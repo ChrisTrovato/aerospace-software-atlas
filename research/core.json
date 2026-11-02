@@ -1,0 +1,760 @@
+[
+  {
+    "id": "python",
+    "name": "Python",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "robotics",
+      "gnc",
+      "thermal",
+      "astrodynamics",
+      "testing"
+    ],
+    "summary": "A programming language for calculations, automation, data analysis and prototypes.",
+    "why": "This is the most reusable programming starting point across your robotics, spacecraft and thermal interests. Learn to explain and debug small programs before relying on large generated projects.",
+    "firstProject": "Write a unit-conversion and component-mass calculator. Check five inputs independently, then plot a recorded sensor signal.",
+    "prerequisites": [
+      "Arithmetic",
+      "Basic computer file management"
+    ],
+    "alternatives": [
+      "MATLAB",
+      "Julia"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Python — official documentation",
+        "url": "https://www.python.org/about/"
+      }
+    ]
+  },
+  {
+    "id": "vscode",
+    "name": "Visual Studio Code",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "An editor in which you write, run and debug code.",
+    "why": "Use one editor consistently for Python, C/C++, documentation and Git. The editor organizes your work; the language runtime and compiler are separate components.",
+    "firstProject": "Open a project folder, run a Python file, set a breakpoint and inspect a variable.",
+    "prerequisites": [
+      "Files and folders"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free Microsoft distribution; extension and AI service terms vary.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Visual Studio Code — official documentation",
+        "url": "https://code.visualstudio.com/docs"
+      }
+    ]
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "systems",
+      "avionics",
+      "testing"
+    ],
+    "summary": "Version control that records changes to files and lets teams work on branches.",
+    "why": "Keep calculations, code, assumptions and test revisions together. This is a small continuous habit, not a subject requiring equal time with mechanics or programming.",
+    "firstProject": "Commit a working calculator, make an experimental branch and restore a prior result.",
+    "prerequisites": [
+      "Basic terminal use"
+    ],
+    "alternatives": [
+      "Other team version-control systems"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Git — official documentation",
+        "url": "https://git-scm.com/"
+      }
+    ]
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "A hosting and collaboration platform for Git repositories.",
+    "why": "Use repositories, issues and pull requests to make engineering work reproducible and reviewable. Keep large binary CAD and test datasets in a storage workflow appropriate to their size.",
+    "firstProject": "Publish a small project with a README, input data, run instructions and one issue describing the next experiment.",
+    "prerequisites": [
+      "Git basics"
+    ],
+    "alternatives": [
+      "GitLab",
+      "Bitbucket"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free and paid plans; storage, automation and organizational limits vary.",
+    "platform": "Web; desktop and command-line clients available.",
+    "sources": [
+      {
+        "title": "GitHub — official documentation",
+        "url": "https://docs.github.com/en/get-started"
+      }
+    ]
+  },
+  {
+    "id": "linux",
+    "name": "Linux / Ubuntu + WSL",
+    "kind": "Environment",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "robotics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "A computing environment used to run development tools and many robotics systems.",
+    "why": "Start with folders, processes, packages, permissions and the terminal. On Windows, WSL provides a useful practice environment; a robot or simulator may later need native Linux and specific device support.",
+    "firstProject": "Run your Python calculator in Ubuntu, make an isolated environment and use Git from the terminal.",
+    "prerequisites": [
+      "Files and folders",
+      "Basic Python"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Ubuntu is free; WSL requires a supported Windows installation.",
+    "platform": "Linux hardware or Ubuntu in WSL on supported Windows.",
+    "sources": [
+      {
+        "title": "Microsoft — WSL overview",
+        "url": "https://learn.microsoft.com/en-us/windows/wsl/about"
+      },
+      {
+        "title": "Ubuntu tutorials",
+        "url": "https://ubuntu.com/tutorials"
+      }
+    ]
+  },
+  {
+    "id": "numpy",
+    "name": "NumPy",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "Fast arrays and mathematical operations for Python.",
+    "why": "Learn array shapes, indexing and units. Vectors, matrices, sensor samples and state histories become easier to express consistently.",
+    "firstProject": "Calculate the mass of a family of brackets from arrays of dimensions and material densities.",
+    "prerequisites": [
+      "Python lists and functions",
+      "Algebra"
+    ],
+    "alternatives": [
+      "MATLAB arrays"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "NumPy — official documentation",
+        "url": "https://numpy.org/"
+      }
+    ]
+  },
+  {
+    "id": "matplotlib",
+    "name": "Matplotlib",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "A Python library for creating scientific plots.",
+    "why": "Use labeled axes, units, uncertainty and clear comparisons. A figure should expose model error and trends, not just decorate a report.",
+    "firstProject": "Plot measured and predicted temperature on one set of axes, with units and a legend.",
+    "prerequisites": [
+      "Python basics",
+      "Arrays"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Matplotlib — official documentation",
+        "url": "https://matplotlib.org/"
+      }
+    ]
+  },
+  {
+    "id": "jupyter",
+    "name": "JupyterLab / Notebook",
+    "kind": "Environment",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "An interactive workspace combining code, equations, results and explanatory text.",
+    "why": "Useful for learning and investigating data. Restart and run all cells before sharing so the document reproduces its results from a clean state.",
+    "firstProject": "Create a notebook explaining one calculation, its assumptions and a plot, then reproduce it from the top.",
+    "prerequisites": [
+      "Python basics"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Browser interface with a local or hosted Python environment.",
+    "sources": [
+      {
+        "title": "JupyterLab / Notebook — official documentation",
+        "url": "https://jupyter.org/"
+      }
+    ]
+  },
+  {
+    "id": "scipy",
+    "name": "SciPy",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "gnc",
+      "thermal",
+      "fluids",
+      "testing"
+    ],
+    "summary": "Scientific Python algorithms for integration, optimization, interpolation and other numerical methods.",
+    "why": "It becomes much more useful as you learn calculus, differential equations and numerical error. Understand the problem and solver assumptions before trusting a numerical answer.",
+    "firstProject": "Integrate a simple cooling model and compare it with its known analytical solution.",
+    "prerequisites": [
+      "Python and NumPy",
+      "Relevant calculus and differential equations"
+    ],
+    "alternatives": [
+      "MATLAB numerical solvers"
+    ],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "SciPy — official documentation",
+        "url": "https://scipy.org/"
+      }
+    ]
+  },
+  {
+    "id": "pandas",
+    "name": "pandas",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing",
+      "systems"
+    ],
+    "summary": "A Python library for cleaning and analyzing tables of measurements.",
+    "why": "Useful for timestamps, missing samples and repeated experiments. Preserve the original measurements and make each cleaning step explicit.",
+    "firstProject": "Read a CSV test log, identify missing readings and compare average temperature across repeated trials.",
+    "prerequisites": [
+      "Python",
+      "Basic statistics"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "pandas — official documentation",
+        "url": "https://pandas.pydata.org/"
+      }
+    ]
+  },
+  {
+    "id": "sympy",
+    "name": "SymPy",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "Symbolic mathematics inside Python, including algebra and calculus.",
+    "why": "Use it to inspect derivations and compare symbolic and numerical solutions. It helps with equations, but does not establish whether your physical assumptions are appropriate.",
+    "firstProject": "Differentiate a simple displacement function and check its velocity at several times.",
+    "prerequisites": [
+      "Python",
+      "Algebra; calculus for calculus tasks"
+    ],
+    "alternatives": [
+      "Mathematica",
+      "MATLAB Symbolic Math Toolbox"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "SymPy — official documentation",
+        "url": "https://www.sympy.org/en/index.html"
+      }
+    ]
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "A compiled programming language used in robotics, simulation and performance-sensitive systems.",
+    "why": "After Python, learn types, functions, memory ownership, compilation and debugging through small hardware or simulation tasks. Language competence is more valuable than collecting frameworks.",
+    "firstProject": "Implement a sensor-reading buffer and test how it handles missing or invalid samples.",
+    "prerequisites": [
+      "Basic programming",
+      "Comfort running terminal commands"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Language is not a paid product; free compilers are available.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Standard C++ — getting started",
+        "url": "https://isocpp.org/get-started"
+      },
+      {
+        "title": "GNU compiler collection",
+        "url": "https://gcc.gnu.org/"
+      }
+    ]
+  },
+  {
+    "id": "c",
+    "name": "C",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "avionics",
+      "robotics",
+      "testing"
+    ],
+    "summary": "A compiled language used close to embedded hardware and operating systems.",
+    "why": "Learn pointers, arrays, memory and device interfaces. UCSD’s current MAE 144 description explicitly includes C and embedded Linux, while your future course’s actual tools should be checked near enrollment.",
+    "firstProject": "Write and test a small state machine for a simulated fan and temperature sensor.",
+    "prerequisites": [
+      "Basic programming",
+      "Computer memory basics"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Language is not a paid product; free compilers are available.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "GNU C compiler collection",
+        "url": "https://gcc.gnu.org/"
+      },
+      {
+        "title": "UCSD MAE catalog — MAE 144",
+        "url": "https://catalog.ucsd.edu/courses/MAE.html"
+      }
+    ]
+  },
+  {
+    "id": "cmake",
+    "name": "CMake",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "A tool for configuring how compiled software projects are built.",
+    "why": "It helps a C/C++ project locate libraries and build on different computers. Learn it when your code has several files or dependencies.",
+    "firstProject": "Build a two-file C++ sensor utility and run its tests from a fresh build directory.",
+    "prerequisites": [
+      "Basic C/C++ compilation",
+      "Terminal use"
+    ],
+    "alternatives": [],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "CMake — official documentation",
+        "url": "https://cmake.org/"
+      }
+    ]
+  },
+  {
+    "id": "gdb",
+    "name": "GDB",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "A debugger for inspecting running compiled programs.",
+    "why": "Breakpoints and variable inspection make software behavior observable. This is especially valuable when C/C++ programs fail in ways that print statements do not explain.",
+    "firstProject": "Find a deliberate out-of-range index in a small local C++ exercise using a breakpoint.",
+    "prerequisites": [
+      "C/C++ basics"
+    ],
+    "alternatives": [
+      "LLDB",
+      "Visual Studio debugger"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "GNU/Linux and supported toolchains; platform integration varies.",
+    "sources": [
+      {
+        "title": "GDB — official documentation",
+        "url": "https://www.sourceware.org/gdb/"
+      }
+    ]
+  },
+  {
+    "id": "pytest",
+    "name": "pytest",
+    "kind": "Framework",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing",
+      "avionics"
+    ],
+    "summary": "A Python testing framework for checking program behavior automatically.",
+    "why": "Engineering scripts deserve checks for units, known cases and invalid inputs. Learn this early enough that each new calculation comes with evidence it behaves as expected.",
+    "firstProject": "Test a unit conversion with known values and ensure impossible inputs are rejected.",
+    "prerequisites": [
+      "Python functions"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "pytest — official documentation",
+        "url": "https://docs.pytest.org/en/stable/"
+      }
+    ]
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "kind": "Environment",
+    "family": "Computing & workflow",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "testing",
+      "systems"
+    ],
+    "summary": "A container workflow for packaging software and its dependencies.",
+    "why": "Helpful for reproducing a lab environment or sharing software with a team. Hardware access and real-time behavior still require deliberate setup; containers do not solve every deployment problem.",
+    "firstProject": "Package an existing analysis script so another computer can produce the same plot.",
+    "prerequisites": [
+      "Linux basics",
+      "One working software project"
+    ],
+    "alternatives": [],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Engine and Desktop terms differ; paid Desktop subscriptions apply in some organizations.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Docker — official documentation",
+        "url": "https://docs.docker.com/get-started/"
+      }
+    ]
+  },
+  {
+    "id": "sqlite",
+    "name": "SQLite / SQL",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "testing",
+      "systems",
+      "avionics"
+    ],
+    "summary": "A small local database engine and the query language used to retrieve structured records.",
+    "why": "Useful when experiment metadata outgrows scattered CSV files. Keep each run linked to its configuration, measurements and notes.",
+    "firstProject": "Store twenty experiment runs and query which configuration had the lowest average error.",
+    "prerequisites": [
+      "Tables and basic programming"
+    ],
+    "alternatives": [],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "SQLite source is public domain.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "SQLite / SQL — official documentation",
+        "url": "https://www.sqlite.org/about.html"
+      }
+    ]
+  },
+  {
+    "id": "blender",
+    "name": "Blender",
+    "kind": "Application",
+    "family": "Visualization & communication",
+    "specialties": [
+      "visualization",
+      "robotics",
+      "mechanisms",
+      "habitats"
+    ],
+    "summary": "A 3D creation suite for rendering, animation and visual assets.",
+    "why": "Useful for explaining mechanisms and building scenes for visualization. Keep dimensioned mechanical design and engineering validation in the appropriate CAD and analysis tools.",
+    "firstProject": "Import a finished CAD model and make a short exploded-view animation explaining assembly.",
+    "prerequisites": [
+      "Basic 3D navigation",
+      "A completed design to communicate"
+    ],
+    "alternatives": [],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Blender — official documentation",
+        "url": "https://www.blender.org/about/"
+      }
+    ]
+  },
+  {
+    "id": "paraview",
+    "name": "ParaView",
+    "kind": "Application",
+    "family": "Visualization & communication",
+    "specialties": [
+      "fluids",
+      "thermal",
+      "structures",
+      "visualization"
+    ],
+    "summary": "An application for examining large scientific and simulation datasets.",
+    "why": "Inspect slices, contours and time histories from numerical work. It is a post-processing tool: the underlying solver and validation determine the meaning of the picture.",
+    "firstProject": "Open a tutorial flow dataset and compare a contour plot with numerical values along a line.",
+    "prerequisites": [
+      "Scientific plots",
+      "Relevant simulation fundamentals"
+    ],
+    "alternatives": [],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "ParaView — official documentation",
+        "url": "https://www.paraview.org/"
+      }
+    ]
+  },
+  {
+    "id": "latex",
+    "name": "LaTeX / Overleaf",
+    "kind": "Environment",
+    "family": "Visualization & communication",
+    "specialties": [
+      "foundations",
+      "systems",
+      "testing",
+      "visualization"
+    ],
+    "summary": "A document-writing workflow for equations, references and technical reports.",
+    "why": "LaTeX is the typesetting system; Overleaf is a hosted editor. Use either when a report needs consistent equations and cross-references, or follow your team’s document template.",
+    "firstProject": "Write a two-page experiment report with one equation, one figure and referenced sources.",
+    "prerequisites": [
+      "Technical writing"
+    ],
+    "alternatives": [
+      "Word",
+      "Google Docs"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "LaTeX is free; Overleaf has free and paid plans.",
+    "platform": "Local TeX distributions or a browser-based editor.",
+    "sources": [
+      {
+        "title": "LaTeX project — official overview",
+        "url": "https://www.latex-project.org/about/"
+      },
+      {
+        "title": "Overleaf — free and paid plans",
+        "url": "https://www.overleaf.com/user/subscription/plans"
+      }
+    ]
+  },
+  {
+    "id": "zotero",
+    "name": "Zotero",
+    "kind": "Application",
+    "family": "Visualization & communication",
+    "specialties": [
+      "foundations",
+      "systems",
+      "materials",
+      "visualization"
+    ],
+    "summary": "A reference manager for collecting, annotating and citing research.",
+    "why": "Keep papers and vendor documentation organized by the question they answer. Useful across every specialty, particularly when a design decision needs a traceable source.",
+    "firstProject": "Build a five-source collection for a material choice and export a bibliography.",
+    "prerequisites": [
+      "Basic research skills"
+    ],
+    "alternatives": [],
+    "priority": "explore",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free application; optional paid storage.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Zotero — official documentation",
+        "url": "https://www.zotero.org/"
+      }
+    ]
+  },
+  {
+    "id": "julia",
+    "name": "Julia",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "A programming language designed for scientific and numerical computing.",
+    "why": "An interesting later comparison once you can already build and validate models in Python or MATLAB. Learn it if a research group or numerical project gives you a reason.",
+    "firstProject": "Reproduce a known cooling-model result in Julia and compare the numerical error.",
+    "prerequisites": [
+      "Programming",
+      "Numerical methods"
+    ],
+    "alternatives": [
+      "Python",
+      "MATLAB"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Julia — official documentation",
+        "url": "https://julialang.org/"
+      }
+    ]
+  },
+  {
+    "id": "octave",
+    "name": "GNU Octave",
+    "kind": "Environment",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "A free numerical-computing environment with syntax similar to MATLAB.",
+    "why": "Useful for trying matrix-based calculations without a MATLAB license. Compatibility is incomplete, especially for specialized toolboxes and Simulink-dependent coursework.",
+    "firstProject": "Solve a small linear system and plot the residual error.",
+    "prerequisites": [
+      "Algebra",
+      "Arrays"
+    ],
+    "alternatives": [
+      "MATLAB"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "GNU Octave — official documentation",
+        "url": "https://octave.org/"
+      }
+    ]
+  }
+]

@@ -1,0 +1,751 @@
+{
+  "specialties": [
+    {
+      "id": "foundations",
+      "name": "Engineering foundations",
+      "short": "Build the computing and design habits that support every later specialty.",
+      "description": "Start with mathematics, physical reasoning, one CAD package, and small programs you can explain. Use the other pathways as future options while you learn to make a prediction, test it, and document what happened.",
+      "symbol": "∑",
+      "color": "#66D6C4",
+      "foundation": "Arithmetic through algebra, units, graphs, and introductory physics",
+      "workflow": [
+        "Define a small question",
+        "Calculate an expected result",
+        "Build a model or prototype",
+        "Compare prediction with evidence"
+      ],
+      "recommended": [
+        "python",
+        "freecad",
+        "vscode",
+        "git",
+        "github",
+        "matplotlib",
+        "jupyter",
+        "matlab"
+      ],
+      "project": "Model a small storage insert, measure whether it fits, and plot the differences between planned and measured dimensions.",
+      "depth": "Expertise begins with reliable calculations, clear assumptions, and the ability to explain and correct your own work."
+    },
+    {
+      "id": "mechanisms",
+      "name": "Mechanisms & mechanical design",
+      "short": "Design parts that fit together, move reliably, and can be manufactured.",
+      "description": "This pathway covers assemblies, hinges, latches, sliding cartridges, and deployment mechanisms. Begin with one parametric CAD system and develop drawing, tolerance, and testing skills before switching among industrial packages.",
+      "symbol": "⚙",
+      "color": "#F5BC78",
+      "foundation": "Geometry, forces, basic materials, and dimensional measurement",
+      "workflow": [
+        "Sketch the required motion",
+        "Constrain the CAD assembly",
+        "Check fit and clearances",
+        "Build and cycle the prototype"
+      ],
+      "recommended": [
+        "freecad",
+        "solidworks",
+        "autodesk-fusion",
+        "siemens-nx",
+        "prusaslicer",
+        "python"
+      ],
+      "project": "Design a removable equipment cartridge with guide rails, then measure alignment and insertion success over repeated trials.",
+      "depth": "Expertise means making motion and fit dependable while balancing mass, wear, assembly, and manufacturing constraints."
+    },
+    {
+      "id": "structures",
+      "name": "Structures & structural analysis",
+      "short": "Understand how hardware carries loads, deforms, vibrates, and fails.",
+      "description": "Structural software connects material properties and loads to predicted deformation and stress. Start with hand-checkable beam or plate problems, then learn mesh convergence, boundary conditions, and comparison with physical tests.",
+      "symbol": "△",
+      "color": "#B6A4F7",
+      "foundation": "Statics, mechanics of materials, linear algebra, and dynamics",
+      "workflow": [
+        "Draw the load path",
+        "Estimate behavior by hand",
+        "Build and refine a finite-element model",
+        "Compare with a measured deflection"
+      ],
+      "recommended": [
+        "ansys-mechanical",
+        "calculix",
+        "abaqus",
+        "msc-nastran",
+        "hypermesh",
+        "python"
+      ],
+      "project": "Compare the deflection of two small support brackets under a known, modest load.",
+      "depth": "Expertise means knowing whether a structural result is physically credible and which assumptions dominate its uncertainty."
+    },
+    {
+      "id": "thermal",
+      "name": "Thermal engineering",
+      "short": "Keep spacecraft and equipment within their required temperature ranges.",
+      "description": "Thermal work follows heat through materials, interfaces, fluids, and radiation. Learn simple energy balances first, then add the tools appropriate to electronics cooling, spacecraft thermal environments, or coupled fluid systems.",
+      "symbol": "♨",
+      "color": "#F49B84",
+      "foundation": "Thermodynamics, heat transfer, differential equations, and measurements",
+      "workflow": [
+        "Draw an energy balance",
+        "Estimate thermal resistances",
+        "Predict temperatures over time",
+        "Correlate the model with test data"
+      ],
+      "recommended": [
+        "python",
+        "matlab",
+        "simscape",
+        "thermal-desktop",
+        "esatan-tms",
+        "ansys-fluent"
+      ],
+      "project": "Measure how a small electronics enclosure cools after power is removed and fit a simple thermal model.",
+      "depth": "Expertise means predicting temperatures across operating conditions and explaining differences between models, ground tests, and flight data."
+    },
+    {
+      "id": "fluids",
+      "name": "Fluid dynamics & CFD",
+      "short": "Study how air and liquids move through and around engineering systems.",
+      "description": "Computational fluid dynamics is useful when pressure, mixing, drag, or heat transfer depends on the flow. Choose one solver and learn conservation, meshing, boundary conditions, and validation before adding complex turbulence models.",
+      "symbol": "≋",
+      "color": "#7DBCEB",
+      "foundation": "Fluid mechanics, vector calculus, numerical methods, and dimensional analysis",
+      "workflow": [
+        "Define the flow regime",
+        "Calculate a simple reference case",
+        "Create and refine the mesh",
+        "Check conservation and convergence"
+      ],
+      "recommended": [
+        "ansys-fluent",
+        "openfoam",
+        "star-ccm-plus",
+        "su2",
+        "paraview",
+        "python"
+      ],
+      "project": "Simulate a simple low-speed duct and compare pressure loss with a textbook estimate.",
+      "depth": "Expertise means separating numerical artifacts from real flow behavior and quantifying the limits of the model."
+    },
+    {
+      "id": "propulsion",
+      "name": "Propulsion & energy conversion",
+      "short": "Connect thermodynamics, chemistry, and fluid flow to aerospace energy systems.",
+      "description": "This pathway spans chemical equilibrium, reacting flows, and the performance of propulsion concepts. Build the mathematical and physical foundation through textbook models and benign laboratory analogues before using advanced analysis software.",
+      "symbol": "⊙",
+      "color": "#E6B56C",
+      "foundation": "Thermodynamics, chemistry, fluid mechanics, and numerical methods",
+      "workflow": [
+        "State the physical assumptions",
+        "Check an energy balance",
+        "Compare a simplified model",
+        "Study sensitivity and model limits"
+      ],
+      "recommended": [
+        "python",
+        "matlab",
+        "cantera",
+        "nasa-cea",
+        "ansys-fluent",
+        "openfoam"
+      ],
+      "project": "Compare calculated gas heat capacities across temperature and explain why a constant-property model eventually becomes inaccurate.",
+      "depth": "Expertise means connecting chemical and fluid assumptions to trustworthy system estimates, with carefully stated operating limits."
+    },
+    {
+      "id": "gnc",
+      "name": "Guidance, navigation & control",
+      "short": "Estimate a vehicle's state and control its motion despite uncertainty.",
+      "description": "GNC combines dynamics, sensors, estimation, and feedback. Your first useful work can be a pendulum or temperature controller, with spacecraft attitude models added once the mathematics is secure.",
+      "symbol": "⌖",
+      "color": "#77D7B1",
+      "foundation": "Linear algebra, differential equations, dynamics, probability, and control theory",
+      "workflow": [
+        "Model the dynamic system",
+        "Estimate state from measurements",
+        "Design and simulate feedback",
+        "Test disturbances and uncertainty"
+      ],
+      "recommended": [
+        "matlab",
+        "simulink",
+        "python",
+        "scipy",
+        "basilisk",
+        "stateflow"
+      ],
+      "project": "Simulate a damped pendulum controller and compare response, settling time, and sensitivity to sensor noise.",
+      "depth": "Expertise means proving that estimation and control remain dependable beyond a single ideal simulation."
+    },
+    {
+      "id": "astrodynamics",
+      "name": "Astrodynamics & mission analysis",
+      "short": "Model spacecraft orbits, mission geometry, and the consequences of uncertainty.",
+      "description": "Start with two-body motion and careful treatment of units, time, and reference frames. Mission tools become more useful as you add perturbations, observations, and operational constraints to models you already understand.",
+      "symbol": "◌",
+      "color": "#8FB7FA",
+      "foundation": "Newtonian dynamics, vectors, calculus, numerical integration, and orbital elements",
+      "workflow": [
+        "Define frames and time scales",
+        "Propagate a reference orbit",
+        "Add one physical effect",
+        "Compare independent predictions"
+      ],
+      "recommended": [
+        "python",
+        "gmat",
+        "nasa-spice",
+        "orekit",
+        "tudat",
+        "freeflyer",
+        "ansys-stk"
+      ],
+      "project": "Predict an Earth satellite's orbital period and compare a numerical propagation with the analytic result.",
+      "depth": "Expertise means handling geometry and uncertainty precisely enough that mission decisions can rely on the analysis."
+    },
+    {
+      "id": "robotics",
+      "name": "Robotics & autonomous systems",
+      "short": "Integrate sensing, motion, planning, and software into useful physical machines.",
+      "description": "Robotics can connect a mechanical cartridge, a camera, and an inspection task into one evolving project. Learn programming and coordinates first, then choose the ROS 2 tools that match a mobile robot or robot arm.",
+      "symbol": "⌘",
+      "color": "#7AD1D8",
+      "foundation": "Programming, linear algebra, mechanics, sensors, and feedback control",
+      "workflow": [
+        "Define a repeatable task",
+        "Connect sensors and software",
+        "Test in a simple simulation",
+        "Measure performance on hardware"
+      ],
+      "recommended": [
+        "ros-2",
+        "gazebo",
+        "opencv",
+        "moveit-2",
+        "nav2",
+        "cpp",
+        "python",
+        "mujoco"
+      ],
+      "project": "Have a simulated indoor rover visit inspection stations and record failures as well as successful runs.",
+      "depth": "Expertise means handling uncertainty, timing, recovery, and hardware limitations as part of the complete robot."
+    },
+    {
+      "id": "avionics",
+      "name": "Avionics & embedded software",
+      "short": "Build the electronics and software that sense, communicate, and operate onboard.",
+      "description": "Begin with a development board, a sensor, and code you can debug. Add real-time scheduling and flight-software frameworks when the project requires several dependable activities with clear interfaces.",
+      "symbol": "▣",
+      "color": "#A5C7F5",
+      "foundation": "C or C++, circuits, digital logic, timing, and software testing",
+      "workflow": [
+        "Read the device interface",
+        "Collect and validate sensor data",
+        "Structure tasks and messages",
+        "Test errors and recovery"
+      ],
+      "recommended": [
+        "c",
+        "cpp",
+        "kicad",
+        "freertos",
+        "f-prime",
+        "nasa-cfs",
+        "gdb",
+        "pytest"
+      ],
+      "project": "Build a temperature logger with a simulated sensor fault and a clear command-and-telemetry interface.",
+      "depth": "Expertise means predictable timing, controlled resource use, traceable requirements, and reliable behavior under faults."
+    },
+    {
+      "id": "rf",
+      "name": "RF, antennas & communications",
+      "short": "Move information through antennas, radio links, and signal-processing systems.",
+      "description": "This pathway connects circuits and electromagnetic fields with communication performance. Begin with signals and low-power, receive-only experiments, then use field solvers when a project needs antenna or high-frequency circuit analysis.",
+      "symbol": "∿",
+      "color": "#CCA8E8",
+      "foundation": "Circuits, electromagnetics, signals, complex numbers, and probability",
+      "workflow": [
+        "Describe the signal and bandwidth",
+        "Model a simple circuit or link",
+        "Analyze fields or waveforms",
+        "Compare predicted and measured behavior"
+      ],
+      "recommended": [
+        "gnu-radio",
+        "ltspice",
+        "ansys-hfss",
+        "cst-studio-suite",
+        "keysight-ads",
+        "python"
+      ],
+      "project": "Analyze a recorded radio signal or a simulated filter and plot how noise changes the recovered waveform.",
+      "depth": "Expertise means connecting fields, circuits, noise, and measurement limits to dependable communications."
+    },
+    {
+      "id": "power",
+      "name": "Electrical power systems",
+      "short": "Generate, store, convert, and distribute energy across a vehicle or facility.",
+      "description": "Power engineering spans solar arrays, batteries, converters, wiring, and the loads they supply. Start with simple low-voltage models and energy budgets, then deepen the circuit and thermal analysis as the design becomes more realistic.",
+      "symbol": "ϟ",
+      "color": "#E4CB7C",
+      "foundation": "Circuits, energy conservation, electronics, and thermal fundamentals",
+      "workflow": [
+        "Build a power budget",
+        "Model generation and loads",
+        "Check transient behavior",
+        "Test with measured component data"
+      ],
+      "recommended": [
+        "ltspice",
+        "ngspice",
+        "simscape",
+        "kicad",
+        "matlab",
+        "python"
+      ],
+      "project": "Create a simulated solar-and-battery power budget for a small environmental sensor station.",
+      "depth": "Expertise means maintaining reliable power while accounting for efficiency, heat, transients, and changing operating conditions."
+    },
+    {
+      "id": "manufacturing",
+      "name": "Manufacturing & fabrication",
+      "short": "Turn a design into parts that can be made, measured, and assembled.",
+      "description": "Manufacturing connects CAD decisions to material, process, tooling, and inspection constraints. Begin with simple prototypes and a slicer or supervised shop workflow; advanced CAM becomes useful when a real fabrication process requires it.",
+      "symbol": "◩",
+      "color": "#B9C68D",
+      "foundation": "Engineering drawings, tolerances, materials, measurement, and process safety",
+      "workflow": [
+        "Choose a suitable process",
+        "Prepare the model and drawing",
+        "Fabricate a controlled prototype",
+        "Measure and revise the design"
+      ],
+      "recommended": [
+        "autodesk-fusion",
+        "solidworks",
+        "mastercam",
+        "prusaslicer",
+        "bambu-studio",
+        "siemens-nx"
+      ],
+      "project": "Print a small fit-test coupon with several clearances and record which dimensions assemble reliably.",
+      "depth": "Expertise means producing repeatable parts and understanding how process variation affects cost, fit, and performance."
+    },
+    {
+      "id": "systems",
+      "name": "Systems engineering",
+      "short": "Make requirements, interfaces, and engineering decisions work together.",
+      "description": "Systems work keeps a complex vehicle or facility coherent across its subsystems. Start with a clear requirements table and interface diagram, then adopt modeling and lifecycle tools when project scale justifies them.",
+      "symbol": "⌗",
+      "color": "#8DC9BA",
+      "foundation": "Clear technical writing, requirements, interfaces, trade studies, and verification",
+      "workflow": [
+        "Define measurable requirements",
+        "Map subsystem interfaces",
+        "Compare design alternatives",
+        "Trace requirements to evidence"
+      ],
+      "recommended": [
+        "sysml",
+        "capella",
+        "cameo-systems-modeler",
+        "ibm-doors-next",
+        "jama-connect",
+        "openmdao",
+        "git"
+      ],
+      "project": "Write measurable requirements for an environmental monitor and map each one to a test or inspection.",
+      "depth": "Expertise means making trade-offs explicit and ensuring that the integrated system satisfies its intended purpose."
+    },
+    {
+      "id": "testing",
+      "name": "Test, verification & validation",
+      "short": "Gather trustworthy evidence that a design behaves as intended.",
+      "description": "Testing connects engineering claims to repeatable measurements and clear acceptance criteria. Start with small automated checks and organized data, then learn laboratory platforms when real instruments or integrated hardware require them.",
+      "symbol": "✓",
+      "color": "#9DCA87",
+      "foundation": "Experimental design, statistics, measurement uncertainty, and programming",
+      "workflow": [
+        "Set acceptance criteria",
+        "Control the test conditions",
+        "Record data and uncertainty",
+        "Explain failures and retest changes"
+      ],
+      "recommended": [
+        "python",
+        "pytest",
+        "pandas",
+        "labview",
+        "ni-teststand",
+        "dspace-controldesk",
+        "git"
+      ],
+      "project": "Create an automated repeatability test for a sensor logger, including missing-data and out-of-range cases.",
+      "depth": "Expertise means distinguishing a passed demonstration from sufficient evidence across the required operating conditions."
+    },
+    {
+      "id": "visualization",
+      "name": "Visualization & technical communication",
+      "short": "Make designs, results, and engineering decisions easy to understand.",
+      "description": "Use plots for numerical evidence, CAD views for geometry, and Blender for explanatory renders or animation. Presentation tools add value when the underlying assumptions, dimensions, and results remain clear to the audience.",
+      "symbol": "◈",
+      "color": "#D9A1BC",
+      "foundation": "Clear writing, graph design, units, geometry, and source attribution",
+      "workflow": [
+        "Choose the engineering message",
+        "Select the right visual form",
+        "Label units and assumptions",
+        "Check that the visual supports the claim"
+      ],
+      "recommended": [
+        "matplotlib",
+        "paraview",
+        "blender",
+        "latex",
+        "zotero",
+        "jupyter"
+      ],
+      "project": "Create a one-page explanation of a prototype with an exploded view, a test plot, and a short account of one redesign.",
+      "depth": "Expertise means communicating technical truth clearly without allowing attractive visuals to conceal uncertainty."
+    },
+    {
+      "id": "materials",
+      "name": "Materials & failure behavior",
+      "short": "Choose materials by how they behave under real service conditions.",
+      "description": "Material choices affect stiffness, mass, temperature limits, durability, processing, and cost. Begin with property comparisons and simple tests, then use constitutive models only when you understand the behavior they represent.",
+      "symbol": "◫",
+      "color": "#C1ABD9",
+      "foundation": "Chemistry, materials science, mechanics, statistics, and test methods",
+      "workflow": [
+        "Define the service conditions",
+        "Compare relevant material properties",
+        "Test a simplified specimen",
+        "Relate failure to the design"
+      ],
+      "recommended": [
+        "granta-edupack",
+        "python",
+        "pandas",
+        "ansys-mechanical",
+        "abaqus",
+        "matlab"
+      ],
+      "project": "Compare the stiffness-to-mass ratio of several harmless beam specimens using a consistent test setup.",
+      "depth": "Expertise means choosing and validating materials with attention to variability, environment, fabrication, and failure mechanisms."
+    },
+    {
+      "id": "habitats",
+      "name": "Habitats & space infrastructure",
+      "short": "Integrate dependable thermal, power, monitoring, and maintainability systems.",
+      "description": "Habitats and infrastructure combine many specialties around long-term operation and servicing. An Earth-based equipment bay is a useful learning project when you clearly separate what it demonstrates from the demands of a space environment.",
+      "symbol": "⌂",
+      "color": "#C7BC83",
+      "foundation": "Thermodynamics, circuits, systems thinking, reliability, and human needs",
+      "workflow": [
+        "Define an operating scenario",
+        "Balance heat and power",
+        "Design access for maintenance",
+        "Test monitoring and fault responses"
+      ],
+      "recommended": [
+        "freecad",
+        "python",
+        "simscape",
+        "openmodelica",
+        "thermal-desktop",
+        "capella",
+        "stateflow"
+      ],
+      "project": "Design a serviceable equipment bay with a removable module, temperature logging, and a documented replacement procedure.",
+      "depth": "Expertise means integrating subsystems so that operation, maintenance, and recovery remain practical over time."
+    },
+    {
+      "id": "aircraft",
+      "name": "Aircraft & aerodynamics",
+      "short": "Connect airframe geometry, aerodynamic behavior, structures, and flight dynamics.",
+      "description": "Aircraft design joins several engineering disciplines rather than depending on one application. Start with simple geometry and low-speed flight concepts, then add analysis tools as your understanding of their assumptions develops.",
+      "symbol": "✈",
+      "color": "#8ABDE3",
+      "foundation": "Mechanics, fluid dynamics, structures, stability, and numerical methods",
+      "workflow": [
+        "Define a simple design objective",
+        "Model the airframe geometry",
+        "Estimate forces and stability",
+        "Compare analysis with a controlled test"
+      ],
+      "recommended": [
+        "openvsp",
+        "xfoil",
+        "su2",
+        "ansys-fluent",
+        "matlab",
+        "simulink",
+        "solidworks"
+      ],
+      "project": "Compare two simple foam-glider wing designs using measured mass, geometry, and repeatable glide observations.",
+      "depth": "Expertise means balancing aerodynamic performance with structure, control, manufacturability, and evidence from testing."
+    },
+    {
+      "id": "defense",
+      "name": "Defense engineering applications",
+      "short": "Apply common engineering methods to dependable aerospace and support systems.",
+      "description": "Defense employers use many of the same CAD, simulation, avionics, systems, and verification skills as civil aerospace. Build transferable expertise through benign hardware and test projects, then learn an employer's approved processes and tools when the role requires them.",
+      "symbol": "◇",
+      "color": "#A7B9A5",
+      "foundation": "Engineering fundamentals, requirements, configuration management, and rigorous testing",
+      "workflow": [
+        "Translate requirements into a design",
+        "Maintain controlled interfaces and revisions",
+        "Verify component behavior",
+        "Document evidence and limitations"
+      ],
+      "recommended": [
+        "siemens-nx",
+        "ansys-mechanical",
+        "matlab",
+        "simulink",
+        "sysml",
+        "ibm-doors-next",
+        "git",
+        "pytest"
+      ],
+      "project": "Design and verify a protective electronics enclosure for a portable environmental-monitoring instrument.",
+      "depth": "Expertise means dependable engineering, disciplined verification, and clear documentation within the assigned technical role."
+    }
+  ],
+  "phases": [
+    {
+      "id": "2026–2027",
+      "label": "Foundation",
+      "title": "Learn to model, calculate, and explain",
+      "description": "Keep mathematics and introductory physics at the center. Learn one CAD package and basic Python through small projects; the tools below are a connected starter workflow, not separate courses to complete.",
+      "outcome": "A simple assembly, a useful calculation script, and a short record of measurements and revisions.",
+      "focus": [
+        "freecad",
+        "python",
+        "vscode",
+        "git",
+        "github",
+        "numpy",
+        "matplotlib",
+        "jupyter"
+      ],
+      "steps": [
+        {
+          "title": "Make one physical idea concrete",
+          "body": "Model a small enclosure or sliding insert. Use dimensions and constraints deliberately, then compare the model with a cardboard or printed prototype."
+        },
+        {
+          "title": "Write small programs yourself",
+          "body": "Practice variables, functions, loops, arrays, and plots using calculations whose results you can estimate independently."
+        },
+        {
+          "title": "Build a record as you work",
+          "body": "Save code with Git, explain the project in a README, and record what changed after each test. Keep this routine lightweight."
+        }
+      ]
+    },
+    {
+      "id": "2028–2029",
+      "label": "Apply & transfer",
+      "title": "Connect software to coursework and experiments",
+      "description": "Plan to deepen MATLAB around the proposed fall 2028 ENGR 221 course. The proposed fall 2029 transfer is a planning milestone; add electronics or robotics tools only when a project and its prerequisites justify them.",
+      "outcome": "An instrumented prototype with a mathematical model, test data, and a reasoned redesign.",
+      "focus": [
+        "matlab",
+        "scipy",
+        "pandas",
+        "solidworks",
+        "opencv",
+        "kicad",
+        "freertos",
+        "ros-2"
+      ],
+      "steps": [
+        {
+          "title": "Use MATLAB alongside the mathematics",
+          "body": "Practice numerical methods, plotting, and data analysis in the context of class problems. Recheck the actual course schedule and software requirements before enrollment."
+        },
+        {
+          "title": "Add a measurable subsystem",
+          "body": "Extend the mechanical project with temperature sensing, an inspection camera, or a simple actuator. Pick one addition and compare predictions with observations."
+        },
+        {
+          "title": "Explore a branch without committing to every tool",
+          "body": "Try a small controls, structures, thermal, or robotics study. Use a student team or transfer project to learn which kind of engineering work you want to pursue further."
+        }
+      ]
+    },
+    {
+      "id": "2030–2032",
+      "label": "Develop depth",
+      "title": "Choose a specialty and demonstrate engineering judgment",
+      "description": "Use upper-division study, projects, and internship opportunities to develop one primary specialty. Graduation in 2032 remains a target dependent on admission, accepted coursework, and course availability; the listed tools are branch options.",
+      "outcome": "A substantial project that connects requirements, design, analysis, testing, and a clear explanation of limitations.",
+      "focus": [
+        "simulink",
+        "ansys-mechanical",
+        "thermal-desktop",
+        "basilisk",
+        "openvsp",
+        "ros-2",
+        "sysml",
+        "latex"
+      ],
+      "steps": [
+        {
+          "title": "Select a coherent workflow",
+          "body": "For example, combine CAD and structural analysis, thermal modeling and test data, or dynamics and control simulation. Become effective with a few connected tools."
+        },
+        {
+          "title": "Validate beyond the demonstration",
+          "body": "Check a simple limiting case, investigate sensitivity, and compare the model with measurements or a credible benchmark. Record failures and the changes they prompted."
+        },
+        {
+          "title": "Show ownership of the complete result",
+          "body": "Use capstone, research, or internship work to explain the problem, your decisions, the evidence, and the remaining uncertainty. Learn the team's tools where they serve that work."
+        }
+      ]
+    },
+    {
+      "id": "2033–2035",
+      "label": "Early career",
+      "title": "Adapt to real teams, products, and research questions",
+      "description": "After the proposed degree timeline, let employment or graduate research determine the next tools. Commercial platforms, flight-software frameworks, and specialized libraries are alternatives to adopt when the work calls for them.",
+      "outcome": "Reliable contribution to a team, with depth in a technical area and the ability to learn a new tool without losing engineering rigor.",
+      "focus": [
+        "siemens-nx",
+        "siemens-teamcenter",
+        "nasa-cfs",
+        "freeflyer",
+        "orekit",
+        "ni-teststand",
+        "ibm-doors-next",
+        "pytorch"
+      ],
+      "steps": [
+        {
+          "title": "Learn the team's engineering process",
+          "body": "Understand review, configuration control, interfaces, and verification evidence before assuming a familiar application is used in the same way."
+        },
+        {
+          "title": "Deepen the specialty that matters",
+          "body": "Work through harder models, more demanding data, or tighter implementation constraints. Use mentors and real feedback to identify gaps in the underlying mathematics and physics."
+        },
+        {
+          "title": "Keep the portfolio selective",
+          "body": "Maintain clear accounts of work you are allowed to share. Revisit the learning plan as your responsibilities change rather than treating this atlas as a fixed checklist."
+        }
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "CAD",
+      "definition": "Computer-aided design: creating precise digital geometry, assemblies, and engineering drawings."
+    },
+    {
+      "term": "CAM",
+      "definition": "Computer-aided manufacturing: preparing toolpaths and other instructions for fabrication equipment."
+    },
+    {
+      "term": "CAE",
+      "definition": "Computer-aided engineering: using computational tools to analyze how a design behaves."
+    },
+    {
+      "term": "FEA",
+      "definition": "Finite element analysis: approximating a physical problem with many connected elements, often for stress, heat, or vibration."
+    },
+    {
+      "term": "CFD",
+      "definition": "Computational fluid dynamics: numerically modeling fluid motion and related heat or species transport."
+    },
+    {
+      "term": "GNC",
+      "definition": "Guidance, navigation, and control: deciding a motion objective, estimating state, and controlling the system."
+    },
+    {
+      "term": "ADCS",
+      "definition": "Attitude determination and control system: estimating and controlling a spacecraft's orientation."
+    },
+    {
+      "term": "PCB",
+      "definition": "Printed circuit board: a physical board that supports and electrically connects components."
+    },
+    {
+      "term": "RTOS",
+      "definition": "Real-time operating system: software that schedules embedded tasks to meet timing needs."
+    },
+    {
+      "term": "SITL",
+      "definition": "Software in the loop: testing real control or embedded software against a simulated physical system."
+    },
+    {
+      "term": "HIL",
+      "definition": "Hardware in the loop: testing actual hardware while a simulator supplies part of its operating environment."
+    },
+    {
+      "term": "MBSE",
+      "definition": "Model-based systems engineering: using structured system models to connect requirements, behavior, architecture, and verification."
+    },
+    {
+      "term": "PLM",
+      "definition": "Product lifecycle management: controlling product data, revisions, configurations, and associated processes."
+    },
+    {
+      "term": "GD&T",
+      "definition": "Geometric dimensioning and tolerancing: communicating allowable variation in a part's geometry and relationships."
+    },
+    {
+      "term": "V&V",
+      "definition": "Verification and validation: checking that requirements were met and that the result is suitable for its intended use."
+    },
+    {
+      "term": "CI",
+      "definition": "Continuous integration: automatically building and checking software changes as they are combined."
+    }
+  ],
+  "evidence": [
+    {
+      "title": "Southwestern College — Engineering course descriptions",
+      "url": "https://catalog.swccd.edu/course-descriptions/engr/engr.pdf",
+      "note": "The published ENGR 221 listing identifies MATLAB programming and applications. Fall 2028 is a proposed study date, not a verified future course offering."
+    },
+    {
+      "title": "UC San Diego — Aerospace engineering program",
+      "url": "https://maeweb.ucsd.edu/undergrad/aerospace-engineering",
+      "note": "The program covers mechanics, materials, thermal and fluid topics, structures, propulsion, controls, and design. Its published transfer planning examples span three years; future admission and requirements must be checked."
+    },
+    {
+      "title": "UC San Diego — MAE 107 syllabus",
+      "url": "https://maeweb.ucsd.edu/sites/default/files/uploads/MAE%20107.pdf",
+      "note": "This March 2025 syllabus includes numerical computation using MATLAB, numerical error, data fitting, and differential equations. It is evidence of curricular relevance, not a guarantee of a future instructor's software choices."
+    },
+    {
+      "title": "Starcloud — Satellite Bus Mechanical Engineer",
+      "url": "https://starcloud.octbr.ai/jobs/mechanical-engineer-satellite-bus-P8qXeV",
+      "note": "This role names advanced CAD, preferably NX and Teamcenter, FEA preferably Ansys, and GD&T. It also emphasizes manufacturing and testing, showing why software knowledge must connect to hardware."
+    },
+    {
+      "title": "Starcloud — Thermal Engineer",
+      "url": "https://starcloud.octbr.ai/jobs/thermal-engineer-v0xuJL",
+      "note": "This experienced-role example names Thermal Desktop and Ansys alongside active thermal control, prototyping, and thermal testing. These are specialization signals, not requirements for every new graduate."
+    },
+    {
+      "title": "Rendezvous Robotics — Flight Software Engineer, Early Career",
+      "url": "https://job-boards.greenhouse.io/rendezvousrobotics/jobs/4464270009",
+      "note": "This early-career posting requests C/C++, Linux, Git, and hardware interaction; Python tooling and F Prime or ROS are preferred experience. It demonstrates how basic coding habits support spacecraft work."
+    },
+    {
+      "title": "Black Coffee Robotics — Robotics Engineer",
+      "url": "https://www.blackcoffeerobotics.com/jobs/robotics-engineer",
+      "note": "This robotics role names ROS 2, Isaac Sim, MuJoCo, C++, and Python for manipulation and simulation. It illustrates a robotics workflow rather than a universal aerospace software list."
+    },
+    {
+      "title": "Northrop Grumman — Systems Engineer/Principal Systems Engineer",
+      "url": "https://ngc.wd1.myworkdayjobs.com/en-US/Northrop_Grumman_External_Site/job/Systems-Engineer-Principal-Systems-Engineer--AHT-_R10251369-1",
+      "note": "The official posting's indexed text identifies MATLAB/Simulink for physics-based systems modeling. This is a defense-career example; the direct page was unavailable during verification, and future openings may differ."
+    }
+  ]
+}

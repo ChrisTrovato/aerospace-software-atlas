@@ -1,0 +1,212 @@
+[
+  {
+    "id": "spreadsheets",
+    "name": "Excel / Google Sheets",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": ["foundations", "systems", "testing", "manufacturing"],
+    "summary": "Spreadsheets organize measurements, calculations, parts lists, schedules, and engineering budgets in an inspectable table.",
+    "why": "Learn formulas, cell references, charts, filtering, and basic data validation early because these help almost every project. Choose one primary application and transfer the concepts later; keep units and assumptions visible, and move repetitive or complicated analysis into tested Python code when that becomes clearer.",
+    "firstProject": "Build a small robot's parts and mass budget, separate measured values from estimates, and plot how each assembly contributes to the total.",
+    "prerequisites": ["Basic arithmetic", "Units and dimensions", "Careful organization of measurements"],
+    "alternatives": ["LibreOffice Calc", "Python with pandas"],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Use available personal or school account access; desktop editions and advanced features have different licensing.",
+    "platform": "Browser access; Excel also has desktop editions. Features differ between editions.",
+    "sources": [
+      {"title": "Start here: Microsoft Excel help and learning", "url": "https://support.microsoft.com/en-us/excel/"},
+      {"title": "Start here: Google Sheets training and help", "url": "https://support.google.com/a/users/answer/9282959?hl=en"}
+    ]
+  },
+  {
+    "id": "arduino-ide",
+    "name": "Arduino IDE",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": ["robotics", "avionics", "testing", "mechanisms"],
+    "summary": "Arduino IDE provides a straightforward way to write, upload, and inspect programs running on supported microcontroller boards.",
+    "why": "It connects introductory programming to physical sensors and actuators, which fits an interest in mechanisms and robots. Start when a small electronics project motivates it; the transferable skills are understanding signals, timing, interfaces, and debugging, rather than collecting familiarity with several editors.",
+    "firstProject": "Read a temperature sensor, print timestamped measurements to the serial monitor, and compare the readings with a separate thermometer before making a simple graph.",
+    "prerequisites": ["Basic C or C++ concepts", "Low-voltage circuit basics", "Reading board and sensor documentation"],
+    "alternatives": ["PlatformIO", "Board manufacturer's development environment"],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free, open-source software; compatible boards, cables, and sensors are separate hardware.",
+    "platform": "Windows, macOS, and Linux; check the current IDE and board requirements.",
+    "sources": [
+      {"title": "Start here: Arduino software tutorials", "url": "https://docs.arduino.cc/software"},
+      {"title": "Arduino IDE installation and supported operating systems", "url": "https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing"}
+    ]
+  },
+  {
+    "id": "platformio",
+    "name": "PlatformIO",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": ["robotics", "avionics", "testing"],
+    "summary": "PlatformIO manages embedded project builds, libraries, supported board toolchains, debugging, and tests from an editor or command line.",
+    "why": "It becomes useful when a working microcontroller project needs reproducible dependencies, multiple source files, or collaboration through Git. Treat it as a later workflow option after understanding a small board program; board and framework support should determine whether it suits the project.",
+    "firstProject": "Move an existing sensor logger into a PlatformIO project, record its board configuration and library versions, and add a desktop test for the unit conversion function.",
+    "prerequisites": ["A working microcontroller program", "Basic C or C++", "Git and build configuration basics"],
+    "alternatives": ["Arduino IDE", "Vendor IDE with CMake"],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Open-source tools without a license fee; hardware and vendor-specific components have separate requirements.",
+    "platform": "Windows, macOS, Linux, and FreeBSD; supported targets depend on the selected platform.",
+    "sources": [
+      {"title": "Start here: PlatformIO quickstart", "url": "https://docs.platformio.org/en/stable/quickstart.html"},
+      {"title": "What PlatformIO provides and its supported platforms", "url": "https://docs.platformio.org/en/stable/what-is-platformio.html"}
+    ]
+  },
+  {
+    "id": "fortran",
+    "name": "Fortran",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": ["fluids", "structures", "thermal", "propulsion"],
+    "summary": "Fortran is a compiled numerical programming language used in scientific computing and existing engineering solver code.",
+    "why": "It is valuable if a research group or simulation code you actually use is written in it. Build strong Python and numerical-methods skills first, then learn enough Fortran to read modules, handle arrays, compile a program, and verify a calculation before considering performance work.",
+    "firstProject": "Translate a small, already verified matrix or heat-conduction calculation from Python, compare numerical results, and document floating-point precision and array indexing differences.",
+    "prerequisites": ["Programming fundamentals", "Arrays and linear algebra", "Numerical accuracy", "Basic compiler usage"],
+    "alternatives": ["Python with NumPy", "C++", "Julia"],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Free compilers such as GNU Fortran are available; other compiler distributions have their own terms.",
+    "platform": "Multiple operating systems and architectures; installation depends on the compiler distribution.",
+    "sources": [
+      {"title": "Start here: Fortran quickstart tutorial", "url": "https://fortran-lang.org/learn/quickstart/"},
+      {"title": "GNU Fortran compiler project", "url": "https://gcc.gnu.org/fortran/"}
+    ]
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": ["avionics", "robotics", "testing"],
+    "summary": "Rust is a compiled language emphasizing explicit ownership and memory safety for reliable systems software.",
+    "why": "Explore it if an embedded or infrastructure project offers a concrete reason to use it. It adds useful ways to think about resource ownership and error handling, but learning it is conditional on the work; it should follow competence in the languages used by your courses and teams.",
+    "firstProject": "Write a command-line parser for a fictional sensor log, reject malformed records cleanly, and add tests for missing fields and invalid units.",
+    "prerequisites": ["Programming and testing experience", "Basic compiled-language workflow", "Interest in software rather than only analysis"],
+    "alternatives": ["C++", "C", "Python"],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Free, open-source language tools and documentation; dependencies retain their own licenses.",
+    "platform": "Windows, macOS, and Linux development; embedded targets require supported toolchains and hardware.",
+    "sources": [
+      {"title": "Start here: official Rust learning resources", "url": "https://rust-lang.org/learn/"},
+      {"title": "Rust installation and platform setup", "url": "https://rust-lang.org/tools/install/"}
+    ]
+  },
+  {
+    "id": "spenvis",
+    "name": "SPENVIS",
+    "kind": "Application",
+    "family": "Orbits & flight dynamics",
+    "specialties": ["systems", "avionics", "materials", "habitats"],
+    "summary": "SPENVIS combines models for the space environment, including radiation, spacecraft charging, atmosphere, and debris exposure.",
+    "why": "It helps connect an orbit or mission duration to environmental questions affecting spacecraft electronics and materials. This is a later space-systems branch after orbital mechanics and relevant physics; choosing model assumptions and interpreting their limitations matter more than simply generating an attractive output plot.",
+    "firstProject": "Follow the documented project workflow for an example Earth orbit, export one environmental result, and explain its units, model assumptions, and unanswered engineering questions.",
+    "prerequisites": ["Orbital mechanics basics", "Radiation and space-environment concepts", "Understanding uncertainty and model limitations"],
+    "alternatives": ["NASA space-environment tools", "Mission-specific environment analysis software"],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Registered web service subject to usage terms; institutions can request student accounts.",
+    "platform": "Web browser; check service availability and current browser requirements.",
+    "sources": [
+      {"title": "Start here: using the SPENVIS system", "url": "https://spenvis4.oma.be/help/system/spenvis.html"},
+      {"title": "SPENVIS institutional student accounts", "url": "https://spenvis.oma.be/student.php"}
+    ]
+  },
+  {
+    "id": "ansys-scade-suite",
+    "name": "Ansys SCADE Suite",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": ["avionics", "gnc", "systems", "testing"],
+    "summary": "SCADE Suite models and simulates embedded software and supports automatic code generation in demanding development workflows.",
+    "why": "It becomes relevant when a specific avionics or embedded-software team uses model-based development and formal verification processes. Learn programming, state machines, testing, and requirements first; owning this commercial tool is unnecessary for exploring those ideas, and a generated program still needs system-level verification.",
+    "firstProject": "With available course or employer access, model a simple temperature alarm, simulate normal and invalid sensor inputs, and link each behavior to a written requirement.",
+    "prerequisites": ["State machines", "Embedded software fundamentals", "Requirements and verification", "Basic control-system concepts"],
+    "alternatives": ["Simulink with Stateflow", "Ansys Scade One"],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial software with a time-limited trial; confirm institutional entitlement before planning practical study.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {"title": "Start here: Introduction to Ansys SCADE Suite", "url": "https://learninghub.ansys.com/learn/course/external/view/elearning/380/introduction-to-ansys-scade-suite"},
+      {"title": "SCADE Suite capabilities and trial terms", "url": "https://ansys.synopsys.com/products/embedded-software/ansys-scade-suite/scade-trial"}
+    ]
+  },
+  {
+    "id": "polyspace",
+    "name": "Polyspace",
+    "kind": "Application",
+    "family": "Systems & verification",
+    "specialties": ["avionics", "testing", "systems", "gnc"],
+    "summary": "Polyspace tools analyze C and C++ source code for defects, coding-rule violations, and possible runtime errors.",
+    "why": "This is a specialized verification branch for people who work substantially with embedded software. Bug Finder and Code Prover serve different analysis purposes; learn to interpret findings against the program's assumptions, and use static analysis alongside reviews and tests rather than treating a report as complete assurance.",
+    "firstProject": "Run a supplied beginner example, inspect an out-of-bounds or divide-by-zero finding, correct the source, and record why the revised result is justified.",
+    "prerequisites": ["Comfortable C or C++", "Pointers and numeric limits", "Software testing", "Understanding program assumptions"],
+    "alternatives": ["Clang Static Analyzer", "Cppcheck", "Team-selected commercial verification tools"],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial Polyspace licensing is separate from MATLAB; confirm which specific products an institution provides.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {"title": "Start here: Polyspace Bug Finder", "url": "https://www.mathworks.com/help/bugfinder/getting-started-with-polyspace-bug-finder.html"},
+      {"title": "MathWorks support: Polyspace installation and separate licensing", "url": "https://www.mathworks.com/matlabcentral/answers/476820-how-do-i-install-polyspace"}
+    ]
+  },
+  {
+    "id": "mathcad-prime",
+    "name": "PTC Mathcad Prime",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": ["structures", "mechanisms", "thermal", "systems"],
+    "summary": "Mathcad Prime combines engineering equations, units, explanatory text, and plots in a calculation worksheet.",
+    "why": "It can make a small design calculation easy for another engineer to read and review. Explore it when a class or workplace uses Mathcad worksheets; first learn how to communicate assumptions and check units, because those habits transfer to Python notebooks, spreadsheets, and written calculations.",
+    "firstProject": "Create a worksheet for the deflection of a simple beam, state the load and support assumptions, include units, and compare the result with a hand calculation.",
+    "prerequisites": ["Algebra and units", "The mechanics behind the chosen calculation", "Clear technical writing"],
+    "alternatives": ["Jupyter with Python", "Excel / Google Sheets", "MATLAB"],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Commercial software; academic access and evaluation options depend on current PTC terms.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {"title": "Start here: PTC Mathcad getting-started tutorial", "url": "https://support.ptc.com/help/mathcad/r11.0/en/PTC_Mathcad_Help/Tutorials/gs_tutorial/about_the_getting_started_tutorial.html"},
+      {"title": "Mathcad Prime product and access information", "url": "https://www.ptc.com/en/products/mathcad/"}
+    ]
+  },
+  {
+    "id": "openrocket",
+    "name": "OpenRocket",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": ["propulsion", "aircraft", "testing"],
+    "summary": "OpenRocket is a free model-rocket simulator with component geometry, flight plots, and documented example workflows.",
+    "why": "It offers an approachable extracurricular connection between geometry, mass, aerodynamic assumptions, and motion. Use it if educational model rocketry becomes a real interest; it is a focused simulation tool, so engineering understanding should also come from mechanics, measurements, and comparisons with simpler analytical models.",
+    "firstProject": "Open a supplied educational example, run its existing simulation, and explain the altitude-versus-time plot and documented assumptions without changing the propulsion hardware.",
+    "prerequisites": ["Basic mechanics", "Mass and force units", "Graph interpretation", "Awareness of simulation assumptions"],
+    "alternatives": ["Python educational flight model", "Course-provided simulation examples"],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free, open-source software; the simulator can be explored without buying physical hardware.",
+    "platform": "Windows, macOS, and Linux packages; a Java distribution is also available.",
+    "sources": [
+      {"title": "Start here: official OpenRocket documentation", "url": "https://openrocket.readthedocs.io/en/latest/"},
+      {"title": "OpenRocket features and downloads", "url": "https://openrocket.info/"}
+    ]
+  }
+]

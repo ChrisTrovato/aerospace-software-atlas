@@ -1,0 +1,4260 @@
+[
+  {
+    "id": "python",
+    "name": "Python",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "robotics",
+      "gnc",
+      "thermal",
+      "astrodynamics",
+      "testing"
+    ],
+    "summary": "A programming language for calculations, automation, data analysis and prototypes.",
+    "why": "This is the most reusable programming starting point across your robotics, spacecraft and thermal interests. Learn to explain and debug small programs before relying on large generated projects.",
+    "firstProject": "Write a unit-conversion and component-mass calculator. Check five inputs independently, then plot a recorded sensor signal.",
+    "prerequisites": [
+      "Arithmetic",
+      "Basic computer file management"
+    ],
+    "alternatives": [
+      "MATLAB",
+      "Julia"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Python — official documentation",
+        "url": "https://www.python.org/about/"
+      }
+    ]
+  },
+  {
+    "id": "vscode",
+    "name": "Visual Studio Code",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "An editor in which you write, run and debug code.",
+    "why": "Use one editor consistently for Python, C/C++, documentation and Git. The editor organizes your work; the language runtime and compiler are separate components.",
+    "firstProject": "Open a project folder, run a Python file, set a breakpoint and inspect a variable.",
+    "prerequisites": [
+      "Files and folders"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free Microsoft distribution; extension and AI service terms vary.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Visual Studio Code — official documentation",
+        "url": "https://code.visualstudio.com/docs"
+      }
+    ]
+  },
+  {
+    "id": "git",
+    "name": "Git",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "systems",
+      "avionics",
+      "testing"
+    ],
+    "summary": "Version control that records changes to files and lets teams work on branches.",
+    "why": "Keep calculations, code, assumptions and test revisions together. This is a small continuous habit, not a subject requiring equal time with mechanics or programming.",
+    "firstProject": "Commit a working calculator, make an experimental branch and restore a prior result.",
+    "prerequisites": [
+      "Basic terminal use"
+    ],
+    "alternatives": [
+      "Other team version-control systems"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Git — official documentation",
+        "url": "https://git-scm.com/"
+      }
+    ]
+  },
+  {
+    "id": "github",
+    "name": "GitHub",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "A hosting and collaboration platform for Git repositories.",
+    "why": "Use repositories, issues and pull requests to make engineering work reproducible and reviewable. Keep large binary CAD and test datasets in a storage workflow appropriate to their size.",
+    "firstProject": "Publish a small project with a README, input data, run instructions and one issue describing the next experiment.",
+    "prerequisites": [
+      "Git basics"
+    ],
+    "alternatives": [
+      "GitLab",
+      "Bitbucket"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free and paid plans; storage, automation and organizational limits vary.",
+    "platform": "Web; desktop and command-line clients available.",
+    "sources": [
+      {
+        "title": "GitHub — official documentation",
+        "url": "https://docs.github.com/en/get-started"
+      }
+    ]
+  },
+  {
+    "id": "linux",
+    "name": "Linux / Ubuntu + WSL",
+    "kind": "Environment",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "robotics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "A computing environment used to run development tools and many robotics systems.",
+    "why": "Start with folders, processes, packages, permissions and the terminal. On Windows, WSL provides a useful practice environment; a robot or simulator may later need native Linux and specific device support.",
+    "firstProject": "Run your Python calculator in Ubuntu, make an isolated environment and use Git from the terminal.",
+    "prerequisites": [
+      "Files and folders",
+      "Basic Python"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Ubuntu is free; WSL requires a supported Windows installation.",
+    "platform": "Linux hardware or Ubuntu in WSL on supported Windows.",
+    "sources": [
+      {
+        "title": "Microsoft — WSL overview",
+        "url": "https://learn.microsoft.com/en-us/windows/wsl/about"
+      },
+      {
+        "title": "Ubuntu tutorials",
+        "url": "https://ubuntu.com/tutorials"
+      }
+    ]
+  },
+  {
+    "id": "numpy",
+    "name": "NumPy",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "Fast arrays and mathematical operations for Python.",
+    "why": "Learn array shapes, indexing and units. Vectors, matrices, sensor samples and state histories become easier to express consistently.",
+    "firstProject": "Calculate the mass of a family of brackets from arrays of dimensions and material densities.",
+    "prerequisites": [
+      "Python lists and functions",
+      "Algebra"
+    ],
+    "alternatives": [
+      "MATLAB arrays"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "NumPy — official documentation",
+        "url": "https://numpy.org/"
+      }
+    ]
+  },
+  {
+    "id": "matplotlib",
+    "name": "Matplotlib",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "A Python library for creating scientific plots.",
+    "why": "Use labeled axes, units, uncertainty and clear comparisons. A figure should expose model error and trends, not just decorate a report.",
+    "firstProject": "Plot measured and predicted temperature on one set of axes, with units and a legend.",
+    "prerequisites": [
+      "Python basics",
+      "Arrays"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Matplotlib — official documentation",
+        "url": "https://matplotlib.org/"
+      }
+    ]
+  },
+  {
+    "id": "jupyter",
+    "name": "JupyterLab / Notebook",
+    "kind": "Environment",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "An interactive workspace combining code, equations, results and explanatory text.",
+    "why": "Useful for learning and investigating data. Restart and run all cells before sharing so the document reproduces its results from a clean state.",
+    "firstProject": "Create a notebook explaining one calculation, its assumptions and a plot, then reproduce it from the top.",
+    "prerequisites": [
+      "Python basics"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Browser interface with a local or hosted Python environment.",
+    "sources": [
+      {
+        "title": "JupyterLab / Notebook — official documentation",
+        "url": "https://jupyter.org/"
+      }
+    ]
+  },
+  {
+    "id": "scipy",
+    "name": "SciPy",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "gnc",
+      "thermal",
+      "fluids",
+      "testing"
+    ],
+    "summary": "Scientific Python algorithms for integration, optimization, interpolation and other numerical methods.",
+    "why": "It becomes much more useful as you learn calculus, differential equations and numerical error. Understand the problem and solver assumptions before trusting a numerical answer.",
+    "firstProject": "Integrate a simple cooling model and compare it with its known analytical solution.",
+    "prerequisites": [
+      "Python and NumPy",
+      "Relevant calculus and differential equations"
+    ],
+    "alternatives": [
+      "MATLAB numerical solvers"
+    ],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "SciPy — official documentation",
+        "url": "https://scipy.org/"
+      }
+    ]
+  },
+  {
+    "id": "pandas",
+    "name": "pandas",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing",
+      "systems"
+    ],
+    "summary": "A Python library for cleaning and analyzing tables of measurements.",
+    "why": "Useful for timestamps, missing samples and repeated experiments. Preserve the original measurements and make each cleaning step explicit.",
+    "firstProject": "Read a CSV test log, identify missing readings and compare average temperature across repeated trials.",
+    "prerequisites": [
+      "Python",
+      "Basic statistics"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "pandas — official documentation",
+        "url": "https://pandas.pydata.org/"
+      }
+    ]
+  },
+  {
+    "id": "sympy",
+    "name": "SymPy",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "Symbolic mathematics inside Python, including algebra and calculus.",
+    "why": "Use it to inspect derivations and compare symbolic and numerical solutions. It helps with equations, but does not establish whether your physical assumptions are appropriate.",
+    "firstProject": "Differentiate a simple displacement function and check its velocity at several times.",
+    "prerequisites": [
+      "Python",
+      "Algebra; calculus for calculus tasks"
+    ],
+    "alternatives": [
+      "Mathematica",
+      "MATLAB Symbolic Math Toolbox"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "SymPy — official documentation",
+        "url": "https://www.sympy.org/en/index.html"
+      }
+    ]
+  },
+  {
+    "id": "cpp",
+    "name": "C++",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "A compiled programming language used in robotics, simulation and performance-sensitive systems.",
+    "why": "After Python, learn types, functions, memory ownership, compilation and debugging through small hardware or simulation tasks. Language competence is more valuable than collecting frameworks.",
+    "firstProject": "Implement a sensor-reading buffer and test how it handles missing or invalid samples.",
+    "prerequisites": [
+      "Basic programming",
+      "Comfort running terminal commands"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Language is not a paid product; free compilers are available.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Standard C++ — getting started",
+        "url": "https://isocpp.org/get-started"
+      },
+      {
+        "title": "GNU compiler collection",
+        "url": "https://gcc.gnu.org/"
+      }
+    ]
+  },
+  {
+    "id": "c",
+    "name": "C",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "avionics",
+      "robotics",
+      "testing"
+    ],
+    "summary": "A compiled language used close to embedded hardware and operating systems.",
+    "why": "Learn pointers, arrays, memory and device interfaces. UCSD’s current MAE 144 description explicitly includes C and embedded Linux, while your future course’s actual tools should be checked near enrollment.",
+    "firstProject": "Write and test a small state machine for a simulated fan and temperature sensor.",
+    "prerequisites": [
+      "Basic programming",
+      "Computer memory basics"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Language is not a paid product; free compilers are available.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "GNU C compiler collection",
+        "url": "https://gcc.gnu.org/"
+      },
+      {
+        "title": "UCSD MAE catalog — MAE 144",
+        "url": "https://catalog.ucsd.edu/courses/MAE.html"
+      }
+    ]
+  },
+  {
+    "id": "cmake",
+    "name": "CMake",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "A tool for configuring how compiled software projects are built.",
+    "why": "It helps a C/C++ project locate libraries and build on different computers. Learn it when your code has several files or dependencies.",
+    "firstProject": "Build a two-file C++ sensor utility and run its tests from a fresh build directory.",
+    "prerequisites": [
+      "Basic C/C++ compilation",
+      "Terminal use"
+    ],
+    "alternatives": [],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "CMake — official documentation",
+        "url": "https://cmake.org/"
+      }
+    ]
+  },
+  {
+    "id": "gdb",
+    "name": "GDB",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "A debugger for inspecting running compiled programs.",
+    "why": "Breakpoints and variable inspection make software behavior observable. This is especially valuable when C/C++ programs fail in ways that print statements do not explain.",
+    "firstProject": "Find a deliberate out-of-range index in a small local C++ exercise using a breakpoint.",
+    "prerequisites": [
+      "C/C++ basics"
+    ],
+    "alternatives": [
+      "LLDB",
+      "Visual Studio debugger"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "GNU/Linux and supported toolchains; platform integration varies.",
+    "sources": [
+      {
+        "title": "GDB — official documentation",
+        "url": "https://www.sourceware.org/gdb/"
+      }
+    ]
+  },
+  {
+    "id": "pytest",
+    "name": "pytest",
+    "kind": "Framework",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing",
+      "avionics"
+    ],
+    "summary": "A Python testing framework for checking program behavior automatically.",
+    "why": "Engineering scripts deserve checks for units, known cases and invalid inputs. Learn this early enough that each new calculation comes with evidence it behaves as expected.",
+    "firstProject": "Test a unit conversion with known values and ensure impossible inputs are rejected.",
+    "prerequisites": [
+      "Python functions"
+    ],
+    "alternatives": [],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "pytest — official documentation",
+        "url": "https://docs.pytest.org/en/stable/"
+      }
+    ]
+  },
+  {
+    "id": "docker",
+    "name": "Docker",
+    "kind": "Environment",
+    "family": "Computing & workflow",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "testing",
+      "systems"
+    ],
+    "summary": "A container workflow for packaging software and its dependencies.",
+    "why": "Helpful for reproducing a lab environment or sharing software with a team. Hardware access and real-time behavior still require deliberate setup; containers do not solve every deployment problem.",
+    "firstProject": "Package an existing analysis script so another computer can produce the same plot.",
+    "prerequisites": [
+      "Linux basics",
+      "One working software project"
+    ],
+    "alternatives": [],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Engine and Desktop terms differ; paid Desktop subscriptions apply in some organizations.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Docker — official documentation",
+        "url": "https://docs.docker.com/get-started/"
+      }
+    ]
+  },
+  {
+    "id": "sqlite",
+    "name": "SQLite / SQL",
+    "kind": "Library",
+    "family": "Computing & workflow",
+    "specialties": [
+      "testing",
+      "systems",
+      "avionics"
+    ],
+    "summary": "A small local database engine and the query language used to retrieve structured records.",
+    "why": "Useful when experiment metadata outgrows scattered CSV files. Keep each run linked to its configuration, measurements and notes.",
+    "firstProject": "Store twenty experiment runs and query which configuration had the lowest average error.",
+    "prerequisites": [
+      "Tables and basic programming"
+    ],
+    "alternatives": [],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "SQLite source is public domain.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "SQLite / SQL — official documentation",
+        "url": "https://www.sqlite.org/about.html"
+      }
+    ]
+  },
+  {
+    "id": "blender",
+    "name": "Blender",
+    "kind": "Application",
+    "family": "Visualization & communication",
+    "specialties": [
+      "visualization",
+      "robotics",
+      "mechanisms",
+      "habitats"
+    ],
+    "summary": "A 3D creation suite for rendering, animation and visual assets.",
+    "why": "Useful for explaining mechanisms and building scenes for visualization. Keep dimensioned mechanical design and engineering validation in the appropriate CAD and analysis tools.",
+    "firstProject": "Import a finished CAD model and make a short exploded-view animation explaining assembly.",
+    "prerequisites": [
+      "Basic 3D navigation",
+      "A completed design to communicate"
+    ],
+    "alternatives": [],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Blender — official documentation",
+        "url": "https://www.blender.org/about/"
+      }
+    ]
+  },
+  {
+    "id": "paraview",
+    "name": "ParaView",
+    "kind": "Application",
+    "family": "Visualization & communication",
+    "specialties": [
+      "fluids",
+      "thermal",
+      "structures",
+      "visualization"
+    ],
+    "summary": "An application for examining large scientific and simulation datasets.",
+    "why": "Inspect slices, contours and time histories from numerical work. It is a post-processing tool: the underlying solver and validation determine the meaning of the picture.",
+    "firstProject": "Open a tutorial flow dataset and compare a contour plot with numerical values along a line.",
+    "prerequisites": [
+      "Scientific plots",
+      "Relevant simulation fundamentals"
+    ],
+    "alternatives": [],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "ParaView — official documentation",
+        "url": "https://www.paraview.org/"
+      }
+    ]
+  },
+  {
+    "id": "latex",
+    "name": "LaTeX / Overleaf",
+    "kind": "Environment",
+    "family": "Visualization & communication",
+    "specialties": [
+      "foundations",
+      "systems",
+      "testing",
+      "visualization"
+    ],
+    "summary": "A document-writing workflow for equations, references and technical reports.",
+    "why": "LaTeX is the typesetting system; Overleaf is a hosted editor. Use either when a report needs consistent equations and cross-references, or follow your team’s document template.",
+    "firstProject": "Write a two-page experiment report with one equation, one figure and referenced sources.",
+    "prerequisites": [
+      "Technical writing"
+    ],
+    "alternatives": [
+      "Word",
+      "Google Docs"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "LaTeX is free; Overleaf has free and paid plans.",
+    "platform": "Local TeX distributions or a browser-based editor.",
+    "sources": [
+      {
+        "title": "LaTeX project — official overview",
+        "url": "https://www.latex-project.org/about/"
+      },
+      {
+        "title": "Overleaf — free and paid plans",
+        "url": "https://www.overleaf.com/user/subscription/plans"
+      }
+    ]
+  },
+  {
+    "id": "zotero",
+    "name": "Zotero",
+    "kind": "Application",
+    "family": "Visualization & communication",
+    "specialties": [
+      "foundations",
+      "systems",
+      "materials",
+      "visualization"
+    ],
+    "summary": "A reference manager for collecting, annotating and citing research.",
+    "why": "Keep papers and vendor documentation organized by the question they answer. Useful across every specialty, particularly when a design decision needs a traceable source.",
+    "firstProject": "Build a five-source collection for a material choice and export a bibliography.",
+    "prerequisites": [
+      "Basic research skills"
+    ],
+    "alternatives": [],
+    "priority": "explore",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free application; optional paid storage.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Zotero — official documentation",
+        "url": "https://www.zotero.org/"
+      }
+    ]
+  },
+  {
+    "id": "julia",
+    "name": "Julia",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "A programming language designed for scientific and numerical computing.",
+    "why": "An interesting later comparison once you can already build and validate models in Python or MATLAB. Learn it if a research group or numerical project gives you a reason.",
+    "firstProject": "Reproduce a known cooling-model result in Julia and compare the numerical error.",
+    "prerequisites": [
+      "Programming",
+      "Numerical methods"
+    ],
+    "alternatives": [
+      "Python",
+      "MATLAB"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "Julia — official documentation",
+        "url": "https://julialang.org/"
+      }
+    ]
+  },
+  {
+    "id": "octave",
+    "name": "GNU Octave",
+    "kind": "Environment",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "testing"
+    ],
+    "summary": "A free numerical-computing environment with syntax similar to MATLAB.",
+    "why": "Useful for trying matrix-based calculations without a MATLAB license. Compatibility is incomplete, especially for specialized toolboxes and Simulink-dependent coursework.",
+    "firstProject": "Solve a small linear system and plot the residual error.",
+    "prerequisites": [
+      "Algebra",
+      "Arrays"
+    ],
+    "alternatives": [
+      "MATLAB"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free and open source.",
+    "platform": "Windows, macOS and Linux; check the current release.",
+    "sources": [
+      {
+        "title": "GNU Octave — official documentation",
+        "url": "https://octave.org/"
+      }
+    ]
+  },
+  {
+    "id": "spreadsheets",
+    "name": "Excel / Google Sheets",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "foundations",
+      "systems",
+      "testing",
+      "manufacturing"
+    ],
+    "summary": "Spreadsheets organize measurements, calculations, parts lists, schedules, and engineering budgets in an inspectable table.",
+    "why": "Learn formulas, cell references, charts, filtering, and basic data validation early because these help almost every project. Choose one primary application and transfer the concepts later; keep units and assumptions visible, and move repetitive or complicated analysis into tested Python code when that becomes clearer.",
+    "firstProject": "Build a small robot's parts and mass budget, separate measured values from estimates, and plot how each assembly contributes to the total.",
+    "prerequisites": [
+      "Basic arithmetic",
+      "Units and dimensions",
+      "Careful organization of measurements"
+    ],
+    "alternatives": [
+      "LibreOffice Calc",
+      "Python with pandas"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Use available personal or school account access; desktop editions and advanced features have different licensing.",
+    "platform": "Browser access; Excel also has desktop editions. Features differ between editions.",
+    "sources": [
+      {
+        "title": "Start here: Microsoft Excel help and learning",
+        "url": "https://support.microsoft.com/en-us/excel/"
+      },
+      {
+        "title": "Start here: Google Sheets training and help",
+        "url": "https://support.google.com/a/users/answer/9282959?hl=en"
+      }
+    ]
+  },
+  {
+    "id": "arduino-ide",
+    "name": "Arduino IDE",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "testing",
+      "mechanisms"
+    ],
+    "summary": "Arduino IDE provides a straightforward way to write, upload, and inspect programs running on supported microcontroller boards.",
+    "why": "It connects introductory programming to physical sensors and actuators, which fits an interest in mechanisms and robots. Start when a small electronics project motivates it; the transferable skills are understanding signals, timing, interfaces, and debugging, rather than collecting familiarity with several editors.",
+    "firstProject": "Read a temperature sensor, print timestamped measurements to the serial monitor, and compare the readings with a separate thermometer before making a simple graph.",
+    "prerequisites": [
+      "Basic C or C++ concepts",
+      "Low-voltage circuit basics",
+      "Reading board and sensor documentation"
+    ],
+    "alternatives": [
+      "PlatformIO",
+      "Board manufacturer's development environment"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free, open-source software; compatible boards, cables, and sensors are separate hardware.",
+    "platform": "Windows, macOS, and Linux; check the current IDE and board requirements.",
+    "sources": [
+      {
+        "title": "Start here: Arduino software tutorials",
+        "url": "https://docs.arduino.cc/software"
+      },
+      {
+        "title": "Arduino IDE installation and supported operating systems",
+        "url": "https://docs.arduino.cc/software/ide-v2/tutorials/getting-started/ide-v2-downloading-and-installing"
+      }
+    ]
+  },
+  {
+    "id": "platformio",
+    "name": "PlatformIO",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "robotics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "PlatformIO manages embedded project builds, libraries, supported board toolchains, debugging, and tests from an editor or command line.",
+    "why": "It becomes useful when a working microcontroller project needs reproducible dependencies, multiple source files, or collaboration through Git. Treat it as a later workflow option after understanding a small board program; board and framework support should determine whether it suits the project.",
+    "firstProject": "Move an existing sensor logger into a PlatformIO project, record its board configuration and library versions, and add a desktop test for the unit conversion function.",
+    "prerequisites": [
+      "A working microcontroller program",
+      "Basic C or C++",
+      "Git and build configuration basics"
+    ],
+    "alternatives": [
+      "Arduino IDE",
+      "Vendor IDE with CMake"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Open-source tools without a license fee; hardware and vendor-specific components have separate requirements.",
+    "platform": "Windows, macOS, Linux, and FreeBSD; supported targets depend on the selected platform.",
+    "sources": [
+      {
+        "title": "Start here: PlatformIO quickstart",
+        "url": "https://docs.platformio.org/en/stable/quickstart.html"
+      },
+      {
+        "title": "What PlatformIO provides and its supported platforms",
+        "url": "https://docs.platformio.org/en/stable/what-is-platformio.html"
+      }
+    ]
+  },
+  {
+    "id": "fortran",
+    "name": "Fortran",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "fluids",
+      "structures",
+      "thermal",
+      "propulsion"
+    ],
+    "summary": "Fortran is a compiled numerical programming language used in scientific computing and existing engineering solver code.",
+    "why": "It is valuable if a research group or simulation code you actually use is written in it. Build strong Python and numerical-methods skills first, then learn enough Fortran to read modules, handle arrays, compile a program, and verify a calculation before considering performance work.",
+    "firstProject": "Translate a small, already verified matrix or heat-conduction calculation from Python, compare numerical results, and document floating-point precision and array indexing differences.",
+    "prerequisites": [
+      "Programming fundamentals",
+      "Arrays and linear algebra",
+      "Numerical accuracy",
+      "Basic compiler usage"
+    ],
+    "alternatives": [
+      "Python with NumPy",
+      "C++",
+      "Julia"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Free compilers such as GNU Fortran are available; other compiler distributions have their own terms.",
+    "platform": "Multiple operating systems and architectures; installation depends on the compiler distribution.",
+    "sources": [
+      {
+        "title": "Start here: Fortran quickstart tutorial",
+        "url": "https://fortran-lang.org/learn/quickstart/"
+      },
+      {
+        "title": "GNU Fortran compiler project",
+        "url": "https://gcc.gnu.org/fortran/"
+      }
+    ]
+  },
+  {
+    "id": "rust",
+    "name": "Rust",
+    "kind": "Language",
+    "family": "Computing & workflow",
+    "specialties": [
+      "avionics",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Rust is a compiled language emphasizing explicit ownership and memory safety for reliable systems software.",
+    "why": "Explore it if an embedded or infrastructure project offers a concrete reason to use it. It adds useful ways to think about resource ownership and error handling, but learning it is conditional on the work; it should follow competence in the languages used by your courses and teams.",
+    "firstProject": "Write a command-line parser for a fictional sensor log, reject malformed records cleanly, and add tests for missing fields and invalid units.",
+    "prerequisites": [
+      "Programming and testing experience",
+      "Basic compiled-language workflow",
+      "Interest in software rather than only analysis"
+    ],
+    "alternatives": [
+      "C++",
+      "C",
+      "Python"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Free, open-source language tools and documentation; dependencies retain their own licenses.",
+    "platform": "Windows, macOS, and Linux development; embedded targets require supported toolchains and hardware.",
+    "sources": [
+      {
+        "title": "Start here: official Rust learning resources",
+        "url": "https://rust-lang.org/learn/"
+      },
+      {
+        "title": "Rust installation and platform setup",
+        "url": "https://rust-lang.org/tools/install/"
+      }
+    ]
+  },
+  {
+    "id": "spenvis",
+    "name": "SPENVIS",
+    "kind": "Application",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "systems",
+      "avionics",
+      "materials",
+      "habitats"
+    ],
+    "summary": "SPENVIS combines models for the space environment, including radiation, spacecraft charging, atmosphere, and debris exposure.",
+    "why": "It helps connect an orbit or mission duration to environmental questions affecting spacecraft electronics and materials. This is a later space-systems branch after orbital mechanics and relevant physics; choosing model assumptions and interpreting their limitations matter more than simply generating an attractive output plot.",
+    "firstProject": "Follow the documented project workflow for an example Earth orbit, export one environmental result, and explain its units, model assumptions, and unanswered engineering questions.",
+    "prerequisites": [
+      "Orbital mechanics basics",
+      "Radiation and space-environment concepts",
+      "Understanding uncertainty and model limitations"
+    ],
+    "alternatives": [
+      "NASA space-environment tools",
+      "Mission-specific environment analysis software"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Registered web service subject to usage terms; institutions can request student accounts.",
+    "platform": "Web browser; check service availability and current browser requirements.",
+    "sources": [
+      {
+        "title": "Start here: using the SPENVIS system",
+        "url": "https://spenvis4.oma.be/help/system/spenvis.html"
+      },
+      {
+        "title": "SPENVIS institutional student accounts",
+        "url": "https://spenvis.oma.be/student.php"
+      }
+    ]
+  },
+  {
+    "id": "ansys-scade-suite",
+    "name": "Ansys SCADE Suite",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "gnc",
+      "systems",
+      "testing"
+    ],
+    "summary": "SCADE Suite models and simulates embedded software and supports automatic code generation in demanding development workflows.",
+    "why": "It becomes relevant when a specific avionics or embedded-software team uses model-based development and formal verification processes. Learn programming, state machines, testing, and requirements first; owning this commercial tool is unnecessary for exploring those ideas, and a generated program still needs system-level verification.",
+    "firstProject": "With available course or employer access, model a simple temperature alarm, simulate normal and invalid sensor inputs, and link each behavior to a written requirement.",
+    "prerequisites": [
+      "State machines",
+      "Embedded software fundamentals",
+      "Requirements and verification",
+      "Basic control-system concepts"
+    ],
+    "alternatives": [
+      "Simulink with Stateflow",
+      "Ansys Scade One"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial software with a time-limited trial; confirm institutional entitlement before planning practical study.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Start here: Introduction to Ansys SCADE Suite",
+        "url": "https://learninghub.ansys.com/learn/course/external/view/elearning/380/introduction-to-ansys-scade-suite"
+      },
+      {
+        "title": "SCADE Suite capabilities and trial terms",
+        "url": "https://ansys.synopsys.com/products/embedded-software/ansys-scade-suite/scade-trial"
+      }
+    ]
+  },
+  {
+    "id": "polyspace",
+    "name": "Polyspace",
+    "kind": "Application",
+    "family": "Systems & verification",
+    "specialties": [
+      "avionics",
+      "testing",
+      "systems",
+      "gnc"
+    ],
+    "summary": "Polyspace tools analyze C and C++ source code for defects, coding-rule violations, and possible runtime errors.",
+    "why": "This is a specialized verification branch for people who work substantially with embedded software. Bug Finder and Code Prover serve different analysis purposes; learn to interpret findings against the program's assumptions, and use static analysis alongside reviews and tests rather than treating a report as complete assurance.",
+    "firstProject": "Run a supplied beginner example, inspect an out-of-bounds or divide-by-zero finding, correct the source, and record why the revised result is justified.",
+    "prerequisites": [
+      "Comfortable C or C++",
+      "Pointers and numeric limits",
+      "Software testing",
+      "Understanding program assumptions"
+    ],
+    "alternatives": [
+      "Clang Static Analyzer",
+      "Cppcheck",
+      "Team-selected commercial verification tools"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial Polyspace licensing is separate from MATLAB; confirm which specific products an institution provides.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Start here: Polyspace Bug Finder",
+        "url": "https://www.mathworks.com/help/bugfinder/getting-started-with-polyspace-bug-finder.html"
+      },
+      {
+        "title": "MathWorks support: Polyspace installation and separate licensing",
+        "url": "https://www.mathworks.com/matlabcentral/answers/476820-how-do-i-install-polyspace"
+      }
+    ]
+  },
+  {
+    "id": "mathcad-prime",
+    "name": "PTC Mathcad Prime",
+    "kind": "Application",
+    "family": "Computing & workflow",
+    "specialties": [
+      "structures",
+      "mechanisms",
+      "thermal",
+      "systems"
+    ],
+    "summary": "Mathcad Prime combines engineering equations, units, explanatory text, and plots in a calculation worksheet.",
+    "why": "It can make a small design calculation easy for another engineer to read and review. Explore it when a class or workplace uses Mathcad worksheets; first learn how to communicate assumptions and check units, because those habits transfer to Python notebooks, spreadsheets, and written calculations.",
+    "firstProject": "Create a worksheet for the deflection of a simple beam, state the load and support assumptions, include units, and compare the result with a hand calculation.",
+    "prerequisites": [
+      "Algebra and units",
+      "The mechanics behind the chosen calculation",
+      "Clear technical writing"
+    ],
+    "alternatives": [
+      "Jupyter with Python",
+      "Excel / Google Sheets",
+      "MATLAB"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Commercial software; academic access and evaluation options depend on current PTC terms.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Start here: PTC Mathcad getting-started tutorial",
+        "url": "https://support.ptc.com/help/mathcad/r11.0/en/PTC_Mathcad_Help/Tutorials/gs_tutorial/about_the_getting_started_tutorial.html"
+      },
+      {
+        "title": "Mathcad Prime product and access information",
+        "url": "https://www.ptc.com/en/products/mathcad/"
+      }
+    ]
+  },
+  {
+    "id": "openrocket",
+    "name": "OpenRocket",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "propulsion",
+      "aircraft",
+      "testing"
+    ],
+    "summary": "OpenRocket is a free model-rocket simulator with component geometry, flight plots, and documented example workflows.",
+    "why": "It offers an approachable extracurricular connection between geometry, mass, aerodynamic assumptions, and motion. Use it if educational model rocketry becomes a real interest; it is a focused simulation tool, so engineering understanding should also come from mechanics, measurements, and comparisons with simpler analytical models.",
+    "firstProject": "Open a supplied educational example, run its existing simulation, and explain the altitude-versus-time plot and documented assumptions without changing the propulsion hardware.",
+    "prerequisites": [
+      "Basic mechanics",
+      "Mass and force units",
+      "Graph interpretation",
+      "Awareness of simulation assumptions"
+    ],
+    "alternatives": [
+      "Python educational flight model",
+      "Course-provided simulation examples"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free, open-source software; the simulator can be explored without buying physical hardware.",
+    "platform": "Windows, macOS, and Linux packages; a Java distribution is also available.",
+    "sources": [
+      {
+        "title": "Start here: official OpenRocket documentation",
+        "url": "https://openrocket.readthedocs.io/en/latest/"
+      },
+      {
+        "title": "OpenRocket features and downloads",
+        "url": "https://openrocket.info/"
+      }
+    ]
+  },
+  {
+    "id": "freecad",
+    "name": "FreeCAD",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "FreeCAD creates dimensioned, parametric solid models and drawings for parts you intend to fabricate.",
+    "why": "It offers an immediate route into mechanical design without student verification or a subscription. Choose it as your primary beginner CAD package if access or ownership matters most, then transfer the underlying sketch, constraint and assembly skills when a team requires another tool.",
+    "firstProject": "Model a removable equipment cartridge and housing, make a dimensioned drawing, and revise the clearance after measuring a cardboard or printed prototype.",
+    "prerequisites": [
+      "Basic geometry",
+      "Units and measurement",
+      "Sketch constraints"
+    ],
+    "alternatives": [
+      "SOLIDWORKS",
+      "Autodesk Fusion",
+      "Onshape"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source; no student eligibility required.",
+    "platform": "Windows, macOS and Linux.",
+    "sources": [
+      {
+        "title": "FreeCAD official overview",
+        "url": "https://www.freecad.org/"
+      },
+      {
+        "title": "FreeCAD source and releases",
+        "url": "https://github.com/FreeCAD/FreeCAD"
+      }
+    ]
+  },
+  {
+    "id": "solidworks",
+    "name": "SOLIDWORKS",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "SOLIDWORKS provides parametric parts, assemblies and technical drawings for mechanical product development.",
+    "why": "This is a strong primary CAD choice for your equipment mechanisms and student engineering teams. You do not need to master FreeCAD first: start here if eligible access is available, and concentrate on design intent, tolerances and explainable drawings rather than collecting CAD certificates.",
+    "firstProject": "Create a cartridge, guide rails and latch as separate parts; assemble them, check motion and interference, and produce drawings for a second person to fabricate.",
+    "prerequisites": [
+      "Basic geometry",
+      "Measurement",
+      "Manufacturing tolerances"
+    ],
+    "alternatives": [
+      "FreeCAD",
+      "Autodesk Fusion",
+      "Onshape"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free Design Standard for qualified students; renewable annual access. Simulation and other add-ins require another entitlement.",
+    "platform": "Windows PC for the desktop student edition.",
+    "sources": [
+      {
+        "title": "SOLIDWORKS student offer and FAQ",
+        "url": "https://www.solidworks.com/product/students/design-standard"
+      }
+    ]
+  },
+  {
+    "id": "autodesk-fusion",
+    "name": "Autodesk Fusion",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "Fusion combines mechanical CAD, manufacturing preparation and related design tools in a connected product-development application.",
+    "why": "It is an alternative primary CAD tool, especially when a makerspace uses its machining workflow. Learning Fusion alongside several other CAD packages would add little early value; choose it because a project, class or fabrication mentor gives you a practical reason.",
+    "firstProject": "Design a small sensor enclosure, create a fitted lid and mounting holes, then compare a printed prototype with the original dimensions.",
+    "prerequisites": [
+      "Sketch constraints",
+      "Units and measurement",
+      "Basic fabrication"
+    ],
+    "alternatives": [
+      "FreeCAD",
+      "SOLIDWORKS",
+      "Onshape"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Paid subscriptions; eligible students have education access. Free personal use has noncommercial eligibility and feature restrictions.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Fusion personal-use scope",
+        "url": "https://www.autodesk.com/products/fusion-360/personal"
+      },
+      {
+        "title": "Fusion education eligibility",
+        "url": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/Do-I-qualify-for-free-use-of-Fusion-360.html"
+      }
+    ]
+  },
+  {
+    "id": "onshape",
+    "name": "Onshape",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "Onshape is browser-based mechanical CAD with integrated document history, branching and collaboration.",
+    "why": "It can make shared student design work convenient across your laptop and desktop. Treat it as an alternative to your main CAD package unless a team adopts it; the particularly useful extra lesson is coordinating changes to a shared assembly without overwriting other people's work.",
+    "firstProject": "Build a two-part inspection fixture, save a named version, and create a branch that changes its camera position while preserving the original design.",
+    "prerequisites": [
+      "Basic geometry",
+      "Sketch constraints",
+      "Assembly relationships"
+    ],
+    "alternatives": [
+      "SOLIDWORKS",
+      "FreeCAD",
+      "Autodesk Fusion"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free plan is noncommercial with public documents; separate education and paid plans have different conditions.",
+    "platform": "Supported web browser; internet connection required.",
+    "sources": [
+      {
+        "title": "Onshape plans and conditions",
+        "url": "https://www.onshape.com/en/pricing"
+      },
+      {
+        "title": "Onshape education",
+        "url": "https://www.onshape.com/en/education/"
+      }
+    ]
+  },
+  {
+    "id": "siemens-nx",
+    "name": "Siemens NX",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "aircraft",
+      "structures"
+    ],
+    "summary": "NX combines advanced mechanical CAD and CAM for detailed parts, surfaces and assemblies.",
+    "why": "Consider NX when an internship, laboratory or aerospace manufacturing team uses it. Existing parametric CAD ability transfers, but large assemblies, data conventions and manufacturing practices require focused experience; learning it before you can finish a small assembly in one simpler tool would dilute your progress.",
+    "firstProject": "Recreate an existing bracket assembly, document which dimensions control its interfaces, and compare two manufacturing approaches without changing the required fit.",
+    "prerequisites": [
+      "Confident parametric CAD",
+      "Technical drawings",
+      "Manufacturing fundamentals"
+    ],
+    "alternatives": [
+      "CATIA",
+      "Creo",
+      "SOLIDWORKS"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial licenses; Siemens offers free student CAD/CAM access with educational restrictions.",
+    "platform": "Student edition: Windows 64-bit; check requirements for the selected release.",
+    "sources": [
+      {
+        "title": "NX student edition",
+        "url": "https://blogs.sw.siemens.com/designcenter/nx-student-edition-free-download/"
+      },
+      {
+        "title": "Siemens student software",
+        "url": "https://www.siemens.com/en-gb/company/academic-future-workforce/engineering-student-resources/engineering-student-software/"
+      }
+    ]
+  },
+  {
+    "id": "catia",
+    "name": "CATIA",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "structures",
+      "aircraft",
+      "manufacturing"
+    ],
+    "summary": "CATIA supports mechanical design, complex surfaces and coordinated engineering of large products.",
+    "why": "It is worth targeted study for organizations that explicitly use CATIA, especially for aircraft or complex spacecraft assemblies. Product versions and the surrounding data-management workflow matter, so choose the edition a course or employer uses instead of assuming every CATIA interface is interchangeable.",
+    "firstProject": "Model a simple fairing around an existing equipment envelope, inspect surface continuity, and create interface drawings that preserve the required mounting clearances.",
+    "prerequisites": [
+      "Confident parametric CAD",
+      "Surface geometry",
+      "Drawing and assembly conventions"
+    ],
+    "alternatives": [
+      "Siemens NX",
+      "Creo",
+      "SOLIDWORKS"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Commercial software; eligible students can purchase a 3DEXPERIENCE education bundle. Institutional access varies.",
+    "platform": "3DEXPERIENCE ENGINEER student bundle requires native Windows installation.",
+    "sources": [
+      {
+        "title": "3DEXPERIENCE ENGINEER student bundle",
+        "url": "https://www.3ds.com/edu/education/students/solutions/engineer-3dx"
+      }
+    ]
+  },
+  {
+    "id": "creo",
+    "name": "Creo",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "Creo is a parametric mechanical design suite for parts, assemblies and engineering documentation.",
+    "why": "Keep it available as an employer-driven CAD option rather than a mandatory additional beginner program. It becomes useful when you need to understand another team's design history, parameter relationships and revision practices; those concepts build on the CAD fundamentals you already learned.",
+    "firstProject": "Rebuild your cartridge mounting bracket with a controlled set of dimensions, generate two size variants, and verify that both retain the same attachment interface.",
+    "prerequisites": [
+      "Parametric modeling",
+      "Technical drawings",
+      "Design intent"
+    ],
+    "alternatives": [
+      "Siemens NX",
+      "CATIA",
+      "SOLIDWORKS"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial licenses; PTC offers free educational access, subject to its current eligibility and use conditions.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "PTC educational software access",
+        "url": "https://www.ptc.com/en/education/free-software"
+      },
+      {
+        "title": "Creo product and trial overview",
+        "url": "https://support.ptc.com/creo/free-software-downloads/"
+      }
+    ]
+  },
+  {
+    "id": "mastercam",
+    "name": "Mastercam",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "manufacturing",
+      "mechanisms"
+    ],
+    "summary": "Mastercam creates and verifies machining toolpaths for mills, lathes and other computer-controlled equipment.",
+    "why": "It matters if you choose hands-on aerospace manufacturing or a shop that uses Mastercam. The durable skills are workholding, coordinate systems, tool choice and inspection; simulation practice should lead into supervised shop training before you operate a real machine.",
+    "firstProject": "Use the Learning Edition to plan and simulate machining a simple pocketed plate, checking stock removal and tool clearance without producing machine instructions.",
+    "prerequisites": [
+      "Mechanical drawings",
+      "Basic machining concepts",
+      "Coordinate systems",
+      "Shop instruction"
+    ],
+    "alternatives": [
+      "Autodesk Fusion",
+      "Siemens NX"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Commercial production software. Free Learning Edition supports practice but does not post G-code; its files have compatibility restrictions.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Mastercam Learning Edition",
+        "url": "https://www.mastercam.com/solutions/products/mastercam-learning-edition/"
+      }
+    ]
+  },
+  {
+    "id": "prusaslicer",
+    "name": "PrusaSlicer",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "manufacturing",
+      "mechanisms",
+      "materials"
+    ],
+    "summary": "PrusaSlicer converts a printable 3D model into layer-by-layer instructions for a compatible printer.",
+    "why": "Learn a slicer when you gain regular printer access, choosing the one that matches the machine. The engineering value comes from relating orientation, support, wall thickness and layer settings to dimensional accuracy and strength, rather than repeatedly accepting default settings.",
+    "firstProject": "Slice three versions of a small fit-test coupon with different clearances, print them using an approved material profile, and record which dimensions actually fit.",
+    "prerequisites": [
+      "Exporting CAD meshes",
+      "Printer orientation",
+      "Basic measurement"
+    ],
+    "alternatives": [
+      "Bambu Studio",
+      "UltiMaker Cura"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free and open source under AGPL; printing still requires compatible hardware and materials.",
+    "platform": "Windows, macOS and Linux.",
+    "sources": [
+      {
+        "title": "PrusaSlicer official project",
+        "url": "https://github.com/prusa3d/PrusaSlicer"
+      },
+      {
+        "title": "PrusaSlicer product overview",
+        "url": "https://www.prusa3d.com/p/prusaslicer/"
+      }
+    ]
+  },
+  {
+    "id": "bambu-studio",
+    "name": "Bambu Studio",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "manufacturing",
+      "mechanisms",
+      "materials"
+    ],
+    "summary": "Bambu Studio prepares, previews and organizes 3D-print jobs for Bambu Lab and other supported printers.",
+    "why": "Choose it if your home printer or makerspace uses the Bambu workflow. It fills the same early learning role as another slicer; concentrate on repeatable print preparation, layer inspection and measured fit instead of treating it as a separate engineering discipline.",
+    "firstProject": "Prepare a cartridge rail and clearance coupon on one plate, inspect supports and layer paths, then compare measured results with the CAD dimensions.",
+    "prerequisites": [
+      "CAD mesh export",
+      "Printer setup",
+      "Measurement"
+    ],
+    "alternatives": [
+      "PrusaSlicer",
+      "UltiMaker Cura"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free, AGPL-licensed application; the optional networking plugin uses non-free components.",
+    "platform": "Windows, macOS and Linux releases.",
+    "sources": [
+      {
+        "title": "Bambu Studio official repository and licensing",
+        "url": "https://github.com/bambulab/BambuStudio"
+      }
+    ]
+  },
+  {
+    "id": "ultimaker-cura",
+    "name": "UltiMaker Cura",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "manufacturing",
+      "mechanisms",
+      "materials"
+    ],
+    "summary": "UltiMaker Cura slices 3D models and previews print settings for supported desktop additive-manufacturing equipment.",
+    "why": "It is another practical route from your CAD designs to physical prototypes, particularly when supplied by a school or makerspace. You only need working fluency in the slicer used by your printer; changing slicers does not replace learning the effects of material, geometry and process settings.",
+    "firstProject": "Prepare a small bracket in two print orientations, estimate time and material, and compare the finished parts for fit and visible layer-related weakness.",
+    "prerequisites": [
+      "CAD export",
+      "Printer profiles",
+      "Dimensional measurement"
+    ],
+    "alternatives": [
+      "PrusaSlicer",
+      "Bambu Studio"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free and open-source desktop software; enterprise offerings and associated services are separate.",
+    "platform": "Windows, macOS and Linux downloads.",
+    "sources": [
+      {
+        "title": "UltiMaker Cura features and downloads",
+        "url": "https://ultimaker.com/software/ultimaker-cura/"
+      }
+    ]
+  },
+  {
+    "id": "ansys-mechanical",
+    "name": "Ansys Mechanical",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "mechanisms",
+      "materials",
+      "thermal"
+    ],
+    "summary": "Ansys Mechanical predicts structural deformation, stress, vibration and related physical responses using finite-element analysis.",
+    "why": "It is a strong first commercial structural-analysis tool once mechanics courses make its assumptions meaningful. Aim for depth in one structural solver: explain loads, constraints, material assumptions and mesh sensitivity, then compare the results with hand calculations and physical measurements.",
+    "firstProject": "Analyze a simply supported or cantilever beam, compare deflection with the beam equation, refine the mesh, and document why local stress peaks may change.",
+    "prerequisites": [
+      "Statics",
+      "Mechanics of materials",
+      "Linear algebra",
+      "Units",
+      "Basic CAD"
+    ],
+    "alternatives": [
+      "Abaqus",
+      "CalculiX",
+      "MSC Nastran"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Commercial and institutional licenses; free size-limited Ansys Student requires verified student or educator eligibility.",
+    "platform": "Student bundle: Windows 64-bit; check current release requirements.",
+    "sources": [
+      {
+        "title": "Ansys Mechanical capabilities",
+        "url": "https://ansys.synopsys.com/products/structures/ansys-mechanical"
+      },
+      {
+        "title": "Ansys Student eligibility",
+        "url": "https://ansys.synopsys.com/academic/students/ansys-student"
+      }
+    ]
+  },
+  {
+    "id": "abaqus",
+    "name": "Abaqus",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "materials",
+      "mechanisms"
+    ],
+    "summary": "Abaqus models structural behavior, including contact, material nonlinearity and large deformation.",
+    "why": "It becomes valuable if your research or employment involves material behavior or assemblies beyond simple elastic analysis. Begin with a benchmark you can solve independently; a more elaborate constitutive model does not improve a result unless its parameters and assumptions match the specimen.",
+    "firstProject": "Reproduce the elastic extension of a short tensile coupon, compare displacement with a hand calculation, and test whether mesh refinement changes the answer.",
+    "prerequisites": [
+      "Mechanics of materials",
+      "Basic finite elements",
+      "Material stress-strain behavior"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "CalculiX",
+      "MSC Nastran"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial and academic licenses; free Learning Edition supports structural models up to 1,000 nodes.",
+    "platform": "Learning Edition: Windows only; check requirements for other editions.",
+    "sources": [
+      {
+        "title": "Abaqus Learning Edition",
+        "url": "https://www.3ds.com/edu/education/students/solutions/abaqus-le/"
+      }
+    ]
+  },
+  {
+    "id": "msc-nastran",
+    "name": "MSC Nastran",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "aircraft",
+      "materials"
+    ],
+    "summary": "MSC Nastran is a finite-element solver used to analyze structural stiffness, dynamics and related behavior.",
+    "why": "It is useful for an aerospace structures branch when the team works with Nastran models and established analysis procedures. Learn what the model contains and how its loads are checked; the solver is distinct from the preprocessing application used to create and inspect its input.",
+    "firstProject": "Run a documented beam or small frame benchmark, compare its static deflection and first vibration mode with independent estimates, and explain the boundary conditions.",
+    "prerequisites": [
+      "Structural mechanics",
+      "Vibrations",
+      "Finite-element fundamentals",
+      "Input-file organization"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "Abaqus",
+      "CalculiX"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial solver; obtain an appropriate institutional or employer license and confirm available academic access.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "MSC Nastran official product overview",
+        "url": "https://nexus.hexagon.com/home/product/msc-nastran/"
+      }
+    ]
+  },
+  {
+    "id": "hypermesh",
+    "name": "HyperMesh",
+    "kind": "Environment",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "materials",
+      "aircraft"
+    ],
+    "summary": "HyperMesh, now presented as Simcenter Hypermesh, prepares and inspects finite-element models for engineering simulation.",
+    "why": "It is especially relevant when complex geometry and mesh quality consume more effort than solving the model. Learn it after completing small analyses elsewhere, and distinguish geometry cleanup and meshing from the separate solver and physical assumptions that determine the result.",
+    "firstProject": "Simplify a bracket model, create several mesh densities, inspect element quality, and compare how the same boundary conditions transfer to a chosen structural solver.",
+    "prerequisites": [
+      "Basic finite-element analysis",
+      "CAD geometry",
+      "Element types",
+      "Mesh-quality concepts"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "Abaqus"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial software; eligible students can access a free Siemens student bundle through Altair One, subject to restrictions.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Simcenter Hypermesh overview",
+        "url": "https://www.siemens.com/en-us/products/simcenter/simulation-modeling-visualization/hypermesh/"
+      },
+      {
+        "title": "Student access",
+        "url": "https://www.siemens.com/en-gb/company/academic-future-workforce/engineering-student-resources/engineering-student-software/altair-student-edition/"
+      }
+    ]
+  },
+  {
+    "id": "calculix",
+    "name": "CalculiX",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "thermal",
+      "materials"
+    ],
+    "summary": "CalculiX provides an open-source finite-element solver and tools for structural and thermal analysis.",
+    "why": "It offers a way to keep learning analysis without relying on a commercial student license. Its input files also make model assumptions visible, but familiarity with an Abaqus-like format does not mean every Abaqus feature or model transfers directly.",
+    "firstProject": "Solve a small beam benchmark, change only the mesh density between runs, and compare displacement and reaction forces with a hand calculation before studying stress contours.",
+    "prerequisites": [
+      "Statics",
+      "Mechanics of materials",
+      "Basic finite elements",
+      "Text-file organization"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "Abaqus"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free software under the GNU GPL; solver and preprocessing tools are available separately.",
+    "platform": "Linux and Windows; follow the chosen distribution's installation instructions.",
+    "sources": [
+      {
+        "title": "CalculiX official overview and license",
+        "url": "https://www.calculix.de/"
+      }
+    ]
+  },
+  {
+    "id": "granta-edupack",
+    "name": "Ansys Granta EduPack",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "materials",
+      "manufacturing",
+      "structures",
+      "thermal"
+    ],
+    "summary": "Granta EduPack organizes material and process data so students can compare and justify engineering material choices.",
+    "why": "Formerly CES EduPack, it connects materials coursework with design trade-offs such as stiffness, density, cost and process compatibility. Treat its data as a screening resource, then use the exact material grade, condition and verified properties required for a real analysis.",
+    "firstProject": "Compare candidate materials for a lightweight removable panel using stiffness, density and manufacturability, and write down why the highest-strength material is not automatically the best choice.",
+    "prerequisites": [
+      "Material properties",
+      "Units",
+      "Basic mechanics",
+      "Trade-off reasoning"
+    ],
+    "alternatives": [
+      "Microsoft Excel",
+      "Google Sheets"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Licensed educational software, usually accessed through an institution; confirm which database levels are included.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Granta EduPack overview",
+        "url": "https://www.ansys.com/en-in/products/materials/granta-edupack"
+      },
+      {
+        "title": "Ansys academic licensing overview",
+        "url": "https://ansys.synopsys.com/academic/educators"
+      }
+    ]
+  },
+  {
+    "id": "thermal-desktop",
+    "name": "Ansys Thermal Desktop",
+    "kind": "Application",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "thermal",
+      "habitats",
+      "mechanisms"
+    ],
+    "summary": "Thermal Desktop builds thermal networks and geometry-based heat-transfer models, including radiation and orbital environments.",
+    "why": "It closely matches spacecraft equipment and habitat thermal interests once you understand conduction, radiation and transient energy balances. Learn a small network before detailed geometry, and distinguish an atmospheric electronics-cooling experiment from an external spacecraft surface exchanging heat in vacuum.",
+    "firstProject": "Create a two-node equipment-and-panel thermal model, vary the thermal connection and applied heat, and compare steady and transient temperatures with a simple Python energy-balance model.",
+    "prerequisites": [
+      "Heat transfer",
+      "Thermodynamics",
+      "Differential equations",
+      "Thermal networks"
+    ],
+    "alternatives": [
+      "ESATAN-TMS",
+      "Ansys Mechanical"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial licensed software; a vendor trial is offered. Confirm institutional access and required companion products.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Thermal Desktop capabilities and trial",
+        "url": "https://ansys.synopsys.com/en-gb/products/fluids/ansys-thermal-desktop"
+      }
+    ]
+  },
+  {
+    "id": "esatan-tms",
+    "name": "ESATAN-TMS",
+    "kind": "Environment",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "thermal",
+      "habitats"
+    ],
+    "summary": "ESATAN-TMS combines thermal networks, radiative calculations and mission heating into a spacecraft thermal-analysis environment.",
+    "why": "It is a targeted alternative to Thermal Desktop for a team or research group that uses this workflow. Do not learn both deeply before choosing a thermal project; energy balances, view factors, material properties and correlation methods transfer more usefully than memorized menus.",
+    "firstProject": "Model a simple instrument box connected to a panel, estimate its radiative heat exchange, and check a reduced thermal network against independent steady-state calculations.",
+    "prerequisites": [
+      "Heat transfer",
+      "Radiation exchange",
+      "Thermal networks",
+      "Transient modeling"
+    ],
+    "alternatives": [
+      "Ansys Thermal Desktop"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial licenses with vendor support; contact the supplier or institution for access and demonstration options.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "ESATAN-TMS components",
+        "url": "https://esatan-tms.com/products/product.php"
+      },
+      {
+        "title": "ESATAN-TMS licensing and support",
+        "url": "https://www.esatan-tms.com/support/support.php"
+      }
+    ]
+  },
+  {
+    "id": "ansys-fluent",
+    "name": "Ansys Fluent",
+    "kind": "Application",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "fluids",
+      "thermal",
+      "habitats",
+      "aircraft",
+      "propulsion"
+    ],
+    "summary": "Fluent uses computational fluid dynamics to simulate fluid motion, heat transfer and related transport processes.",
+    "why": "It supports your equipment-cooling and aerodynamics interests after fluid mechanics and heat transfer. Begin with a flow whose behavior you can predict; judging mesh quality, conservation, boundary conditions and model sensitivity matters more than producing attractive velocity pictures.",
+    "firstProject": "Simulate slow laminar flow through a straight duct, compare pressure loss with an analytical result, and document how mesh refinement changes the prediction.",
+    "prerequisites": [
+      "Fluid mechanics",
+      "Heat transfer",
+      "Numerical methods",
+      "Conservation laws"
+    ],
+    "alternatives": [
+      "OpenFOAM",
+      "Simcenter STAR-CCM+",
+      "SU2"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial and institutional licenses; free size-limited student bundle requires verified educational eligibility.",
+    "platform": "Student bundle: Windows 64-bit; check requirements for other deployments.",
+    "sources": [
+      {
+        "title": "Fluent capabilities",
+        "url": "https://ansys.synopsys.com/Products/Fluids/ANSYS-Fluent"
+      },
+      {
+        "title": "Ansys Student access",
+        "url": "https://ansys.synopsys.com/academic/students/ansys-student"
+      }
+    ]
+  },
+  {
+    "id": "star-ccm-plus",
+    "name": "Simcenter STAR-CCM+",
+    "kind": "Application",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "fluids",
+      "thermal",
+      "aircraft",
+      "propulsion"
+    ],
+    "summary": "STAR-CCM+ integrates meshing, fluid simulation, heat transfer and analysis in a multiphysics application.",
+    "why": "Choose it when a laboratory or employer uses its workflow for CFD studies. It is a peer to Fluent rather than another universal prerequisite; a carefully checked result in one solver is more useful than shallow familiarity with several packages.",
+    "firstProject": "Build a simple air-cooled channel model, compare its pressure drop and energy balance with estimates, then automate a small sweep of inlet flow conditions.",
+    "prerequisites": [
+      "Fluid mechanics",
+      "Heat transfer",
+      "CFD fundamentals",
+      "Mesh-convergence studies"
+    ],
+    "alternatives": [
+      "Ansys Fluent",
+      "OpenFOAM",
+      "SU2"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial software; pricing and academic arrangements require confirmation with Siemens or your institution.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "STAR-CCM+ official overview",
+        "url": "https://www.siemens.com/en-us/products/simcenter/fluids-thermal-simulation/star-ccm/"
+      }
+    ]
+  },
+  {
+    "id": "openfoam",
+    "name": "OpenFOAM",
+    "kind": "Application",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "fluids",
+      "thermal",
+      "habitats",
+      "aircraft"
+    ],
+    "summary": "OpenFOAM provides open-source solvers and utilities for computational fluid dynamics and other continuum problems.",
+    "why": "It is useful if you want transparent, scriptable CFD workflows and are comfortable working in Linux. Choose a distribution matching your course or research group because commands and capabilities can differ; learning CFD validation is more important than learning two distributions simultaneously.",
+    "firstProject": "Run a documented laminar channel case, change one physical parameter, and compare mass balance and pressure loss with an independent calculation and a mesh-refinement study.",
+    "prerequisites": [
+      "Fluid mechanics",
+      "Linux command line",
+      "Numerical methods",
+      "Basic Python"
+    ],
+    "alternatives": [
+      "Ansys Fluent",
+      "Simcenter STAR-CCM+",
+      "SU2"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source. The linked Foundation distribution uses GPLv3; other OpenFOAM distributions have separate release schedules.",
+    "platform": "Linux; Foundation instructions support Windows via WSL and macOS via Multipass.",
+    "sources": [
+      {
+        "title": "OpenFOAM Foundation downloads",
+        "url": "https://openfoam.org/download/"
+      },
+      {
+        "title": "OpenFOAM licensing",
+        "url": "https://openfoam.org/licence/"
+      }
+    ]
+  },
+  {
+    "id": "su2",
+    "name": "SU2",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "fluids",
+      "aircraft",
+      "propulsion"
+    ],
+    "summary": "SU2 is an open-source simulation and optimization suite with a strong focus on computational aerodynamics.",
+    "why": "It fits an aerodynamic-analysis or research branch after you understand numerical fluid mechanics. Its optimization capabilities become useful only after a baseline model is trustworthy; an optimizer can exploit numerical errors or unrealistic constraints as easily as it can improve a design.",
+    "firstProject": "Reproduce a documented low-speed airfoil benchmark, compare lift across a small angle range, and test sensitivity to mesh density before attempting shape optimization.",
+    "prerequisites": [
+      "Fluid mechanics",
+      "Aerodynamics",
+      "Numerical methods",
+      "Command-line tools"
+    ],
+    "alternatives": [
+      "Ansys Fluent",
+      "OpenFOAM",
+      "Simcenter STAR-CCM+"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under LGPL 2.1; capabilities can differ between prebuilt binaries and custom builds.",
+    "platform": "Linux, macOS and Windows installation paths are documented.",
+    "sources": [
+      {
+        "title": "SU2 capabilities",
+        "url": "https://su2code.github.io/"
+      },
+      {
+        "title": "SU2 downloads and licensing",
+        "url": "https://su2code.github.io/download.html"
+      }
+    ]
+  },
+  {
+    "id": "openvsp",
+    "name": "OpenVSP",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "aircraft",
+      "fluids",
+      "structures"
+    ],
+    "summary": "OpenVSP creates parametric aircraft geometry for conceptual design and associated aerodynamic analysis.",
+    "why": "It is a good exploration tool if aircraft configuration interests persist alongside spacecraft robotics. Its purpose is broader vehicle geometry and early trade studies; you will still need a mechanical CAD package for fabrication-ready parts and more detailed analysis when the assumptions require it.",
+    "firstProject": "Model a small unpowered glider, vary wingspan while holding wing area fixed, and document how geometry and a simple aerodynamic estimate change.",
+    "prerequisites": [
+      "Geometry",
+      "Basic aerodynamics",
+      "Units",
+      "Aspect ratio"
+    ],
+    "alternatives": [
+      "XFLR5",
+      "AVL"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free, open-source NASA-developed software; follow the project's license and distribution terms.",
+    "platform": "Windows, macOS and Ubuntu downloads.",
+    "sources": [
+      {
+        "title": "OpenVSP getting started",
+        "url": "https://openvsp.org/start.shtml"
+      },
+      {
+        "title": "OpenVSP background and open-source license",
+        "url": "https://openvsp.org/learn.shtml"
+      }
+    ]
+  },
+  {
+    "id": "xfoil",
+    "name": "XFOIL",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "aircraft",
+      "fluids"
+    ],
+    "summary": "XFOIL analyzes and helps design isolated two-dimensional airfoils in subsonic flow.",
+    "why": "It is useful for learning airfoil behavior with a relatively small computational model. Understand its assumptions and convergence limits, especially near separation; a converged two-dimensional prediction should not be presented as a complete aircraft or strongly separated-flow result.",
+    "firstProject": "Compare a symmetric and a cambered airfoil over a modest angle-of-attack range, plot the predicted lift curves, and mark any points where the solver fails to converge.",
+    "prerequisites": [
+      "Basic aerodynamics",
+      "Reynolds number",
+      "Plotting",
+      "Boundary-layer concepts"
+    ],
+    "alternatives": [
+      "SU2",
+      "OpenVSP with VSPAERO"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free software under the GNU GPL; the original distribution includes source and legacy binaries.",
+    "platform": "Unix and Windows source/build paths; check compatibility of current systems.",
+    "sources": [
+      {
+        "title": "MIT XFOIL description, license and downloads",
+        "url": "https://web.mit.edu/drela/Public/web/xfoil/"
+      }
+    ]
+  },
+  {
+    "id": "cantera",
+    "name": "Cantera",
+    "kind": "Library",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "propulsion",
+      "thermal",
+      "materials"
+    ],
+    "summary": "Cantera calculates chemical kinetics, thermodynamic properties and transport behavior through programmable scientific interfaces.",
+    "why": "It connects your chemistry foundation with propulsion and energy-system analysis if you choose that branch. Start with gas properties and equilibrium concepts before detailed reacting-flow models, and check the mechanism's intended range rather than treating every chemical dataset as universally valid.",
+    "firstProject": "Use Python to plot the heat capacity of air over a moderate temperature range, compare the values with a reference table, and state the mixture assumptions.",
+    "prerequisites": [
+      "Python",
+      "Chemistry",
+      "Thermodynamics",
+      "Units and numerical plotting"
+    ],
+    "alternatives": [
+      "NASA CEA"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open-source software; consult the project license and the provenance of any separate reaction mechanisms.",
+    "platform": "Installation options include pip, Conda, Ubuntu packages and source builds.",
+    "sources": [
+      {
+        "title": "Cantera official overview",
+        "url": "https://www.cantera.org/"
+      },
+      {
+        "title": "Cantera installation",
+        "url": "https://www.cantera.org/stable/install/index.html"
+      }
+    ]
+  },
+  {
+    "id": "nasa-cea",
+    "name": "NASA CEA",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "propulsion",
+      "thermal"
+    ],
+    "summary": "NASA CEA computes chemical equilibrium composition and thermodynamic properties for specified mixtures and conditions.",
+    "why": "It is a focused thermochemistry tool for a later propulsion or high-temperature-gas branch. Learn to explain equilibrium assumptions and distinguish theoretical calculations from measured hardware performance; the modern implementation supports integration with scientific programming workflows rather than only manual legacy input files.",
+    "firstProject": "Calculate equilibrium air composition across a documented temperature range, compare species trends with a chemistry reference, and record the chosen pressure and database assumptions.",
+    "prerequisites": [
+      "Chemistry",
+      "Thermodynamics",
+      "Equilibrium concepts",
+      "Python or command-line basics"
+    ],
+    "alternatives": [
+      "Cantera"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Modern NASA repository is open source under Apache 2.0; the legacy CEARUN browser interface is also available.",
+    "platform": "Check current project build requirements; CEARUN runs in a web browser.",
+    "sources": [
+      {
+        "title": "Modern NASA CEA documentation",
+        "url": "https://nasa.github.io/cea/"
+      },
+      {
+        "title": "NASA CEA source and license",
+        "url": "https://github.com/nasa/cea"
+      },
+      {
+        "title": "NASA CEARUN",
+        "url": "https://cearun.grc.nasa.gov/index.html"
+      }
+    ]
+  },
+  {
+    "id": "ros-2",
+    "name": "ROS 2",
+    "kind": "Framework",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Connects a robot's sensors, software modules, and controllers through reusable communication tools.",
+    "why": "A strong branch choice for autonomous inspection or servicing prototypes after you can write and debug small programs. Learning nodes, topics, coordinate frames, and logging helps you understand how a complete robot is organized.",
+    "firstProject": "Around late 2029, after small Python and C++ programs work on Linux, publish simulated temperature readings, subscribe in a second node, and record and replay the data.",
+    "prerequisites": [
+      "Working small Python programs",
+      "Basic C++ and debugging",
+      "Linux terminal and package basics",
+      "Basic networking",
+      "Coordinate frames for later motion work"
+    ],
+    "alternatives": [
+      "Direct Python messaging for a tiny prototype",
+      "A project's existing robotics middleware"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Free and open source; core ROS 2 uses Apache 2.0, with some packages under BSD or other licenses.",
+    "platform": "Ubuntu is a practical starting point; Windows and other platform support depend on the ROS distribution and package.",
+    "sources": [
+      {
+        "title": "ROS 2 releases and target platforms",
+        "url": "https://reps.openrobotics.org/rep-2000/"
+      },
+      {
+        "title": "Current ROS 2 documentation and distribution guides",
+        "url": "https://github.com/ros2/ros2_documentation"
+      }
+    ]
+  },
+  {
+    "id": "gazebo",
+    "name": "Gazebo",
+    "kind": "Application",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "testing",
+      "gnc"
+    ],
+    "summary": "Simulates robots, their sensors, and their interactions with a virtual physical environment.",
+    "why": "Pairs naturally with ROS 2 when a rover or robot-arm project needs repeatable tests before hardware. Use it to compare a model with measurements; a convincing animation alone does not establish physical accuracy.",
+    "firstProject": "Around late 2029 or later, after a simple ROS 2 project works, simulate a two-wheel indoor rover driving a short route and compare its commanded and measured travel distance.",
+    "prerequisites": [
+      "Working small Python and basic C++ programs",
+      "Linux terminal and package basics",
+      "A working ROS 2 publisher/subscriber project",
+      "Rigid-body motion",
+      "Robot model files",
+      "Simulation time-step awareness"
+    ],
+    "alternatives": [
+      "MuJoCo",
+      "Isaac Sim"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source; Gazebo Sim uses Apache 2.0, with dependencies under their own licenses.",
+    "platform": "Ubuntu is officially supported for current Jetty releases; Windows and macOS support is best effort.",
+    "sources": [
+      {
+        "title": "Gazebo installation and supported platforms",
+        "url": "https://gazebosim.org/docs/latest/install/"
+      },
+      {
+        "title": "Gazebo Sim source and license",
+        "url": "https://github.com/gazebosim/gz-sim"
+      }
+    ]
+  },
+  {
+    "id": "moveit-2",
+    "name": "MoveIt 2",
+    "kind": "Framework",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Provides motion planning, kinematics, and collision checking for robot arms and manipulators.",
+    "why": "Relevant if your equipment-cartridge project evolves into robotic insertion, inspection, or servicing. Learn it after basic robot coordinates and joint motion so that you can explain why a planned motion succeeds or fails.",
+    "firstProject": "Move a simulated arm between two poses while avoiding a simple box obstacle.",
+    "prerequisites": [
+      "ROS 2",
+      "Linear algebra",
+      "Robot kinematics",
+      "Coordinate transforms"
+    ],
+    "alternatives": [
+      "A custom planner for a simple arm",
+      "MoveIt Pro where a team licenses it"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "MoveIt 2 is free open-source software under BSD terms; the separate MoveIt Pro product has commercial licensing.",
+    "platform": "Linux, especially a supported Ubuntu and ROS 2 pairing; follow the distribution compatibility table.",
+    "sources": [
+      {
+        "title": "MoveIt project and BSD licensing",
+        "url": "https://moveit.ai/"
+      },
+      {
+        "title": "MoveIt installation guidance",
+        "url": "https://moveit.ai/documentation/faqs/"
+      },
+      {
+        "title": "MoveIt releases and ROS distributions",
+        "url": "https://moveit.ai/about/distribution/"
+      }
+    ]
+  },
+  {
+    "id": "nav2",
+    "name": "Nav2",
+    "kind": "Framework",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Adds navigation, route planning, obstacle handling, and recovery behaviors to ROS 2 mobile robots.",
+    "why": "Useful for an indoor inspection rover once you understand basic localization and sensor limitations. Its planning and behavior components help turn a driving demo into a robot that handles repeatable tasks and reports failures.",
+    "firstProject": "Navigate a simulated rover between three indoor stations and record successes, travel time, and recovery events.",
+    "prerequisites": [
+      "ROS 2",
+      "Gazebo or another simulator",
+      "Coordinate frames",
+      "Localization basics"
+    ],
+    "alternatives": [
+      "A simple waypoint controller",
+      "A robot vendor's navigation stack"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source; follow the licenses included with the individual Nav2 packages and dependencies.",
+    "platform": "Supported ROS 2 environments; the documented binary quickstart uses Ubuntu packages.",
+    "sources": [
+      {
+        "title": "Nav2 getting started",
+        "url": "https://docs.nav2.org/jazzy/getting_started/"
+      },
+      {
+        "title": "Nav2 local installation",
+        "url": "https://docs.nav2.org/jazzy/getting_started/build_and_install/local_installation/"
+      },
+      {
+        "title": "Nav2 source repository",
+        "url": "https://github.com/ros-navigation/navigation2"
+      }
+    ]
+  },
+  {
+    "id": "opencv",
+    "name": "OpenCV",
+    "kind": "Library",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "testing",
+      "gnc"
+    ],
+    "summary": "Processes camera images and video for tasks such as calibration, measurement, and visual inspection.",
+    "why": "A practical early addition to Python for your equipment-panel inspection idea. Start with controlled lighting, geometry, and known markers before adding machine learning; you can learn a great deal from measuring errors in a modest camera setup.",
+    "firstProject": "Detect a printed marker on an equipment panel and measure how detection changes with angle and lighting.",
+    "prerequisites": [
+      "Python arrays",
+      "Basic geometry",
+      "Image coordinates",
+      "Simple experimental design"
+    ],
+    "alternatives": [
+      "scikit-image",
+      "MATLAB Computer Vision Toolbox"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source; OpenCV 4.5.0 and later use Apache 2.0.",
+    "platform": "Windows, Linux, and macOS, with mobile and other platform support documented by the project.",
+    "sources": [
+      {
+        "title": "OpenCV licensing",
+        "url": "https://opencv.org/license/"
+      },
+      {
+        "title": "OpenCV platforms and getting started",
+        "url": "https://opencv.org/platforms/"
+      }
+    ]
+  },
+  {
+    "id": "pytorch",
+    "name": "PyTorch",
+    "kind": "Framework",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "testing"
+    ],
+    "summary": "Builds and trains machine-learning models using tensors, automatic differentiation, and optional GPU acceleration.",
+    "why": "Worth adding when a perception project has a real dataset and a baseline that conventional image processing cannot handle well. It is not a prerequisite for learning CAD, mechanics, controls, or basic robotics.",
+    "firstProject": "Train a small classifier on your own labeled images of correctly and incorrectly assembled mock equipment, using a separate test set.",
+    "prerequisites": [
+      "Python and NumPy",
+      "Linear algebra",
+      "Probability",
+      "Training versus test data"
+    ],
+    "alternatives": [
+      "JAX",
+      "TensorFlow",
+      "Classical computer-vision methods"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under PyTorch's BSD-style license; some dependencies carry separate terms.",
+    "platform": "Windows, Linux, and macOS; available GPU acceleration depends on operating system, hardware, and build.",
+    "sources": [
+      {
+        "title": "PyTorch installation and platforms",
+        "url": "https://pytorch.org/get-started/locally/"
+      },
+      {
+        "title": "PyTorch license",
+        "url": "https://github.com/pytorch/pytorch/blob/main/LICENSE"
+      }
+    ]
+  },
+  {
+    "id": "isaac-sim",
+    "name": "NVIDIA Isaac Sim",
+    "kind": "Application",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "testing"
+    ],
+    "summary": "Creates detailed virtual robot environments with physics, camera simulation, and synthetic-data workflows.",
+    "why": "An optional advanced environment for testing vision-based inspection or manipulation. It becomes worthwhile when your project needs its sensor or visual capabilities; learning it early would add setup work before you have the underlying robotics skills.",
+    "firstProject": "Place a camera and mock equipment panel in a scene, vary lighting, and compare synthetic images with real photographs.",
+    "prerequisites": [
+      "Python",
+      "Robot coordinate frames",
+      "Simulation fundamentals",
+      "GPU and driver compatibility"
+    ],
+    "alternatives": [
+      "Gazebo",
+      "MuJoCo"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Isaac Sim repository code is Apache 2.0; required Omniverse components, models, textures, and other dependencies have additional terms.",
+    "platform": "Current documentation lists Windows 11 and Ubuntu with supported NVIDIA RTX hardware; check the compatibility tool and current requirements.",
+    "sources": [
+      {
+        "title": "Isaac Sim source and capabilities",
+        "url": "https://github.com/isaac-sim/IsaacSim"
+      },
+      {
+        "title": "Isaac Sim system requirements",
+        "url": "https://docs.isaacsim.omniverse.nvidia.com/latest/installation/requirements.html"
+      },
+      {
+        "title": "Isaac Sim licensing",
+        "url": "https://github.com/isaac-sim/IsaacSim/blob/release/6.3/LICENSE"
+      }
+    ]
+  },
+  {
+    "id": "mujoco",
+    "name": "MuJoCo",
+    "kind": "Library",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Simulates articulated bodies and contact for robotics research and control experiments.",
+    "why": "Useful if you become interested in robot dynamics, manipulation, or learning-based control. Its compact models make repeated experiments convenient, but contact behavior still needs careful assumptions and comparison with physical observations.",
+    "firstProject": "Model a simple pendulum, compare its period with a hand calculation, and study how damping changes its motion using documented assumptions and units.",
+    "prerequisites": [
+      "Python",
+      "Rigid-body dynamics",
+      "Differential equations",
+      "Numerical integration"
+    ],
+    "alternatives": [
+      "Gazebo",
+      "Isaac Sim",
+      "Simscape Multibody"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open-source code under Apache 2.0; documentation has separate Creative Commons terms.",
+    "platform": "Prebuilt binaries are available for Windows, Linux, and macOS; architecture support varies.",
+    "sources": [
+      {
+        "title": "MuJoCo overview",
+        "url": "https://mujoco.org/"
+      },
+      {
+        "title": "MuJoCo installation, source, and license",
+        "url": "https://github.com/google-deepmind/mujoco"
+      }
+    ]
+  },
+  {
+    "id": "px4",
+    "name": "PX4 Autopilot",
+    "kind": "Framework",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "aircraft",
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Provides an open-source autopilot stack with simulation and hardware interfaces for autonomous vehicles.",
+    "why": "A branch tool for an aircraft or vehicle-controls project, rather than a requirement for spacecraft engineering. Begin in software-in-the-loop simulation to learn logs, sensors, modes, and testing without making hardware the first obstacle.",
+    "firstProject": "Run a supplied virtual vehicle example and compare its logged attitude and altitude with the commanded values.",
+    "prerequisites": [
+      "C++ basics",
+      "Feedback control",
+      "Linux tools",
+      "Simulation and sensor concepts"
+    ],
+    "alternatives": [
+      "ArduPilot",
+      "A small custom controller for a teaching model"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under BSD-3-Clause; hardware and third-party components have separate costs or terms.",
+    "platform": "Development on Ubuntu, macOS, or Windows through WSL 2; target and simulator support vary.",
+    "sources": [
+      {
+        "title": "PX4 project and license",
+        "url": "https://github.com/PX4/PX4-Autopilot"
+      },
+      {
+        "title": "PX4 development environments",
+        "url": "https://docs.px4.io/main/en/dev_setup/dev_env"
+      }
+    ]
+  },
+  {
+    "id": "ardupilot",
+    "name": "ArduPilot",
+    "kind": "Framework",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "robotics",
+      "aircraft",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Supplies autopilot software for several vehicle types, including rovers, aircraft, and boats.",
+    "why": "An alternative to PX4 if your chosen student project or hardware ecosystem already uses it. You do not need to master both stacks; vehicle simulation, logs, state estimation, and reproducible tests transfer between them.",
+    "firstProject": "Use the supplied simulated rover to drive a short route and inspect its position and sensor logs.",
+    "prerequisites": [
+      "Basic programming",
+      "Feedback control",
+      "Linux or supported development tools",
+      "Coordinate frames"
+    ],
+    "alternatives": [
+      "PX4",
+      "ROS 2 with a simple rover controller"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free software under GPLv3; redistribution and modification must follow those terms.",
+    "platform": "Runs on supported autopilot hardware; the documented SITL workflow runs on Linux and Windows.",
+    "sources": [
+      {
+        "title": "ArduPilot licensing",
+        "url": "https://ardupilot.org/dev/docs/license-gplv3.html"
+      },
+      {
+        "title": "ArduPilot software-in-the-loop setup",
+        "url": "https://ardupilot.org/dev/docs/setting-up-sitl-on-linux.html"
+      },
+      {
+        "title": "ArduPilot source workflow",
+        "url": "https://ardupilot.org/dev/docs/where-to-get-the-code.html"
+      }
+    ]
+  },
+  {
+    "id": "qgroundcontrol",
+    "name": "QGroundControl",
+    "kind": "Application",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "aircraft",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Provides a graphical ground station for configuring and monitoring MAVLink-compatible vehicles.",
+    "why": "Useful alongside PX4 or a compatible ArduPilot project for inspecting telemetry and understanding operational workflows. It is a supporting application, not a replacement for learning the vehicle's dynamics or how its control software works.",
+    "firstProject": "Connect it to a simulated vehicle and document where to inspect battery, position, attitude, and status information.",
+    "prerequisites": [
+      "A supported simulator or vehicle stack",
+      "Basic telemetry concepts",
+      "Units and coordinate conventions"
+    ],
+    "alternatives": [
+      "Mission Planner for ArduPilot",
+      "MAVProxy"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source; code is dual-licensed under Apache 2.0 and GPLv3-or-later, with separate artwork terms.",
+    "platform": "Desktop support includes Windows, macOS, and Linux; check current releases for mobile availability.",
+    "sources": [
+      {
+        "title": "QGroundControl overview and licensing",
+        "url": "https://qgroundcontrol.com/"
+      },
+      {
+        "title": "QGroundControl download and installation",
+        "url": "https://docs.qgroundcontrol.com/master/en/qgc-user-guide/getting_started/download_and_install.html"
+      }
+    ]
+  },
+  {
+    "id": "f-prime",
+    "name": "F Prime (F´)",
+    "kind": "Framework",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "systems",
+      "testing"
+    ],
+    "summary": "Organizes embedded and spacecraft software as reusable components with commands, events, and telemetry.",
+    "why": "A strong later option if you enjoy making dependable spacecraft electronics and software work together. It connects programming skills to flight-software architecture, but using a flight-proven framework does not automatically qualify your own application for spaceflight.",
+    "firstProject": "Build the official Hello World example, then add a simulated temperature component and a command that changes its reporting rate.",
+    "prerequisites": [
+      "C++",
+      "Python tooling",
+      "Git and build systems",
+      "Embedded-system basics"
+    ],
+    "alternatives": [
+      "NASA cFS",
+      "A team's existing flight-software framework"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under Apache 2.0.",
+    "platform": "Documented development workflows cover Linux, macOS, and Windows through WSL; embedded targets require a suitable port.",
+    "sources": [
+      {
+        "title": "NASA JPL F Prime overview and tutorials",
+        "url": "https://fprime.jpl.nasa.gov/"
+      },
+      {
+        "title": "F Prime source and license",
+        "url": "https://github.com/nasa/fprime"
+      },
+      {
+        "title": "F Prime installation",
+        "url": "https://fprime.jpl.nasa.gov/latest/docs/getting-started/installing-fprime/"
+      }
+    ]
+  },
+  {
+    "id": "nasa-cfs",
+    "name": "NASA Core Flight System (cFS)",
+    "kind": "Framework",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "systems",
+      "testing"
+    ],
+    "summary": "Provides a reusable architecture and services for spacecraft flight-software applications.",
+    "why": "Explore it when a research group, employer, or mission uses cFS; there is little reason to learn it and F Prime deeply at the same time. The public bundle is a starting point, and mission-specific verification remains essential.",
+    "firstProject": "Run the public sample application on a Linux host and trace a command through to a telemetry response.",
+    "prerequisites": [
+      "C",
+      "Operating-system concepts",
+      "CMake and Git",
+      "Software testing",
+      "Command and telemetry concepts"
+    ],
+    "alternatives": [
+      "F Prime",
+      "An employer's flight-software platform"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "The public framework and listed common components are Apache 2.0; a separate government-use distribution has restricted access.",
+    "platform": "The public quickstart targets a Linux host; other processors and operating systems need suitable platform support.",
+    "sources": [
+      {
+        "title": "NASA cFS architecture, distribution, and quickstart",
+        "url": "https://github.com/nasa/cFS"
+      }
+    ]
+  },
+  {
+    "id": "freertos",
+    "name": "FreeRTOS",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Runs small embedded applications as scheduled tasks on microcontrollers and modest processors.",
+    "why": "Useful once your sensor-and-actuator project needs several activities with timing constraints. Learning tasks, queues, synchronization, and timing teaches more about dependable embedded software than immediately adding a large robotics framework.",
+    "firstProject": "On a supported development board or simulator, run one task that generates temperature readings and another that logs them through a queue.",
+    "prerequisites": [
+      "C basics",
+      "Microcontroller fundamentals",
+      "Interrupts and timing",
+      "Debugging"
+    ],
+    "alternatives": [
+      "Zephyr",
+      "A simple bare-metal loop"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source under MIT terms; commercial support and separately certified variants are distinct offerings.",
+    "platform": "Targets numerous microcontroller architectures; development-host support depends on the selected board and toolchain.",
+    "sources": [
+      {
+        "title": "FreeRTOS features, license, and supported architectures",
+        "url": "https://www.freertos.org/"
+      }
+    ]
+  },
+  {
+    "id": "zephyr",
+    "name": "Zephyr",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Provides a configurable embedded operating system with drivers, networking, and development tools.",
+    "why": "An alternative embedded ecosystem when your board or team benefits from its driver and hardware-description support. Learn one small embedded workflow first; adopting Zephyr is most useful when it solves a concrete project need.",
+    "firstProject": "Build a supported board's sensor sample, log readings, and add a simple warning state for a simulated out-of-range value.",
+    "prerequisites": [
+      "C",
+      "Microcontroller basics",
+      "Build tools",
+      "Device-tree and configuration concepts"
+    ],
+    "alternatives": [
+      "FreeRTOS",
+      "A board vendor's SDK"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Main project uses Apache 2.0; imported components can have other licenses.",
+    "platform": "Host setup is documented for Ubuntu, Windows, and supported macOS systems; deployment targets supported embedded boards.",
+    "sources": [
+      {
+        "title": "Zephyr introduction and licensing",
+        "url": "https://docs.zephyrproject.org/latest/introduction/index.html"
+      },
+      {
+        "title": "Zephyr getting started and host platforms",
+        "url": "https://docs.zephyrproject.org/latest/develop/getting_started/index.html"
+      }
+    ]
+  },
+  {
+    "id": "gmat",
+    "name": "NASA GMAT",
+    "kind": "Application",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "systems"
+    ],
+    "summary": "Models spacecraft orbits and mission sequences through a graphical interface, scripts, and programming interfaces.",
+    "why": "A useful first dedicated mission-analysis application after gravity, vectors, and numerical integration make sense. It lets you connect a simple orbit calculation to a larger spacecraft mission study without first writing every supporting tool yourself.",
+    "firstProject": "Propagate a simple Earth orbit, plot altitude over time, and compare its period with the two-body formula.",
+    "prerequisites": [
+      "Newtonian mechanics",
+      "Vectors",
+      "Orbital elements",
+      "Numerical integration basics"
+    ],
+    "alternatives": [
+      "FreeFlyer",
+      "Orekit",
+      "Tudat"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "NASA distributes GMAT as open-source software; check the release's license and included dependency notices.",
+    "platform": "NASA lists Windows, Linux, and macOS; use the distribution and setup instructions for your platform.",
+    "sources": [
+      {
+        "title": "NASA GMAT software catalog and operating systems",
+        "url": "https://software.nasa.gov/software/GSC-19640-1"
+      }
+    ]
+  },
+  {
+    "id": "ansys-stk",
+    "name": "Ansys STK",
+    "kind": "Application",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "systems",
+      "defense",
+      "testing"
+    ],
+    "summary": "Analyzes how spacecraft, ground sites, sensors, and communications interact over time.",
+    "why": "Useful for mission-level questions such as contact windows, coverage, and system trade-offs. Learn it when a course, research project, or employer needs that workflow; it overlaps with other mission tools but does not replace their underlying physics.",
+    "firstProject": "Model a public satellite orbit and a ground station, then explain when line-of-sight contact is possible.",
+    "prerequisites": [
+      "Orbital geometry",
+      "Coordinate systems",
+      "Time conventions",
+      "Basic mission requirements"
+    ],
+    "alternatives": [
+      "GMAT for orbit-focused studies",
+      "FreeFlyer",
+      "Orekit"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial software; available capabilities depend on licensed products and modules. Check institutional or current student access before purchasing.",
+    "platform": "STK desktop uses Windows; STK Engine also has a Linux workflow with separate requirements.",
+    "sources": [
+      {
+        "title": "Ansys STK product overview",
+        "url": "https://ansys.synopsys.com/products/missions/ansys-stk"
+      },
+      {
+        "title": "STK system requirements",
+        "url": "https://help.agi.com/stk/content/install/sysreq.htm"
+      },
+      {
+        "title": "STK Engine on Linux",
+        "url": "https://help.agi.com/stkEngineOnUNIX/Content/stkEngineUX/Getting_Started_with_EngineOnLinux.htm"
+      }
+    ]
+  },
+  {
+    "id": "freeflyer",
+    "name": "FreeFlyer",
+    "kind": "Application",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "systems"
+    ],
+    "summary": "Supports orbit analysis, spacecraft mission design, and operational flight-dynamics workflows.",
+    "why": "A valuable later choice if an internship or employer uses it for mission operations. Its scripting and external interfaces support repeatable analyses; you can learn orbital fundamentals in a free tool before deciding whether this specific environment is needed.",
+    "firstProject": "Create a simple satellite mission and compare predicted eclipse intervals after changing the initial orbit.",
+    "prerequisites": [
+      "Orbital mechanics",
+      "Numerical methods",
+      "Scripting",
+      "Time and reference frames"
+    ],
+    "alternatives": [
+      "GMAT",
+      "Orekit",
+      "Tudat"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Commercial a.i. solutions product; request appropriate licensing or institutional access rather than assuming the name means free software.",
+    "platform": "The current vendor page lists Windows, Linux, and Mac; confirm edition-specific requirements.",
+    "sources": [
+      {
+        "title": "FreeFlyer capabilities, licensing links, and platforms",
+        "url": "https://ai-solutions.com/"
+      }
+    ]
+  },
+  {
+    "id": "orekit",
+    "name": "Orekit",
+    "kind": "Library",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "systems"
+    ],
+    "summary": "Provides reusable space-dynamics calculations for orbit propagation, timing, frames, events, and estimation.",
+    "why": "Useful when you want to build a custom mission-analysis application rather than operate a graphical one. It rewards careful handling of data, units, frames, and time scales, so it belongs after a basic orbital-mechanics project.",
+    "firstProject": "Propagate a simple orbit and compute ground-station visibility, validating one result against an independent tool.",
+    "prerequisites": [
+      "Java or a supported wrapper",
+      "Orbital mechanics",
+      "Coordinate frames",
+      "Time scales and data files"
+    ],
+    "alternatives": [
+      "Tudat",
+      "GMAT interfaces",
+      "FreeFlyer runtime interfaces"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Free and open source under Apache 2.0; supporting physical-data files have their own provenance.",
+    "platform": "Java-based library requiring a compatible JDK; wrapper and deployment requirements depend on the chosen environment.",
+    "sources": [
+      {
+        "title": "Orekit official source mirror, capabilities, and requirements",
+        "url": "https://github.com/CS-SI/Orekit"
+      }
+    ]
+  },
+  {
+    "id": "nasa-spice",
+    "name": "NASA SPICE Toolkit",
+    "kind": "Library",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "systems"
+    ],
+    "summary": "Calculates spacecraft and planetary geometry using mission data, reference frames, and time information.",
+    "why": "Important in many planetary and spacecraft-analysis workflows when real ephemerides and consistent geometry are needed. It complements a dynamics simulator: SPICE mainly supplies geometry and data handling rather than a complete spacecraft design environment.",
+    "firstProject": "Use public kernels to plot Earth–Moon distance over a month and document the time scale and reference frame.",
+    "prerequisites": [
+      "Programming",
+      "Vectors and transforms",
+      "Time scales",
+      "Kernel and data provenance"
+    ],
+    "alternatives": [
+      "Orekit for overlapping time/frame functions",
+      "GMAT interfaces"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Publicly available from NASA NAIF under its SPICE use rules; language wrappers may carry separate licenses.",
+    "platform": "Official C toolkits include Windows, Linux, and Intel/Apple-silicon Mac variants; choose a supported compiler/platform combination.",
+    "sources": [
+      {
+        "title": "NASA SPICE Toolkit",
+        "url": "https://naif.jpl.nasa.gov/naif/toolkit.html"
+      },
+      {
+        "title": "SPICE use rules",
+        "url": "https://naif.jpl.nasa.gov/naif/rules.html"
+      },
+      {
+        "title": "SPICE C toolkit platforms",
+        "url": "https://naif.jpl.nasa.gov/naif/toolkit_C.html"
+      }
+    ]
+  },
+  {
+    "id": "basilisk",
+    "name": "Basilisk",
+    "kind": "Framework",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "gnc",
+      "astrodynamics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "Combines spacecraft dynamics, flight algorithms, and repeatable simulation experiments in a programmable framework.",
+    "why": "Especially relevant if you choose spacecraft attitude control, estimation, or integrated simulation. Its Python interface and compiled modules connect your programming foundation with serious engineering models and can later support hardware-in-the-loop testing.",
+    "firstProject": "Run a documented attitude-control example, change one initial condition, and explain the resulting settling behavior with labeled time-history plots.",
+    "prerequisites": [
+      "Python",
+      "Rigid-body dynamics",
+      "Differential equations",
+      "Feedback control",
+      "Coordinate transforms"
+    ],
+    "alternatives": [
+      "MATLAB and Simulink",
+      "A custom dynamics model",
+      "Tudat for orbit-centered research"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under the ISC license; check companion-tool terms separately.",
+    "platform": "Official documentation lists macOS, Linux, and Windows.",
+    "sources": [
+      {
+        "title": "Basilisk architecture, applications, license, and platforms",
+        "url": "https://avslab.github.io/basilisk/"
+      }
+    ]
+  },
+  {
+    "id": "tudat",
+    "name": "Tudat / TudatPy",
+    "kind": "Library",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Provides programmable astrodynamics tools for propagation, estimation, and space-research studies.",
+    "why": "A strong optional research path if you enjoy numerical methods and want direct control over model assumptions. Its Python interface makes it accessible from your scientific-computing foundation, while meaningful results still require orbital mechanics and validation.",
+    "firstProject": "Compare two-body orbit propagation with a model including one additional perturbation, and plot the difference.",
+    "prerequisites": [
+      "Python and NumPy",
+      "Orbital mechanics",
+      "Numerical integration",
+      "Model validation"
+    ],
+    "alternatives": [
+      "Orekit",
+      "GMAT",
+      "Basilisk for spacecraft dynamics and control"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Free and open source; TudatPy uses BSD-3-Clause with dependency licenses also applicable.",
+    "platform": "Conda installation is documented for Windows, Linux, and macOS; check supported architectures and package builds.",
+    "sources": [
+      {
+        "title": "TU Delft Tudat overview",
+        "url": "https://docs.tudat.space/en/latest/index.html"
+      },
+      {
+        "title": "Tudat installation",
+        "url": "https://docs.tudat.space/en/latest/getting-started/installation.html"
+      },
+      {
+        "title": "TudatPy source and license",
+        "url": "https://github.com/tudat-team/tudatpy"
+      }
+    ]
+  },
+  {
+    "id": "matlab",
+    "name": "MATLAB",
+    "kind": "Environment",
+    "family": "Computing & controls",
+    "specialties": [
+      "gnc",
+      "astrodynamics",
+      "systems",
+      "testing",
+      "habitats",
+      "aircraft"
+    ],
+    "summary": "Combines a matrix-oriented programming language with numerical analysis, plotting, and engineering tools.",
+    "why": "One of your core academic tools because it connects mathematics with engineering calculations and coursework. Learn arrays, functions, plots, data import, and checking numerical results; add specialized toolboxes only when a class or project needs them.",
+    "firstProject": "Import a small temperature dataset, plot it with units, fit a simple model, and inspect the residual errors.",
+    "prerequisites": [
+      "Algebra",
+      "Basic programming ideas",
+      "Functions and graphs"
+    ],
+    "alternatives": [
+      "Python with NumPy and SciPy",
+      "GNU Octave where compatible"
+    ],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Commercial software with student, academic, and other licensing routes; campus access and individual toolbox entitlement must be checked.",
+    "platform": "Windows, macOS, and Linux, plus MATLAB Online for supported browser workflows; feature requirements vary.",
+    "sources": [
+      {
+        "title": "MATLAB product overview",
+        "url": "https://www.mathworks.com/products/matlab.html"
+      },
+      {
+        "title": "MATLAB system requirements",
+        "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+      }
+    ]
+  },
+  {
+    "id": "simulink",
+    "name": "Simulink",
+    "kind": "Environment",
+    "family": "Computing & controls",
+    "specialties": [
+      "gnc",
+      "avionics",
+      "systems",
+      "testing",
+      "aircraft",
+      "defense"
+    ],
+    "summary": "Models dynamic systems and controllers with block diagrams that can be simulated and tested.",
+    "why": "Prioritize it when differential equations, feedback control, or a relevant course becomes part of your work. It is particularly valuable for comparing a controller with a physical-system model and understanding how changes affect stability and response.",
+    "firstProject": "Simulate a room-temperature controller and compare overshoot and settling time after changing one controller parameter.",
+    "prerequisites": [
+      "MATLAB basics",
+      "Differential equations",
+      "Dynamic systems",
+      "Feedback concepts"
+    ],
+    "alternatives": [
+      "Python control and simulation libraries",
+      "Basilisk for spacecraft simulations"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Commercial MathWorks product requiring appropriate MATLAB/Simulink access; code generation and specialized capabilities can require additional products.",
+    "platform": "Supported MATLAB desktop platforms; confirm product, add-on, and compiler requirements for the intended workflow.",
+    "sources": [
+      {
+        "title": "Simulink modeling, testing, and design",
+        "url": "https://www.mathworks.com/products/simulink.html"
+      },
+      {
+        "title": "MathWorks platform and product requirements",
+        "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+      }
+    ]
+  },
+  {
+    "id": "simscape",
+    "name": "Simscape",
+    "kind": "Environment",
+    "family": "Computing & controls",
+    "specialties": [
+      "systems",
+      "robotics",
+      "habitats",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Models connected physical components such as motors, thermal networks, and fluid or electrical systems.",
+    "why": "Useful for your equipment-bay or robotics projects when interactions between physical subsystems matter. Start with a small model whose parameters you can measure; large component libraries do not remove the need to understand conservation laws and model limits.",
+    "firstProject": "Build a simple thermal mass and heat-transfer model, then compare its cooling curve with measured data.",
+    "prerequisites": [
+      "MATLAB and Simulink",
+      "Relevant physics",
+      "Differential equations",
+      "Parameter estimation"
+    ],
+    "alternatives": [
+      "Modelica tools",
+      "Custom Python differential-equation models"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial add-on within the MATLAB/Simulink ecosystem; specialized Simscape products may need separate licenses.",
+    "platform": "Supported MATLAB/Simulink desktop platforms; confirm requirements for each specialized add-on.",
+    "sources": [
+      {
+        "title": "Simscape physical-system modeling",
+        "url": "https://www.mathworks.com/products/simscape.html"
+      },
+      {
+        "title": "MathWorks platform and product requirements",
+        "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+      }
+    ]
+  },
+  {
+    "id": "stateflow",
+    "name": "Stateflow",
+    "kind": "Environment",
+    "family": "Computing & controls",
+    "specialties": [
+      "avionics",
+      "systems",
+      "testing",
+      "robotics",
+      "gnc"
+    ],
+    "summary": "Describes event-driven decisions and operating modes using state machines and graphical logic.",
+    "why": "Useful when your system must switch clearly between startup, normal operation, cooling, and fault-handling modes. It complements continuous control models and makes transition conditions visible, which can help you design and test reliable behavior.",
+    "firstProject": "Model an equipment monitor with off, warming, normal, and sensor-fault states, then test every transition with synthetic inputs.",
+    "prerequisites": [
+      "MATLAB basics",
+      "Boolean logic",
+      "State-machine concepts",
+      "System requirements and tests"
+    ],
+    "alternatives": [
+      "A state machine written in Python or C++",
+      "Other model-based state-machine tools"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial MathWorks product; verify Stateflow and any required simulation or code-generation entitlements.",
+    "platform": "Supported MATLAB platforms; check whether the selected workflow also requires Simulink and other products.",
+    "sources": [
+      {
+        "title": "Stateflow capabilities and execution options",
+        "url": "https://www.mathworks.com/products/stateflow.html"
+      },
+      {
+        "title": "MathWorks platform and product requirements",
+        "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+      }
+    ]
+  },
+  {
+    "id": "comsol-multiphysics",
+    "name": "COMSOL Multiphysics",
+    "kind": "Environment",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "thermal",
+      "fluids",
+      "structures",
+      "materials",
+      "power"
+    ],
+    "summary": "COMSOL builds and solves models that couple heat transfer, structural mechanics, electrical effects and other physical processes.",
+    "why": "It fills a useful research niche when several physical effects interact or you need to inspect and adapt the governing equations. Choose it for a specific coupled problem and available laboratory license; it is not necessary to learn it alongside every separate structural or CFD package.",
+    "firstProject": "Model heat conduction through a two-material plate, compare the interface temperatures with a thermal-resistance calculation, and test sensitivity to mesh density.",
+    "prerequisites": [
+      "Heat transfer",
+      "Relevant differential equations",
+      "Finite-element basics",
+      "Model verification"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "Ansys Fluent",
+      "OpenFOAM"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial and academic licenses; required modules and institutional rights vary. Do not assume a universal free student edition.",
+    "platform": "Windows, macOS and Linux; module and hardware requirements vary.",
+    "sources": [
+      {
+        "title": "COMSOL Multiphysics capabilities",
+        "url": "https://www.comsol.com/comsol-multiphysics"
+      },
+      {
+        "title": "COMSOL license options",
+        "url": "https://www.comsol.com/products/licensing"
+      },
+      {
+        "title": "COMSOL system requirements",
+        "url": "https://www.comsol.com/system-requirements/64/general"
+      }
+    ]
+  },
+  {
+    "id": "adams",
+    "name": "Adams",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "structures",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Adams simulates the dynamics of mechanisms assembled from moving parts, joints, forces and other mechanical elements.",
+    "why": "It adds a dedicated multibody-engineering workflow for studying deployment mechanisms, linkages and actuator loads. Use it when a mechanism project or employer needs that level of analysis; first understand the difference between animating prescribed motion and predicting motion from forces.",
+    "firstProject": "Build a simple pendulum or four-bar linkage, compare its motion with a hand calculation, and inspect the joint reactions as you vary one load.",
+    "prerequisites": [
+      "Rigid-body dynamics",
+      "Kinematics",
+      "Differential equations",
+      "Mechanical CAD"
+    ],
+    "alternatives": [
+      "Simscape Multibody",
+      "MuJoCo",
+      "Simpack"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial multibody-dynamics software; institutional or employer access and licensed modules determine available capabilities.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Hexagon Adams capabilities",
+        "url": "https://nexus.hexagon.com/home/product/adams/"
+      },
+      {
+        "title": "Hexagon Adams for robotics",
+        "url": "https://go.de.mi.hexagon.com/2026_Adams_for_Robotics"
+      }
+    ]
+  },
+  {
+    "id": "gmsh",
+    "name": "Gmsh",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "fluids",
+      "thermal",
+      "testing"
+    ],
+    "summary": "Gmsh generates meshes from geometric models and exposes both an interactive interface and programmable geometry and meshing tools.",
+    "why": "It fills the step between geometry and many open-source numerical solvers. Learn it when your analysis needs controlled meshes or repeatable refinement, keeping element quality and boundary labels explicit; producing a mesh does not itself solve or validate the engineering problem.",
+    "firstProject": "Create a plate with a circular hole, label its boundaries, generate three mesh densities, and compare element quality before exporting to a compatible solver.",
+    "prerequisites": [
+      "Geometry",
+      "Mesh and element concepts",
+      "A chosen numerical solver",
+      "Basic scripting for automation"
+    ],
+    "alternatives": [
+      "HyperMesh",
+      "Abaqus meshing",
+      "Ansys Mechanical meshing"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source under GPL terms; separate licensing is available for some closed-source integration needs.",
+    "platform": "Windows, Linux and macOS downloads; Python and other language interfaces are available.",
+    "sources": [
+      {
+        "title": "Gmsh official overview, downloads and licensing",
+        "url": "https://gmsh.info/"
+      },
+      {
+        "title": "Gmsh reference manual",
+        "url": "https://gmsh.info/doc/texinfo/"
+      }
+    ]
+  },
+  {
+    "id": "zemax-opticstudio",
+    "name": "Ansys Zemax OpticStudio",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "avionics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "OpticStudio designs and analyzes optical systems such as lenses, imaging assemblies and illumination paths.",
+    "why": "It covers a distinct optical-payload and sensor-design branch that ordinary CAD and camera-image processing do not address. Consider it if you become interested in spacecraft cameras, star trackers or scientific instruments; basic OpenCV use alone does not require optical-design software.",
+    "firstProject": "Trace rays through a simple lens, compare the predicted image position with the thin-lens equation, and inspect how field angle changes the image quality.",
+    "prerequisites": [
+      "Geometrical optics",
+      "Refraction and focal length",
+      "Coordinate systems",
+      "Basic numerical interpretation"
+    ],
+    "alternatives": [
+      "CODE V",
+      "Optiland"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial optical-design software; a limited version is included in Ansys Student for verified eligible students and educators.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Ansys Zemax OpticStudio overview",
+        "url": "https://ansys.synopsys.com/products/optics/ansys-zemax-opticstudio"
+      },
+      {
+        "title": "Ansys Student eligibility and included products",
+        "url": "https://ansys.synopsys.com/academic/students/ansys-student"
+      }
+    ]
+  },
+  {
+    "id": "python-control",
+    "name": "Python Control Systems Library",
+    "kind": "Library",
+    "family": "Computing & controls",
+    "specialties": [
+      "gnc",
+      "robotics",
+      "testing"
+    ],
+    "summary": "The python-control package analyzes feedback systems using transfer functions, state-space models and time or frequency responses.",
+    "why": "It connects your Python foundation to later controls coursework and reproducible engineering notebooks. Learn the underlying dynamics first, then use it alongside MATLAB or Simulink to check simple models; it does not reproduce every commercial toolbox or course workflow.",
+    "firstProject": "Model a mass-spring-damper system, plot its step response for three damping ratios, and compare the trends with a hand calculation.",
+    "prerequisites": [
+      "Python and NumPy",
+      "Differential equations",
+      "Linear algebra",
+      "Introductory dynamic systems"
+    ],
+    "alternatives": [
+      "MATLAB Control System Toolbox",
+      "GNU Octave control package"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under a BSD-3-Clause license; some routines need the optional Slycot dependency.",
+    "platform": "Python on Windows, macOS and Linux; dependency installation varies by environment.",
+    "sources": [
+      {
+        "title": "Python Control Systems Library documentation",
+        "url": "https://python-control.readthedocs.io/en/latest/"
+      },
+      {
+        "title": "Official python-control repository, license and installation",
+        "url": "https://github.com/python-control/python-control"
+      }
+    ]
+  },
+  {
+    "id": "kicad",
+    "name": "KiCad",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "avionics",
+      "power",
+      "testing"
+    ],
+    "summary": "Draw electronic circuits and turn them into manufacturable printed circuit boards.",
+    "why": "Useful when a sensor-equipped mechanism outgrows a breadboard and needs reliable connectors, mounting holes and a compact board. Learn circuit reading and measurements first; owning the board design also means checking footprints, electrical rules and its mechanical fit.",
+    "firstProject": "Design a simple low-voltage temperature-sensor breakout with labeled connectors and mounting holes, inspect its 3D view beside your enclosure, and review every connection before ordering anything.",
+    "prerequisites": [
+      "Basic circuits and component datasheets",
+      "Breadboard measurements",
+      "Connector and mounting dimensions"
+    ],
+    "alternatives": [
+      "Altium Designer"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free, open-source software; fabrication and components are separate costs.",
+    "platform": "Windows, macOS and Linux",
+    "sources": [
+      {
+        "title": "KiCad: About the project",
+        "url": "https://www.kicad.org/about/kicad/"
+      }
+    ]
+  },
+  {
+    "id": "altium-designer",
+    "name": "Altium Designer",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "avionics",
+      "power",
+      "manufacturing"
+    ],
+    "summary": "Design circuit boards in an integrated environment for schematics, layout and manufacturing documentation.",
+    "why": "A useful next tool if an electronics team or employer already uses Altium for shared component libraries and board release. KiCad can teach the underlying craft first; learning two interfaces at once adds little before you understand a circuit and can inspect its physical implementation.",
+    "firstProject": "Rebuild a previously checked sensor breakout, associate each schematic symbol with the correct footprint, and produce a reviewed board drawing and bill of materials.",
+    "prerequisites": [
+      "Schematic and PCB fundamentals",
+      "Datasheet interpretation",
+      "Electrical and mechanical design checks"
+    ],
+    "alternatives": [
+      "KiCad"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Commercial product; Altium advertises free Student Lab access subject to eligibility and terms.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Altium Designer product and student access",
+        "url": "https://www.altium.com/altium-designer"
+      }
+    ]
+  },
+  {
+    "id": "ltspice",
+    "name": "LTspice",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "power",
+      "avionics",
+      "testing"
+    ],
+    "summary": "Simulate analog circuits and inspect voltages and currents before building them.",
+    "why": "An approachable companion to basic electronics when learning sensor filters, amplifiers or power supplies. It makes the relationship between a circuit and its time response visible, but the result still depends on the component models, operating conditions and parasitic effects you include.",
+    "firstProject": "Simulate a resistor-capacitor low-pass filter, predict its time constant by hand, and compare the simulation with a low-voltage breadboard measurement.",
+    "prerequisites": [
+      "Ohm's law and series/parallel circuits",
+      "Capacitance and time constants",
+      "Reading voltage plots and units"
+    ],
+    "alternatives": [
+      "ngspice",
+      "KiCad SPICE simulation"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free proprietary simulator from Analog Devices.",
+    "platform": "Windows and macOS; supported versions and CPU architectures vary by release.",
+    "sources": [
+      {
+        "title": "Analog Devices: LTspice downloads and tutorials",
+        "url": "https://www.analog.com/en/resources/design-tools-and-calculators/ltspice-simulator.html"
+      }
+    ]
+  },
+  {
+    "id": "ngspice",
+    "name": "ngspice",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "power",
+      "avionics",
+      "testing"
+    ],
+    "summary": "Run open-source analog and mixed-signal circuit simulations from circuit descriptions.",
+    "why": "Useful for repeatable circuit experiments, parameter sweeps and integration into a script-based workflow. The core program accepts netlists rather than providing its own schematic editor, so it is a natural choice when you want to see exactly which connections and models a simulation contains.",
+    "firstProject": "Describe a small resistor-capacitor circuit in a netlist, sweep its resistance, and explain how the output changes relative to a hand calculation.",
+    "prerequisites": [
+      "Basic analog circuits",
+      "Text files and command-line basics",
+      "SPICE model assumptions"
+    ],
+    "alternatives": [
+      "LTspice",
+      "KiCad SPICE simulation"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free, open-source simulator; external component models may have their own terms.",
+    "platform": "Windows, Linux and macOS builds or packages are available.",
+    "sources": [
+      {
+        "title": "ngspice: Official project overview",
+        "url": "https://ngspice.sourceforge.io/"
+      }
+    ]
+  },
+  {
+    "id": "ansys-hfss",
+    "name": "Ansys HFSS",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "rf",
+      "avionics",
+      "defense"
+    ],
+    "summary": "Solve three-dimensional electromagnetic fields around antennas, connectors and high-frequency electronics.",
+    "why": "Relevant if antennas, radio links or electromagnetic compatibility become your specialty. This is a later electrical-engineering branch: field plots become meaningful only when you understand excitation, boundaries, meshing and what measurements would validate the model.",
+    "firstProject": "Reproduce a vendor tutorial for a simple transmission-line structure, vary the mesh resolution, and compare the predicted response with an analytical reference.",
+    "prerequisites": [
+      "Electromagnetism and vector calculus",
+      "Transmission lines and frequency response",
+      "Numerical convergence and boundary conditions"
+    ],
+    "alternatives": [
+      "CST Studio Suite"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Commercial product; a limited student option is available through Ansys Electronics Desktop Student.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Ansys: HFSS electromagnetic simulation and student access",
+        "url": "https://ansys.synopsys.com/products/electronics/ansys-hfss"
+      }
+    ]
+  },
+  {
+    "id": "cst-studio-suite",
+    "name": "CST Studio Suite",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "rf",
+      "avionics",
+      "power",
+      "defense"
+    ],
+    "summary": "Analyze electromagnetic components and systems with a collection of three-dimensional field solvers.",
+    "why": "A specialist option for antennas, interference, electrical machines and other electromagnetic problems. Choose it when the lab's methods, licenses and reference models support it; acquiring competence in one validated workflow matters more than collecting experience with multiple field-solver interfaces.",
+    "firstProject": "Use a documented tutorial to study a passive electromagnetic component, then report which boundary and mesh changes affect its predicted response.",
+    "prerequisites": [
+      "Electric and magnetic fields",
+      "Frequency-domain analysis",
+      "Mesh convergence and validation"
+    ],
+    "alternatives": [
+      "Ansys HFSS"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Commercial suite with a free, limited CST Studio Suite Learning Edition; full capabilities depend on your institution's or employer's license and modules.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Dassault Systèmes: CST Studio Suite",
+        "url": "https://www.3ds.com/products/simulia/cst-studio-suite"
+      }
+    ]
+  },
+  {
+    "id": "keysight-ads",
+    "name": "Keysight Advanced Design System (ADS)",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "rf",
+      "avionics",
+      "power"
+    ],
+    "summary": "Design and simulate high-frequency circuits with linked circuit, electromagnetic and system models.",
+    "why": "Fits a committed RF-electronics path involving filters, radio modules or high-speed interconnects. It complements field solvers by helping reason about the circuit around the electromagnetic structure; it is a substantial specialization rather than an early aerospace prerequisite.",
+    "firstProject": "Model a passive low-pass filter, inspect its frequency response, and compare ideal components with a documented model that includes component losses.",
+    "prerequisites": [
+      "Analog circuits and complex impedance",
+      "Signals and frequency response",
+      "RF network parameters"
+    ],
+    "alternatives": [
+      "Cadence AWR Design Environment",
+      "LTspice for simpler lumped circuits"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial design software; access depends on institution, employer or evaluation terms.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Keysight: Advanced Design System",
+        "url": "https://www.keysight.com/us/en/products/design-engineering-software/electronic-design-automation/advanced-design-system-ads.html"
+      }
+    ]
+  },
+  {
+    "id": "gnu-radio",
+    "name": "GNU Radio",
+    "kind": "Framework",
+    "family": "Electronics & RF",
+    "specialties": [
+      "rf",
+      "avionics",
+      "testing"
+    ],
+    "summary": "Connect signal-processing blocks to explore software-defined radios and communications systems.",
+    "why": "A useful way to discover whether you enjoy signals, filtering and communications without buying RF equipment immediately. Start with simulated signals so you can inspect each transformation and connect it to the mathematics before introducing hardware and its additional uncertainties.",
+    "firstProject": "Generate a simple simulated tone with added noise, filter it, and compare the time waveform and frequency spectrum before and after processing.",
+    "prerequisites": [
+      "Python basics",
+      "Sampling and frequency",
+      "Complex numbers and introductory signals"
+    ],
+    "alternatives": [
+      "Python with SciPy",
+      "MATLAB communications tools"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free, open-source toolkit; optional radio hardware is separate.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "GNU Radio: About the toolkit",
+        "url": "https://www.gnuradio.org/about/"
+      }
+    ]
+  },
+  {
+    "id": "amd-vivado",
+    "name": "AMD Vivado",
+    "kind": "Environment",
+    "family": "Electronics & RF",
+    "specialties": [
+      "avionics",
+      "rf",
+      "defense"
+    ],
+    "summary": "Turn digital hardware descriptions into circuits implemented on supported AMD FPGAs.",
+    "why": "Worth learning if you choose FPGA-based instrumentation, digital processing or avionics hardware. FPGA development requires reasoning about simultaneous operations, clocks and timing, which is a different skill from writing a normal sequential Python program.",
+    "firstProject": "Simulate a clocked counter with a reset and a testbench, then implement it on a supported learning board and compare observed behavior with the simulation.",
+    "prerequisites": [
+      "Digital logic and binary arithmetic",
+      "Verilog or VHDL",
+      "Clocks, resets and timing constraints"
+    ],
+    "alternatives": [
+      "Altera Quartus Prime for Altera devices"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Current Basic tier is free with annual renewal and limited devices/features; other tiers are commercial.",
+    "platform": "Windows and Linux; verify the release's supported distributions and devices.",
+    "sources": [
+      {
+        "title": "AMD: Vivado overview",
+        "url": "https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vivado.html"
+      },
+      {
+        "title": "AMD: Current Vivado licensing options",
+        "url": "https://www.amd.com/en/products/software/adaptive-socs-and-fpgas/vivado/vivado-licensing-options.html"
+      }
+    ]
+  },
+  {
+    "id": "altera-quartus-prime",
+    "name": "Altera Quartus Prime",
+    "kind": "Environment",
+    "family": "Electronics & RF",
+    "specialties": [
+      "avionics",
+      "rf",
+      "testing"
+    ],
+    "summary": "Compile, analyze and implement digital hardware designs for supported Altera FPGA devices.",
+    "why": "The appropriate FPGA environment when your course, board or employer uses the Altera device family. Learn one device ecosystem first; transferable knowledge includes hardware description, testbenches, resource use and timing analysis rather than memorizing every vendor menu.",
+    "firstProject": "Write and simulate a small finite-state machine for a harmless indicator panel, then check synthesis and timing reports before using a compatible board.",
+    "prerequisites": [
+      "Digital logic",
+      "Verilog or VHDL and testbenches",
+      "Clocking and timing analysis"
+    ],
+    "alternatives": [
+      "AMD Vivado for AMD devices"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Lite Edition is free for selected devices with limited features; Standard and Pro licensing differs.",
+    "platform": "Windows and Linux; supported operating-system versions vary by edition and release.",
+    "sources": [
+      {
+        "title": "Altera: Quartus Prime software licenses",
+        "url": "https://docs.altera.com/r/docs/683472/25.3/altera-fpga-software-installation-and-licensing/quartus-prime-software-license"
+      },
+      {
+        "title": "Altera: Operating-system support",
+        "url": "https://www.altera.com/developers/software/os-support"
+      }
+    ]
+  },
+  {
+    "id": "labview",
+    "name": "NI LabVIEW",
+    "kind": "Environment",
+    "family": "Testing & optimization",
+    "specialties": [
+      "testing",
+      "avionics",
+      "manufacturing",
+      "power"
+    ],
+    "summary": "Build graphical programs that acquire measurements, control instruments and display test results.",
+    "why": "Useful when a university laboratory or test team already relies on NI hardware and instrument drivers. Python remains a strong general foundation; learn LabVIEW when it helps you operate an actual experiment and understand data flow, timing and measurement quality.",
+    "firstProject": "Create an instrument-style dashboard from a simulated temperature signal, log samples with timestamps, and deliberately trigger an out-of-range indicator.",
+    "prerequisites": [
+      "Basic programming and data flow",
+      "Sampling and sensor calibration",
+      "Instrument interfaces and measurement uncertainty"
+    ],
+    "alternatives": [
+      "Python with instrument-control libraries",
+      "MATLAB data-acquisition tools"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial environment with evaluation and institutional options; choose a license appropriate to your use.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "NI: What is LabVIEW?",
+        "url": "https://www.ni.com/en/shop/labview.html"
+      }
+    ]
+  },
+  {
+    "id": "ni-teststand",
+    "name": "NI TestStand",
+    "kind": "Application",
+    "family": "Testing & optimization",
+    "specialties": [
+      "testing",
+      "manufacturing",
+      "avionics"
+    ],
+    "summary": "Organize test steps, execute measurement code and produce consistent test reports.",
+    "why": "Relevant to verification and production testing after you can already write or understand individual measurements. It manages the sequence around code written in tools such as Python or LabVIEW, helping distinguish a repeatable test procedure from an improvised demonstration.",
+    "firstProject": "Create a sequence that checks three synthetic sensor readings against documented limits, records a pass or fail for each, and generates a report for two simulated units.",
+    "prerequisites": [
+      "Measurement programming",
+      "Pass/fail criteria and test coverage",
+      "Repeatable data logging"
+    ],
+    "alternatives": [
+      "Python-based test automation",
+      "dSPACE AutomationDesk for suitable control-system tests"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Commercial test-management software; usually learned through an equipped lab or employer.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "NI: What is TestStand?",
+        "url": "https://www.ni.com/en/shop/electronic-test-instrumentation/application-software-for-electronic-test-and-instrumentation-category/what-is-teststand.html"
+      }
+    ]
+  },
+  {
+    "id": "dspace-controldesk",
+    "name": "dSPACE ControlDesk",
+    "kind": "Application",
+    "family": "Testing & optimization",
+    "specialties": [
+      "testing",
+      "gnc",
+      "avionics"
+    ],
+    "summary": "Observe and adjust control-system experiments connected to real-time simulation and hardware.",
+    "why": "Useful in a controls lab that tests real controllers against simulated equipment before a full physical experiment. Its value comes from the complete test setup, including models, interfaces and timing; it is not an essential standalone installation for a beginner.",
+    "firstProject": "In an equipped lab, monitor a simulated temperature controller, vary its setpoint, and record settling time and tracking error using a documented experiment layout.",
+    "prerequisites": [
+      "Feedback control and dynamic models",
+      "Real-time sampling",
+      "Lab instrumentation and test planning"
+    ],
+    "alternatives": [
+      "NI VeriStand",
+      "Simulink Real-Time workflows"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Commercial experiment software; practical use depends on the lab's licensed modules and connected platforms.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "dSPACE: ControlDesk experiment software",
+        "url": "https://www.dspace.com/en/pub/home/products/sw/experimentandvisualization/controldesk.cfm"
+      }
+    ]
+  },
+  {
+    "id": "openmdao",
+    "name": "OpenMDAO",
+    "kind": "Framework",
+    "family": "Testing & optimization",
+    "specialties": [
+      "systems",
+      "testing",
+      "power",
+      "gnc"
+    ],
+    "summary": "Connect engineering models and optimize design choices across interacting disciplines.",
+    "why": "Useful when a design trade involves coupled effects such as mass, power and thermal performance. Begin after writing and checking the component calculations yourself; an optimizer searches the model you provide and cannot correct missing physics or unrealistic constraints.",
+    "firstProject": "Connect simple mass and electrical-power models for an instrument box, choose explicit design limits, and compare the optimum with a small manually checked parameter sweep.",
+    "prerequisites": [
+      "Python and numerical arrays",
+      "Calculus and numerical optimization",
+      "Model verification and derivatives"
+    ],
+    "alternatives": [
+      "SciPy optimize for smaller problems",
+      "MATLAB optimization tools"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free, open-source Python framework; optional solver and computing dependencies have separate requirements.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "OpenMDAO: Official documentation",
+        "url": "https://openmdao.org/newdocs/versions/latest/"
+      }
+    ]
+  },
+  {
+    "id": "dymos",
+    "name": "Dymos",
+    "kind": "Library",
+    "family": "Testing & optimization",
+    "specialties": [
+      "gnc",
+      "systems",
+      "power"
+    ],
+    "summary": "Solve optimal-control problems while linking time-dependent behavior to a broader engineering design.",
+    "why": "A later extension of the OpenMDAO path when decisions vary over time and interact with subsystem sizing. It requires understanding differential equations, constraints and numerical transcription so you can evaluate whether a computed solution is accurate and physically meaningful.",
+    "firstProject": "Optimize the heating schedule of a simulated insulated box under a power limit, then independently simulate the resulting schedule and check temperature constraints.",
+    "prerequisites": [
+      "Python and OpenMDAO",
+      "Ordinary differential equations",
+      "Constrained optimization and convergence checks"
+    ],
+    "alternatives": [
+      "CasADi",
+      "MATLAB optimal-control workflows"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Free, open-source Python library built around OpenMDAO; optional optimization solvers may need separate licenses.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Dymos: Multidisciplinary optimal control library",
+        "url": "https://openmdao.github.io/dymos/"
+      }
+    ]
+  },
+  {
+    "id": "modelica",
+    "name": "Modelica",
+    "kind": "Language",
+    "family": "Systems & verification",
+    "specialties": [
+      "systems",
+      "power",
+      "gnc"
+    ],
+    "summary": "Describe connected physical components through equations rather than a fixed sequence of calculations.",
+    "why": "Useful for learning how electrical, mechanical and thermal subsystems interact in one dynamic model. Modelica is a language, so you use it through a compatible tool such as OpenModelica; it does not replace the physics needed to select and check the equations.",
+    "firstProject": "Write a thermal-capacitance component connected to a heat-loss element, simulate a heating-and-cooling cycle, and compare it with a first-order analytical solution.",
+    "prerequisites": [
+      "Conservation laws and units",
+      "Ordinary differential equations",
+      "Introductory component modeling"
+    ],
+    "alternatives": [
+      "Simscape modeling",
+      "Explicit Python differential-equation models"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Open modeling language; tools and component libraries have their own licenses.",
+    "platform": "Depends on the chosen Modelica tool; OpenModelica provides several desktop-platform options.",
+    "sources": [
+      {
+        "title": "Modelica Association: Language and tools",
+        "url": "https://modelica.org/"
+      },
+      {
+        "title": "OpenModelica: Supported download routes",
+        "url": "https://openmodelica.org/"
+      }
+    ]
+  },
+  {
+    "id": "openmodelica",
+    "name": "OpenModelica",
+    "kind": "Environment",
+    "family": "Systems & verification",
+    "specialties": [
+      "systems",
+      "power",
+      "gnc"
+    ],
+    "summary": "Build, compile and simulate physical-system models written in the Modelica language.",
+    "why": "An accessible route into equation-based modeling when exploring coupled mechanical, electrical or thermal behavior. Treat component libraries as models with assumptions to inspect; verify that the particular library and features you need are supported before building a large system around them.",
+    "firstProject": "Assemble a simple motor-and-load demonstration from a compatible library, compare startup behavior at two loads, and check an energy balance over the run.",
+    "prerequisites": [
+      "Modelica basics",
+      "Dynamics and electrical fundamentals",
+      "Solver tolerances and model validation"
+    ],
+    "alternatives": [
+      "Dymola",
+      "Simscape"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free, open-source modeling and simulation environment; library compatibility and licensing vary.",
+    "platform": "Windows, Linux and macOS download routes, plus container and virtual-machine options.",
+    "sources": [
+      {
+        "title": "OpenModelica: Project introduction and downloads",
+        "url": "https://openmodelica.org/"
+      }
+    ]
+  },
+  {
+    "id": "sysml",
+    "name": "SysML",
+    "kind": "Language",
+    "family": "Systems & verification",
+    "specialties": [
+      "systems",
+      "testing",
+      "avionics",
+      "defense"
+    ],
+    "summary": "Use a structured modeling language to describe a system's parts, behavior, requirements and relationships.",
+    "why": "Useful when a project becomes too interconnected for separate informal diagrams to stay consistent. Learn clear requirements and interface thinking first; SysML is a language rather than an app, and a team's version and modeling conventions determine the tool you should use.",
+    "firstProject": "Model a small environmental-monitoring station, identify its sensor, power and logging interfaces, and connect each stated requirement to a proposed verification activity.",
+    "prerequisites": [
+      "Requirements and interfaces",
+      "Functional decomposition",
+      "Basic verification planning"
+    ],
+    "alternatives": [
+      "Arcadia with Capella",
+      "Simple documented diagrams for small projects"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "OMG publishes the specification; modeling-tool licenses vary. SysML v1 and v2 workflows both need version awareness.",
+    "platform": "Depends on the selected modeling application.",
+    "sources": [
+      {
+        "title": "OMG: SysML specification and version history",
+        "url": "https://www.omg.org/spec/SysML"
+      }
+    ]
+  },
+  {
+    "id": "cameo-systems-modeler",
+    "name": "Cameo Systems Modeler",
+    "kind": "Environment",
+    "family": "Systems & verification",
+    "specialties": [
+      "systems",
+      "avionics",
+      "testing",
+      "defense"
+    ],
+    "summary": "Create connected systems-engineering models and trace requirements to design elements and tests.",
+    "why": "Relevant when a systems team uses a shared SysML model to coordinate hardware, software and verification. Learn enough to read and contribute to that team's conventions; a large model is only useful when its relationships are maintained and answer real engineering questions.",
+    "firstProject": "Represent an instrument package's main components and interfaces, link a handful of requirements to verification cases, and review the resulting traceability matrix for gaps.",
+    "prerequisites": [
+      "SysML concepts",
+      "Requirement quality and traceability",
+      "Team modeling conventions"
+    ],
+    "alternatives": [
+      "Capella with the Arcadia method",
+      "Other SysML modeling tools"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial modeling environment; use institution or employer access and check supported language versions.",
+    "platform": "Cross-platform product; check current vendor requirements for the chosen release.",
+    "sources": [
+      {
+        "title": "Dassault Systèmes: Cameo Systems Modeler",
+        "url": "https://www.3ds.com/products/catia/no-magic/cameo-systems-modeler"
+      }
+    ]
+  },
+  {
+    "id": "capella",
+    "name": "Capella",
+    "kind": "Environment",
+    "family": "Systems & verification",
+    "specialties": [
+      "systems",
+      "testing",
+      "avionics",
+      "defense"
+    ],
+    "summary": "Develop a structured system architecture using the Arcadia engineering method.",
+    "why": "A free entry into model-based systems engineering when you want to connect operational needs, functions and physical implementation. It implements Arcadia rather than simply being a free clone of a SysML tool; learning the method is part of using it well.",
+    "firstProject": "Model how an environmental-monitoring station senses, stores and reports data, then allocate those functions to a sensor board, controller and user interface.",
+    "prerequisites": [
+      "System boundaries and stakeholders",
+      "Functions and interfaces",
+      "Basic Arcadia concepts"
+    ],
+    "alternatives": [
+      "Cameo Systems Modeler with SysML",
+      "Simple architecture diagrams for small projects"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free, open-source core; commercial extensions, support and collaboration services are available separately.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Capella: Open-source MBSE tool and Arcadia method",
+        "url": "https://mbse-capella.org/"
+      }
+    ]
+  },
+  {
+    "id": "ibm-doors-next",
+    "name": "IBM DOORS Next",
+    "kind": "Application",
+    "family": "Systems & verification",
+    "specialties": [
+      "systems",
+      "testing",
+      "avionics",
+      "defense"
+    ],
+    "summary": "Manage requirements, review changes and maintain links to the evidence that verifies them.",
+    "why": "Important in organizations coordinating many requirements across teams and suppliers. Learn measurable requirements, stable identifiers and change control before investing in this interface; small personal projects can practice the same reasoning in a table without deploying an enterprise platform.",
+    "firstProject": "In a training project, record ten requirements for a sensor enclosure, assign verification methods, and trace the impact of changing one temperature or mounting requirement.",
+    "prerequisites": [
+      "Measurable requirements",
+      "Verification methods and evidence",
+      "Configuration and change management"
+    ],
+    "alternatives": [
+      "Jama Connect",
+      "A requirements table for small projects"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Commercial enterprise product; usually accessed through a team. DOORS Next and classic DOORS are distinct products.",
+    "platform": "Web-based client; deployment and supported-browser requirements depend on the installation.",
+    "sources": [
+      {
+        "title": "IBM: Engineering requirements management options",
+        "url": "https://www.ibm.com/products/requirements-management"
+      },
+      {
+        "title": "IBM: Overview of DOORS Next",
+        "url": "https://www.ibm.com/docs/en/engineering-lifecycle-management-suite/doors-next/7.1.0?topic=overview-doors-next"
+      }
+    ]
+  },
+  {
+    "id": "jama-connect",
+    "name": "Jama Connect",
+    "kind": "Application",
+    "family": "Systems & verification",
+    "specialties": [
+      "systems",
+      "testing",
+      "avionics",
+      "manufacturing"
+    ],
+    "summary": "Keep requirements, reviews and verification information connected as a product changes.",
+    "why": "Useful when an engineering organization needs shared traceability across mechanical, electrical and software work. Its main learning value is understanding how a changed requirement affects design and tests; software-generated links or text still require engineering review and evidence.",
+    "firstProject": "Build a small example requirements set for a data logger, review it with another person, and record which verification cases must change when battery endurance is revised.",
+    "prerequisites": [
+      "Requirement writing",
+      "Review and change-control habits",
+      "Verification coverage"
+    ],
+    "alternatives": [
+      "IBM DOORS Next",
+      "A requirements table for small projects"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Commercial platform with trial and demonstration routes; team licenses and terms determine access.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Jama Software: Jama Connect platform",
+        "url": "https://www.jamasoftware.com/platform/jama-connect/"
+      }
+    ]
+  },
+  {
+    "id": "siemens-teamcenter",
+    "name": "Siemens Teamcenter",
+    "kind": "Application",
+    "family": "Systems & verification",
+    "specialties": [
+      "manufacturing",
+      "systems",
+      "testing",
+      "defense"
+    ],
+    "summary": "Coordinate product data and lifecycle processes across engineering, manufacturing and service teams.",
+    "why": "Relevant when a product has many parts, revisions and contributors who must build the same approved configuration. Learn part numbering, bills of materials and release discipline first; use Teamcenter when a team supplies a configured environment and real collaboration needs.",
+    "firstProject": "In a training environment, register a small enclosure assembly and its drawings, propose one dimensional change, and follow the team's review and revision process.",
+    "prerequisites": [
+      "CAD assemblies and drawings",
+      "Bills of materials and revisions",
+      "Engineering change management"
+    ],
+    "alternatives": [
+      "PTC Windchill",
+      "CAD-specific PDM systems"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Commercial PLM platform with cloud and on-premises deployment options; usually employer-provided.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Siemens: Teamcenter product lifecycle management",
+        "url": "https://www.siemens.com/en-us/products/teamcenter/"
+      }
+    ]
+  },
+  {
+    "id": "ptc-windchill",
+    "name": "PTC Windchill",
+    "kind": "Application",
+    "family": "Systems & verification",
+    "specialties": [
+      "manufacturing",
+      "systems",
+      "testing",
+      "defense"
+    ],
+    "summary": "Manage product definitions, engineering changes and manufacturing information through a product's lifecycle.",
+    "why": "Useful in organizations that need controlled collaboration around parts, assemblies, drawings and suppliers. The important skill is knowing which configuration is approved and how evidence follows a revision; learn the specific application after joining a team that actually uses it.",
+    "firstProject": "Follow a training change request for a sensor enclosure, identify affected parts and documents, and verify that the revised bill of materials matches the released drawing set.",
+    "prerequisites": [
+      "CAD document management",
+      "Bills of materials and release states",
+      "Configuration-control basics"
+    ],
+    "alternatives": [
+      "Siemens Teamcenter",
+      "CAD-specific PDM systems"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Commercial enterprise PLM software; access normally comes through an institution or employer deployment.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "PTC: Windchill product lifecycle management",
+        "url": "https://www.ptc.com/en/products/windchill"
+      }
+    ]
+  }
+]

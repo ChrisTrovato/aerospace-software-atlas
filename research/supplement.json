@@ -1,0 +1,190 @@
+[
+  {
+    "id": "comsol-multiphysics",
+    "name": "COMSOL Multiphysics",
+    "kind": "Environment",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "thermal",
+      "fluids",
+      "structures",
+      "materials",
+      "power"
+    ],
+    "summary": "COMSOL builds and solves models that couple heat transfer, structural mechanics, electrical effects and other physical processes.",
+    "why": "It fills a useful research niche when several physical effects interact or you need to inspect and adapt the governing equations. Choose it for a specific coupled problem and available laboratory license; it is not necessary to learn it alongside every separate structural or CFD package.",
+    "firstProject": "Model heat conduction through a two-material plate, compare the interface temperatures with a thermal-resistance calculation, and test sensitivity to mesh density.",
+    "prerequisites": [
+      "Heat transfer",
+      "Relevant differential equations",
+      "Finite-element basics",
+      "Model verification"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "Ansys Fluent",
+      "OpenFOAM"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial and academic licenses; required modules and institutional rights vary. Do not assume a universal free student edition.",
+    "platform": "Windows, macOS and Linux; module and hardware requirements vary.",
+    "sources": [
+      {
+        "title": "COMSOL Multiphysics capabilities",
+        "url": "https://www.comsol.com/comsol-multiphysics"
+      },
+      {
+        "title": "COMSOL license options",
+        "url": "https://www.comsol.com/products/licensing"
+      },
+      {
+        "title": "COMSOL system requirements",
+        "url": "https://www.comsol.com/system-requirements/64/general"
+      }
+    ]
+  },
+  {
+    "id": "adams",
+    "name": "Adams",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "structures",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Adams simulates the dynamics of mechanisms assembled from moving parts, joints, forces and other mechanical elements.",
+    "why": "It adds a dedicated multibody-engineering workflow for studying deployment mechanisms, linkages and actuator loads. Use it when a mechanism project or employer needs that level of analysis; first understand the difference between animating prescribed motion and predicting motion from forces.",
+    "firstProject": "Build a simple pendulum or four-bar linkage, compare its motion with a hand calculation, and inspect the joint reactions as you vary one load.",
+    "prerequisites": [
+      "Rigid-body dynamics",
+      "Kinematics",
+      "Differential equations",
+      "Mechanical CAD"
+    ],
+    "alternatives": [
+      "Simscape Multibody",
+      "MuJoCo",
+      "Simpack"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial multibody-dynamics software; institutional or employer access and licensed modules determine available capabilities.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Hexagon Adams capabilities",
+        "url": "https://nexus.hexagon.com/home/product/adams/"
+      },
+      {
+        "title": "Hexagon Adams for robotics",
+        "url": "https://go.de.mi.hexagon.com/2026_Adams_for_Robotics"
+      }
+    ]
+  },
+  {
+    "id": "gmsh",
+    "name": "Gmsh",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "fluids",
+      "thermal",
+      "testing"
+    ],
+    "summary": "Gmsh generates meshes from geometric models and exposes both an interactive interface and programmable geometry and meshing tools.",
+    "why": "It fills the step between geometry and many open-source numerical solvers. Learn it when your analysis needs controlled meshes or repeatable refinement, keeping element quality and boundary labels explicit; producing a mesh does not itself solve or validate the engineering problem.",
+    "firstProject": "Create a plate with a circular hole, label its boundaries, generate three mesh densities, and compare element quality before exporting to a compatible solver.",
+    "prerequisites": [
+      "Geometry",
+      "Mesh and element concepts",
+      "A chosen numerical solver",
+      "Basic scripting for automation"
+    ],
+    "alternatives": [
+      "HyperMesh",
+      "Abaqus meshing",
+      "Ansys Mechanical meshing"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source under GPL terms; separate licensing is available for some closed-source integration needs.",
+    "platform": "Windows, Linux and macOS downloads; Python and other language interfaces are available.",
+    "sources": [
+      {
+        "title": "Gmsh official overview, downloads and licensing",
+        "url": "https://gmsh.info/"
+      },
+      {
+        "title": "Gmsh reference manual",
+        "url": "https://gmsh.info/doc/texinfo/"
+      }
+    ]
+  },
+  {
+    "id": "zemax-opticstudio",
+    "name": "Ansys Zemax OpticStudio",
+    "kind": "Application",
+    "family": "Electronics & RF",
+    "specialties": [
+      "avionics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "OpticStudio designs and analyzes optical systems such as lenses, imaging assemblies and illumination paths.",
+    "why": "It covers a distinct optical-payload and sensor-design branch that ordinary CAD and camera-image processing do not address. Consider it if you become interested in spacecraft cameras, star trackers or scientific instruments; basic OpenCV use alone does not require optical-design software.",
+    "firstProject": "Trace rays through a simple lens, compare the predicted image position with the thin-lens equation, and inspect how field angle changes the image quality.",
+    "prerequisites": [
+      "Geometrical optics",
+      "Refraction and focal length",
+      "Coordinate systems",
+      "Basic numerical interpretation"
+    ],
+    "alternatives": [
+      "CODE V",
+      "Optiland"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial optical-design software; a limited version is included in Ansys Student for verified eligible students and educators.",
+    "platform": "Check current vendor requirements",
+    "sources": [
+      {
+        "title": "Ansys Zemax OpticStudio overview",
+        "url": "https://ansys.synopsys.com/products/optics/ansys-zemax-opticstudio"
+      },
+      {
+        "title": "Ansys Student eligibility and included products",
+        "url": "https://ansys.synopsys.com/academic/students/ansys-student"
+      }
+    ]
+  },
+  {
+    "id": "python-control",
+    "name": "Python Control Systems Library",
+    "kind": "Library",
+    "family": "Computing & controls",
+    "specialties": ["gnc", "robotics", "testing"],
+    "summary": "The python-control package analyzes feedback systems using transfer functions, state-space models and time or frequency responses.",
+    "why": "It connects your Python foundation to later controls coursework and reproducible engineering notebooks. Learn the underlying dynamics first, then use it alongside MATLAB or Simulink to check simple models; it does not reproduce every commercial toolbox or course workflow.",
+    "firstProject": "Model a mass-spring-damper system, plot its step response for three damping ratios, and compare the trends with a hand calculation.",
+    "prerequisites": ["Python and NumPy", "Differential equations", "Linear algebra", "Introductory dynamic systems"],
+    "alternatives": ["MATLAB Control System Toolbox", "GNU Octave control package"],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under a BSD-3-Clause license; some routines need the optional Slycot dependency.",
+    "platform": "Python on Windows, macOS and Linux; dependency installation varies by environment.",
+    "sources": [
+      {"title": "Python Control Systems Library documentation", "url": "https://python-control.readthedocs.io/en/latest/"},
+      {"title": "Official python-control repository, license and installation", "url": "https://github.com/python-control/python-control"}
+    ]
+  }
+]

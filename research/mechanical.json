@@ -1,0 +1,1020 @@
+[
+  {
+    "id": "freecad",
+    "name": "FreeCAD",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "FreeCAD creates dimensioned, parametric solid models and drawings for parts you intend to fabricate.",
+    "why": "It offers an immediate route into mechanical design without student verification or a subscription. Choose it as your primary beginner CAD package if access or ownership matters most, then transfer the underlying sketch, constraint and assembly skills when a team requires another tool.",
+    "firstProject": "Model a removable equipment cartridge and housing, make a dimensioned drawing, and revise the clearance after measuring a cardboard or printed prototype.",
+    "prerequisites": [
+      "Basic geometry",
+      "Units and measurement",
+      "Sketch constraints"
+    ],
+    "alternatives": [
+      "SOLIDWORKS",
+      "Autodesk Fusion",
+      "Onshape"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free and open source; no student eligibility required.",
+    "platform": "Windows, macOS and Linux.",
+    "sources": [
+      {
+        "title": "FreeCAD official overview",
+        "url": "https://www.freecad.org/"
+      },
+      {
+        "title": "FreeCAD source and releases",
+        "url": "https://github.com/FreeCAD/FreeCAD"
+      }
+    ]
+  },
+  {
+    "id": "solidworks",
+    "name": "SOLIDWORKS",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "SOLIDWORKS provides parametric parts, assemblies and technical drawings for mechanical product development.",
+    "why": "This is a strong primary CAD choice for your equipment mechanisms and student engineering teams. You do not need to master FreeCAD first: start here if eligible access is available, and concentrate on design intent, tolerances and explainable drawings rather than collecting CAD certificates.",
+    "firstProject": "Create a cartridge, guide rails and latch as separate parts; assemble them, check motion and interference, and produce drawings for a second person to fabricate.",
+    "prerequisites": [
+      "Basic geometry",
+      "Measurement",
+      "Manufacturing tolerances"
+    ],
+    "alternatives": [
+      "FreeCAD",
+      "Autodesk Fusion",
+      "Onshape"
+    ],
+    "priority": "core",
+    "start": "2026–2027",
+    "depth": "Proficient",
+    "access": "Free Design Standard for qualified students; renewable annual access. Simulation and other add-ins require another entitlement.",
+    "platform": "Windows PC for the desktop student edition.",
+    "sources": [
+      {
+        "title": "SOLIDWORKS student offer and FAQ",
+        "url": "https://www.solidworks.com/product/students/design-standard"
+      }
+    ]
+  },
+  {
+    "id": "autodesk-fusion",
+    "name": "Autodesk Fusion",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "Fusion combines mechanical CAD, manufacturing preparation and related design tools in a connected product-development application.",
+    "why": "It is an alternative primary CAD tool, especially when a makerspace uses its machining workflow. Learning Fusion alongside several other CAD packages would add little early value; choose it because a project, class or fabrication mentor gives you a practical reason.",
+    "firstProject": "Design a small sensor enclosure, create a fitted lid and mounting holes, then compare a printed prototype with the original dimensions.",
+    "prerequisites": [
+      "Sketch constraints",
+      "Units and measurement",
+      "Basic fabrication"
+    ],
+    "alternatives": [
+      "FreeCAD",
+      "SOLIDWORKS",
+      "Onshape"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Paid subscriptions; eligible students have education access. Free personal use has noncommercial eligibility and feature restrictions.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Fusion personal-use scope",
+        "url": "https://www.autodesk.com/products/fusion-360/personal"
+      },
+      {
+        "title": "Fusion education eligibility",
+        "url": "https://www.autodesk.com/support/technical/article/caas/sfdcarticles/Do-I-qualify-for-free-use-of-Fusion-360.html"
+      }
+    ]
+  },
+  {
+    "id": "onshape",
+    "name": "Onshape",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "Onshape is browser-based mechanical CAD with integrated document history, branching and collaboration.",
+    "why": "It can make shared student design work convenient across your laptop and desktop. Treat it as an alternative to your main CAD package unless a team adopts it; the particularly useful extra lesson is coordinating changes to a shared assembly without overwriting other people's work.",
+    "firstProject": "Build a two-part inspection fixture, save a named version, and create a branch that changes its camera position while preserving the original design.",
+    "prerequisites": [
+      "Basic geometry",
+      "Sketch constraints",
+      "Assembly relationships"
+    ],
+    "alternatives": [
+      "SOLIDWORKS",
+      "FreeCAD",
+      "Autodesk Fusion"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free plan is noncommercial with public documents; separate education and paid plans have different conditions.",
+    "platform": "Supported web browser; internet connection required.",
+    "sources": [
+      {
+        "title": "Onshape plans and conditions",
+        "url": "https://www.onshape.com/en/pricing"
+      },
+      {
+        "title": "Onshape education",
+        "url": "https://www.onshape.com/en/education/"
+      }
+    ]
+  },
+  {
+    "id": "siemens-nx",
+    "name": "Siemens NX",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "aircraft",
+      "structures"
+    ],
+    "summary": "NX combines advanced mechanical CAD and CAM for detailed parts, surfaces and assemblies.",
+    "why": "Consider NX when an internship, laboratory or aerospace manufacturing team uses it. Existing parametric CAD ability transfers, but large assemblies, data conventions and manufacturing practices require focused experience; learning it before you can finish a small assembly in one simpler tool would dilute your progress.",
+    "firstProject": "Recreate an existing bracket assembly, document which dimensions control its interfaces, and compare two manufacturing approaches without changing the required fit.",
+    "prerequisites": [
+      "Confident parametric CAD",
+      "Technical drawings",
+      "Manufacturing fundamentals"
+    ],
+    "alternatives": [
+      "CATIA",
+      "Creo",
+      "SOLIDWORKS"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial licenses; Siemens offers free student CAD/CAM access with educational restrictions.",
+    "platform": "Student edition: Windows 64-bit; check requirements for the selected release.",
+    "sources": [
+      {
+        "title": "NX student edition",
+        "url": "https://blogs.sw.siemens.com/designcenter/nx-student-edition-free-download/"
+      },
+      {
+        "title": "Siemens student software",
+        "url": "https://www.siemens.com/en-gb/company/academic-future-workforce/engineering-student-resources/engineering-student-software/"
+      }
+    ]
+  },
+  {
+    "id": "catia",
+    "name": "CATIA",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "structures",
+      "aircraft",
+      "manufacturing"
+    ],
+    "summary": "CATIA supports mechanical design, complex surfaces and coordinated engineering of large products.",
+    "why": "It is worth targeted study for organizations that explicitly use CATIA, especially for aircraft or complex spacecraft assemblies. Product versions and the surrounding data-management workflow matter, so choose the edition a course or employer uses instead of assuming every CATIA interface is interchangeable.",
+    "firstProject": "Model a simple fairing around an existing equipment envelope, inspect surface continuity, and create interface drawings that preserve the required mounting clearances.",
+    "prerequisites": [
+      "Confident parametric CAD",
+      "Surface geometry",
+      "Drawing and assembly conventions"
+    ],
+    "alternatives": [
+      "Siemens NX",
+      "Creo",
+      "SOLIDWORKS"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Commercial software; eligible students can purchase a 3DEXPERIENCE education bundle. Institutional access varies.",
+    "platform": "3DEXPERIENCE ENGINEER student bundle requires native Windows installation.",
+    "sources": [
+      {
+        "title": "3DEXPERIENCE ENGINEER student bundle",
+        "url": "https://www.3ds.com/edu/education/students/solutions/engineer-3dx"
+      }
+    ]
+  },
+  {
+    "id": "creo",
+    "name": "Creo",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "mechanisms",
+      "manufacturing",
+      "structures"
+    ],
+    "summary": "Creo is a parametric mechanical design suite for parts, assemblies and engineering documentation.",
+    "why": "Keep it available as an employer-driven CAD option rather than a mandatory additional beginner program. It becomes useful when you need to understand another team's design history, parameter relationships and revision practices; those concepts build on the CAD fundamentals you already learned.",
+    "firstProject": "Rebuild your cartridge mounting bracket with a controlled set of dimensions, generate two size variants, and verify that both retain the same attachment interface.",
+    "prerequisites": [
+      "Parametric modeling",
+      "Technical drawings",
+      "Design intent"
+    ],
+    "alternatives": [
+      "Siemens NX",
+      "CATIA",
+      "SOLIDWORKS"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial licenses; PTC offers free educational access, subject to its current eligibility and use conditions.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "PTC educational software access",
+        "url": "https://www.ptc.com/en/education/free-software"
+      },
+      {
+        "title": "Creo product and trial overview",
+        "url": "https://support.ptc.com/creo/free-software-downloads/"
+      }
+    ]
+  },
+  {
+    "id": "mastercam",
+    "name": "Mastercam",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "manufacturing",
+      "mechanisms"
+    ],
+    "summary": "Mastercam creates and verifies machining toolpaths for mills, lathes and other computer-controlled equipment.",
+    "why": "It matters if you choose hands-on aerospace manufacturing or a shop that uses Mastercam. The durable skills are workholding, coordinate systems, tool choice and inspection; simulation practice should lead into supervised shop training before you operate a real machine.",
+    "firstProject": "Use the Learning Edition to plan and simulate machining a simple pocketed plate, checking stock removal and tool clearance without producing machine instructions.",
+    "prerequisites": [
+      "Mechanical drawings",
+      "Basic machining concepts",
+      "Coordinate systems",
+      "Shop instruction"
+    ],
+    "alternatives": [
+      "Autodesk Fusion",
+      "Siemens NX"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Commercial production software. Free Learning Edition supports practice but does not post G-code; its files have compatibility restrictions.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Mastercam Learning Edition",
+        "url": "https://www.mastercam.com/solutions/products/mastercam-learning-edition/"
+      }
+    ]
+  },
+  {
+    "id": "prusaslicer",
+    "name": "PrusaSlicer",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "manufacturing",
+      "mechanisms",
+      "materials"
+    ],
+    "summary": "PrusaSlicer converts a printable 3D model into layer-by-layer instructions for a compatible printer.",
+    "why": "Learn a slicer when you gain regular printer access, choosing the one that matches the machine. The engineering value comes from relating orientation, support, wall thickness and layer settings to dimensional accuracy and strength, rather than repeatedly accepting default settings.",
+    "firstProject": "Slice three versions of a small fit-test coupon with different clearances, print them using an approved material profile, and record which dimensions actually fit.",
+    "prerequisites": [
+      "Exporting CAD meshes",
+      "Printer orientation",
+      "Basic measurement"
+    ],
+    "alternatives": [
+      "Bambu Studio",
+      "UltiMaker Cura"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free and open source under AGPL; printing still requires compatible hardware and materials.",
+    "platform": "Windows, macOS and Linux.",
+    "sources": [
+      {
+        "title": "PrusaSlicer official project",
+        "url": "https://github.com/prusa3d/PrusaSlicer"
+      },
+      {
+        "title": "PrusaSlicer product overview",
+        "url": "https://www.prusa3d.com/p/prusaslicer/"
+      }
+    ]
+  },
+  {
+    "id": "bambu-studio",
+    "name": "Bambu Studio",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "manufacturing",
+      "mechanisms",
+      "materials"
+    ],
+    "summary": "Bambu Studio prepares, previews and organizes 3D-print jobs for Bambu Lab and other supported printers.",
+    "why": "Choose it if your home printer or makerspace uses the Bambu workflow. It fills the same early learning role as another slicer; concentrate on repeatable print preparation, layer inspection and measured fit instead of treating it as a separate engineering discipline.",
+    "firstProject": "Prepare a cartridge rail and clearance coupon on one plate, inspect supports and layer paths, then compare measured results with the CAD dimensions.",
+    "prerequisites": [
+      "CAD mesh export",
+      "Printer setup",
+      "Measurement"
+    ],
+    "alternatives": [
+      "PrusaSlicer",
+      "UltiMaker Cura"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free, AGPL-licensed application; the optional networking plugin uses non-free components.",
+    "platform": "Windows, macOS and Linux releases.",
+    "sources": [
+      {
+        "title": "Bambu Studio official repository and licensing",
+        "url": "https://github.com/bambulab/BambuStudio"
+      }
+    ]
+  },
+  {
+    "id": "ultimaker-cura",
+    "name": "UltiMaker Cura",
+    "kind": "Application",
+    "family": "CAD & manufacturing",
+    "specialties": [
+      "manufacturing",
+      "mechanisms",
+      "materials"
+    ],
+    "summary": "UltiMaker Cura slices 3D models and previews print settings for supported desktop additive-manufacturing equipment.",
+    "why": "It is another practical route from your CAD designs to physical prototypes, particularly when supplied by a school or makerspace. You only need working fluency in the slicer used by your printer; changing slicers does not replace learning the effects of material, geometry and process settings.",
+    "firstProject": "Prepare a small bracket in two print orientations, estimate time and material, and compare the finished parts for fit and visible layer-related weakness.",
+    "prerequisites": [
+      "CAD export",
+      "Printer profiles",
+      "Dimensional measurement"
+    ],
+    "alternatives": [
+      "PrusaSlicer",
+      "Bambu Studio"
+    ],
+    "priority": "branch",
+    "start": "2026–2027",
+    "depth": "Working",
+    "access": "Free and open-source desktop software; enterprise offerings and associated services are separate.",
+    "platform": "Windows, macOS and Linux downloads.",
+    "sources": [
+      {
+        "title": "UltiMaker Cura features and downloads",
+        "url": "https://ultimaker.com/software/ultimaker-cura/"
+      }
+    ]
+  },
+  {
+    "id": "ansys-mechanical",
+    "name": "Ansys Mechanical",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "mechanisms",
+      "materials",
+      "thermal"
+    ],
+    "summary": "Ansys Mechanical predicts structural deformation, stress, vibration and related physical responses using finite-element analysis.",
+    "why": "It is a strong first commercial structural-analysis tool once mechanics courses make its assumptions meaningful. Aim for depth in one structural solver: explain loads, constraints, material assumptions and mesh sensitivity, then compare the results with hand calculations and physical measurements.",
+    "firstProject": "Analyze a simply supported or cantilever beam, compare deflection with the beam equation, refine the mesh, and document why local stress peaks may change.",
+    "prerequisites": [
+      "Statics",
+      "Mechanics of materials",
+      "Linear algebra",
+      "Units",
+      "Basic CAD"
+    ],
+    "alternatives": [
+      "Abaqus",
+      "CalculiX",
+      "MSC Nastran"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Commercial and institutional licenses; free size-limited Ansys Student requires verified student or educator eligibility.",
+    "platform": "Student bundle: Windows 64-bit; check current release requirements.",
+    "sources": [
+      {
+        "title": "Ansys Mechanical capabilities",
+        "url": "https://ansys.synopsys.com/products/structures/ansys-mechanical"
+      },
+      {
+        "title": "Ansys Student eligibility",
+        "url": "https://ansys.synopsys.com/academic/students/ansys-student"
+      }
+    ]
+  },
+  {
+    "id": "abaqus",
+    "name": "Abaqus",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "materials",
+      "mechanisms"
+    ],
+    "summary": "Abaqus models structural behavior, including contact, material nonlinearity and large deformation.",
+    "why": "It becomes valuable if your research or employment involves material behavior or assemblies beyond simple elastic analysis. Begin with a benchmark you can solve independently; a more elaborate constitutive model does not improve a result unless its parameters and assumptions match the specimen.",
+    "firstProject": "Reproduce the elastic extension of a short tensile coupon, compare displacement with a hand calculation, and test whether mesh refinement changes the answer.",
+    "prerequisites": [
+      "Mechanics of materials",
+      "Basic finite elements",
+      "Material stress-strain behavior"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "CalculiX",
+      "MSC Nastran"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial and academic licenses; free Learning Edition supports structural models up to 1,000 nodes.",
+    "platform": "Learning Edition: Windows only; check requirements for other editions.",
+    "sources": [
+      {
+        "title": "Abaqus Learning Edition",
+        "url": "https://www.3ds.com/edu/education/students/solutions/abaqus-le/"
+      }
+    ]
+  },
+  {
+    "id": "msc-nastran",
+    "name": "MSC Nastran",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "aircraft",
+      "materials"
+    ],
+    "summary": "MSC Nastran is a finite-element solver used to analyze structural stiffness, dynamics and related behavior.",
+    "why": "It is useful for an aerospace structures branch when the team works with Nastran models and established analysis procedures. Learn what the model contains and how its loads are checked; the solver is distinct from the preprocessing application used to create and inspect its input.",
+    "firstProject": "Run a documented beam or small frame benchmark, compare its static deflection and first vibration mode with independent estimates, and explain the boundary conditions.",
+    "prerequisites": [
+      "Structural mechanics",
+      "Vibrations",
+      "Finite-element fundamentals",
+      "Input-file organization"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "Abaqus",
+      "CalculiX"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial solver; obtain an appropriate institutional or employer license and confirm available academic access.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "MSC Nastran official product overview",
+        "url": "https://nexus.hexagon.com/home/product/msc-nastran/"
+      }
+    ]
+  },
+  {
+    "id": "hypermesh",
+    "name": "HyperMesh",
+    "kind": "Environment",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "materials",
+      "aircraft"
+    ],
+    "summary": "HyperMesh, now presented as Simcenter Hypermesh, prepares and inspects finite-element models for engineering simulation.",
+    "why": "It is especially relevant when complex geometry and mesh quality consume more effort than solving the model. Learn it after completing small analyses elsewhere, and distinguish geometry cleanup and meshing from the separate solver and physical assumptions that determine the result.",
+    "firstProject": "Simplify a bracket model, create several mesh densities, inspect element quality, and compare how the same boundary conditions transfer to a chosen structural solver.",
+    "prerequisites": [
+      "Basic finite-element analysis",
+      "CAD geometry",
+      "Element types",
+      "Mesh-quality concepts"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "Abaqus"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial software; eligible students can access a free Siemens student bundle through Altair One, subject to restrictions.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Simcenter Hypermesh overview",
+        "url": "https://www.siemens.com/en-us/products/simcenter/simulation-modeling-visualization/hypermesh/"
+      },
+      {
+        "title": "Student access",
+        "url": "https://www.siemens.com/en-gb/company/academic-future-workforce/engineering-student-resources/engineering-student-software/altair-student-edition/"
+      }
+    ]
+  },
+  {
+    "id": "calculix",
+    "name": "CalculiX",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "structures",
+      "thermal",
+      "materials"
+    ],
+    "summary": "CalculiX provides an open-source finite-element solver and tools for structural and thermal analysis.",
+    "why": "It offers a way to keep learning analysis without relying on a commercial student license. Its input files also make model assumptions visible, but familiarity with an Abaqus-like format does not mean every Abaqus feature or model transfers directly.",
+    "firstProject": "Solve a small beam benchmark, change only the mesh density between runs, and compare displacement and reaction forces with a hand calculation before studying stress contours.",
+    "prerequisites": [
+      "Statics",
+      "Mechanics of materials",
+      "Basic finite elements",
+      "Text-file organization"
+    ],
+    "alternatives": [
+      "Ansys Mechanical",
+      "Abaqus"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free software under the GNU GPL; solver and preprocessing tools are available separately.",
+    "platform": "Linux and Windows; follow the chosen distribution's installation instructions.",
+    "sources": [
+      {
+        "title": "CalculiX official overview and license",
+        "url": "https://www.calculix.de/"
+      }
+    ]
+  },
+  {
+    "id": "granta-edupack",
+    "name": "Ansys Granta EduPack",
+    "kind": "Application",
+    "family": "Structures & materials",
+    "specialties": [
+      "materials",
+      "manufacturing",
+      "structures",
+      "thermal"
+    ],
+    "summary": "Granta EduPack organizes material and process data so students can compare and justify engineering material choices.",
+    "why": "Formerly CES EduPack, it connects materials coursework with design trade-offs such as stiffness, density, cost and process compatibility. Treat its data as a screening resource, then use the exact material grade, condition and verified properties required for a real analysis.",
+    "firstProject": "Compare candidate materials for a lightweight removable panel using stiffness, density and manufacturability, and write down why the highest-strength material is not automatically the best choice.",
+    "prerequisites": [
+      "Material properties",
+      "Units",
+      "Basic mechanics",
+      "Trade-off reasoning"
+    ],
+    "alternatives": [
+      "Microsoft Excel",
+      "Google Sheets"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Licensed educational software, usually accessed through an institution; confirm which database levels are included.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Granta EduPack overview",
+        "url": "https://www.ansys.com/en-in/products/materials/granta-edupack"
+      },
+      {
+        "title": "Ansys academic licensing overview",
+        "url": "https://ansys.synopsys.com/academic/educators"
+      }
+    ]
+  },
+  {
+    "id": "thermal-desktop",
+    "name": "Ansys Thermal Desktop",
+    "kind": "Application",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "thermal",
+      "habitats",
+      "mechanisms"
+    ],
+    "summary": "Thermal Desktop builds thermal networks and geometry-based heat-transfer models, including radiation and orbital environments.",
+    "why": "It closely matches spacecraft equipment and habitat thermal interests once you understand conduction, radiation and transient energy balances. Learn a small network before detailed geometry, and distinguish an atmospheric electronics-cooling experiment from an external spacecraft surface exchanging heat in vacuum.",
+    "firstProject": "Create a two-node equipment-and-panel thermal model, vary the thermal connection and applied heat, and compare steady and transient temperatures with a simple Python energy-balance model.",
+    "prerequisites": [
+      "Heat transfer",
+      "Thermodynamics",
+      "Differential equations",
+      "Thermal networks"
+    ],
+    "alternatives": [
+      "ESATAN-TMS",
+      "Ansys Mechanical"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial licensed software; a vendor trial is offered. Confirm institutional access and required companion products.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "Thermal Desktop capabilities and trial",
+        "url": "https://ansys.synopsys.com/en-gb/products/fluids/ansys-thermal-desktop"
+      }
+    ]
+  },
+  {
+    "id": "esatan-tms",
+    "name": "ESATAN-TMS",
+    "kind": "Environment",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "thermal",
+      "habitats"
+    ],
+    "summary": "ESATAN-TMS combines thermal networks, radiative calculations and mission heating into a spacecraft thermal-analysis environment.",
+    "why": "It is a targeted alternative to Thermal Desktop for a team or research group that uses this workflow. Do not learn both deeply before choosing a thermal project; energy balances, view factors, material properties and correlation methods transfer more usefully than memorized menus.",
+    "firstProject": "Model a simple instrument box connected to a panel, estimate its radiative heat exchange, and check a reduced thermal network against independent steady-state calculations.",
+    "prerequisites": [
+      "Heat transfer",
+      "Radiation exchange",
+      "Thermal networks",
+      "Transient modeling"
+    ],
+    "alternatives": [
+      "Ansys Thermal Desktop"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial licenses with vendor support; contact the supplier or institution for access and demonstration options.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "ESATAN-TMS components",
+        "url": "https://esatan-tms.com/products/product.php"
+      },
+      {
+        "title": "ESATAN-TMS licensing and support",
+        "url": "https://www.esatan-tms.com/support/support.php"
+      }
+    ]
+  },
+  {
+    "id": "ansys-fluent",
+    "name": "Ansys Fluent",
+    "kind": "Application",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "fluids",
+      "thermal",
+      "habitats",
+      "aircraft",
+      "propulsion"
+    ],
+    "summary": "Fluent uses computational fluid dynamics to simulate fluid motion, heat transfer and related transport processes.",
+    "why": "It supports your equipment-cooling and aerodynamics interests after fluid mechanics and heat transfer. Begin with a flow whose behavior you can predict; judging mesh quality, conservation, boundary conditions and model sensitivity matters more than producing attractive velocity pictures.",
+    "firstProject": "Simulate slow laminar flow through a straight duct, compare pressure loss with an analytical result, and document how mesh refinement changes the prediction.",
+    "prerequisites": [
+      "Fluid mechanics",
+      "Heat transfer",
+      "Numerical methods",
+      "Conservation laws"
+    ],
+    "alternatives": [
+      "OpenFOAM",
+      "Simcenter STAR-CCM+",
+      "SU2"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial and institutional licenses; free size-limited student bundle requires verified educational eligibility.",
+    "platform": "Student bundle: Windows 64-bit; check requirements for other deployments.",
+    "sources": [
+      {
+        "title": "Fluent capabilities",
+        "url": "https://ansys.synopsys.com/Products/Fluids/ANSYS-Fluent"
+      },
+      {
+        "title": "Ansys Student access",
+        "url": "https://ansys.synopsys.com/academic/students/ansys-student"
+      }
+    ]
+  },
+  {
+    "id": "star-ccm-plus",
+    "name": "Simcenter STAR-CCM+",
+    "kind": "Application",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "fluids",
+      "thermal",
+      "aircraft",
+      "propulsion"
+    ],
+    "summary": "STAR-CCM+ integrates meshing, fluid simulation, heat transfer and analysis in a multiphysics application.",
+    "why": "Choose it when a laboratory or employer uses its workflow for CFD studies. It is a peer to Fluent rather than another universal prerequisite; a carefully checked result in one solver is more useful than shallow familiarity with several packages.",
+    "firstProject": "Build a simple air-cooled channel model, compare its pressure drop and energy balance with estimates, then automate a small sweep of inlet flow conditions.",
+    "prerequisites": [
+      "Fluid mechanics",
+      "Heat transfer",
+      "CFD fundamentals",
+      "Mesh-convergence studies"
+    ],
+    "alternatives": [
+      "Ansys Fluent",
+      "OpenFOAM",
+      "SU2"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Explore",
+    "access": "Commercial software; pricing and academic arrangements require confirmation with Siemens or your institution.",
+    "platform": "Check current vendor requirements.",
+    "sources": [
+      {
+        "title": "STAR-CCM+ official overview",
+        "url": "https://www.siemens.com/en-us/products/simcenter/fluids-thermal-simulation/star-ccm/"
+      }
+    ]
+  },
+  {
+    "id": "openfoam",
+    "name": "OpenFOAM",
+    "kind": "Application",
+    "family": "Thermal & fluids",
+    "specialties": [
+      "fluids",
+      "thermal",
+      "habitats",
+      "aircraft"
+    ],
+    "summary": "OpenFOAM provides open-source solvers and utilities for computational fluid dynamics and other continuum problems.",
+    "why": "It is useful if you want transparent, scriptable CFD workflows and are comfortable working in Linux. Choose a distribution matching your course or research group because commands and capabilities can differ; learning CFD validation is more important than learning two distributions simultaneously.",
+    "firstProject": "Run a documented laminar channel case, change one physical parameter, and compare mass balance and pressure loss with an independent calculation and a mesh-refinement study.",
+    "prerequisites": [
+      "Fluid mechanics",
+      "Linux command line",
+      "Numerical methods",
+      "Basic Python"
+    ],
+    "alternatives": [
+      "Ansys Fluent",
+      "Simcenter STAR-CCM+",
+      "SU2"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source. The linked Foundation distribution uses GPLv3; other OpenFOAM distributions have separate release schedules.",
+    "platform": "Linux; Foundation instructions support Windows via WSL and macOS via Multipass.",
+    "sources": [
+      {
+        "title": "OpenFOAM Foundation downloads",
+        "url": "https://openfoam.org/download/"
+      },
+      {
+        "title": "OpenFOAM licensing",
+        "url": "https://openfoam.org/licence/"
+      }
+    ]
+  },
+  {
+    "id": "su2",
+    "name": "SU2",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "fluids",
+      "aircraft",
+      "propulsion"
+    ],
+    "summary": "SU2 is an open-source simulation and optimization suite with a strong focus on computational aerodynamics.",
+    "why": "It fits an aerodynamic-analysis or research branch after you understand numerical fluid mechanics. Its optimization capabilities become useful only after a baseline model is trustworthy; an optimizer can exploit numerical errors or unrealistic constraints as easily as it can improve a design.",
+    "firstProject": "Reproduce a documented low-speed airfoil benchmark, compare lift across a small angle range, and test sensitivity to mesh density before attempting shape optimization.",
+    "prerequisites": [
+      "Fluid mechanics",
+      "Aerodynamics",
+      "Numerical methods",
+      "Command-line tools"
+    ],
+    "alternatives": [
+      "Ansys Fluent",
+      "OpenFOAM",
+      "Simcenter STAR-CCM+"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under LGPL 2.1; capabilities can differ between prebuilt binaries and custom builds.",
+    "platform": "Linux, macOS and Windows installation paths are documented.",
+    "sources": [
+      {
+        "title": "SU2 capabilities",
+        "url": "https://su2code.github.io/"
+      },
+      {
+        "title": "SU2 downloads and licensing",
+        "url": "https://su2code.github.io/download.html"
+      }
+    ]
+  },
+  {
+    "id": "openvsp",
+    "name": "OpenVSP",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "aircraft",
+      "fluids",
+      "structures"
+    ],
+    "summary": "OpenVSP creates parametric aircraft geometry for conceptual design and associated aerodynamic analysis.",
+    "why": "It is a good exploration tool if aircraft configuration interests persist alongside spacecraft robotics. Its purpose is broader vehicle geometry and early trade studies; you will still need a mechanical CAD package for fabrication-ready parts and more detailed analysis when the assumptions require it.",
+    "firstProject": "Model a small unpowered glider, vary wingspan while holding wing area fixed, and document how geometry and a simple aerodynamic estimate change.",
+    "prerequisites": [
+      "Geometry",
+      "Basic aerodynamics",
+      "Units",
+      "Aspect ratio"
+    ],
+    "alternatives": [
+      "XFLR5",
+      "AVL"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free, open-source NASA-developed software; follow the project's license and distribution terms.",
+    "platform": "Windows, macOS and Ubuntu downloads.",
+    "sources": [
+      {
+        "title": "OpenVSP getting started",
+        "url": "https://openvsp.org/start.shtml"
+      },
+      {
+        "title": "OpenVSP background and open-source license",
+        "url": "https://openvsp.org/learn.shtml"
+      }
+    ]
+  },
+  {
+    "id": "xfoil",
+    "name": "XFOIL",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "aircraft",
+      "fluids"
+    ],
+    "summary": "XFOIL analyzes and helps design isolated two-dimensional airfoils in subsonic flow.",
+    "why": "It is useful for learning airfoil behavior with a relatively small computational model. Understand its assumptions and convergence limits, especially near separation; a converged two-dimensional prediction should not be presented as a complete aircraft or strongly separated-flow result.",
+    "firstProject": "Compare a symmetric and a cambered airfoil over a modest angle-of-attack range, plot the predicted lift curves, and mark any points where the solver fails to converge.",
+    "prerequisites": [
+      "Basic aerodynamics",
+      "Reynolds number",
+      "Plotting",
+      "Boundary-layer concepts"
+    ],
+    "alternatives": [
+      "SU2",
+      "OpenVSP with VSPAERO"
+    ],
+    "priority": "explore",
+    "start": "2028–2029",
+    "depth": "Explore",
+    "access": "Free software under the GNU GPL; the original distribution includes source and legacy binaries.",
+    "platform": "Unix and Windows source/build paths; check compatibility of current systems.",
+    "sources": [
+      {
+        "title": "MIT XFOIL description, license and downloads",
+        "url": "https://web.mit.edu/drela/Public/web/xfoil/"
+      }
+    ]
+  },
+  {
+    "id": "cantera",
+    "name": "Cantera",
+    "kind": "Library",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "propulsion",
+      "thermal",
+      "materials"
+    ],
+    "summary": "Cantera calculates chemical kinetics, thermodynamic properties and transport behavior through programmable scientific interfaces.",
+    "why": "It connects your chemistry foundation with propulsion and energy-system analysis if you choose that branch. Start with gas properties and equilibrium concepts before detailed reacting-flow models, and check the mechanism's intended range rather than treating every chemical dataset as universally valid.",
+    "firstProject": "Use Python to plot the heat capacity of air over a moderate temperature range, compare the values with a reference table, and state the mixture assumptions.",
+    "prerequisites": [
+      "Python",
+      "Chemistry",
+      "Thermodynamics",
+      "Units and numerical plotting"
+    ],
+    "alternatives": [
+      "NASA CEA"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open-source software; consult the project license and the provenance of any separate reaction mechanisms.",
+    "platform": "Installation options include pip, Conda, Ubuntu packages and source builds.",
+    "sources": [
+      {
+        "title": "Cantera official overview",
+        "url": "https://www.cantera.org/"
+      },
+      {
+        "title": "Cantera installation",
+        "url": "https://www.cantera.org/stable/install/index.html"
+      }
+    ]
+  },
+  {
+    "id": "nasa-cea",
+    "name": "NASA CEA",
+    "kind": "Application",
+    "family": "Propulsion & aerodynamics",
+    "specialties": [
+      "propulsion",
+      "thermal"
+    ],
+    "summary": "NASA CEA computes chemical equilibrium composition and thermodynamic properties for specified mixtures and conditions.",
+    "why": "It is a focused thermochemistry tool for a later propulsion or high-temperature-gas branch. Learn to explain equilibrium assumptions and distinguish theoretical calculations from measured hardware performance; the modern implementation supports integration with scientific programming workflows rather than only manual legacy input files.",
+    "firstProject": "Calculate equilibrium air composition across a documented temperature range, compare species trends with a chemistry reference, and record the chosen pressure and database assumptions.",
+    "prerequisites": [
+      "Chemistry",
+      "Thermodynamics",
+      "Equilibrium concepts",
+      "Python or command-line basics"
+    ],
+    "alternatives": [
+      "Cantera"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Modern NASA repository is open source under Apache 2.0; the legacy CEARUN browser interface is also available.",
+    "platform": "Check current project build requirements; CEARUN runs in a web browser.",
+    "sources": [
+      {
+        "title": "Modern NASA CEA documentation",
+        "url": "https://nasa.github.io/cea/"
+      },
+      {
+        "title": "NASA CEA source and license",
+        "url": "https://github.com/nasa/cea"
+      },
+      {
+        "title": "NASA CEARUN",
+        "url": "https://cearun.grc.nasa.gov/index.html"
+      }
+    ]
+  }
+]

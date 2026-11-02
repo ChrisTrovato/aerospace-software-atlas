@@ -1,0 +1,1047 @@
+[
+  {
+    "id": "ros-2",
+    "name": "ROS 2",
+    "kind": "Framework",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Connects a robot's sensors, software modules, and controllers through reusable communication tools.",
+    "why": "A strong branch choice for autonomous inspection or servicing prototypes after you can write and debug small programs. Learning nodes, topics, coordinate frames, and logging helps you understand how a complete robot is organized.",
+    "firstProject": "Around late 2029, after small Python and C++ programs work on Linux, publish simulated temperature readings, subscribe in a second node, and record and replay the data.",
+    "prerequisites": [
+      "Working small Python programs",
+      "Basic C++ and debugging",
+      "Linux terminal and package basics",
+      "Basic networking",
+      "Coordinate frames for later motion work"
+    ],
+    "alternatives": [
+      "Direct Python messaging for a tiny prototype",
+      "A project's existing robotics middleware"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Free and open source; core ROS 2 uses Apache 2.0, with some packages under BSD or other licenses.",
+    "platform": "Ubuntu is a practical starting point; Windows and other platform support depend on the ROS distribution and package.",
+    "sources": [
+      {
+        "title": "ROS 2 releases and target platforms",
+        "url": "https://reps.openrobotics.org/rep-2000/"
+      },
+      {
+      "title": "Current ROS 2 documentation and distribution guides",
+      "url": "https://github.com/ros2/ros2_documentation"
+      }
+    ]
+  },
+  {
+    "id": "gazebo",
+    "name": "Gazebo",
+    "kind": "Application",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "testing",
+      "gnc"
+    ],
+    "summary": "Simulates robots, their sensors, and their interactions with a virtual physical environment.",
+    "why": "Pairs naturally with ROS 2 when a rover or robot-arm project needs repeatable tests before hardware. Use it to compare a model with measurements; a convincing animation alone does not establish physical accuracy.",
+    "firstProject": "Around late 2029 or later, after a simple ROS 2 project works, simulate a two-wheel indoor rover driving a short route and compare its commanded and measured travel distance.",
+    "prerequisites": [
+      "Working small Python and basic C++ programs",
+      "Linux terminal and package basics",
+      "A working ROS 2 publisher/subscriber project",
+      "Rigid-body motion",
+      "Robot model files",
+      "Simulation time-step awareness"
+    ],
+    "alternatives": [
+      "MuJoCo",
+      "Isaac Sim"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source; Gazebo Sim uses Apache 2.0, with dependencies under their own licenses.",
+    "platform": "Ubuntu is officially supported for current Jetty releases; Windows and macOS support is best effort.",
+    "sources": [
+      {
+        "title": "Gazebo installation and supported platforms",
+        "url": "https://gazebosim.org/docs/latest/install/"
+      },
+      {
+        "title": "Gazebo Sim source and license",
+        "url": "https://github.com/gazebosim/gz-sim"
+      }
+    ]
+  },
+  {
+    "id": "moveit-2",
+    "name": "MoveIt 2",
+    "kind": "Framework",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Provides motion planning, kinematics, and collision checking for robot arms and manipulators.",
+    "why": "Relevant if your equipment-cartridge project evolves into robotic insertion, inspection, or servicing. Learn it after basic robot coordinates and joint motion so that you can explain why a planned motion succeeds or fails.",
+    "firstProject": "Move a simulated arm between two poses while avoiding a simple box obstacle.",
+    "prerequisites": [
+      "ROS 2",
+      "Linear algebra",
+      "Robot kinematics",
+      "Coordinate transforms"
+    ],
+    "alternatives": [
+      "A custom planner for a simple arm",
+      "MoveIt Pro where a team licenses it"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "MoveIt 2 is free open-source software under BSD terms; the separate MoveIt Pro product has commercial licensing.",
+    "platform": "Linux, especially a supported Ubuntu and ROS 2 pairing; follow the distribution compatibility table.",
+    "sources": [
+      {
+        "title": "MoveIt project and BSD licensing",
+        "url": "https://moveit.ai/"
+      },
+      {
+        "title": "MoveIt installation guidance",
+        "url": "https://moveit.ai/documentation/faqs/"
+      },
+      {
+        "title": "MoveIt releases and ROS distributions",
+        "url": "https://moveit.ai/about/distribution/"
+      }
+    ]
+  },
+  {
+    "id": "nav2",
+    "name": "Nav2",
+    "kind": "Framework",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Adds navigation, route planning, obstacle handling, and recovery behaviors to ROS 2 mobile robots.",
+    "why": "Useful for an indoor inspection rover once you understand basic localization and sensor limitations. Its planning and behavior components help turn a driving demo into a robot that handles repeatable tasks and reports failures.",
+    "firstProject": "Navigate a simulated rover between three indoor stations and record successes, travel time, and recovery events.",
+    "prerequisites": [
+      "ROS 2",
+      "Gazebo or another simulator",
+      "Coordinate frames",
+      "Localization basics"
+    ],
+    "alternatives": [
+      "A simple waypoint controller",
+      "A robot vendor's navigation stack"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source; follow the licenses included with the individual Nav2 packages and dependencies.",
+    "platform": "Supported ROS 2 environments; the documented binary quickstart uses Ubuntu packages.",
+    "sources": [
+      {
+        "title": "Nav2 getting started",
+        "url": "https://docs.nav2.org/jazzy/getting_started/"
+      },
+      {
+        "title": "Nav2 local installation",
+        "url": "https://docs.nav2.org/jazzy/getting_started/build_and_install/local_installation/"
+      },
+      {
+        "title": "Nav2 source repository",
+        "url": "https://github.com/ros-navigation/navigation2"
+      }
+    ]
+  },
+  {
+    "id": "opencv",
+    "name": "OpenCV",
+    "kind": "Library",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "testing",
+      "gnc"
+    ],
+    "summary": "Processes camera images and video for tasks such as calibration, measurement, and visual inspection.",
+    "why": "A practical early addition to Python for your equipment-panel inspection idea. Start with controlled lighting, geometry, and known markers before adding machine learning; you can learn a great deal from measuring errors in a modest camera setup.",
+    "firstProject": "Detect a printed marker on an equipment panel and measure how detection changes with angle and lighting.",
+    "prerequisites": [
+      "Python arrays",
+      "Basic geometry",
+      "Image coordinates",
+      "Simple experimental design"
+    ],
+    "alternatives": [
+      "scikit-image",
+      "MATLAB Computer Vision Toolbox"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source; OpenCV 4.5.0 and later use Apache 2.0.",
+    "platform": "Windows, Linux, and macOS, with mobile and other platform support documented by the project.",
+    "sources": [
+      {
+        "title": "OpenCV licensing",
+        "url": "https://opencv.org/license/"
+      },
+      {
+        "title": "OpenCV platforms and getting started",
+        "url": "https://opencv.org/platforms/"
+      }
+    ]
+  },
+  {
+    "id": "pytorch",
+    "name": "PyTorch",
+    "kind": "Framework",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "testing"
+    ],
+    "summary": "Builds and trains machine-learning models using tensors, automatic differentiation, and optional GPU acceleration.",
+    "why": "Worth adding when a perception project has a real dataset and a baseline that conventional image processing cannot handle well. It is not a prerequisite for learning CAD, mechanics, controls, or basic robotics.",
+    "firstProject": "Train a small classifier on your own labeled images of correctly and incorrectly assembled mock equipment, using a separate test set.",
+    "prerequisites": [
+      "Python and NumPy",
+      "Linear algebra",
+      "Probability",
+      "Training versus test data"
+    ],
+    "alternatives": [
+      "JAX",
+      "TensorFlow",
+      "Classical computer-vision methods"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under PyTorch's BSD-style license; some dependencies carry separate terms.",
+    "platform": "Windows, Linux, and macOS; available GPU acceleration depends on operating system, hardware, and build.",
+    "sources": [
+      {
+        "title": "PyTorch installation and platforms",
+        "url": "https://pytorch.org/get-started/locally/"
+      },
+      {
+        "title": "PyTorch license",
+        "url": "https://github.com/pytorch/pytorch/blob/main/LICENSE"
+      }
+    ]
+  },
+  {
+    "id": "isaac-sim",
+    "name": "NVIDIA Isaac Sim",
+    "kind": "Application",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "testing"
+    ],
+    "summary": "Creates detailed virtual robot environments with physics, camera simulation, and synthetic-data workflows.",
+    "why": "An optional advanced environment for testing vision-based inspection or manipulation. It becomes worthwhile when your project needs its sensor or visual capabilities; learning it early would add setup work before you have the underlying robotics skills.",
+    "firstProject": "Place a camera and mock equipment panel in a scene, vary lighting, and compare synthetic images with real photographs.",
+    "prerequisites": [
+      "Python",
+      "Robot coordinate frames",
+      "Simulation fundamentals",
+      "GPU and driver compatibility"
+    ],
+    "alternatives": [
+      "Gazebo",
+      "MuJoCo"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Explore",
+    "access": "Isaac Sim repository code is Apache 2.0; required Omniverse components, models, textures, and other dependencies have additional terms.",
+    "platform": "Current documentation lists Windows 11 and Ubuntu with supported NVIDIA RTX hardware; check the compatibility tool and current requirements.",
+    "sources": [
+      {
+        "title": "Isaac Sim source and capabilities",
+        "url": "https://github.com/isaac-sim/IsaacSim"
+      },
+      {
+        "title": "Isaac Sim system requirements",
+        "url": "https://docs.isaacsim.omniverse.nvidia.com/latest/installation/requirements.html"
+      },
+      {
+        "title": "Isaac Sim licensing",
+        "url": "https://github.com/isaac-sim/IsaacSim/blob/release/6.3/LICENSE"
+      }
+    ]
+  },
+  {
+    "id": "mujoco",
+    "name": "MuJoCo",
+    "kind": "Library",
+    "family": "Robotics & autonomy",
+    "specialties": [
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Simulates articulated bodies and contact for robotics research and control experiments.",
+    "why": "Useful if you become interested in robot dynamics, manipulation, or learning-based control. Its compact models make repeated experiments convenient, but contact behavior still needs careful assumptions and comparison with physical observations.",
+    "firstProject": "Model a simple pendulum, compare its period with a hand calculation, and study how damping changes its motion using documented assumptions and units.",
+    "prerequisites": [
+      "Python",
+      "Rigid-body dynamics",
+      "Differential equations",
+      "Numerical integration"
+    ],
+    "alternatives": [
+      "Gazebo",
+      "Isaac Sim",
+      "Simscape Multibody"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open-source code under Apache 2.0; documentation has separate Creative Commons terms.",
+    "platform": "Prebuilt binaries are available for Windows, Linux, and macOS; architecture support varies.",
+    "sources": [
+      {
+        "title": "MuJoCo overview",
+        "url": "https://mujoco.org/"
+      },
+      {
+        "title": "MuJoCo installation, source, and license",
+        "url": "https://github.com/google-deepmind/mujoco"
+      }
+    ]
+  },
+  {
+    "id": "px4",
+    "name": "PX4 Autopilot",
+    "kind": "Framework",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "aircraft",
+      "robotics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Provides an open-source autopilot stack with simulation and hardware interfaces for autonomous vehicles.",
+    "why": "A branch tool for an aircraft or vehicle-controls project, rather than a requirement for spacecraft engineering. Begin in software-in-the-loop simulation to learn logs, sensors, modes, and testing without making hardware the first obstacle.",
+    "firstProject": "Run a supplied virtual vehicle example and compare its logged attitude and altitude with the commanded values.",
+    "prerequisites": [
+      "C++ basics",
+      "Feedback control",
+      "Linux tools",
+      "Simulation and sensor concepts"
+    ],
+    "alternatives": [
+      "ArduPilot",
+      "A small custom controller for a teaching model"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under BSD-3-Clause; hardware and third-party components have separate costs or terms.",
+    "platform": "Development on Ubuntu, macOS, or Windows through WSL 2; target and simulator support vary.",
+    "sources": [
+      {
+        "title": "PX4 project and license",
+        "url": "https://github.com/PX4/PX4-Autopilot"
+      },
+      {
+        "title": "PX4 development environments",
+        "url": "https://docs.px4.io/main/en/dev_setup/dev_env"
+      }
+    ]
+  },
+  {
+    "id": "ardupilot",
+    "name": "ArduPilot",
+    "kind": "Framework",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "robotics",
+      "aircraft",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Supplies autopilot software for several vehicle types, including rovers, aircraft, and boats.",
+    "why": "An alternative to PX4 if your chosen student project or hardware ecosystem already uses it. You do not need to master both stacks; vehicle simulation, logs, state estimation, and reproducible tests transfer between them.",
+    "firstProject": "Use the supplied simulated rover to drive a short route and inspect its position and sensor logs.",
+    "prerequisites": [
+      "Basic programming",
+      "Feedback control",
+      "Linux or supported development tools",
+      "Coordinate frames"
+    ],
+    "alternatives": [
+      "PX4",
+      "ROS 2 with a simple rover controller"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free software under GPLv3; redistribution and modification must follow those terms.",
+    "platform": "Runs on supported autopilot hardware; the documented SITL workflow runs on Linux and Windows.",
+    "sources": [
+      {
+        "title": "ArduPilot licensing",
+        "url": "https://ardupilot.org/dev/docs/license-gplv3.html"
+      },
+      {
+        "title": "ArduPilot software-in-the-loop setup",
+        "url": "https://ardupilot.org/dev/docs/setting-up-sitl-on-linux.html"
+      },
+      {
+        "title": "ArduPilot source workflow",
+        "url": "https://ardupilot.org/dev/docs/where-to-get-the-code.html"
+      }
+    ]
+  },
+  {
+    "id": "qgroundcontrol",
+    "name": "QGroundControl",
+    "kind": "Application",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "aircraft",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Provides a graphical ground station for configuring and monitoring MAVLink-compatible vehicles.",
+    "why": "Useful alongside PX4 or a compatible ArduPilot project for inspecting telemetry and understanding operational workflows. It is a supporting application, not a replacement for learning the vehicle's dynamics or how its control software works.",
+    "firstProject": "Connect it to a simulated vehicle and document where to inspect battery, position, attitude, and status information.",
+    "prerequisites": [
+      "A supported simulator or vehicle stack",
+      "Basic telemetry concepts",
+      "Units and coordinate conventions"
+    ],
+    "alternatives": [
+      "Mission Planner for ArduPilot",
+      "MAVProxy"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source; code is dual-licensed under Apache 2.0 and GPLv3-or-later, with separate artwork terms.",
+    "platform": "Desktop support includes Windows, macOS, and Linux; check current releases for mobile availability.",
+    "sources": [
+      {
+        "title": "QGroundControl overview and licensing",
+        "url": "https://qgroundcontrol.com/"
+      },
+      {
+        "title": "QGroundControl download and installation",
+        "url": "https://docs.qgroundcontrol.com/master/en/qgc-user-guide/getting_started/download_and_install.html"
+      }
+    ]
+  },
+  {
+    "id": "f-prime",
+    "name": "F Prime (F´)",
+    "kind": "Framework",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "systems",
+      "testing"
+    ],
+    "summary": "Organizes embedded and spacecraft software as reusable components with commands, events, and telemetry.",
+    "why": "A strong later option if you enjoy making dependable spacecraft electronics and software work together. It connects programming skills to flight-software architecture, but using a flight-proven framework does not automatically qualify your own application for spaceflight.",
+    "firstProject": "Build the official Hello World example, then add a simulated temperature component and a command that changes its reporting rate.",
+    "prerequisites": [
+      "C++",
+      "Python tooling",
+      "Git and build systems",
+      "Embedded-system basics"
+    ],
+    "alternatives": [
+      "NASA cFS",
+      "A team's existing flight-software framework"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under Apache 2.0.",
+    "platform": "Documented development workflows cover Linux, macOS, and Windows through WSL; embedded targets require a suitable port.",
+    "sources": [
+      {
+        "title": "NASA JPL F Prime overview and tutorials",
+        "url": "https://fprime.jpl.nasa.gov/"
+      },
+      {
+        "title": "F Prime source and license",
+        "url": "https://github.com/nasa/fprime"
+      },
+      {
+        "title": "F Prime installation",
+        "url": "https://fprime.jpl.nasa.gov/latest/docs/getting-started/installing-fprime/"
+      }
+    ]
+  },
+  {
+    "id": "nasa-cfs",
+    "name": "NASA Core Flight System (cFS)",
+    "kind": "Framework",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "systems",
+      "testing"
+    ],
+    "summary": "Provides a reusable architecture and services for spacecraft flight-software applications.",
+    "why": "Explore it when a research group, employer, or mission uses cFS; there is little reason to learn it and F Prime deeply at the same time. The public bundle is a starting point, and mission-specific verification remains essential.",
+    "firstProject": "Run the public sample application on a Linux host and trace a command through to a telemetry response.",
+    "prerequisites": [
+      "C",
+      "Operating-system concepts",
+      "CMake and Git",
+      "Software testing",
+      "Command and telemetry concepts"
+    ],
+    "alternatives": [
+      "F Prime",
+      "An employer's flight-software platform"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "The public framework and listed common components are Apache 2.0; a separate government-use distribution has restricted access.",
+    "platform": "The public quickstart targets a Linux host; other processors and operating systems need suitable platform support.",
+    "sources": [
+      {
+        "title": "NASA cFS architecture, distribution, and quickstart",
+        "url": "https://github.com/nasa/cFS"
+      }
+    ]
+  },
+  {
+    "id": "freertos",
+    "name": "FreeRTOS",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Runs small embedded applications as scheduled tasks on microcontrollers and modest processors.",
+    "why": "Useful once your sensor-and-actuator project needs several activities with timing constraints. Learning tasks, queues, synchronization, and timing teaches more about dependable embedded software than immediately adding a large robotics framework.",
+    "firstProject": "On a supported development board or simulator, run one task that generates temperature readings and another that logs them through a queue.",
+    "prerequisites": [
+      "C basics",
+      "Microcontroller fundamentals",
+      "Interrupts and timing",
+      "Debugging"
+    ],
+    "alternatives": [
+      "Zephyr",
+      "A simple bare-metal loop"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "Free and open source under MIT terms; commercial support and separately certified variants are distinct offerings.",
+    "platform": "Targets numerous microcontroller architectures; development-host support depends on the selected board and toolchain.",
+    "sources": [
+      {
+        "title": "FreeRTOS features, license, and supported architectures",
+        "url": "https://www.freertos.org/"
+      }
+    ]
+  },
+  {
+    "id": "zephyr",
+    "name": "Zephyr",
+    "kind": "Environment",
+    "family": "Embedded & avionics",
+    "specialties": [
+      "avionics",
+      "robotics",
+      "testing"
+    ],
+    "summary": "Provides a configurable embedded operating system with drivers, networking, and development tools.",
+    "why": "An alternative embedded ecosystem when your board or team benefits from its driver and hardware-description support. Learn one small embedded workflow first; adopting Zephyr is most useful when it solves a concrete project need.",
+    "firstProject": "Build a supported board's sensor sample, log readings, and add a simple warning state for a simulated out-of-range value.",
+    "prerequisites": [
+      "C",
+      "Microcontroller basics",
+      "Build tools",
+      "Device-tree and configuration concepts"
+    ],
+    "alternatives": [
+      "FreeRTOS",
+      "A board vendor's SDK"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Main project uses Apache 2.0; imported components can have other licenses.",
+    "platform": "Host setup is documented for Ubuntu, Windows, and supported macOS systems; deployment targets supported embedded boards.",
+    "sources": [
+      {
+        "title": "Zephyr introduction and licensing",
+        "url": "https://docs.zephyrproject.org/latest/introduction/index.html"
+      },
+      {
+        "title": "Zephyr getting started and host platforms",
+        "url": "https://docs.zephyrproject.org/latest/develop/getting_started/index.html"
+      }
+    ]
+  },
+  {
+    "id": "gmat",
+    "name": "NASA GMAT",
+    "kind": "Application",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "systems"
+    ],
+    "summary": "Models spacecraft orbits and mission sequences through a graphical interface, scripts, and programming interfaces.",
+    "why": "A useful first dedicated mission-analysis application after gravity, vectors, and numerical integration make sense. It lets you connect a simple orbit calculation to a larger spacecraft mission study without first writing every supporting tool yourself.",
+    "firstProject": "Propagate a simple Earth orbit, plot altitude over time, and compare its period with the two-body formula.",
+    "prerequisites": [
+      "Newtonian mechanics",
+      "Vectors",
+      "Orbital elements",
+      "Numerical integration basics"
+    ],
+    "alternatives": [
+      "FreeFlyer",
+      "Orekit",
+      "Tudat"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Working",
+    "access": "NASA distributes GMAT as open-source software; check the release's license and included dependency notices.",
+    "platform": "NASA lists Windows, Linux, and macOS; use the distribution and setup instructions for your platform.",
+    "sources": [
+      {
+        "title": "NASA GMAT software catalog and operating systems",
+        "url": "https://software.nasa.gov/software/GSC-19640-1"
+      }
+    ]
+  },
+  {
+    "id": "ansys-stk",
+    "name": "Ansys STK",
+    "kind": "Application",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "systems",
+      "defense",
+      "testing"
+    ],
+    "summary": "Analyzes how spacecraft, ground sites, sensors, and communications interact over time.",
+    "why": "Useful for mission-level questions such as contact windows, coverage, and system trade-offs. Learn it when a course, research project, or employer needs that workflow; it overlaps with other mission tools but does not replace their underlying physics.",
+    "firstProject": "Model a public satellite orbit and a ground station, then explain when line-of-sight contact is possible.",
+    "prerequisites": [
+      "Orbital geometry",
+      "Coordinate systems",
+      "Time conventions",
+      "Basic mission requirements"
+    ],
+    "alternatives": [
+      "GMAT for orbit-focused studies",
+      "FreeFlyer",
+      "Orekit"
+    ],
+    "priority": "explore",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial software; available capabilities depend on licensed products and modules. Check institutional or current student access before purchasing.",
+    "platform": "STK desktop uses Windows; STK Engine also has a Linux workflow with separate requirements.",
+    "sources": [
+      {
+        "title": "Ansys STK product overview",
+        "url": "https://ansys.synopsys.com/products/missions/ansys-stk"
+      },
+      {
+        "title": "STK system requirements",
+        "url": "https://help.agi.com/stk/content/install/sysreq.htm"
+      },
+      {
+        "title": "STK Engine on Linux",
+        "url": "https://help.agi.com/stkEngineOnUNIX/Content/stkEngineUX/Getting_Started_with_EngineOnLinux.htm"
+      }
+    ]
+  },
+  {
+    "id": "freeflyer",
+    "name": "FreeFlyer",
+    "kind": "Application",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "systems"
+    ],
+    "summary": "Supports orbit analysis, spacecraft mission design, and operational flight-dynamics workflows.",
+    "why": "A valuable later choice if an internship or employer uses it for mission operations. Its scripting and external interfaces support repeatable analyses; you can learn orbital fundamentals in a free tool before deciding whether this specific environment is needed.",
+    "firstProject": "Create a simple satellite mission and compare predicted eclipse intervals after changing the initial orbit.",
+    "prerequisites": [
+      "Orbital mechanics",
+      "Numerical methods",
+      "Scripting",
+      "Time and reference frames"
+    ],
+    "alternatives": [
+      "GMAT",
+      "Orekit",
+      "Tudat"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Commercial a.i. solutions product; request appropriate licensing or institutional access rather than assuming the name means free software.",
+    "platform": "The current vendor page lists Windows, Linux, and Mac; confirm edition-specific requirements.",
+    "sources": [
+      {
+        "title": "FreeFlyer capabilities, licensing links, and platforms",
+        "url": "https://ai-solutions.com/"
+      }
+    ]
+  },
+  {
+    "id": "orekit",
+    "name": "Orekit",
+    "kind": "Library",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "systems"
+    ],
+    "summary": "Provides reusable space-dynamics calculations for orbit propagation, timing, frames, events, and estimation.",
+    "why": "Useful when you want to build a custom mission-analysis application rather than operate a graphical one. It rewards careful handling of data, units, frames, and time scales, so it belongs after a basic orbital-mechanics project.",
+    "firstProject": "Propagate a simple orbit and compute ground-station visibility, validating one result against an independent tool.",
+    "prerequisites": [
+      "Java or a supported wrapper",
+      "Orbital mechanics",
+      "Coordinate frames",
+      "Time scales and data files"
+    ],
+    "alternatives": [
+      "Tudat",
+      "GMAT interfaces",
+      "FreeFlyer runtime interfaces"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Free and open source under Apache 2.0; supporting physical-data files have their own provenance.",
+    "platform": "Java-based library requiring a compatible JDK; wrapper and deployment requirements depend on the chosen environment.",
+    "sources": [
+      {
+        "title": "Orekit official source mirror, capabilities, and requirements",
+        "url": "https://github.com/CS-SI/Orekit"
+      }
+    ]
+  },
+  {
+    "id": "nasa-spice",
+    "name": "NASA SPICE Toolkit",
+    "kind": "Library",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "systems"
+    ],
+    "summary": "Calculates spacecraft and planetary geometry using mission data, reference frames, and time information.",
+    "why": "Important in many planetary and spacecraft-analysis workflows when real ephemerides and consistent geometry are needed. It complements a dynamics simulator: SPICE mainly supplies geometry and data handling rather than a complete spacecraft design environment.",
+    "firstProject": "Use public kernels to plot Earth–Moon distance over a month and document the time scale and reference frame.",
+    "prerequisites": [
+      "Programming",
+      "Vectors and transforms",
+      "Time scales",
+      "Kernel and data provenance"
+    ],
+    "alternatives": [
+      "Orekit for overlapping time/frame functions",
+      "GMAT interfaces"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Publicly available from NASA NAIF under its SPICE use rules; language wrappers may carry separate licenses.",
+    "platform": "Official C toolkits include Windows, Linux, and Intel/Apple-silicon Mac variants; choose a supported compiler/platform combination.",
+    "sources": [
+      {
+        "title": "NASA SPICE Toolkit",
+        "url": "https://naif.jpl.nasa.gov/naif/toolkit.html"
+      },
+      {
+        "title": "SPICE use rules",
+        "url": "https://naif.jpl.nasa.gov/naif/rules.html"
+      },
+      {
+        "title": "SPICE C toolkit platforms",
+        "url": "https://naif.jpl.nasa.gov/naif/toolkit_C.html"
+      }
+    ]
+  },
+  {
+    "id": "basilisk",
+    "name": "Basilisk",
+    "kind": "Framework",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "gnc",
+      "astrodynamics",
+      "avionics",
+      "testing"
+    ],
+    "summary": "Combines spacecraft dynamics, flight algorithms, and repeatable simulation experiments in a programmable framework.",
+    "why": "Especially relevant if you choose spacecraft attitude control, estimation, or integrated simulation. Its Python interface and compiled modules connect your programming foundation with serious engineering models and can later support hardware-in-the-loop testing.",
+    "firstProject": "Run a documented attitude-control example, change one initial condition, and explain the resulting settling behavior with labeled time-history plots.",
+    "prerequisites": [
+      "Python",
+      "Rigid-body dynamics",
+      "Differential equations",
+      "Feedback control",
+      "Coordinate transforms"
+    ],
+    "alternatives": [
+      "MATLAB and Simulink",
+      "A custom dynamics model",
+      "Tudat for orbit-centered research"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Free and open source under the ISC license; check companion-tool terms separately.",
+    "platform": "Official documentation lists macOS, Linux, and Windows.",
+    "sources": [
+      {
+        "title": "Basilisk architecture, applications, license, and platforms",
+        "url": "https://avslab.github.io/basilisk/"
+      }
+    ]
+  },
+  {
+    "id": "tudat",
+    "name": "Tudat / TudatPy",
+    "kind": "Library",
+    "family": "Orbits & flight dynamics",
+    "specialties": [
+      "astrodynamics",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Provides programmable astrodynamics tools for propagation, estimation, and space-research studies.",
+    "why": "A strong optional research path if you enjoy numerical methods and want direct control over model assumptions. Its Python interface makes it accessible from your scientific-computing foundation, while meaningful results still require orbital mechanics and validation.",
+    "firstProject": "Compare two-body orbit propagation with a model including one additional perturbation, and plot the difference.",
+    "prerequisites": [
+      "Python and NumPy",
+      "Orbital mechanics",
+      "Numerical integration",
+      "Model validation"
+    ],
+    "alternatives": [
+      "Orekit",
+      "GMAT",
+      "Basilisk for spacecraft dynamics and control"
+    ],
+    "priority": "explore",
+    "start": "2033–2035",
+    "depth": "Working",
+    "access": "Free and open source; TudatPy uses BSD-3-Clause with dependency licenses also applicable.",
+    "platform": "Conda installation is documented for Windows, Linux, and macOS; check supported architectures and package builds.",
+    "sources": [
+      {
+        "title": "TU Delft Tudat overview",
+        "url": "https://docs.tudat.space/en/latest/index.html"
+      },
+      {
+        "title": "Tudat installation",
+        "url": "https://docs.tudat.space/en/latest/getting-started/installation.html"
+      },
+      {
+        "title": "TudatPy source and license",
+        "url": "https://github.com/tudat-team/tudatpy"
+      }
+    ]
+  },
+  {
+    "id": "matlab",
+    "name": "MATLAB",
+    "kind": "Environment",
+    "family": "Computing & controls",
+    "specialties": [
+      "gnc",
+      "astrodynamics",
+      "systems",
+      "testing",
+      "habitats",
+      "aircraft"
+    ],
+    "summary": "Combines a matrix-oriented programming language with numerical analysis, plotting, and engineering tools.",
+    "why": "One of your core academic tools because it connects mathematics with engineering calculations and coursework. Learn arrays, functions, plots, data import, and checking numerical results; add specialized toolboxes only when a class or project needs them.",
+    "firstProject": "Import a small temperature dataset, plot it with units, fit a simple model, and inspect the residual errors.",
+    "prerequisites": [
+      "Algebra",
+      "Basic programming ideas",
+      "Functions and graphs"
+    ],
+    "alternatives": [
+      "Python with NumPy and SciPy",
+      "GNU Octave where compatible"
+    ],
+    "priority": "core",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Commercial software with student, academic, and other licensing routes; campus access and individual toolbox entitlement must be checked.",
+    "platform": "Windows, macOS, and Linux, plus MATLAB Online for supported browser workflows; feature requirements vary.",
+    "sources": [
+      {
+        "title": "MATLAB product overview",
+        "url": "https://www.mathworks.com/products/matlab.html"
+      },
+      {
+        "title": "MATLAB system requirements",
+        "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+      }
+    ]
+  },
+  {
+    "id": "simulink",
+    "name": "Simulink",
+    "kind": "Environment",
+    "family": "Computing & controls",
+    "specialties": [
+      "gnc",
+      "avionics",
+      "systems",
+      "testing",
+      "aircraft",
+      "defense"
+    ],
+    "summary": "Models dynamic systems and controllers with block diagrams that can be simulated and tested.",
+    "why": "Prioritize it when differential equations, feedback control, or a relevant course becomes part of your work. It is particularly valuable for comparing a controller with a physical-system model and understanding how changes affect stability and response.",
+    "firstProject": "Simulate a room-temperature controller and compare overshoot and settling time after changing one controller parameter.",
+    "prerequisites": [
+      "MATLAB basics",
+      "Differential equations",
+      "Dynamic systems",
+      "Feedback concepts"
+    ],
+    "alternatives": [
+      "Python control and simulation libraries",
+      "Basilisk for spacecraft simulations"
+    ],
+    "priority": "branch",
+    "start": "2028–2029",
+    "depth": "Proficient",
+    "access": "Commercial MathWorks product requiring appropriate MATLAB/Simulink access; code generation and specialized capabilities can require additional products.",
+    "platform": "Supported MATLAB desktop platforms; confirm product, add-on, and compiler requirements for the intended workflow.",
+    "sources": [
+      {
+        "title": "Simulink modeling, testing, and design",
+        "url": "https://www.mathworks.com/products/simulink.html"
+      },
+      {
+        "title": "MathWorks platform and product requirements",
+        "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+      }
+    ]
+  },
+  {
+    "id": "simscape",
+    "name": "Simscape",
+    "kind": "Environment",
+    "family": "Computing & controls",
+    "specialties": [
+      "systems",
+      "robotics",
+      "habitats",
+      "gnc",
+      "testing"
+    ],
+    "summary": "Models connected physical components such as motors, thermal networks, and fluid or electrical systems.",
+    "why": "Useful for your equipment-bay or robotics projects when interactions between physical subsystems matter. Start with a small model whose parameters you can measure; large component libraries do not remove the need to understand conservation laws and model limits.",
+    "firstProject": "Build a simple thermal mass and heat-transfer model, then compare its cooling curve with measured data.",
+    "prerequisites": [
+      "MATLAB and Simulink",
+      "Relevant physics",
+      "Differential equations",
+      "Parameter estimation"
+    ],
+    "alternatives": [
+      "Modelica tools",
+      "Custom Python differential-equation models"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial add-on within the MATLAB/Simulink ecosystem; specialized Simscape products may need separate licenses.",
+    "platform": "Supported MATLAB/Simulink desktop platforms; confirm requirements for each specialized add-on.",
+    "sources": [
+      {
+        "title": "Simscape physical-system modeling",
+        "url": "https://www.mathworks.com/products/simscape.html"
+      },
+      {
+        "title": "MathWorks platform and product requirements",
+        "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+      }
+    ]
+  },
+  {
+    "id": "stateflow",
+    "name": "Stateflow",
+    "kind": "Environment",
+    "family": "Computing & controls",
+    "specialties": [
+      "avionics",
+      "systems",
+      "testing",
+      "robotics",
+      "gnc"
+    ],
+    "summary": "Describes event-driven decisions and operating modes using state machines and graphical logic.",
+    "why": "Useful when your system must switch clearly between startup, normal operation, cooling, and fault-handling modes. It complements continuous control models and makes transition conditions visible, which can help you design and test reliable behavior.",
+    "firstProject": "Model an equipment monitor with off, warming, normal, and sensor-fault states, then test every transition with synthetic inputs.",
+    "prerequisites": [
+      "MATLAB basics",
+      "Boolean logic",
+      "State-machine concepts",
+      "System requirements and tests"
+    ],
+    "alternatives": [
+      "A state machine written in Python or C++",
+      "Other model-based state-machine tools"
+    ],
+    "priority": "branch",
+    "start": "2030–2032",
+    "depth": "Working",
+    "access": "Commercial MathWorks product; verify Stateflow and any required simulation or code-generation entitlements.",
+    "platform": "Supported MATLAB platforms; check whether the selected workflow also requires Simulink and other products.",
+    "sources": [
+      {
+        "title": "Stateflow capabilities and execution options",
+        "url": "https://www.mathworks.com/products/stateflow.html"
+      },
+      {
+        "title": "MathWorks platform and product requirements",
+        "url": "https://www.mathworks.com/support/requirements/matlab-system-requirements.html"
+      }
+    ]
+  }
+]
