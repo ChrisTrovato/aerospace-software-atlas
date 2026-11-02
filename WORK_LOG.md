@@ -15,6 +15,11 @@
 - Browser checks cover filtering, profile navigation, notes, reload persistence, status changes, backup export/import, three-tool comparison limits, keyboard skip navigation, and a 390-pixel responsive layout.
 - Corrected import validation, stale auto-save controls, and skip-link routing during review.
 
-**Deployment verification pending**
+**Deployment verification**
 
-Verify the Git-connected Vercel deployment and the main website's `/softwares` route, including static assets and page refreshes.
+- Published the source to `ChrisTrovato/aerospace-software-atlas` on GitHub.
+- Deployed committed source through the Vercel API to `https://aerospace-software-atlas.vercel.app`.
+- Added and promoted a single scoped rewrite for `/softwares` on the main portfolio project.
+- Verified `https://www.christrovato.com/softwares`, catalog data loading, filtering, direct tool navigation, and a tool-page refresh in the browser.
+- Aligned recommended pathway tools with catalog specialty tags so counts and filters agree.
+- Automatic Git deployments remain unconfigured: the Vercel Git integration returned repository-access errors. Direct deployment succeeded without changing Git integration permissions.

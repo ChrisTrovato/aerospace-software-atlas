@@ -7,7 +7,9 @@
     "specialties": [
       "mechanisms",
       "manufacturing",
-      "structures"
+      "structures",
+      "foundations",
+      "habitats"
     ],
     "summary": "FreeCAD creates dimensioned, parametric solid models and drawings for parts you intend to fabricate.",
     "why": "It offers an immediate route into mechanical design without student verification or a subscription. Choose it as your primary beginner CAD package if access or ownership matters most, then transfer the underlying sketch, constraint and assembly skills when a team requires another tool.",
@@ -46,7 +48,8 @@
     "specialties": [
       "mechanisms",
       "manufacturing",
-      "structures"
+      "structures",
+      "aircraft"
     ],
     "summary": "SOLIDWORKS provides parametric parts, assemblies and technical drawings for mechanical product development.",
     "why": "This is a strong primary CAD choice for your equipment mechanisms and student engineering teams. You do not need to master FreeCAD first: start here if eligible access is available, and concentrate on design intent, tolerances and explainable drawings rather than collecting CAD certificates.",
@@ -160,7 +163,8 @@
       "mechanisms",
       "manufacturing",
       "aircraft",
-      "structures"
+      "structures",
+      "defense"
     ],
     "summary": "NX combines advanced mechanical CAD and CAM for detailed parts, surfaces and assemblies.",
     "why": "Consider NX when an internship, laboratory or aerospace manufacturing team uses it. Existing parametric CAD ability transfers, but large assemblies, data conventions and manufacturing practices require focused experience; learning it before you can finish a small assembly in one simpler tool would dilute your progress.",
@@ -415,7 +419,8 @@
       "structures",
       "mechanisms",
       "materials",
-      "thermal"
+      "thermal",
+      "defense"
     ],
     "summary": "Ansys Mechanical predicts structural deformation, stress, vibration and related physical responses using finite-element analysis.",
     "why": "It is a strong first commercial structural-analysis tool once mechanics courses make its assumptions meaningful. Aim for depth in one structural solver: explain loads, constraints, material assumptions and mesh sensitivity, then compare the results with hand calculations and physical measurements.",
@@ -793,7 +798,8 @@
       "fluids",
       "thermal",
       "habitats",
-      "aircraft"
+      "aircraft",
+      "propulsion"
     ],
     "summary": "OpenFOAM provides open-source solvers and utilities for computational fluid dynamics and other continuum problems.",
     "why": "It is useful if you want transparent, scriptable CFD workflows and are comfortable working in Linux. Choose a distribution matching your course or research group because commands and capabilities can differ; learning CFD validation is more important than learning two distributions simultaneously.",

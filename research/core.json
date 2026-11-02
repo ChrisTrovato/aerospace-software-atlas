@@ -10,7 +10,15 @@
       "gnc",
       "thermal",
       "astrodynamics",
-      "testing"
+      "testing",
+      "mechanisms",
+      "structures",
+      "fluids",
+      "propulsion",
+      "rf",
+      "power",
+      "materials",
+      "habitats"
     ],
     "summary": "A programming language for calculations, automation, data analysis and prototypes.",
     "why": "This is the most reusable programming starting point across your robotics, spacecraft and thermal interests. Learn to explain and debug small programs before relying on large generated projects.",
@@ -72,7 +80,8 @@
       "foundations",
       "systems",
       "avionics",
-      "testing"
+      "testing",
+      "defense"
     ],
     "summary": "Version control that records changes to files and lets teams work on branches.",
     "why": "Keep calculations, code, assumptions and test revisions together. This is a small continuous habit, not a subject requiring equal time with mechanics or programming.",
@@ -199,7 +208,8 @@
     "family": "Computing & workflow",
     "specialties": [
       "foundations",
-      "testing"
+      "testing",
+      "visualization"
     ],
     "summary": "A Python library for creating scientific plots.",
     "why": "Use labeled axes, units, uncertainty and clear comparisons. A figure should expose model error and trends, not just decorate a report.",
@@ -228,7 +238,8 @@
     "family": "Computing & workflow",
     "specialties": [
       "foundations",
-      "testing"
+      "testing",
+      "visualization"
     ],
     "summary": "An interactive workspace combining code, equations, results and explanatory text.",
     "why": "Useful for learning and investigating data. Restart and run all cells before sharing so the document reproduces its results from a clean state.",
@@ -291,7 +302,8 @@
     "specialties": [
       "foundations",
       "testing",
-      "systems"
+      "systems",
+      "materials"
     ],
     "summary": "A Python library for cleaning and analyzing tables of measurements.",
     "why": "Useful for timestamps, missing samples and repeated experiments. Preserve the original measurements and make each cleaning step explicit.",
@@ -484,7 +496,8 @@
     "specialties": [
       "foundations",
       "testing",
-      "avionics"
+      "avionics",
+      "defense"
     ],
     "summary": "A Python testing framework for checking program behavior automatically.",
     "why": "Engineering scripts deserve checks for units, known cases and invalid inputs. Learn this early enough that each new calculation comes with evidence it behaves as expected.",

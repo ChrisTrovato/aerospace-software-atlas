@@ -34,8 +34,8 @@
         "url": "https://reps.openrobotics.org/rep-2000/"
       },
       {
-      "title": "Current ROS 2 documentation and distribution guides",
-      "url": "https://github.com/ros2/ros2_documentation"
+        "title": "Current ROS 2 documentation and distribution guides",
+        "url": "https://github.com/ros2/ros2_documentation"
       }
     ]
   },
@@ -890,7 +890,13 @@
       "systems",
       "testing",
       "habitats",
-      "aircraft"
+      "aircraft",
+      "foundations",
+      "thermal",
+      "propulsion",
+      "power",
+      "materials",
+      "defense"
     ],
     "summary": "Combines a matrix-oriented programming language with numerical analysis, plotting, and engineering tools.",
     "why": "One of your core academic tools because it connects mathematics with engineering calculations and coursework. Learn arrays, functions, plots, data import, and checking numerical results; add specialized toolboxes only when a class or project needs them.",
@@ -972,7 +978,9 @@
       "robotics",
       "habitats",
       "gnc",
-      "testing"
+      "testing",
+      "thermal",
+      "power"
     ],
     "summary": "Models connected physical components such as motors, thermal networks, and fluid or electrical systems.",
     "why": "Useful for your equipment-bay or robotics projects when interactions between physical subsystems matter. Start with a small model whose parameters you can measure; large component libraries do not remove the need to understand conservation laws and model limits.",
@@ -1013,7 +1021,8 @@
       "systems",
       "testing",
       "robotics",
-      "gnc"
+      "gnc",
+      "habitats"
     ],
     "summary": "Describes event-driven decisions and operating modes using state machines and graphical logic.",
     "why": "Useful when your system must switch clearly between startup, normal operation, cooling, and fault-handling modes. It complements continuous control models and makes transition conditions visible, which can help you design and test reliable behavior.",

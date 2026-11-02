@@ -10,7 +10,15 @@
       "gnc",
       "thermal",
       "astrodynamics",
-      "testing"
+      "testing",
+      "mechanisms",
+      "structures",
+      "fluids",
+      "propulsion",
+      "rf",
+      "power",
+      "materials",
+      "habitats"
     ],
     "summary": "A programming language for calculations, automation, data analysis and prototypes.",
     "why": "This is the most reusable programming starting point across your robotics, spacecraft and thermal interests. Learn to explain and debug small programs before relying on large generated projects.",
@@ -72,7 +80,8 @@
       "foundations",
       "systems",
       "avionics",
-      "testing"
+      "testing",
+      "defense"
     ],
     "summary": "Version control that records changes to files and lets teams work on branches.",
     "why": "Keep calculations, code, assumptions and test revisions together. This is a small continuous habit, not a subject requiring equal time with mechanics or programming.",
@@ -199,7 +208,8 @@
     "family": "Computing & workflow",
     "specialties": [
       "foundations",
-      "testing"
+      "testing",
+      "visualization"
     ],
     "summary": "A Python library for creating scientific plots.",
     "why": "Use labeled axes, units, uncertainty and clear comparisons. A figure should expose model error and trends, not just decorate a report.",
@@ -228,7 +238,8 @@
     "family": "Computing & workflow",
     "specialties": [
       "foundations",
-      "testing"
+      "testing",
+      "visualization"
     ],
     "summary": "An interactive workspace combining code, equations, results and explanatory text.",
     "why": "Useful for learning and investigating data. Restart and run all cells before sharing so the document reproduces its results from a clean state.",
@@ -291,7 +302,8 @@
     "specialties": [
       "foundations",
       "testing",
-      "systems"
+      "systems",
+      "materials"
     ],
     "summary": "A Python library for cleaning and analyzing tables of measurements.",
     "why": "Useful for timestamps, missing samples and repeated experiments. Preserve the original measurements and make each cleaning step explicit.",
@@ -484,7 +496,8 @@
     "specialties": [
       "foundations",
       "testing",
-      "avionics"
+      "avionics",
+      "defense"
     ],
     "summary": "A Python testing framework for checking program behavior automatically.",
     "why": "Engineering scripts deserve checks for units, known cases and invalid inputs. Learn this early enough that each new calculation comes with evidence it behaves as expected.",
@@ -1160,7 +1173,9 @@
     "specialties": [
       "mechanisms",
       "manufacturing",
-      "structures"
+      "structures",
+      "foundations",
+      "habitats"
     ],
     "summary": "FreeCAD creates dimensioned, parametric solid models and drawings for parts you intend to fabricate.",
     "why": "It offers an immediate route into mechanical design without student verification or a subscription. Choose it as your primary beginner CAD package if access or ownership matters most, then transfer the underlying sketch, constraint and assembly skills when a team requires another tool.",
@@ -1199,7 +1214,8 @@
     "specialties": [
       "mechanisms",
       "manufacturing",
-      "structures"
+      "structures",
+      "aircraft"
     ],
     "summary": "SOLIDWORKS provides parametric parts, assemblies and technical drawings for mechanical product development.",
     "why": "This is a strong primary CAD choice for your equipment mechanisms and student engineering teams. You do not need to master FreeCAD first: start here if eligible access is available, and concentrate on design intent, tolerances and explainable drawings rather than collecting CAD certificates.",
@@ -1313,7 +1329,8 @@
       "mechanisms",
       "manufacturing",
       "aircraft",
-      "structures"
+      "structures",
+      "defense"
     ],
     "summary": "NX combines advanced mechanical CAD and CAM for detailed parts, surfaces and assemblies.",
     "why": "Consider NX when an internship, laboratory or aerospace manufacturing team uses it. Existing parametric CAD ability transfers, but large assemblies, data conventions and manufacturing practices require focused experience; learning it before you can finish a small assembly in one simpler tool would dilute your progress.",
@@ -1568,7 +1585,8 @@
       "structures",
       "mechanisms",
       "materials",
-      "thermal"
+      "thermal",
+      "defense"
     ],
     "summary": "Ansys Mechanical predicts structural deformation, stress, vibration and related physical responses using finite-element analysis.",
     "why": "It is a strong first commercial structural-analysis tool once mechanics courses make its assumptions meaningful. Aim for depth in one structural solver: explain loads, constraints, material assumptions and mesh sensitivity, then compare the results with hand calculations and physical measurements.",
@@ -1946,7 +1964,8 @@
       "fluids",
       "thermal",
       "habitats",
-      "aircraft"
+      "aircraft",
+      "propulsion"
     ],
     "summary": "OpenFOAM provides open-source solvers and utilities for computational fluid dynamics and other continuum problems.",
     "why": "It is useful if you want transparent, scriptable CFD workflows and are comfortable working in Linux. Choose a distribution matching your course or research group because commands and capabilities can differ; learning CFD validation is more important than learning two distributions simultaneously.",
@@ -3061,7 +3080,13 @@
       "systems",
       "testing",
       "habitats",
-      "aircraft"
+      "aircraft",
+      "foundations",
+      "thermal",
+      "propulsion",
+      "power",
+      "materials",
+      "defense"
     ],
     "summary": "Combines a matrix-oriented programming language with numerical analysis, plotting, and engineering tools.",
     "why": "One of your core academic tools because it connects mathematics with engineering calculations and coursework. Learn arrays, functions, plots, data import, and checking numerical results; add specialized toolboxes only when a class or project needs them.",
@@ -3143,7 +3168,9 @@
       "robotics",
       "habitats",
       "gnc",
-      "testing"
+      "testing",
+      "thermal",
+      "power"
     ],
     "summary": "Models connected physical components such as motors, thermal networks, and fluid or electrical systems.",
     "why": "Useful for your equipment-bay or robotics projects when interactions between physical subsystems matter. Start with a small model whose parameters you can measure; large component libraries do not remove the need to understand conservation laws and model limits.",
@@ -3184,7 +3211,8 @@
       "systems",
       "testing",
       "robotics",
-      "gnc"
+      "gnc",
+      "habitats"
     ],
     "summary": "Describes event-driven decisions and operating modes using state machines and graphical logic.",
     "why": "Useful when your system must switch clearly between startup, normal operation, cooling, and fault-handling modes. It complements continuous control models and makes transition conditions visible, which can help you design and test reliable behavior.",
@@ -3495,7 +3523,8 @@
     "specialties": [
       "power",
       "avionics",
-      "testing"
+      "testing",
+      "rf"
     ],
     "summary": "Simulate analog circuits and inspect voltages and currents before building them.",
     "why": "An approachable companion to basic electronics when learning sensor filters, amplifiers or power supplies. It makes the relationship between a circuit and its time response visible, but the result still depends on the component models, operating conditions and parasitic effects you include.",
@@ -3982,7 +4011,8 @@
     "specialties": [
       "systems",
       "power",
-      "gnc"
+      "gnc",
+      "habitats"
     ],
     "summary": "Build, compile and simulate physical-system models written in the Modelica language.",
     "why": "An accessible route into equation-based modeling when exploring coupled mechanical, electrical or thermal behavior. Treat component libraries as models with assumptions to inspect; verify that the particular library and features you need are supported before building a large system around them.",
@@ -4087,7 +4117,8 @@
       "systems",
       "testing",
       "avionics",
-      "defense"
+      "defense",
+      "habitats"
     ],
     "summary": "Develop a structured system architecture using the Arcadia engineering method.",
     "why": "A free entry into model-based systems engineering when you want to connect operational needs, functions and physical implementation. It implements Arcadia rather than simply being a free clone of a SysML tool; learning the method is part of using it well.",
