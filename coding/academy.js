@@ -1,5 +1,6 @@
 import {ACADEMY_KEY,LANGS,today,validDay,fresh,normalize,migrateV1,mergeBackups,rateReview,searchItems} from './academy-engine.mjs';
 import {makeDrill,gradeNumber} from './drills.mjs';
+import {whyView} from './why-view.mjs';
 import {tracks,dataset,datasetSpecs,mentorPrompt,readmeTemplate} from './toolkit.mjs';
 import {esc,todayView,libraryView,libraryResults,lessonView,exerciseView,projectsView,projectView,practiceView,reviewView,journalView,toolkitView,exploreView} from './academy-views.mjs';
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
@@ -34,13 +35,14 @@ function render(){
  else if(view==='journal')html=journalView(data,state);
  else if(view==='toolkit')html=toolkitView(data,state)+(recoveryRaw?'<button class="a-button section-spacer" data-action="recovery-export">Download unreadable progress for recovery</button>':'');
  else if(view==='explore')html=exploreView(data,state);
+ else if(view==='why')html=whyView(data,params.get('lang')||state.prefs.focus);
  else if(view==='guide'||view.startsWith('guide-')){$('#field-guide').hidden=false;$('#academy-content').hidden=true;active='guide';if(view!=='guide')requestAnimationFrame(()=>document.getElementById(view)?.scrollIntoView());}
  else if(view==='today')html=todayView(data,state);
  if(html!==undefined)$('#academy-content').innerHTML=html;
  else if(active!=='guide'){$('#academy-content').innerHTML='<div class="empty-state"><h1>This item was not found.</h1><p>Use the library to find a lesson or project.</p><a class="a-button" href="#library">Open curriculum</a></div>';active='library';}
  if(view==='library')$('#library-results').innerHTML=renderLibraryResults(params);
  $$('[data-view]').forEach(a=>{if(a.dataset.view===active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
- const label=$(`[data-view="${active}"]`)?.textContent?.replace(/\d+/g,'').trim()||'Academy';$('#view-breadcrumb').textContent='The long game / '+label;
+ const label=[...($(`[data-view="${active}"]`)?.childNodes||[])].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim()||'Academy';$('#view-breadcrumb').textContent='The long game / '+label;
  const due=reviewData().due.length;$('#due-badge').textContent=due?String(due):'';
  updateTimerDisplay();
 }

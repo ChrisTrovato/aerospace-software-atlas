@@ -13,6 +13,7 @@ The same six public addresses now open a long-term learning workspace, with the 
 - A recall queue with a transparent interval heuristic, not a personalized or clinically validated memory algorithm.
 - Twelve deterministic numeric practice generators. Parameter variations are not represented as distinct authored lessons; these check numbers, not submitted program code.
 - An editable journal, six exploration lenses, four synthetic CSV datasets, cross-language comparisons, and study playbooks.
+- A dedicated Why tab (`#why`), with five source-linked language histories, timelines, aerospace examples, tradeoffs, learning priorities, and direct curriculum links. Deep-link a language with `#why?lang=cpp` (or python, matlab, c, bash).
 - Light and dark themes, responsive layouts, keyboard-accessible controls, and local progress export/import.
 
 ### Academy source

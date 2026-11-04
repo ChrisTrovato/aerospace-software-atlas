@@ -16,3 +16,49 @@ body{background:var(--ac-bg);color:var(--ac-ink)}button,input,select,textarea{fo
 .source-buttons a{font-size:12px}
 @media(max-width:760px){.academy-sidebar nav{scrollbar-width:none}.academy-sidebar nav::-webkit-scrollbar{display:none}.academy-sidebar nav a{font-size:11px}.reading-column .a-code pre{font-size:12px}.source-buttons a{font-size:11px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{animation:none!important;transition:none!important}.path-card:hover{transform:none}}
+/* The Why chapter: language origins connected to a practical learning path. */
+.why-language-nav{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:24px}
+.why-language-nav>a{display:flex;align-items:center;gap:10px;padding:15px 13px;border:1px solid var(--ac-line);border-radius:8px;text-decoration:none;background:var(--ac-panel);min-width:0}
+.why-language-nav>a:hover{border-color:var(--ac-accent)}
+.why-language-nav>a[aria-current]{border-color:var(--ac-accent);box-shadow:inset 0 -3px var(--ac-accent);background:var(--ac-soft)}
+.why-language-nav .language-chip{margin:0;flex-shrink:0}
+.why-language-nav b{display:block;font-size:13px;line-height:1.35}
+.why-language-nav small{display:block;color:var(--ac-muted);font-size:9px;line-height:1.5;margin-top:3px}
+.why-hero{display:grid;grid-template-columns:minmax(0,1fr) 180px;align-items:center;gap:35px;padding:36px 40px;background:#123a35;color:#f1f8ee;border-radius:12px;overflow:hidden;margin-bottom:42px}
+#academy-content .why-hero h2{font-size:clamp(28px,3vw,44px);max-width:720px;margin:12px 0 18px}
+#academy-content .why-hero p{color:#c4d9cc;max-width:740px;font-size:14px;line-height:1.85}
+.why-hero .overline{color:#b0d4bc}
+.why-origin{display:flex;flex-wrap:wrap;gap:8px 24px;border-top:1px solid #41685a;padding-top:18px;margin-top:24px;font-size:10px;color:#bed4c7}
+.why-origin b{font-weight:500;color:#e7f3e9}
+.why-emblem{display:grid;place-items:center;aspect-ratio:1;border:1px solid #648376;border-radius:50%;font:500 57px var(--display);letter-spacing:-.05em;color:var(--why-accent);box-shadow:0 0 0 18px #ffffff04,0 0 0 37px #ffffff03}
+.why-history-grid{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:50px;align-items:start}
+#academy-content .why-history-intro{font-size:15px;line-height:1.9}
+.why-source-note{display:flex;flex-wrap:wrap;gap:8px 20px;margin:18px 0 30px;font-size:11px}
+.why-timeline{list-style:none;padding:0;margin:0 0 0 5px;border-left:1px solid var(--ac-line)}
+.why-timeline li{display:grid;grid-template-columns:90px minmax(0,1fr);gap:18px;position:relative;padding:0 0 32px 24px}
+.why-timeline li:last-child{padding-bottom:0}
+.why-timeline li:before{content:'';position:absolute;top:6px;left:-5px;background:var(--ac-accent);border:3px solid var(--ac-bg);width:9px;height:9px;border-radius:50%;box-sizing:content-box;transform:translateX(-2px)}
+.why-timeline li>span{font:500 10px/1.6 var(--display);color:var(--ac-accent);padding-top:3px}
+#academy-content .why-timeline h3{font-size:19px;margin:0 0 10px}
+#academy-content .why-timeline p{font-size:13px;line-height:1.85;margin:0 0 8px}
+.why-timeline a{font-size:10px}
+.why-carry{padding:30px;border:1px solid var(--ac-line);border-top:4px solid #7da68a;background:var(--ac-panel);border-radius:9px}
+#academy-content .why-carry h2{font-size:28px;margin:15px 0}
+#academy-content .why-carry p{font-size:13px;line-height:1.85}
+.why-carry>div{padding-top:20px;margin-top:20px;border-top:1px solid var(--ac-line)}
+.why-carry>.a-button{margin-top:16px}
+.why-value-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.why-value-grid .overline{margin-bottom:25px;color:var(--ac-accent)}
+#academy-content .why-value-grid p{font-size:13px;line-height:1.85}
+.why-scenario{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:40px;background:var(--ac-soft);border:1px solid var(--ac-line);border-radius:10px;padding:36px}
+#academy-content .why-scenario h2{font-size:29px;margin-top:15px}
+#academy-content .why-scenario p{font-size:13px;line-height:1.85}
+.why-outcome{align-self:center;border-left:1px solid var(--ac-line);padding-left:32px}
+#academy-content .why-outcome p{font:400 23px/1.55 Georgia,serif;color:var(--ac-ink);margin:20px 0 28px}
+.why-together{border-top:1px solid var(--ac-line);padding-top:35px;max-width:880px}
+.why-together h2{margin-top:15px!important}
+#academy-content .why-together p{font-size:14px;line-height:1.9}
+@media(max-width:1200px){.why-language-nav{grid-template-columns:repeat(3,minmax(0,1fr))}.why-history-grid{gap:28px;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr)}.why-timeline li{grid-template-columns:1fr;gap:7px}.why-value-grid{gap:12px}.why-value-grid .a-panel{padding:24px}.why-hero{grid-template-columns:minmax(0,1fr) 130px}.why-scenario{gap:24px}}
+@media(max-width:900px){.why-history-grid{grid-template-columns:1fr}.why-value-grid{grid-template-columns:1fr}.why-scenario{grid-template-columns:1fr}.why-outcome{border-left:0;border-top:1px solid var(--ac-line);padding:25px 0 0}.why-language-nav small{font-size:10px}.why-carry{padding:28px}}
+@media(max-width:760px){.why-language-nav{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.why-language-nav>a{padding:12px 10px}.why-language-nav .language-chip{width:28px;height:28px;font-size:10px}.why-language-nav b{font-size:12px}.why-language-nav small{font-size:9px}.why-hero{padding:26px;grid-template-columns:1fr;gap:0;margin-bottom:30px}.why-emblem{display:none}#academy-content .why-hero h2{font-size:31px}#academy-content .why-hero p{font-size:13px}.why-origin{font-size:10px;gap:7px}.why-history-grid{gap:30px}#academy-content .why-history-intro{font-size:14px}.why-timeline li{padding-left:23px}.why-scenario{padding:25px}.why-source-note{font-size:11px}.why-outcome .a-button{font-size:11px}.why-together{padding-top:25px}}
+@media print{.why-language-nav,.why-emblem{display:none}.why-hero{background:white;color:black;border:1px solid #aaa;display:block}.why-hero p,.why-hero .overline,.why-origin,.why-origin b{color:black!important}.why-history-grid,.why-scenario{display:block}.why-carry,.why-value-grid .a-panel{break-inside:avoid}.why-timeline li{break-inside:avoid}}
