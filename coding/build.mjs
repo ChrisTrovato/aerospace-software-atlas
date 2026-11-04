@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {languages,missions,ecosystemSources} from './content.mjs';
+import {upgradePages} from './academy-build.mjs';
 const dir=path.dirname(fileURLToPath(import.meta.url));
 const out=path.join(dir,'../dist');
 const resources=JSON.parse(fs.readFileSync(path.join(dir,'resources.json'),'utf8'));
@@ -65,3 +66,4 @@ languages.forEach((l,i)=>fs.writeFileSync(path.join(out,l.route.slice(1)+'.html'
 for(const file of ['styles.css','app.js','engine.mjs','icon.svg'])fs.copyFileSync(path.join(dir,file),path.join(out,'coding_assets',file));
 fs.writeFileSync(path.join(out,'coding_assets/data.json'),JSON.stringify({languages:languages.map(({id,name,symbol,first})=>({id,name,symbol,first})),missions}));
 console.log('Built six Coding Field Guide pages and shared assets.');
+upgradePages(languages);

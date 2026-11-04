@@ -30,3 +30,8 @@
 Added a six-page programming learning hub with five language guides, 30 provider-linked resources, four mission narratives, five illustrative interactive demos, and local study/readiness progress with validated JSON backup. The existing Software Atlas content is preserved.
 
 Validation: 27 automated tests passed, including the original 19 atlas checks. Static content and asset audit passed. Chrome checks covered all five demo results, all six mobile routes without page-level overflow, resource filtering, mission switching, session duration/focus, local persistence, and export/import restoration. Desktop and mobile visuals inspected. Public routing is scoped to the coding pages and shared coding assets.
+# Coding Academy v2 — November 2026
+
+Expanded the six coding routes into a shared long-term learning workspace. Added five original curricula with 82 lessons, 328 exercises, 164 recall cards, 27 project briefs/108 milestones, and 80 glossary entries. Added searchable/filterable content, prerequisites and next-lesson suggestions, autosaved scratchpads, project tracking, recall scheduling, editable journal, synthetic datasets, exploration lenses, study playbooks, offline handbook/workbook, theme switching, and progress backup migration/merge/recovery.
+
+Validated 39 automated tests and the static asset/privacy audit. Browser checks verified draft and project persistence, search, numeric practice feedback, recall scheduling, journal editing, backup preview/merge, next-lesson advancement, dark theme persistence, and nine mobile view layouts. Python/Bash examples received syntax checks; C/C++ and MATLAB runtime execution was unavailable, as documented in the coding README. The original Software Atlas remains preserved.

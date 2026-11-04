@@ -4,7 +4,7 @@ Also includes **[The Coding Field Guide](https://www.christrovato.com/coding_lea
 
 A public learning guide with 116 software profiles, 20 engineering pathways, and a suggested 2026–2035 progression. Explore CAD, scientific computing, simulation, robotics, avionics, systems engineering, and technical communication through small, practical projects.
 
-Live site: [christrovato.com/softwares](https://www.christrovato.com/softwares)  
+Live site: [christrovato.com/softwares](https://www.christrovato.com/softwares)
 Repository: [ChrisTrovato/aerospace-software-atlas](https://github.com/ChrisTrovato/aerospace-software-atlas)
 
 The priorities are educational recommendations, not universal degree or employer requirements. Dates are proposed learning windows. Sources and access notes reflect a **November 2, 2026** research snapshot; verify current licenses, eligibility, platform requirements, course offerings, and job postings before acting on them.
@@ -32,3 +32,6 @@ node check.mjs
 The project is configured for a standalone Vercel static deployment with `node build.mjs` as its build command and `dist` as its output directory. The main website proxies `/softwares` and its asset requests to `https://aerospace-software-atlas.vercel.app`. This route is managed in the main portfolio project on Vercel. The current release was deployed from committed source through the Vercel API; automatic Git deployments are not configured because the Vercel Git integration could not access this repository.
 
 Before release, verify the catalog, pathway links, filters, comparison view, progress persistence, backup export/import, mobile layout, and the final domain path in a browser. See `WORK_LOG.md` for implementation and release status.
+# Coding Academy expansion
+
+The coding paths now include a complete study workspace: 82 lessons, 328 exercises, 164 recall cards, 27 projects, 80 glossary entries, and downloadable handbooks. Start at [Coding Academy](https://www.christrovato.com/coding_learning_main). See [the coding source guide](coding/README.md) for content, persistence, verification, and maintenance details.

@@ -1,0 +1,2383 @@
+{
+  "modules": [
+    {
+      "id": "cpp-01",
+      "language": "cpp",
+      "title": "From source file to a trustworthy executable",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [],
+      "summary": "Compile a tiny engineering calculation and distinguish compile, link, and runtime failures.",
+      "why": "A reproducible executable is the first building block of a robotics component. Being able to explain how it was built matters more than owning an elaborate editor.",
+      "explanation": [
+        "A source file is a description of a program, not the running program itself. A compiler checks and translates it; a linker connects the translated pieces and required libraries. An editor may hide those steps behind a button. For this first session, make the path visible: save one file, compile it with an explicitly selected language standard, run the resulting executable, then change a number and rebuild.",
+        "Use a deliberately small engineering question: what is the total mass of three components? Write the units in variable names and in the result. Predict 1.2 + 0.8 + 0.5 = 2.5 kg on paper before compiling. The compiler can detect many language mistakes, but it cannot determine that you accidentally entered a value in grams. A successful build is evidence about the program's structure, not proof of its physical meaning.",
+        "Keep a short build note containing the compiler version, language standard, command, input, and observed output. For GCC or Clang, a starting command is g++ -std=c++17 -Wall -Wextra -Wpedantic main.cpp -o mass. Those options are compiler-specific; an MSVC workflow uses different commands. Rebuilding a saved file should be an intentional step, because accidentally running yesterday's executable can make a correct edit appear ineffective."
+      ],
+      "example": {
+        "code": "#include <iostream>\nint main() {\n    const double total_kg = 1.2 + 0.8 + 0.5;\n    std::cout << total_kg << \" kg\\n\";\n}",
+        "explanation": "The program prints 2.5 kg. This is a complete program; save it as main.cpp and compile with a C++ compiler."
+      },
+      "walkthrough": [
+        "Write the predicted output before running.",
+        "Compile with warnings enabled and record the complete command.",
+        "Change the final mass to 0.7, rebuild, and verify 2.7 kg.",
+        "Introduce a missing semicolon, read the first diagnostic, then repair it."
+      ],
+      "pitfalls": [
+        "An IDE run button may launch an older successful build after a new build fails.",
+        "A file extension and compiler driver affect whether the source is treated as C or C++.",
+        "Adding all warning flags does not prove the absence of defects."
+      ],
+      "exercises": [
+        {
+          "title": "A second mass estimate",
+          "prompt": "Replace the masses with the supplied values and label the output.",
+          "inputs": "2.4 kg, 0.75 kg, 0.35 kg",
+          "expected": "3.5 kg",
+          "hints": [
+            "Add on paper first.",
+            "Keep every input in kilograms."
+          ],
+          "solution": "The sum is 2.4 + 0.75 + 0.35 = 3.5. Store it as double and print the unit.",
+          "tests": [
+            "All zero inputs give zero.",
+            "A single 2.4 kg item gives 2.4."
+          ],
+          "extension": "Add an item count to the output.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-01-a"
+        },
+        {
+          "title": "Separate three failure stages",
+          "prompt": "Make one syntax error, one missing function definition, and one wrong arithmetic operator in separate saved versions.",
+          "inputs": "A declared total() function with no definition; a missing semicolon; subtraction instead of addition",
+          "expected": "A compile diagnostic, a link diagnostic, and a runnable wrong answer",
+          "hints": [
+            "Change one thing at a time.",
+            "Save the first diagnostic rather than all cascaded errors."
+          ],
+          "solution": "The compiler rejects syntax; the linker cannot resolve total(); the wrong operator is a logic error found by the expected result.",
+          "tests": [
+            "Restore the correct source and rebuild.",
+            "Confirm the new executable timestamp changes."
+          ],
+          "extension": "Write a two-sentence recovery note for each failure.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-01-b"
+        },
+        {
+          "title": "Rebuild from a clean folder",
+          "prompt": "Copy only source and build notes into a new task folder and reproduce the result.",
+          "inputs": "main.cpp and the recorded build command",
+          "expected": "Same labeled 2.5 kg result",
+          "hints": [
+            "Do not copy the previous executable.",
+            "Use the same compiler standard flag."
+          ],
+          "solution": "A successful rebuild demonstrates that the source and notes are sufficient for this tiny project, without relying on hidden editor state.",
+          "tests": [
+            "Compile with no existing binary.",
+            "Change one mass and rebuild again."
+          ],
+          "extension": "Have a future version of yourself follow the notes after a week.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-01-c"
+        },
+        {
+          "title": "The suspicious unchanged answer",
+          "prompt": "The source says 0.7 kg but the executable still reports 2.5 kg. Diagnose without changing arithmetic again.",
+          "inputs": "Last build failed because a semicolon is missing",
+          "expected": "Fix the build and run the new binary; result becomes 2.7 kg",
+          "hints": [
+            "Check whether compilation succeeded.",
+            "Check which executable path is running."
+          ],
+          "solution": "The old binary survived the failed build. Fix the first compiler error, rebuild successfully, and verify the executable location.",
+          "tests": [
+            "Run after a successful build.",
+            "Run from the folder named in the notes."
+          ],
+          "extension": "Make your build command stop before run if compilation fails.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-01-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Does compiling prove the mass is physically correct?",
+          "answer": "No. It checks language constraints, not units, assumptions, or source data."
+        },
+        {
+          "question": "Why record the compiler and standard?",
+          "answer": "They define the build environment and help reproduce differences later."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GCC warning options",
+          "url": "https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html"
+        },
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-02",
+      "language": "cpp",
+      "title": "Types, units, and deliberate conversions",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-01"
+      ],
+      "summary": "Use numeric types that match the question and expose assumptions in the interface.",
+      "why": "A rover can receive perfectly valid numbers with the wrong units. Preventing that mismatch begins with clear types and explicit conversion boundaries.",
+      "explanation": [
+        "A type constrains what operations are meaningful and what values can be represented. An integer is appropriate for a count of received samples; a floating-point value is appropriate for a measured duration with fractional seconds. Neither automatically carries a physical unit. A variable named time_s is a useful first defense, while later a dedicated unit type can prevent some invalid combinations before the program runs.",
+        "Integer division discards the fractional part of its result when both operands are integers. Thus 3 / 2 yields 1, even if you subsequently store that result in a double. Write 3.0 / 2.0 or convert before the division when a fractional result is intended. Conversions should be placed where the meaning changes, such as milliseconds entering an analysis that consistently uses seconds, rather than scattered throughout the calculations.",
+        "Treat ranges and invalid values as part of the problem. A negative duration or a non-finite measurement may need rejection rather than silent correction. A cast makes a conversion explicit but does not make it sensible; narrowing a huge value into a small integer still needs a range check. During this module, stay with ordinary integer and double values, document units, and compare every formula against one hand-computable case."
+      ],
+      "example": {
+        "code": "#include <iostream>\nint main() {\n    const int elapsed_ms = 1500;\n    const double elapsed_s = elapsed_ms / 1000.0;\n    std::cout << elapsed_s << \" s\\n\";\n}",
+        "explanation": "The decimal denominator makes this floating-point division, yielding 1.5 seconds."
+      },
+      "walkthrough": [
+        "Annotate each input with its unit and plausible range.",
+        "Compare 1500/1000 with 1500/1000.0.",
+        "Put conversion into one named expression or function.",
+        "Write down a rejection policy for negative and non-finite input."
+      ],
+      "pitfalls": [
+        "Converting after integer division cannot restore the discarded fraction.",
+        "A cast is not an input-validation policy.",
+        "Using more decimal digits in output does not improve sensor accuracy."
+      ],
+      "exercises": [
+        {
+          "title": "Milliseconds at the boundary",
+          "prompt": "Convert each duration to seconds without losing the fraction.",
+          "inputs": "0, 1, 999, 1000, 1500 milliseconds",
+          "expected": "0, 0.001, 0.999, 1, 1.5 seconds",
+          "hints": [
+            "Use 1000.0.",
+            "Print enough digits to inspect 0.001."
+          ],
+          "solution": "Divide the millisecond value by a floating-point thousand at one documented boundary.",
+          "tests": [
+            "1 ms must not become 0 s.",
+            "1000 ms must become 1 s."
+          ],
+          "extension": "Add a function name that states both units.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-02-a"
+        },
+        {
+          "title": "Rate from count and time",
+          "prompt": "Compute a sample rate and reject nonpositive duration.",
+          "inputs": "250 samples over 2.5 s; 250 over 0 s",
+          "expected": "100 samples/s; explicit invalid-duration result",
+          "hints": [
+            "Count divided by seconds gives samples/s.",
+            "Validate before dividing."
+          ],
+          "solution": "Use a floating-point duration and evaluate count/duration only if duration > 0.",
+          "tests": [
+            "0 samples over 2 s gives 0.",
+            "Negative duration is rejected."
+          ],
+          "extension": "Distinguish invalid data from a valid zero rate.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-02-b"
+        },
+        {
+          "title": "A tiny unit wrapper",
+          "prompt": "Create Seconds and Milliseconds structs and a conversion function; do not allow implicit mixed arithmetic.",
+          "inputs": "Milliseconds{1250}",
+          "expected": "Seconds with value 1.25",
+          "hints": [
+            "Each struct may initially contain one double.",
+            "Make conversion a named function."
+          ],
+          "solution": "Separate types force the call site to choose the conversion explicitly, making accidental mixing more visible.",
+          "tests": [
+            "1000 ms converts to 1 s.",
+            "Attempting an undefined mixed addition fails to compile."
+          ],
+          "extension": "Add a Meters type and a speed calculation.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-02-c"
+        },
+        {
+          "title": "Why the rate is zero",
+          "prompt": "A program calculates double dt = 20 / 1000; then divides by dt. Find the first error.",
+          "inputs": "20 ms interval",
+          "expected": "dt must be 0.02 s",
+          "hints": [
+            "Inspect operands before assignment.",
+            "Changing only the receiving type is insufficient."
+          ],
+          "solution": "20 / 1000 is integer division and yields zero; use 20 / 1000.0 before any rate calculation.",
+          "tests": [
+            "20 ms yields 0.02.",
+            "1000 ms yields 1.0."
+          ],
+          "extension": "Enable conversion warnings and explain which mistakes they do not catch.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-02-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Where should unit conversion happen?",
+          "answer": "At a named, documented interface boundary, so internal calculations use a consistent convention."
+        },
+        {
+          "question": "Does double guarantee exact decimal arithmetic?",
+          "answer": "No. Many decimal fractions are approximated; use tolerances based on the calculation."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        },
+        {
+          "title": "GCC warning options",
+          "url": "https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html"
+        }
+      ]
+    },
+    {
+      "id": "cpp-03",
+      "language": "cpp",
+      "title": "Functions, references, and clear contracts",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-02"
+      ],
+      "summary": "Express a small calculation as a function with explicit inputs, outputs, and failure behavior.",
+      "why": "Good functions let a test exercise one engineering decision without launching a whole robot.",
+      "explanation": [
+        "A function turns a useful question into an interface. Instead of a large main function that reads files, converts units, and prints a report, isolate a conversion or classification that can be called with known values. A contract states what the function accepts, what it returns, and whether it changes anything provided by the caller. Start with functions that return a value and avoid hidden global state.",
+        "Passing a small scalar by value gives the function its own copy. Passing by reference allows it to refer to an existing object; a non-const reference can modify that object. A const reference is useful for reading a larger object without copying it, but it does not extend every possible object's lifetime. References are not ownership: the referenced object must still exist for the entire use.",
+        "Make boundary policies visible. A threshold comparison should say whether equality counts, a normalization routine should specify its zero-input behavior, and an averaging function should say what happens with no samples. Naming the policy is often more valuable than making the code shorter. Draw a tiny input-output table before implementation, then turn each row into a repeatable check and retain that table when you refactor."
+      ],
+      "example": {
+        "code": "bool needs_review(double temperature_c, double limit_c) {\n    return temperature_c > limit_c;\n}",
+        "explanation": "This function fragment uses a strict threshold: equality does not request review. It does not diagnose hardware safety."
+      },
+      "walkthrough": [
+        "Write the contract in plain language.",
+        "Use names that include units where useful.",
+        "Call with below, equal, and above-threshold values.",
+        "Separate the boolean decision from printing its explanation."
+      ],
+      "pitfalls": [
+        "A non-const reference can hide mutation if the call site is unclear.",
+        "Returning a reference to a local variable leaves a dangling reference.",
+        "A comment and implementation can disagree at equality."
+      ],
+      "exercises": [
+        {
+          "title": "The exact threshold",
+          "prompt": "Call needs_review with the supplied temperatures.",
+          "inputs": "29.9, 30.0, 30.1 °C; limit 30.0 °C",
+          "expected": "false, false, true",
+          "hints": [
+            "Read > literally.",
+            "Test equality separately."
+          ],
+          "solution": "Only 30.1 is greater than 30.0; equality remains an ordinary observation under this stated policy.",
+          "tests": [
+            "A negative temperature below the limit returns false.",
+            "Changing the limit changes the decision."
+          ],
+          "extension": "Add a finite-input check.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-03-a"
+        },
+        {
+          "title": "Value or reference",
+          "prompt": "Write scale_copy(double) returning twice its input and scale_in_place(double&) modifying it.",
+          "inputs": "x = 3.0",
+          "expected": "Copy call returns 6 while x stays 3; in-place call changes x to 6",
+          "hints": [
+            "Give the functions different names.",
+            "Inspect x after each call."
+          ],
+          "solution": "Pass-by-value changes a local copy; a non-const reference refers to the caller variable.",
+          "tests": [
+            "Try zero.",
+            "Try a negative scalar."
+          ],
+          "extension": "Explain which interface is easier to compose in an analysis.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-03-b"
+        },
+        {
+          "title": "Classify a valid measurement",
+          "prompt": "Return an enum class with Invalid, Normal, and Review; reject non-finite input.",
+          "inputs": "NaN, 30.0, 31.0; limit 30.0",
+          "expected": "Invalid, Normal, Review",
+          "hints": [
+            "Use std::isfinite from cmath.",
+            "Test invalidity before comparison."
+          ],
+          "solution": "A dedicated invalid result avoids pretending NaN is a normal low measurement when comparisons are false.",
+          "tests": [
+            "Positive infinity is invalid.",
+            "Exactly the limit is Normal."
+          ],
+          "extension": "Include a reason string in a later result type.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-03-c"
+        },
+        {
+          "title": "Reference to a vanished result",
+          "prompt": "A function declares double result locally and returns const double& referring to it. Explain and fix.",
+          "inputs": "const double& twice(double x) { double result=2*x; return result; }",
+          "expected": "Return double by value",
+          "hints": [
+            "The local object ends at function return.",
+            "Small numeric return values do not need references."
+          ],
+          "solution": "The reference dangles after return. Return the computed double value; the caller receives a valid result object.",
+          "tests": [
+            "Compile with warnings.",
+            "Call twice(4) and verify 8."
+          ],
+          "extension": "Find a similar lifetime mistake involving a local string.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-03-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Does const reference mean ownership?",
+          "answer": "No. It restricts mutation through that reference but does not own the object."
+        },
+        {
+          "question": "What makes a function testable?",
+          "answer": "Explicit inputs and outputs, a small contract, and minimal hidden dependencies."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-04",
+      "language": "cpp",
+      "title": "Vectors, arrays, strings, and valid indexes",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-03"
+      ],
+      "summary": "Represent collections with standard containers and preserve bounds.",
+      "why": "Telemetry arrives in collections. Containers express ownership and size so you can focus on the meaning of the samples.",
+      "explanation": [
+        "Use std::vector for an owned sequence whose size can change, std::array for a fixed-size owned collection, and std::string for ordinary owned text. These types manage their storage. This does not mean every access is automatically checked: vector operator[] assumes a valid index, while at() performs a bounds check and can throw an exception. A range-based loop avoids an index entirely when you only need each element.",
+        "Decide what an empty collection means before calculating a statistic. A sum over no values can reasonably be zero; an average requires a separate no-data result. The size of a container and its allocated capacity are different: reserving capacity does not create elements that can be indexed. This distinction becomes essential when collecting many observations efficiently without inventing data that was never received.",
+        "Pointers, iterators, and references into a vector can become invalid when it reallocates. Do not keep a reference to an element, grow the vector, and assume that reference is still usable. At this stage, finish collecting the data and then traverse it, or reacquire an element by a validated index after mutation. Clear ownership and simple traversal are better first tools than attempts to minimize every copy."
+      ],
+      "example": {
+        "code": "#include <iostream>\n#include <vector>\nint main() {\n    const std::vector<double> masses_kg{1.2, 0.8, 0.5};\n    double total_kg = 0;\n    for (double mass : masses_kg) total_kg += mass;\n    std::cout << total_kg << '\\n';\n}",
+        "explanation": "Each element is visited once, with no manual index. The sum is 2.5."
+      },
+      "walkthrough": [
+        "Choose fixed or variable size deliberately.",
+        "Write the empty-input policy.",
+        "Use a range loop for a sum and at() for a chosen index.",
+        "Compare size() with capacity() before and after reserve()."
+      ],
+      "pitfalls": [
+        "reserve(10) does not make ten elements.",
+        "An index equal to size() is already outside the collection.",
+        "Growing a vector may invalidate references into its elements."
+      ],
+      "exercises": [
+        {
+          "title": "Add a component",
+          "prompt": "Append 0.25 to the supplied masses and sum them.",
+          "inputs": "[1.2, 0.8, 0.5] kg",
+          "expected": "4 elements and 2.75 kg",
+          "hints": [
+            "push_back creates a new element.",
+            "Recompute the sum after appending."
+          ],
+          "solution": "The new item changes both size and total; capacity is an implementation detail, not the count.",
+          "tests": [
+            "Empty vector sums to 0.",
+            "One item equals its own sum."
+          ],
+          "extension": "Print the count beside the total.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-04-a"
+        },
+        {
+          "title": "No measurement is different from zero",
+          "prompt": "Write an average function with an explicit empty-input result.",
+          "inputs": "[]; [0,0]; [2,4,6]",
+          "expected": "No data; 0; 4",
+          "hints": [
+            "Check empty before division.",
+            "std::optional<double> can express absence."
+          ],
+          "solution": "The empty vector yields nullopt; populated vectors yield sum/size. Zero is valid evidence when samples exist.",
+          "tests": [
+            "A single sample is its own mean.",
+            "Mixed negative and positive samples can average zero."
+          ],
+          "extension": "Document treatment of non-finite samples.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-04-b"
+        },
+        {
+          "title": "Select only useful samples",
+          "prompt": "Copy values strictly above 25 into a new vector while retaining their original order.",
+          "inputs": "[20,30,25,28]",
+          "expected": "[30,28]",
+          "hints": [
+            "Append matching values.",
+            "Do not erase while traversing for the first version."
+          ],
+          "solution": "A simple range loop with if(value > 25) and push_back preserves order and avoids iterator invalidation.",
+          "tests": [
+            "All match.",
+            "None match."
+          ],
+          "extension": "Implement the same behavior with a standard algorithm.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-04-c"
+        },
+        {
+          "title": "Reserved but nonexistent",
+          "prompt": "A vector reserves capacity 5 and then writes values[0]=2. Why is that invalid?",
+          "inputs": "std::vector<int> values; values.reserve(5); values[0]=2;",
+          "expected": "Use push_back(2) or resize(5) before valid indexing",
+          "hints": [
+            "Check size(), not capacity().",
+            "Storage and live elements are distinct."
+          ],
+          "solution": "The vector still has size zero. reserve only prepares storage; push_back constructs an element and increases size.",
+          "tests": [
+            "After push_back, size is 1.",
+            "at(1) throws for the one-element vector."
+          ],
+          "extension": "Explain why a lucky run does not legitimize the invalid access.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-04-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "When is std::array a good choice?",
+          "answer": "When the number of owned elements is fixed and part of the interface, such as a three-axis vector."
+        },
+        {
+          "question": "Why avoid keeping element references across vector growth?",
+          "answer": "Reallocation can move storage and invalidate them."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-05",
+      "language": "cpp",
+      "title": "Structs, enums, and meaningful measurement states",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-04"
+      ],
+      "summary": "Represent a measurement and its validity without magic numbers.",
+      "why": "A stale value and a valid zero require different decisions. Your data model should preserve that distinction.",
+      "explanation": [
+        "A bare number loses context. A temperature sample may need a timestamp, unit convention, source identifier, and validity state. Put related values into a small struct, then give mutually exclusive states an enum class. This creates names such as Missing and Stale instead of unexplained integers. It also reduces the temptation to use an impossible-looking numeric value, such as -999, as an undocumented signal.",
+        "Keep the model as small as the problem requires. A struct with public data is reasonable for a simple record. A class with private data becomes useful when construction or mutation must preserve an invariant, such as a positive calibration scale. You do not need inheritance to organize every sensor; begin with records and ordinary functions, and add stronger boundaries where they prevent real mistakes.",
+        "Separate two questions: what was observed, and what should the application do about it? A decoder may mark a measurement Missing, while a supervisor decides whether to wait, report, or request inspection. Avoid silently carrying the previous valid value forward without keeping its original time. That practice turns absence of new evidence into apparent continuity and makes later analysis misleading."
+      ],
+      "example": {
+        "code": "enum class Quality { Valid, Stale, Missing };\nstruct Sample {\n    double value_c;\n    double time_s;\n    Quality quality;\n};\nbool usable(const Sample& s) {\n    return s.quality == Quality::Valid;\n}",
+        "explanation": "The sample record groups value and context. usable does not yet check age or numeric finiteness; its contract is deliberately narrow."
+      },
+      "walkthrough": [
+        "List the states your input can genuinely have.",
+        "Build one record for each state.",
+        "Write a function handling each enum value explicitly.",
+        "Keep the timestamp associated with the original measurement."
+      ],
+      "pitfalls": [
+        "An unexplained sentinel may collide with real data.",
+        "A valid status flag does not prove the numeric value is finite.",
+        "Adding inheritance before identifying invariants can obscure a simple record."
+      ],
+      "exercises": [
+        {
+          "title": "Three observations",
+          "prompt": "Create records for valid zero, stale 12, and missing data; count usable records.",
+          "inputs": "Quality values Valid, Stale, Missing",
+          "expected": "Exactly one usable record",
+          "hints": [
+            "Quality determines usability in this contract.",
+            "Zero is not automatically missing."
+          ],
+          "solution": "Check the enum, not the numeric value. The valid zero remains a usable observation.",
+          "tests": [
+            "Valid negative temperature remains usable here.",
+            "Missing with value 99 remains unusable."
+          ],
+          "extension": "Add explicit finiteness validation.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-05-a"
+        },
+        {
+          "title": "Age policy",
+          "prompt": "Define stale as age > 2 seconds and invalid as a future timestamp.",
+          "inputs": "now=10; sample times 8, 7.9, 10.1",
+          "expected": "Fresh, stale, invalid",
+          "hints": [
+            "Equality belongs to fresh under this policy.",
+            "Check future time separately."
+          ],
+          "solution": "Compute age=now-time, reject negative age, and compare strictly with 2.",
+          "tests": [
+            "time=10 is fresh.",
+            "time=8 is the exact boundary."
+          ],
+          "extension": "Explain why both times need a common clock.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-05-b"
+        },
+        {
+          "title": "A calibration invariant",
+          "prompt": "Design a Calibration class that cannot represent a nonpositive scale.",
+          "inputs": "scale 0.1 accepted; scale 0 rejected",
+          "expected": "Construction rejects zero under the stated model",
+          "hints": [
+            "Choose exception or factory-result behavior.",
+            "Keep the validation in one place."
+          ],
+          "solution": "A validated constructor or factory checks finite scale > 0 before returning a usable calibration object.",
+          "tests": [
+            "Negative scale rejected by this chosen model.",
+            "Offset may still be negative."
+          ],
+          "extension": "Discuss a different instrument for which negative scale could be valid.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-05-c"
+        },
+        {
+          "title": "The disguised missing sample",
+          "prompt": "A function checks value != -999 and ignores Quality::Missing. Repair the data contract.",
+          "inputs": "Sample{20,10,Quality::Missing}",
+          "expected": "Not usable",
+          "hints": [
+            "Read the status.",
+            "Numeric plausibility does not establish presence."
+          ],
+          "solution": "Use the named quality state. Sentinel-only logic mistakes a copied or placeholder value for an actual observation.",
+          "tests": [
+            "Valid -999 follows the explicit domain policy.",
+            "Missing 20 is rejected."
+          ],
+          "extension": "Remove sentinel assumptions from the calling code.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-05-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why use an enum class?",
+          "answer": "It makes named states explicit and avoids many accidental implicit integer conversions."
+        },
+        {
+          "question": "Should a decoder decide the whole robot response?",
+          "answer": "Usually no. Preserve evidence in the decoder and apply application policy in a separate layer."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-06",
+      "language": "cpp",
+      "title": "RAII, scope, and ownership without manual cleanup",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-05"
+      ],
+      "summary": "Tie resources to objects and let scope handle their release.",
+      "why": "Long-running tools need predictable cleanup even when parsing fails or a function returns early.",
+      "explanation": [
+        "Ownership answers who is responsible for releasing a resource. In modern C++, an owning object can acquire a resource during construction and release it during destruction. The object lifetime becomes the cleanup plan. std::vector owns its elements and storage; std::string owns its text; std::ifstream owns a file handle. This approach is commonly called RAII, and it removes many paths where manual cleanup could be forgotten.",
+        "A scope is a useful reasoning boundary. When a local owning object leaves scope, its destructor runs during ordinary return and normal exception unwinding. Write the resource declaration close to where it becomes necessary so the lifetime is visible. You still need to check whether acquiring or using the resource succeeded; automatic closing does not make an unreadable file readable or make output writes infallible.",
+        "Prefer values until a concrete design needs dynamic ownership. If an object truly needs one dynamic owner, std::unique_ptr expresses that relationship. std::shared_ptr represents shared ownership, which adds lifetime complexity and can form cycles. It is not a default cure for unclear design. In this module, learn to draw owner-to-resource relationships and use existing library owners before attempting a custom low-level resource wrapper."
+      ],
+      "example": {
+        "code": "#include <fstream>\n#include <string>\nint main() {\n    std::ifstream input(\"samples.txt\");\n    if (!input) return 1;\n    std::string line;\n    while (std::getline(input, line)) { /* process line */ }\n    return input.bad() ? 2 : 0;\n}",
+        "explanation": "The stream owns the file handle and closes it when it leaves scope. The program still distinguishes opening failure from a serious read error."
+      },
+      "walkthrough": [
+        "Draw one box for each owning object and its resource.",
+        "Add an early return and identify which owners leave scope.",
+        "Check file-open success before reading.",
+        "Use values and standard library owners before adding pointers."
+      ],
+      "pitfalls": [
+        "RAII handles cleanup, not all application-level recovery.",
+        "A raw pointer alone does not document ownership.",
+        "Shared ownership can delay destruction and form cycles."
+      ],
+      "exercises": [
+        {
+          "title": "Early return and cleanup",
+          "prompt": "Explain what happens to an ifstream when the function returns after detecting a malformed first line.",
+          "inputs": "A local opened ifstream and return 3",
+          "expected": "The stream destructor closes its owned handle",
+          "hints": [
+            "Follow scope exit.",
+            "No manual close is required for lifetime cleanup."
+          ],
+          "solution": "Returning leaves the local scope, destroying the stream and releasing its file resource.",
+          "tests": [
+            "Open failure returns without reading.",
+            "Normal end of file also closes on scope exit."
+          ],
+          "extension": "List a resource other than memory that benefits from RAII.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-06-a"
+        },
+        {
+          "title": "Single dynamic owner",
+          "prompt": "Create an integer with make_unique, read it, and move ownership into a second unique_ptr.",
+          "inputs": "Owned value 42",
+          "expected": "Second owner reads 42; first pointer is empty after move",
+          "hints": [
+            "Include memory and utility.",
+            "Check the first pointer before any later use."
+          ],
+          "solution": "auto a=std::make_unique<int>(42); auto b=std::move(a); moves the owner. Dereference b, not a.",
+          "tests": [
+            "a evaluates false after the move.",
+            "b evaluates true."
+          ],
+          "extension": "Explain why copying unique_ptr is prohibited.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-06-b"
+        },
+        {
+          "title": "Avoid a resource on every branch",
+          "prompt": "Refactor a function with repeated manual file-close calls into a local stream object and early error returns.",
+          "inputs": "Three validation branches after opening a file",
+          "expected": "Every exit path releases the handle",
+          "hints": [
+            "Declare the stream before validation.",
+            "Keep error reporting separate from cleanup."
+          ],
+          "solution": "One owning stream eliminates repeated cleanup code while each branch still returns its own failure reason.",
+          "tests": [
+            "Trigger every early return.",
+            "Read a valid file fully."
+          ],
+          "extension": "Add a test that repeatedly opens and rejects files.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-06-c"
+        },
+        {
+          "title": "A pointer that outlives its owner",
+          "prompt": "A function returns input.c_str() where input is a local std::string. Repair the interface.",
+          "inputs": "const char* from local string storage",
+          "expected": "Return std::string by value",
+          "hints": [
+            "The string owns the characters.",
+            "Its destruction invalidates the pointer."
+          ],
+          "solution": "Return the owned string. The caller then owns a valid result rather than a pointer into destroyed storage.",
+          "tests": [
+            "Use the returned string after other allocations.",
+            "Verify an empty string remains valid."
+          ],
+          "extension": "Identify when a string_view would have the same lifetime problem.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-06-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does RAII connect?",
+          "answer": "Resource release to the lifetime of an owning object."
+        },
+        {
+          "question": "Why not use shared_ptr everywhere?",
+          "answer": "It complicates ownership and lifetime, adds overhead, and can create cycles."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-07",
+      "language": "cpp",
+      "title": "Errors as part of the interface",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-06"
+      ],
+      "summary": "Distinguish no data, invalid data, and operational failure.",
+      "why": "A robust component should explain why it cannot produce a result, rather than inventing a plausible value.",
+      "explanation": [
+        "An error policy is a design choice that callers must understand. std::optional<T> can represent a value that is absent, but it cannot by itself explain the reason. A small result struct with a status enum and value can preserve that reason. Exceptions are another tool for propagating failures, especially where the existing library interface uses them. Avoid mixing several approaches without a clear boundary and translation policy.",
+        "Consider a mean-temperature calculation. An empty file, a malformed token, and a failed file read are different events. Returning 0 for all three destroys evidence because zero may be a valid mean. A result should let the user or calling component take the next meaningful action. This often requires a useful message with a file name or row number, without dumping irrelevant internal details.",
+        "Programmer contract violations are different from ordinary external input failures. An assertion may document an internal condition expected always to hold during development, but it is not an adequate parser for arbitrary files and may be disabled in release builds. Validate external input using normal control flow. Then test each expected failure path with as much attention as the happy path, including whether partial output has been left behind."
+      ],
+      "example": {
+        "code": "#include <optional>\n#include <vector>\nstd::optional<double> mean(const std::vector<double>& values) {\n    if (values.empty()) return std::nullopt;\n    double total = 0;\n    for (double x : values) total += x;\n    return total / values.size();\n}",
+        "explanation": "Absence is represented separately from a valid zero mean. This fragment assumes all supplied values are finite."
+      },
+      "walkthrough": [
+        "List three realistic ways your operation can fail.",
+        "Choose a result type that preserves the needed distinctions.",
+        "Write the caller's error-handling branch before the implementation.",
+        "Test empty, malformed, and unavailable input independently."
+      ],
+      "pitfalls": [
+        "optional::value() on an empty optional throws; check before use or deliberately handle that exception.",
+        "Assertions must not be the only external-input validation.",
+        "Catching every exception and returning zero hides the failure."
+      ],
+      "exercises": [
+        {
+          "title": "Zero versus none",
+          "prompt": "Evaluate mean for an empty vector and for two zeros.",
+          "inputs": "[] and [0,0]",
+          "expected": "nullopt and 0 respectively",
+          "hints": [
+            "A valid zero still has a value.",
+            "Use has_value() or the optional boolean check."
+          ],
+          "solution": "An empty container has no defined arithmetic mean in this contract; two zero samples have a real mean of zero.",
+          "tests": [
+            "[2,4] gives 3.",
+            "[-2,2] gives 0 with a value."
+          ],
+          "extension": "Add finite-sample validation.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-07-a"
+        },
+        {
+          "title": "Useful parser result",
+          "prompt": "Define statuses Ok, Empty, Malformed with a value and row number where appropriate.",
+          "inputs": "Empty text; line 3 contains abc; valid numeric text",
+          "expected": "Three distinguishable outcomes",
+          "hints": [
+            "The row number matters for malformed input.",
+            "Do not give the success value meaning on an error."
+          ],
+          "solution": "Use a struct or tagged variant whose status guides which fields a caller reads. Document the invariant explicitly.",
+          "tests": [
+            "A valid 0 is Ok.",
+            "Malformed row 3 is reported as row 3."
+          ],
+          "extension": "Replace the always-present value with a variant.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-07-b"
+        },
+        {
+          "title": "A strong output policy",
+          "prompt": "A report has ten input rows and row 8 is invalid. Design an all-or-nothing output policy.",
+          "inputs": "Seven accepted rows, then malformed input",
+          "expected": "No final report is presented as complete",
+          "hints": [
+            "Validate before publishing.",
+            "A temporary output can be promoted after success."
+          ],
+          "solution": "Compute into temporary state; only replace the final result after the full input passes. Keep the failure reason visible.",
+          "tests": [
+            "Row 1 failure produces no report.",
+            "All ten valid rows produce one complete report."
+          ],
+          "extension": "Compare with an explicitly labeled partial-report policy.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-07-c"
+        },
+        {
+          "title": "The disappearing check",
+          "prompt": "A release build no longer rejects a negative duration because the only check used assert(duration>0). Fix it.",
+          "inputs": "User supplies -2 seconds",
+          "expected": "Ordinary error result in every build",
+          "hints": [
+            "Assertions can be compiled out.",
+            "Input validation belongs to program behavior."
+          ],
+          "solution": "Use an if branch that returns or reports InvalidDuration before division; keep an assertion only for separate internal invariants.",
+          "tests": [
+            "Test debug and release builds.",
+            "Test zero and positive values."
+          ],
+          "extension": "Document which conditions are input errors and which indicate programmer defects.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-07-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does optional omit?",
+          "answer": "It represents absence but does not inherently explain the cause."
+        },
+        {
+          "question": "Should an external invalid value be handled only by assert?",
+          "answer": "No. Use validation that remains part of the program in every build."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-08",
+      "language": "cpp",
+      "title": "Text files, parsing, and repeatable telemetry imports",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-07"
+      ],
+      "summary": "Read small logs while preserving row numbers, units, and invalid-input evidence.",
+      "why": "Most early engineering software connects to files before it connects to real hardware. Reliable import is a valuable project on its own.",
+      "explanation": [
+        "Treat a file format as a contract rather than a suggestion. Specify its separator, header, columns, unit conventions, blank-line behavior, and allowed number syntax. A deliberately narrow format is easier to validate than a vague imitation of every possible CSV dialect. State that your first parser supports one numeric value per line, or exactly two whitespace-separated fields, and reject anything outside that definition.",
+        "Read a complete line and then parse that line. This lets you attach a useful row number to a malformed record and detect unexpected trailing text. Formatted extraction directly from the file can leave the stream in a failed state; repeatedly trying the same operation without repairing the state or discarding the bad input can trap the program. Separate acquisition from interpretation so the parser can be tested with in-memory text.",
+        "Preserve the original data and make transformation visible. If you skip blank lines, say so; if you reject a row, record why; if you convert milliseconds to seconds, label the output accordingly. A clean summary should report how many rows were accepted and rejected. Do not silently drop inconvenient values and later claim that the remaining statistics describe the entire experiment."
+      ],
+      "example": {
+        "code": "#include <sstream>\n#include <string>\nbool parse_pair(const std::string& line, double& t, double& x) {\n    std::istringstream in(line);\n    double a, b;\n    std::string extra;\n    if (!(in >> a >> b) || (in >> extra)) return false;\n    t = a; x = b;\n    return true;\n}",
+        "explanation": "This fragment accepts exactly two whitespace-separated numbers and assigns outputs only after that syntactic check. Add a separate finite-value and domain-validation policy."
+      },
+      "walkthrough": [
+        "Write three valid and three invalid sample lines.",
+        "Parse a string independently of file access.",
+        "Reject trailing tokens and preserve output values on failure.",
+        "Attach row numbers in the file-reading layer."
+      ],
+      "pitfalls": [
+        "A simple whitespace parser is not a complete CSV parser.",
+        "Syntactic acceptance does not prove finite or physically plausible values.",
+        "while(!eof()) is not the right condition for reading records; test the read operation."
+      ],
+      "exercises": [
+        {
+          "title": "Two-field record",
+          "prompt": "Classify each supplied line with parse_pair.",
+          "inputs": "\"1 20\", \"2\", \"3 21 extra\"",
+          "expected": "Accept, reject, reject",
+          "hints": [
+            "Exactly two numbers are required.",
+            "A third token is outside the contract."
+          ],
+          "solution": "The first extraction must produce both fields and no remaining token may be present.",
+          "tests": [
+            "Leading whitespace is accepted.",
+            "Blank line is rejected."
+          ],
+          "extension": "Add an explicit blank-line skip policy in the caller.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-08-a"
+        },
+        {
+          "title": "Import accounting",
+          "prompt": "Count accepted and rejected records without modifying the input file.",
+          "inputs": "\"0 20\", \"bad\", \"1 21\", \"2 22 extra\"",
+          "expected": "2 accepted, 2 rejected with row numbers 2 and 4",
+          "hints": [
+            "Keep row count separate from accepted count.",
+            "Parse each line independently."
+          ],
+          "solution": "Increment the physical row number for each line, store valid pairs, and report invalid rows with their line number.",
+          "tests": [
+            "All valid yields zero rejections.",
+            "An empty file yields zero records."
+          ],
+          "extension": "Calculate a mean only from a clearly labeled accepted subset.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-08-b"
+        },
+        {
+          "title": "Monotonic times",
+          "prompt": "Add a policy that timestamps must strictly increase after the first valid record.",
+          "inputs": "(0,20), (1,21), (1,22), (0.5,23)",
+          "expected": "The third and fourth records violate the stated ordering policy",
+          "hints": [
+            "Compare against last accepted timestamp.",
+            "Decide how a rejected row affects state."
+          ],
+          "solution": "With last accepted time 1, both later times are <=1 and are rejected. Retain the original row evidence.",
+          "tests": [
+            "A first negative time may be accepted if relative time is allowed.",
+            "Times 0,1,2 all pass."
+          ],
+          "extension": "Support separate runs explicitly rather than treating resets as one run.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-08-c"
+        },
+        {
+          "title": "One stale value printed twice",
+          "prompt": "A loop tests !input.eof(), reads into x, and prints x even after extraction fails. Repair it.",
+          "inputs": "File containing 1 then 2",
+          "expected": "Print two successful values only",
+          "hints": [
+            "The read operation tells you success.",
+            "End-of-file is detected by an attempted read."
+          ],
+          "solution": "Use while(input >> x) for this narrow numeric stream, or getline followed by line validation for row-level diagnostics.",
+          "tests": [
+            "A trailing newline produces no duplicate.",
+            "Malformed text stops or is reported according to policy."
+          ],
+          "extension": "Refactor to a line parser that continues with explicit rejection accounting.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-08-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why parse whole lines first?",
+          "answer": "It provides record boundaries, row-number diagnostics, and a way to reject trailing content."
+        },
+        {
+          "question": "What must a cleaned dataset retain?",
+          "answer": "The transformation policy and evidence of rejected or missing records."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-09",
+      "language": "cpp",
+      "title": "Tests, debugging, and evidence of correctness",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-08"
+      ],
+      "summary": "Use boundary cases and a debugger to explain a failure rather than merely remove its symptom.",
+      "why": "Autonomous software needs understandable behavior under bad input, not just a convincing demonstration.",
+      "explanation": [
+        "A test translates a claim into a repeatable observation. For a function that flags values strictly above a threshold, the three essential cases are below, equal, and above. For a parser, include empty, short, malformed, and valid records. Name each test after the behavior it promises, because a future failure should communicate which contract changed rather than only which line of test code ran.",
+        "A debugger lets you stop at a chosen point and inspect actual values, call history, and control flow. First predict what should be present; then compare the program state against that prediction. When the mismatch appears, reduce the input and isolate the smallest failing function. Randomly adding print statements until the output looks acceptable can hide the underlying model error.",
+        "Compiler diagnostics and runtime tools complement tests. On supported desktop toolchains, AddressSanitizer can expose memory-access errors and UndefinedBehaviorSanitizer can detect selected undefined operations on executed paths. Neither proves the whole program safe, and their availability varies by platform. Keep a normal build and a diagnostic build, document how to run both, and retain the smallest input that reproduces every bug you repair."
+      ],
+      "example": {
+        "code": "#include <cassert>\nbool needs_review(double x, double limit) { return x > limit; }\nint main() {\n    assert(!needs_review(29.9, 30));\n    assert(!needs_review(30, 30));\n    assert(needs_review(30.1, 30));\n}",
+        "explanation": "A small assertion harness illustrates three boundary cases. Assertions may be disabled by build settings, so use an explicit test runner or failure checks for a durable test suite."
+      },
+      "walkthrough": [
+        "Write the intended behavior in one sentence.",
+        "Construct the smallest boundary-case table.",
+        "Stop in the debugger immediately before the wrong decision.",
+        "Save the failing input and add a regression test before refactoring."
+      ],
+      "pitfalls": [
+        "A passing test proves only the cases and properties it actually checks.",
+        "Do not count a disabled assert as an executed test.",
+        "Sanitizers detect selected runtime defects, not physical-model validity."
+      ],
+      "exercises": [
+        {
+          "title": "Catch equality drift",
+          "prompt": "A developer changes x > limit to x >= limit. Identify the single most important regression case.",
+          "inputs": "x=30, limit=30",
+          "expected": "The equality test fails",
+          "hints": [
+            "Below and above still behave the same.",
+            "Target the changed boundary."
+          ],
+          "solution": "The equal case distinguishes the two contracts; it must expect false for strict exceedance.",
+          "tests": [
+            "29.9 remains false.",
+            "30.1 remains true."
+          ],
+          "extension": "Write test names that state strictness.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-09-a"
+        },
+        {
+          "title": "Test an average",
+          "prompt": "Design a table for empty, singleton, mixed-sign, and repeated values.",
+          "inputs": "[]; [7]; [-2,2]; [3,3,3]",
+          "expected": "No data; 7; 0; 3",
+          "hints": [
+            "Do not compare empty to zero.",
+            "Use tolerance for non-exact arithmetic."
+          ],
+          "solution": "These cases check absence, the identity property for a singleton, cancellation, and a constant sequence.",
+          "tests": [
+            "Check the optional has a value before reading it.",
+            "Add [0.1,0.2] with a documented tolerance."
+          ],
+          "extension": "Add a non-finite-input policy.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-09-b"
+        },
+        {
+          "title": "Minimize a failing log",
+          "prompt": "A 1000-row file crashes a parser. Describe and perform a reduction process on a copied fixture.",
+          "inputs": "A failure caused by one truncated final row",
+          "expected": "A minimal fixture that still reproduces the same failure",
+          "hints": [
+            "Remove independent sections, preserving the failure.",
+            "Do not edit the original evidence."
+          ],
+          "solution": "Repeatedly remove blocks and rerun until the cause is isolated, then verify the shortened file fails for the same reason.",
+          "tests": [
+            "The minimal case fails before the fix.",
+            "It passes or is cleanly rejected after the fix."
+          ],
+          "extension": "Record the defect and the violated contract.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-09-c"
+        },
+        {
+          "title": "The test suite that never tested",
+          "prompt": "A release build reports success because every check was assert and NDEBUG was defined. Repair the harness.",
+          "inputs": "A deliberately wrong threshold implementation",
+          "expected": "The executable must exit nonzero on a failed check in all test configurations",
+          "hints": [
+            "Inspect preprocessing/build flags.",
+            "An if check can return failure explicitly."
+          ],
+          "solution": "Use a test framework or ordinary runtime comparisons that record failures independent of assert configuration.",
+          "tests": [
+            "Run known-correct code.",
+            "Temporarily inject an equality bug and confirm failure."
+          ],
+          "extension": "Add the test executable to CTest.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-09-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why keep the smallest failing input?",
+          "answer": "It makes diagnosis repeatable and becomes a focused regression test."
+        },
+        {
+          "question": "Can a sanitizer prove a program correct?",
+          "answer": "No. It detects specific defects on paths that execute under its instrumentation."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Clang AddressSanitizer",
+          "url": "https://clang.llvm.org/docs/AddressSanitizer.html"
+        },
+        {
+          "title": "Clang UndefinedBehaviorSanitizer",
+          "url": "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html"
+        }
+      ]
+    },
+    {
+      "id": "cpp-10",
+      "language": "cpp",
+      "title": "CMake, headers, libraries, and clean builds",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-09"
+      ],
+      "summary": "Organize a calculation into a reusable library plus a test executable.",
+      "why": "A reusable component must build outside the one folder and editor where it was created.",
+      "explanation": [
+        "Once one source file becomes inconvenient, separate the reusable logic from the executable entry point. A header declares the interface that other source files use; a source file defines non-inline functions. The compiler checks each translation unit, then the linker connects them. Keep dependencies explicit so a change in one file does not accidentally depend on an include that happened to arrive through another header.",
+        "CMake describes build targets and their relationships. A target might be a library holding telemetry calculations, an application reading files, or a test executable checking the library. Prefer target-specific configuration: language features, include directories, and linked dependencies should belong to the targets that need them. This makes the build easier to reason about than a long list of global flags.",
+        "Use an out-of-source build folder, which keeps generated build files separate from authored source. The precise compiler and generator differ across systems; the purpose is a reproducible recipe, not one universal shell command. Record configuration and build steps, then perform a clean build using only the repository contents and documented prerequisites. A successful incremental build can hide missing dependencies that a clean build reveals."
+      ],
+      "example": {
+        "code": "cmake_minimum_required(VERSION 3.20)\nproject(Telemetry LANGUAGES CXX)\nadd_library(telemetry telemetry.cpp)\ntarget_compile_features(telemetry PUBLIC cxx_std_17)\nadd_executable(telemetry_tests tests.cpp)\ntarget_link_libraries(telemetry_tests PRIVATE telemetry)\nenable_testing()\nadd_test(NAME telemetry_contracts COMMAND telemetry_tests)",
+        "explanation": "This CMakeLists.txt expects authored telemetry.cpp, its interface header, and tests.cpp. It builds a library and registers a test executable."
+      },
+      "walkthrough": [
+        "Extract one pure function into a header/source pair.",
+        "Create a library target and a separate test target.",
+        "Configure into build/, compile, and run CTest.",
+        "Repeat in a new empty build folder and compare results."
+      ],
+      "pitfalls": [
+        "Putting ordinary non-inline function definitions in a widely included header can cause duplicate definitions.",
+        "A missing source file in the target can produce a linker failure.",
+        "Generated build files are not a replacement for CMakeLists.txt."
+      ],
+      "exercises": [
+        {
+          "title": "Know each file",
+          "prompt": "Assign interface, implementation, application entry, and test responsibilities to four files.",
+          "inputs": "telemetry.hpp, telemetry.cpp, main.cpp, tests.cpp",
+          "expected": "Header declares; source implements; main drives; tests verify",
+          "hints": [
+            "Separate reusable logic from I/O.",
+            "A library need not contain main."
+          ],
+          "solution": "The header is the shared contract. Both application and tests link to the same compiled implementation.",
+          "tests": [
+            "Test executable has its own main.",
+            "Library has no competing main."
+          ],
+          "extension": "Draw the build-target dependency graph.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-10-a"
+        },
+        {
+          "title": "Missing implementation",
+          "prompt": "A function is declared and called, but telemetry.cpp is not added to the target. Diagnose the failure.",
+          "inputs": "Undefined reference/unresolved external symbol for the function",
+          "expected": "Add the implementation to the library and link that library",
+          "hints": [
+            "Declaration permits compilation.",
+            "Definition is needed at link time."
+          ],
+          "solution": "Confirm the signature matches, then include the source in the target and link the consuming executable against it.",
+          "tests": [
+            "Clean build succeeds.",
+            "Removing the source recreates the failure."
+          ],
+          "extension": "Explain a signature mismatch that produces a similar diagnostic.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-10-b"
+        },
+        {
+          "title": "One library, two clients",
+          "prompt": "Build a report executable and a test executable using the same telemetry library.",
+          "inputs": "One mean calculation implementation",
+          "expected": "Both clients use the same contract and implementation",
+          "hints": [
+            "Avoid copying the function into tests.",
+            "Link each target to the library."
+          ],
+          "solution": "Create two executable targets with distinct entry points, each linked privately to telemetry. Test source is not the production implementation.",
+          "tests": [
+            "A library change affects both clients.",
+            "Tests fail if the library result is intentionally wrong."
+          ],
+          "extension": "Add a second platform build when available.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-10-c"
+        },
+        {
+          "title": "It only works in the old build folder",
+          "prompt": "A clean build fails while a week-old build directory succeeds. Investigate before copying old outputs.",
+          "inputs": "Missing generated file or undeclared dependency",
+          "expected": "A documented dependency or generation step fixes clean builds",
+          "hints": [
+            "Treat cached outputs as clues.",
+            "Check configuration inputs and generated artifacts."
+          ],
+          "solution": "Identify what the old folder supplied implicitly, then declare that dependency or build step rather than retaining accidental state.",
+          "tests": [
+            "Build from a new directory.",
+            "Build after changing the relevant source."
+          ],
+          "extension": "Document external tool versions needed for generation.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-10-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why create a library for the calculation?",
+          "answer": "Both application and tests can use one implementation through an explicit interface."
+        },
+        {
+          "question": "What does a clean build reveal?",
+          "answer": "Missing or undeclared dependencies that cached outputs can conceal."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Official CMake tutorial",
+          "url": "https://cmake.org/cmake/help/latest/guide/tutorial/index.html"
+        }
+      ]
+    },
+    {
+      "id": "cpp-11",
+      "language": "cpp",
+      "title": "Algorithms, iterators, and measured efficiency",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-10"
+      ],
+      "summary": "Express collection operations clearly and choose performance work using evidence.",
+      "why": "Telemetry analysis can grow from tens to millions of records, but readable correct code remains the baseline.",
+      "explanation": [
+        "A standard algorithm communicates intent: count_if counts matching elements, sort orders them, and accumulate combines values. A hand-written loop is also appropriate when it is clearer. The goal is not to replace every loop, but to make operations recognizable and keep their boundary conditions understandable. Learn what range an algorithm receives and whether it reads, modifies, or reorders that range.",
+        "Complexity describes how work grows with input size; it is not a direct stopwatch reading. A linear scan visits each record once. Repeatedly scanning the entire history for each new record can turn a manageable task into quadratic work. Before optimizing, choose a representative dataset, record a correct reference result, and measure the operation that actually matters rather than the time to print thousands of lines.",
+        "Iteration has validity rules. Removing elements can invalidate iterators or change positions, and a comparator used for sorting must obey a consistent ordering. Avoid a comparator based on less-than-or-equal, because equality must not make both objects precede each other. For numerical data, decide how non-finite values are handled before sorting or aggregation; mysterious values should not silently enter a statistical summary."
+      ],
+      "example": {
+        "code": "#include <algorithm>\n#include <vector>\nint flagged_count(const std::vector<double>& x) {\n    return static_cast<int>(std::count_if(x.begin(), x.end(),\n        [](double value) { return value > 30.0; }));\n}",
+        "explanation": "The fragment counts strict threshold exceedances. Its int result assumes the count is representable; a general large-data API should retain the algorithm's count type or check conversion."
+      },
+      "walkthrough": [
+        "Write a simple loop as the reference implementation.",
+        "Implement the same operation with one standard algorithm.",
+        "Compare outputs on empty, singleton, and duplicate-containing inputs.",
+        "Measure on several input sizes without console I/O in the timed section."
+      ],
+      "pitfalls": [
+        "Faster-looking syntax does not establish faster execution.",
+        "A sort comparator must not use <= as its ordering rule.",
+        "Iterator validity must be rechecked after collection mutation."
+      ],
+      "exercises": [
+        {
+          "title": "Count the events",
+          "prompt": "Count samples strictly greater than 30 with a loop and count_if.",
+          "inputs": "[29,30,31,31,12]",
+          "expected": "2",
+          "hints": [
+            "Duplicates still count as separate samples.",
+            "Equality is excluded."
+          ],
+          "solution": "Both implementations should increment or count for the two 31 values only.",
+          "tests": [
+            "Empty gives 0.",
+            "[30,30] gives 0."
+          ],
+          "extension": "Return the native count type rather than narrowing to int.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-11-a"
+        },
+        {
+          "title": "Median without losing the source",
+          "prompt": "Compute a median on a copy of finite data; define an even-count rule.",
+          "inputs": "[7,1,4]; [8,2,6,4]",
+          "expected": "4; 5 using the mean of the middle pair",
+          "hints": [
+            "Sort a copy.",
+            "Empty input needs a separate result."
+          ],
+          "solution": "Sorted sequences are [1,4,7] and [2,4,6,8]; choose the center or mean of the two centers.",
+          "tests": [
+            "Source remains unchanged.",
+            "Single value is its median."
+          ],
+          "extension": "Discuss overflow-resistant averaging of large middle values.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-11-b"
+        },
+        {
+          "title": "Avoid repeated full scans",
+          "prompt": "Maintain a running count of above-threshold samples as a stream arrives.",
+          "inputs": "[10,35,40,20] with limit 30",
+          "expected": "Counts after arrivals: 0,1,2,2",
+          "hints": [
+            "Update from the new record only.",
+            "Do not rescan all previous records."
+          ],
+          "solution": "An increment for each new matching record makes total counting work linear in the number of arrivals.",
+          "tests": [
+            "No matching sample keeps count 0.",
+            "Every matching sample increments once."
+          ],
+          "extension": "Add a fixed-window count with a documented eviction rule.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-11-c"
+        },
+        {
+          "title": "The broken comparator",
+          "prompt": "A sort comparator returns a.value <= b.value. Explain the defect.",
+          "inputs": "Two equal values 5 and 5",
+          "expected": "Neither equal element should be ordered before the other by a strict less comparator",
+          "hints": [
+            "Evaluate comparator(a,a).",
+            "Equality is not strict ordering."
+          ],
+          "solution": "Use < for ascending finite numeric values. Reject or explicitly order NaN values before relying on this simple comparator.",
+          "tests": [
+            "Compare an object with itself: false.",
+            "Test duplicates and already sorted input."
+          ],
+          "extension": "Write a tie-breaker by sample ID.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-11-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does linear complexity mean?",
+          "answer": "Work grows proportionally to the number of input elements, abstracting constant factors."
+        },
+        {
+          "question": "Why preserve a reference implementation?",
+          "answer": "It provides a correctness comparison while changing algorithms or optimizing."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-12",
+      "language": "cpp",
+      "title": "Time, timestamps, and latency budgets",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-11"
+      ],
+      "summary": "Distinguish elapsed duration, measurement age, and scheduling guarantees.",
+      "why": "Robotics software can use the right value too late; time is part of the data contract.",
+      "explanation": [
+        "A timestamp identifies a point on a particular clock, while a duration describes a difference. std::chrono types make units explicit and reduce accidental mixing of milliseconds with seconds. For measuring local elapsed intervals, a monotonic clock such as steady_clock avoids changes caused by wall-clock adjustments. A measurement timestamp from another device still requires a documented synchronization and conversion policy before its age is meaningful.",
+        "A latency budget distributes an allowed time interval across work such as acquisition, parsing, processing, and publication. Summing nominal durations is a first model, not proof that every update meets a deadline. Operating-system scheduling, I/O waits, contention, allocation, and rare slow paths can change the observed result. Measure a distribution, include worst observed values, and state the test conditions.",
+        "Keep a distinction between educational desktop timing and validated real-time behavior. A desktop test may show that a component usually finishes in two milliseconds; it does not establish a hard upper bound on every possible execution. Begin by recording timestamps at meaningful boundaries and testing stale-data policy using a fake clock. Deterministic clock inputs make boundary tests much more reliable than tests that sleep and hope."
+      ],
+      "example": {
+        "code": "#include <chrono>\nusing Milliseconds = std::chrono::milliseconds;\nbool stale(Milliseconds age, Milliseconds limit) {\n    return age > limit;\n}",
+        "explanation": "Typed durations preserve units at the interface. Negative age requires a separate clock/domain policy; this narrow function only implements the strict comparison."
+      },
+      "walkthrough": [
+        "Draw acquisition-to-result timing boundaries.",
+        "Assign units and clock domains to timestamps.",
+        "Test staleness with supplied durations instead of sleep.",
+        "Measure realistic runs and report conditions and variability."
+      ],
+      "pitfalls": [
+        "Wall-clock timestamps can jump and may not be synchronized across devices.",
+        "A mean below the deadline does not establish a worst-case bound.",
+        "A type-safe duration does not validate the physical timestamp source."
+      ],
+      "exercises": [
+        {
+          "title": "Budget arithmetic",
+          "prompt": "Sum acquisition, parsing, processing, and publication durations against a 20 ms interval.",
+          "inputs": "3 + 2 + 9 + 1 ms",
+          "expected": "15 ms used; 5 ms nominal remainder",
+          "hints": [
+            "Include every named stage.",
+            "Do not label remainder as a guarantee."
+          ],
+          "solution": "The nominal sum is 15; 20-15=5 before unmodeled variation and interference.",
+          "tests": [
+            "A 20 ms sum has zero remainder.",
+            "A 21 ms sum exceeds by 1."
+          ],
+          "extension": "Add measured variability for each stage.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-12-a"
+        },
+        {
+          "title": "Stale boundary",
+          "prompt": "Apply stale(age,100ms) to three ages.",
+          "inputs": "99,100,101 ms",
+          "expected": "false,false,true",
+          "hints": [
+            "The comparison is strict.",
+            "Use chrono durations in the test."
+          ],
+          "solution": "Equality remains fresh under this contract. A different application can choose >=, but must update the contract and tests.",
+          "tests": [
+            "Zero age is fresh.",
+            "Negative age triggers separate validation."
+          ],
+          "extension": "Add an enum result for future timestamps.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-12-b"
+        },
+        {
+          "title": "Fake-clock replay",
+          "prompt": "Design a component that accepts now as an argument and replay an old measurement.",
+          "inputs": "measurement at 1000 ms; now 1050,1100,1101; limit 100 ms",
+          "expected": "Fresh,fresh,stale",
+          "hints": [
+            "Keep all times on one simulated clock.",
+            "Avoid real sleeps."
+          ],
+          "solution": "Age is 50,100,101 ms. Injecting now makes the three outcomes deterministic and fast to test.",
+          "tests": [
+            "Repeated replay gives the same results.",
+            "A now before measurement time is handled explicitly."
+          ],
+          "extension": "Replay a sequence containing a clock reset.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-12-c"
+        },
+        {
+          "title": "The comforting average",
+          "prompt": "A timing report lists runs [2,2,2,30] ms against a 10 ms budget and concludes the system always meets it. Correct the claim.",
+          "inputs": "Mean 9 ms; maximum observed 30 ms",
+          "expected": "One observed deadline miss; no hard-real-time guarantee",
+          "hints": [
+            "Inspect individual runs.",
+            "Mean and bound answer different questions."
+          ],
+          "solution": "Although the mean is 9, the 30 ms run exceeds the interval by 20. Report miss count, maximum observed duration, and test conditions.",
+          "tests": [
+            "Count exactly one miss.",
+            "Keep the raw timing observations."
+          ],
+          "extension": "Investigate where the slow run spent time.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-12-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why inject a clock in a test?",
+          "answer": "It makes time-boundary cases deterministic without sleeping."
+        },
+        {
+          "question": "Does measured maximum equal guaranteed worst-case time?",
+          "answer": "No. It is only the largest value observed under those test conditions."
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-13",
+      "language": "cpp",
+      "title": "State machines and recoverable behavior",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-12"
+      ],
+      "summary": "Model a simulated inspection workflow with named states, events, and transitions.",
+      "why": "A robot must handle missing evidence and recovery as deliberately as normal operation.",
+      "explanation": [
+        "A state machine makes the current operating mode explicit. An event, together with the current state and any documented guard condition, selects a transition and possibly an action. Start on paper with a transition table. For an inspection tool, useful states could be Idle, Collecting, Review, and Complete. A timeout is an event; it should not be buried as an unrelated boolean deep inside a processing loop.",
+        "Keep transition logic separate from side effects. A pure function can return the next state and a requested action, while another layer performs logging or I/O. This separation lets you replay event sequences and verify decisions without connecting hardware. It also avoids changing the state halfway through an operation that later fails. Define what happens when an event is irrelevant or arrives twice.",
+        "Recovery is part of the model, not an exception to having a model. If a sample is missing, does the workflow pause, request another sample, or require a human review? How is the accumulated data labeled? A reset should state which evidence is retained. Use conservative simulated examples while learning; the validity of a real machine's state model depends on hazard analysis and domain requirements beyond a programming exercise."
+      ],
+      "example": {
+        "code": "enum class State { Idle, Collecting, Review, Complete };\nenum class Event { Start, GoodSample, MissingSample, Finish, Reset };\nState next(State s, Event e) {\n    if (e == Event::Reset) return State::Idle;\n    if (s == State::Idle && e == Event::Start) return State::Collecting;\n    if (s == State::Collecting && e == Event::MissingSample) return State::Review;\n    if (s == State::Collecting && e == Event::Finish) return State::Complete;\n    return s;\n}",
+        "explanation": "This small transition function is a desktop inspection model. Unlisted events retain the current state, a policy that should be documented and tested."
+      },
+      "walkthrough": [
+        "Draw the transition table before coding.",
+        "Identify actions separately from state changes.",
+        "Replay normal, missing-input, and reset sequences.",
+        "Decide how duplicate and irrelevant events behave."
+      ],
+      "pitfalls": [
+        "Several independent booleans can encode impossible combinations.",
+        "A default branch that silently accepts every unknown event may hide an integration error.",
+        "A simulated state machine is not a validated control system."
+      ],
+      "exercises": [
+        {
+          "title": "Normal inspection",
+          "prompt": "Replay Start, GoodSample, Finish from Idle.",
+          "inputs": "Idle → Start → GoodSample → Finish",
+          "expected": "Collecting, Collecting, Complete",
+          "hints": [
+            "Follow one event at a time.",
+            "GoodSample does not change the state in this model."
+          ],
+          "solution": "Start begins collection; a good sample retains it; Finish completes the workflow.",
+          "tests": [
+            "Finish in Idle retains Idle.",
+            "Reset in Complete gives Idle."
+          ],
+          "extension": "Return a transition log alongside the final state.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-13-a"
+        },
+        {
+          "title": "Missing data path",
+          "prompt": "Replay Start, MissingSample, Finish.",
+          "inputs": "Initial Idle",
+          "expected": "Collecting, Review, Review",
+          "hints": [
+            "Finish only completes from Collecting.",
+            "Missing evidence prevents ordinary completion."
+          ],
+          "solution": "The Review state does not accept Finish under the given contract; a later explicit recovery event would need a new transition.",
+          "tests": [
+            "Reset from Review returns Idle.",
+            "Repeated MissingSample remains Review."
+          ],
+          "extension": "Design a reviewed-and-approved event without hiding the review.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-13-b"
+        },
+        {
+          "title": "Transition coverage",
+          "prompt": "Create a table-driven test of all four states and all five events.",
+          "inputs": "4 states × 5 events",
+          "expected": "20 defined test cases",
+          "hints": [
+            "Count the Cartesian product.",
+            "Do not test only the happy path."
+          ],
+          "solution": "Each row states the expected next state. Coverage of the table makes ignored-event policy visible and checks Reset everywhere.",
+          "tests": [
+            "All Reset rows lead to Idle.",
+            "Only the specified Start and Finish rows change modes."
+          ],
+          "extension": "Add a transition result indicating ignored versus accepted events.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-13-c"
+        },
+        {
+          "title": "Impossible flags",
+          "prompt": "A design has is_idle=true and is_complete=true simultaneously. Refactor its representation.",
+          "inputs": "Independent mutable boolean mode flags",
+          "expected": "One enum state represents exactly one mode",
+          "hints": [
+            "The flags permit combinations the model does not allow.",
+            "Store one mutually exclusive state."
+          ],
+          "solution": "Replace independent mode booleans with State, deriving display booleans from that single source if needed.",
+          "tests": [
+            "State cannot be both Idle and Complete.",
+            "Reset has one clear assignment."
+          ],
+          "extension": "Identify which other flags are independent facts and should remain separate.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-13-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why separate transitions from I/O?",
+          "answer": "You can test decisions deterministically and handle side-effect failure explicitly."
+        },
+        {
+          "question": "What should happen to an unlisted event?",
+          "answer": "Whatever the documented policy says: reject, log, ignore, or transition; it must be deliberate."
+        }
+      ],
+      "sources": [
+        {
+          "title": "NASA JPL F Prime documentation",
+          "url": "https://fprime.jpl.nasa.gov/latest/docs/"
+        },
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-14",
+      "language": "cpp",
+      "title": "Queues, concurrency, and bounded work",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-13"
+      ],
+      "summary": "Understand ownership transfer and queue overload before introducing parallel execution.",
+      "why": "A busy robot needs an explicit policy when input arrives faster than it can be processed.",
+      "explanation": [
+        "Concurrency introduces multiple activities whose execution may overlap or interleave. Shared mutable data requires coordination; using two threads does not automatically make a task faster. Begin by separating producer and consumer responsibilities in a single-threaded simulation. Define who owns each message, when ownership transfers, and whether the consumer sees a complete immutable snapshot or a shared object that might change.",
+        "A queue absorbs temporary differences in production and consumption rates, but it cannot fix a permanent mismatch. If ten samples arrive per second and only eight are processed, backlog grows. Bound the queue and choose an explicit overload policy: reject new work, drop oldest data, keep only the latest measurement, or apply backpressure where supported. The correct choice depends on whether old samples retain value.",
+        "When threads are actually introduced, protect the whole invariant rather than only individual variables. A mutex can guard a queue plus its count; an atomic counter does not automatically make a separate container safe. Condition variables require a predicate checked under the synchronization policy. This module's exercises focus on deterministic queue behavior first, so scheduling surprises do not obscure a basic design error."
+      ],
+      "example": {
+        "code": "#include <deque>\n#include <cstddef>\nvoid push_latest(std::deque<int>& q, int value, std::size_t capacity) {\n    if (capacity == 0) return;\n    if (q.size() == capacity) q.pop_front();\n    q.push_back(value);\n}",
+        "explanation": "This single-threaded queue retains the newest capacity values. It is not thread-safe and assumes q.size() never exceeds capacity."
+      },
+      "walkthrough": [
+        "Simulate producer and consumer steps without threads.",
+        "Choose and document a finite capacity.",
+        "Record discarded or rejected messages visibly.",
+        "Only then add synchronization around every shared queue operation."
+      ],
+      "pitfalls": [
+        "A bounded queue needs an overload policy, not just a number.",
+        "Protecting a size counter does not protect the container.",
+        "Thread timing should not decide whether a message is partially initialized."
+      ],
+      "exercises": [
+        {
+          "title": "Keep the latest three",
+          "prompt": "Push 1,2,3,4,5 into an initially empty queue with capacity 3.",
+          "inputs": "1,2,3,4,5",
+          "expected": "Final queue [3,4,5]; two oldest values discarded",
+          "hints": [
+            "Remove before adding when full.",
+            "Track discards separately."
+          ],
+          "solution": "After the fourth push drop 1; after the fifth drop 2. The remaining order is oldest-to-newest 3,4,5.",
+          "tests": [
+            "Capacity 1 keeps only 5.",
+            "Capacity 0 retains nothing."
+          ],
+          "extension": "Return a discard count from the queue wrapper.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-14-a"
+        },
+        {
+          "title": "Growing backlog",
+          "prompt": "Compute backlog growth for a sustained producer and consumer mismatch.",
+          "inputs": "10 arrivals/s, 8 processed/s, initially empty, 5 seconds",
+          "expected": "10 unprocessed samples ignoring finite capacity",
+          "hints": [
+            "Net growth is two per second.",
+            "A queue only delays overload."
+          ],
+          "solution": "The difference is 2/s, so five seconds adds 10 records unless the policy drops or blocks work.",
+          "tests": [
+            "Equal rates have no average growth.",
+            "A slower producer allows draining."
+          ],
+          "extension": "Include a finite capacity of 6 and count drops.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-14-b"
+        },
+        {
+          "title": "Compare overload policies",
+          "prompt": "Replay the same events using drop-oldest and reject-new policies.",
+          "inputs": "Queue [1,2,3], incoming 4, capacity 3",
+          "expected": "Drop-oldest keeps [2,3,4]; reject-new keeps [1,2,3]",
+          "hints": [
+            "Both are bounded.",
+            "They preserve different information."
+          ],
+          "solution": "Latest telemetry often values freshness; archival records may instead require backpressure or explicit loss handling. Document why your chosen policy fits.",
+          "tests": [
+            "Both report the loss event.",
+            "Neither silently exceeds capacity."
+          ],
+          "extension": "Add timestamps and compare final measurement ages.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-14-c"
+        },
+        {
+          "title": "The atomic-count illusion",
+          "prompt": "A queue is modified by two threads without a lock, but its size counter is atomic. Explain why the design is still unsafe.",
+          "inputs": "Shared std::deque plus atomic count",
+          "expected": "Container access and its invariant need synchronization",
+          "hints": [
+            "Atomicity belongs to that counter operation.",
+            "The deque performs other mutable operations."
+          ],
+          "solution": "Guard queue operations with an appropriate mutex or use a correctly designed concurrent queue. Keep count consistent with the same invariant.",
+          "tests": [
+            "Use a race detector when supported.",
+            "Retain deterministic policy tests separately."
+          ],
+          "extension": "Replace shared mutation with message ownership transfer.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-14-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Can a larger queue solve permanent overload?",
+          "answer": "No. It increases buffering time while backlog continues to grow."
+        },
+        {
+          "question": "What is the first concurrency design question?",
+          "answer": "Who owns each piece of data and which operations may access or mutate it concurrently?"
+        }
+      ],
+      "sources": [
+        {
+          "title": "C++ Core Guidelines",
+          "url": "https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines"
+        }
+      ]
+    },
+    {
+      "id": "cpp-15",
+      "language": "cpp",
+      "title": "ROS 2 integration with explicit message contracts",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-14"
+      ],
+      "summary": "Connect one tested calculation to a publisher/subscriber boundary.",
+      "why": "ROS 2 becomes useful when it connects understood components rather than hiding unfamiliar code behind a launch command.",
+      "explanation": [
+        "A ROS 2 node is a unit of computation that communicates through interfaces such as topics, services, and actions. For a first integration, keep the engineering calculation in an ordinary tested C++ library and use a node as the adapter that receives a message, checks its meaning, calls the library, and publishes a result. This keeps framework learning from replacing ordinary software reasoning.",
+        "A message contract includes more than field types. State units, coordinate frames when relevant, timestamp meaning, validity, expected rate, and what happens when messages disappear. Matching a topic name does not guarantee matching meaning. Quality-of-service settings affect delivery behavior, and endpoints need compatible settings to communicate. Use documentation for the installed ROS distribution instead of assuming examples from another release are interchangeable.",
+        "An executor schedules callbacks; callback groups and executor choices affect concurrency. Do not assume that a callback's code is automatically isolated from every other callback or that timers imply hard-real-time deadlines. Start with one simple topic and one deterministic fixture, inspect what is actually received, and then test missing, delayed, and duplicate messages. This lesson defines the integration task; use the official installed-distribution tutorial for exact package and build commands."
+      ],
+      "example": {
+        "code": "struct MeasurementContract {\n    double temperature_c;\n    double sample_time_s;\n    bool valid;\n};\nbool should_process(const MeasurementContract& m, double now_s) {\n    const double age_s = now_s - m.sample_time_s;\n    return m.valid && age_s >= 0 && age_s <= 0.5;\n}",
+        "explanation": "This framework-independent adapter policy can be tested before binding it to a ROS message. It assumes timestamps share a meaningful clock and requires separate finite-value validation."
+      },
+      "walkthrough": [
+        "Complete an official publisher/subscriber tutorial for your installed distribution.",
+        "Write a message contract beside the interface definition.",
+        "Call a tested library from the callback.",
+        "Replay fresh, stale, missing, and duplicate data and record the observed policy."
+      ],
+      "pitfalls": [
+        "Matching field types does not establish matching units or coordinate frames.",
+        "Incompatible QoS can prevent communication even when topic names match.",
+        "A timer callback is not by itself a hard-real-time guarantee."
+      ],
+      "exercises": [
+        {
+          "title": "Contract age check",
+          "prompt": "Apply should_process to valid measurements with three ages.",
+          "inputs": "0.1,0.5,0.6 seconds",
+          "expected": "true,true,false",
+          "hints": [
+            "The upper bound is inclusive.",
+            "A false validity flag overrides age."
+          ],
+          "solution": "The function accepts age from zero through 0.5; older messages do not enter the calculation.",
+          "tests": [
+            "Invalid but fresh returns false.",
+            "A future timestamp returns false."
+          ],
+          "extension": "Add finiteness checks.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-15-a"
+        },
+        {
+          "title": "Document a topic",
+          "prompt": "Write a contract for a simulated temperature topic with a timestamp and quality flag.",
+          "inputs": "One publisher and one consumer",
+          "expected": "Units, clock, expected rate, validity, and missing-data policy are explicit",
+          "hints": [
+            "Avoid a bare field named value.",
+            "Choose a timeout policy that is a learning assumption."
+          ],
+          "solution": "A complete contract states Celsius, the simulated shared clock, nominal update rate, how quality is encoded, and how absence is reported.",
+          "tests": [
+            "Consumer rejects the wrong unit convention at its adapter boundary.",
+            "Missing messages produce the documented state."
+          ],
+          "extension": "Version the interface when meaning changes.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-15-b"
+        },
+        {
+          "title": "Replay before hardware",
+          "prompt": "Feed a node a saved sequence containing valid, stale, duplicate, and absent intervals.",
+          "inputs": "Sequence IDs 1,2,2,4 with a long gap before 4",
+          "expected": "Logged decisions explain every accepted or rejected record",
+          "hints": [
+            "A duplicate policy must be chosen.",
+            "Preserve timestamps from the fixture."
+          ],
+          "solution": "Separate freshness and duplicate checks; report the long interval as missing-data evidence rather than inventing sample 3.",
+          "tests": [
+            "Replaying the fixture gives the same decisions.",
+            "A fresh unique sequence passes."
+          ],
+          "extension": "Compare the node output with the pure library tests.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-15-c"
+        },
+        {
+          "title": "Silent subscriber",
+          "prompt": "A subscriber receives nothing despite matching topic names. Build a focused diagnosis.",
+          "inputs": "Publisher exists; types and QoS not yet checked",
+          "expected": "Verify discovery, type, QoS compatibility, and callback execution",
+          "hints": [
+            "Do not immediately rewrite the calculation.",
+            "Inspect the communication boundary."
+          ],
+          "solution": "Confirm both endpoints are in the intended domain, have matching message types and compatible QoS, and that the subscriber executor is running.",
+          "tests": [
+            "A known tutorial pair communicates.",
+            "The node logs a callback when a fixture arrives."
+          ],
+          "extension": "Document the actual installed distribution and chosen QoS.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-15-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Where should reusable math live?",
+          "answer": "In a framework-independent library with tests; the node adapts messages and policy."
+        },
+        {
+          "question": "What else matters besides a topic name?",
+          "answer": "Message type, semantic contract, discovery context, QoS compatibility, and executing callbacks."
+        }
+      ],
+      "sources": [
+        {
+          "title": "ROS 2 documentation source: QoS",
+          "url": "https://github.com/ros2/ros2_documentation/blob/jazzy/source/Concepts/Intermediate/About-Quality-of-Service-Settings.rst"
+        }
+      ]
+    },
+    {
+      "id": "cpp-16",
+      "language": "cpp",
+      "title": "From prototype to a reviewable engineering component",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "cpp-15"
+      ],
+      "summary": "Package a small component with requirements, tests, limitations, and a reproducible demonstration.",
+      "why": "A portfolio becomes credible when another person can rebuild the result and see what it does under failure.",
+      "explanation": [
+        "A useful engineering component has a bounded purpose. Write a short statement such as classify a simulated temperature record as fresh, stale, or invalid, and list what lies outside scope. Connect each requirement to at least one test or demonstration. This traceability is not bureaucracy for its own sake: it makes gaps visible when a feature changes or a new collaborator asks why the program behaves a certain way.",
+        "Preserve evidence, not only screenshots. Include source, build instructions, a small data fixture, expected outputs, tests, and a concise explanation of assumptions. Record the compiler and relevant library versions used for the demonstration. Separate measured observations from guarantees; a desktop timing plot and a successful replay are valuable, but neither certifies flight suitability or safe operation of a real mechanism.",
+        "Study mature systems after you can explain a small one. F Prime provides examples of component-oriented flight-software architecture, commands, telemetry, and testing. NASA cFS is a separate ecosystem centered on reusable flight-software services and applications. Reading them can reveal ideas to borrow, but copying a framework into a project does not transfer mission qualification. Your next step should answer one concrete learning question, not simply increase the stack."
+      ],
+      "example": {
+        "code": "struct Requirement {\n    const char* id;\n    const char* statement;\n    const char* evidence;\n};\nconst Requirement reqs[] = {\n    {\"R1\", \"Reject stale input\", \"age_boundary_test\"},\n    {\"R2\", \"Report malformed records\", \"bad_row_fixture\"}\n};",
+        "explanation": "This small trace table illustrates a documentation relationship. A real project may keep it in Markdown or a test-management format."
+      },
+      "walkthrough": [
+        "Choose one component with a narrow, explainable purpose.",
+        "Map requirements to tests and example outputs.",
+        "Perform a clean build and demonstration using only the README.",
+        "Write limitations and a next experiment before adding another dependency."
+      ],
+      "pitfalls": [
+        "Framework adoption does not confer flight qualification.",
+        "A video without reproducible inputs is weak evidence of behavior.",
+        "A portfolio should distinguish your authored code from dependencies and generated code."
+      ],
+      "exercises": [
+        {
+          "title": "Requirement with a boundary",
+          "prompt": "Rewrite reject old data as a testable requirement.",
+          "inputs": "A chosen learning threshold of 0.5 s",
+          "expected": "Reject age > 0.5 s; define equality and future timestamps",
+          "hints": [
+            "Give a unit and comparison.",
+            "Describe invalid clock cases separately."
+          ],
+          "solution": "A precise requirement identifies the clock assumption, strictness, output status, and test at 0.5 versus 0.5001 seconds.",
+          "tests": [
+            "Equality test is mapped.",
+            "Future-time test is mapped."
+          ],
+          "extension": "Record why the threshold was chosen for the simulation.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "cpp-16-a"
+        },
+        {
+          "title": "Evidence manifest",
+          "prompt": "List the smallest files needed to reproduce a telemetry decision component.",
+          "inputs": "Source, build, tests, fixture, expected result",
+          "expected": "A new folder can reproduce the demonstration",
+          "hints": [
+            "Do not rely on an old binary.",
+            "Include dependency versions and commands."
+          ],
+          "solution": "Package authored code, CMake recipe, test executable source, input fixture, expected output, and README with assumptions and limitations.",
+          "tests": [
+            "Clean build passes.",
+            "Fixture output matches documented result."
+          ],
+          "extension": "Add a machine-readable result summary.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "cpp-16-b"
+        },
+        {
+          "title": "Framework reading expedition",
+          "prompt": "Read one F Prime tutorial and identify the equivalents of input, state, output, and test.",
+          "inputs": "A documentation-only study; no hardware",
+          "expected": "A one-page map connecting a tutorial to your component",
+          "hints": [
+            "Read the smallest tutorial first.",
+            "Use framework terms only when you can define them."
+          ],
+          "solution": "Map a command or port to input, component fields to state, telemetry/events to observations, and test harnesses to evidence.",
+          "tests": [
+            "Every mapped element cites a source section.",
+            "Mark unknown concepts for later study."
+          ],
+          "extension": "Implement one tiny tutorial only after the map makes sense.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "cpp-16-c"
+        },
+        {
+          "title": "Overstated portfolio claim",
+          "prompt": "A README says flight-ready because it uses C++ and passes tests. Rewrite it accurately.",
+          "inputs": "Desktop simulation and selected tests only",
+          "expected": "A tested educational prototype with explicit coverage and limitations",
+          "hints": [
+            "Describe evidence actually collected.",
+            "Separate language choice from assurance."
+          ],
+          "solution": "State the tested scenarios, platform, known gaps, and absence of operational qualification. The result can be impressive without unsupported guarantees.",
+          "tests": [
+            "README names the test data.",
+            "Limitations include untested hardware and timing assumptions."
+          ],
+          "extension": "Add a risk-driven next-test list.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "cpp-16-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What makes a requirement reviewable?",
+          "answer": "It is specific enough to connect to observable evidence and clear boundary behavior."
+        },
+        {
+          "question": "Why read mature frameworks later?",
+          "answer": "You can connect their abstractions to problems you already understand instead of collecting unfamiliar machinery."
+        }
+      ],
+      "sources": [
+        {
+          "title": "NASA JPL F Prime documentation",
+          "url": "https://fprime.jpl.nasa.gov/latest/docs/"
+        },
+        {
+          "title": "NASA core Flight System",
+          "url": "https://github.com/nasa/cFS"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "cpp-project-01",
+      "language": "cpp",
+      "title": "Telemetry import workbench",
+      "level": "Beginner",
+      "summary": "Turn a small plain-text experiment log into a reproducible summary with honest rejection accounting.",
+      "mission": "Foundations",
+      "prerequisites": [
+        "cpp-04",
+        "cpp-07",
+        "cpp-08"
+      ],
+      "milestones": [
+        {
+          "title": "Define the format",
+          "deliverable": "A one-page contract and six hand-written sample records",
+          "acceptance": "Columns, units, blank lines, and malformed records have explicit policies."
+        },
+        {
+          "title": "Parse independently",
+          "deliverable": "A function that accepts one text line",
+          "acceptance": "Valid pairs parse; missing or extra fields are rejected without altering outputs."
+        },
+        {
+          "title": "Summarize evidence",
+          "deliverable": "A command-line report of accepted rows, rejected rows, and mean",
+          "acceptance": "The supplied fixture gives the hand-calculated counts and mean."
+        },
+        {
+          "title": "Package the result",
+          "deliverable": "Source, build notes, fixture, tests, and example output",
+          "acceptance": "A clean folder reproduces the report."
+        }
+      ],
+      "testPlan": [
+        "Empty file reports no data, not zero mean.",
+        "Malformed rows retain their physical line numbers.",
+        "Future or nonmonotonic timestamps follow the documented policy."
+      ],
+      "extensions": [
+        "Add a separately documented CSV dialect.",
+        "Compare the report with a Python reference implementation."
+      ],
+      "portfolio": [
+        "Screenshot of output with fixture.",
+        "A paragraph explaining why rows were rejected.",
+        "One regression test from a real bug."
+      ],
+      "constraints": [
+        "Use invented or public sample data.",
+        "Do not silently repair or overwrite original records."
+      ]
+    },
+    {
+      "id": "cpp-project-02",
+      "language": "cpp",
+      "title": "Rover inspection supervisor simulator",
+      "level": "Intermediate",
+      "summary": "Implement and replay a state machine that can explain its response to missing inspection evidence.",
+      "mission": "Rovers",
+      "prerequisites": [
+        "cpp-05",
+        "cpp-09",
+        "cpp-13"
+      ],
+      "milestones": [
+        {
+          "title": "Draw the workflow",
+          "deliverable": "State/event table including invalid events",
+          "acceptance": "Every state has a reset policy and every event has a defined outcome."
+        },
+        {
+          "title": "Write the transition core",
+          "deliverable": "Pure next-state function",
+          "acceptance": "Table-driven tests cover the full state/event product."
+        },
+        {
+          "title": "Replay scenarios",
+          "deliverable": "Normal, missing-input, and recovery fixture logs",
+          "acceptance": "The trace explains every accepted or ignored event."
+        },
+        {
+          "title": "Review behavior",
+          "deliverable": "Short decision report and limitations",
+          "acceptance": "Another reader can trace a scenario without reading all source."
+        }
+      ],
+      "testPlan": [
+        "Missing sample prevents ordinary completion.",
+        "Repeated events follow a deliberate idempotency policy.",
+        "Reset behavior is tested in every state."
+      ],
+      "extensions": [
+        "Add a fake clock and timeout events.",
+        "Expose the core through one ROS 2 node."
+      ],
+      "portfolio": [
+        "State diagram.",
+        "Replay trace.",
+        "Requirement-to-test table."
+      ],
+      "constraints": [
+        "Desktop simulation only.",
+        "Do not connect the prototype to actuators."
+      ]
+    },
+    {
+      "id": "cpp-project-03",
+      "language": "cpp",
+      "title": "Bounded sensor-stream laboratory",
+      "level": "Intermediate",
+      "summary": "Explore freshness, queue capacity, and processing load with deterministic simulated events.",
+      "mission": "Habitats",
+      "prerequisites": [
+        "cpp-11",
+        "cpp-12",
+        "cpp-14"
+      ],
+      "milestones": [
+        {
+          "title": "Specify time",
+          "deliverable": "Clock, input rate, process rate, and stale threshold",
+          "acceptance": "All timestamps use the same stated simulated clock."
+        },
+        {
+          "title": "Build bounded queues",
+          "deliverable": "Drop-oldest and reject-new implementations",
+          "acceptance": "Both enforce capacity and count every lost record."
+        },
+        {
+          "title": "Replay overload",
+          "deliverable": "A fixture with bursts and sustained overload",
+          "acceptance": "Expected backlog and loss totals match hand calculations."
+        },
+        {
+          "title": "Compare policies",
+          "deliverable": "Plot or table of age, loss, and completed work",
+          "acceptance": "Tradeoffs are explained without claiming a universal best policy."
+        }
+      ],
+      "testPlan": [
+        "Capacity zero and one work by contract.",
+        "Exactly full queues behave correctly.",
+        "Age equality and future timestamps are tested."
+      ],
+      "extensions": [
+        "Generate a CSV for Python plots.",
+        "Introduce threads only after deterministic behavior is established."
+      ],
+      "portfolio": [
+        "Policy comparison table.",
+        "Raw event fixtures.",
+        "Timing assumptions and limits."
+      ],
+      "constraints": [
+        "Measured desktop timing is not a hard deadline guarantee.",
+        "Use simulated observations rather than a live safety system."
+      ]
+    },
+    {
+      "id": "cpp-project-04",
+      "language": "cpp",
+      "title": "ROS 2 environmental-data adapter",
+      "level": "Advanced",
+      "summary": "Connect a tested measurement classifier to a single ROS 2 communication path.",
+      "mission": "Rovers",
+      "prerequisites": [
+        "cpp-10",
+        "cpp-12",
+        "cpp-15"
+      ],
+      "milestones": [
+        {
+          "title": "Keep the core portable",
+          "deliverable": "Framework-independent classifier library",
+          "acceptance": "Ordinary C++ tests run without starting ROS."
+        },
+        {
+          "title": "Define the message contract",
+          "deliverable": "Units, timestamp convention, quality, and QoS notes",
+          "acceptance": "Publisher and subscriber agree on semantics and compatible settings."
+        },
+        {
+          "title": "Integrate one path",
+          "deliverable": "One publisher fixture and one processing node",
+          "acceptance": "Fresh valid observations produce the expected classification."
+        },
+        {
+          "title": "Exercise failures",
+          "deliverable": "Replay delayed, invalid, duplicate, and absent intervals",
+          "acceptance": "Every decision is visible in logs or output status."
+        }
+      ],
+      "testPlan": [
+        "Wrong or absent data cannot appear as a fresh valid zero.",
+        "Core and node agree on boundary fixtures.",
+        "Stopping the publisher exposes missing-data behavior."
+      ],
+      "extensions": [
+        "Record and replay with the distribution-supported tools.",
+        "Add an integration test around the node boundary."
+      ],
+      "portfolio": [
+        "Architecture sketch.",
+        "Short reproducible launch instructions.",
+        "Output trace with failure cases."
+      ],
+      "constraints": [
+        "Use the documentation for the installed ROS distribution.",
+        "No claim of real-time or flight qualification."
+      ]
+    },
+    {
+      "id": "cpp-project-05",
+      "language": "cpp",
+      "title": "Space-component design study",
+      "level": "Advanced",
+      "summary": "Build a small command/state/telemetry component and compare its design with an official F Prime tutorial.",
+      "mission": "Spacecraft",
+      "prerequisites": [
+        "cpp-06",
+        "cpp-09",
+        "cpp-13",
+        "cpp-16"
+      ],
+      "milestones": [
+        {
+          "title": "Bound the purpose",
+          "deliverable": "Two commands and a small explicit state model",
+          "acceptance": "No unbounded command surface or implicit state changes."
+        },
+        {
+          "title": "Implement a desktop component",
+          "deliverable": "Commands modify state and emit structured observations",
+          "acceptance": "Each command has normal and invalid-state tests."
+        },
+        {
+          "title": "Study a real framework",
+          "deliverable": "Annotated map to one F Prime tutorial",
+          "acceptance": "Framework-specific claims cite official documentation."
+        },
+        {
+          "title": "Publish an engineering note",
+          "deliverable": "Reproducible build plus design tradeoff discussion",
+          "acceptance": "The note separates implemented behavior from future integration."
+        }
+      ],
+      "testPlan": [
+        "Invalid-state command reports a reason.",
+        "Repeated command policy is tested.",
+        "Telemetry reports the actual state after each transition."
+      ],
+      "extensions": [
+        "Port the tiny component into the official tutorial workspace.",
+        "Add a requirement-to-test trace table."
+      ],
+      "portfolio": [
+        "Design note.",
+        "State/event table.",
+        "Tests and example command transcript."
+      ],
+      "constraints": [
+        "Educational simulation.",
+        "Framework use does not transfer mission assurance or qualification."
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Translation unit",
+      "definition": "A source file after preprocessing, compiled as one unit.",
+      "example": "telemetry.cpp plus the headers it includes."
+    },
+    {
+      "term": "Linker",
+      "definition": "A build tool that connects compiled definitions and libraries.",
+      "example": "An unresolved function can compile at the call site yet fail at linking."
+    },
+    {
+      "term": "RAII",
+      "definition": "Resource ownership tied to an object lifetime so destruction releases it.",
+      "example": "A local ifstream closes its file when it leaves scope."
+    },
+    {
+      "term": "Value semantics",
+      "definition": "An object behaves as an independent value under its documented copy and assignment operations.",
+      "example": "Copying a vector produces a separate owned sequence."
+    },
+    {
+      "term": "Reference",
+      "definition": "An alias to an existing object; it does not inherently own that object.",
+      "example": "const Sample& allows reading a caller-owned record."
+    },
+    {
+      "term": "Lifetime",
+      "definition": "The interval during which an object exists and can be validly used.",
+      "example": "A pointer to a local string is invalid after that string is destroyed."
+    },
+    {
+      "term": "Invariant",
+      "definition": "A condition a component promises to preserve at its interface boundaries.",
+      "example": "A bounded queue never contains more than its capacity."
+    },
+    {
+      "term": "Iterator invalidation",
+      "definition": "A collection change makes a previously obtained iterator unusable.",
+      "example": "Vector reallocation invalidates iterators into old storage."
+    },
+    {
+      "term": "Undefined behavior",
+      "definition": "An operation for which the language imposes no requirements on resulting program behavior.",
+      "example": "Out-of-bounds vector indexing is not legitimized by one successful run."
+    },
+    {
+      "term": "Optional",
+      "definition": "A type holding either a value or no value.",
+      "example": "An empty dataset returns no mean instead of a numeric zero."
+    },
+    {
+      "term": "Contract",
+      "definition": "Explicit input assumptions, output meaning, and failure behavior.",
+      "example": "A stale check defines units, clock, and equality policy."
+    },
+    {
+      "term": "Monotonic clock",
+      "definition": "A clock intended for elapsed-time measurement without going backward.",
+      "example": "steady_clock measures a local processing interval."
+    },
+    {
+      "term": "Backpressure",
+      "definition": "A mechanism that slows or stops production when downstream work cannot keep up.",
+      "example": "A producer waits for queue space instead of dropping a record."
+    },
+    {
+      "term": "QoS",
+      "definition": "Communication policies controlling delivery behavior and compatibility.",
+      "example": "A ROS 2 publisher and subscriber need compatible reliability settings."
+    },
+    {
+      "term": "Regression test",
+      "definition": "A repeatable check preserving the fix for a previously observed defect.",
+      "example": "A truncated final record remains in the parser test fixtures."
+    }
+  ]
+}

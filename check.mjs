@@ -119,7 +119,7 @@ export function audit(root=ROOT){
   const allIds=new Set(records.map(t=>t.id));
   const publicFiles=fs.readdirSync(dist,{recursive:true}).filter(name=>fs.statSync(path.join(dist,name)).isFile());
   for(const name of publicFiles){
-    if(!/\.(?:html|css|js|json|svg|txt)$/i.test(name))continue;
+    if(!/\.(?:html|css|m?js|json|svg|txt|md)$/i.test(name))continue;
     const file=path.join(dist,name),text=fs.readFileSync(file,'utf8');
     errors.push(...validatePublicText(text,name));
     const localRefs=[];

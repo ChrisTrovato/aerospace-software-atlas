@@ -1,0 +1,2402 @@
+{
+  "modules": [
+    {
+      "id": "c-01",
+      "language": "c",
+      "title": "Build C deliberately, not accidentally as C++",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [],
+      "summary": "Create a hosted C program and understand the compiler contract.",
+      "why": "C helps you understand firmware interfaces and machine constraints. Learning it as a separate language avoids misleading assumptions from C++.",
+      "explanation": [
+        "C and C++ share much syntax but are distinct languages with different rules and idioms. Start with a .c file, a C compiler driver, and an explicitly selected language standard. For GCC or Clang, a useful desktop learning command is cc -std=c17 -Wall -Wextra -Wpedantic main.c -o sample. Other toolchains use different flags, so record the actual tool and command you used.",
+        "A hosted C program usually begins at main and can use the standard library available in that environment. A microcontroller project may be freestanding, with startup code, linking rules, and libraries supplied by its toolchain and board support package. Do not treat a desktop program and a board binary as interchangeable simply because both contain C source. Begin on the desktop where tests and diagnostics are easy to inspect.",
+        "Use one tiny calculation to make every build step observable. Write source, compile it, inspect diagnostics, run the exact executable you built, and compare with a predicted output. Distinguish a language error from a link failure and a wrong calculation. The first lasting habit is preserving enough evidence that you can reproduce the same result after your tools or directory layout change."
+      ],
+      "example": {
+        "code": "#include <stdio.h>\nint main(void) {\n    const double elapsed_s = 1500 / 1000.0;\n    printf(\"%.3f s\\n\", elapsed_s);\n    return 0;\n}",
+        "explanation": "The program prints 1.500 s. Floating-point division is paired with a matching printf format."
+      },
+      "walkthrough": [
+        "Save the example as a .c file.",
+        "Select C17 explicitly in a supported toolchain.",
+        "Resolve the first diagnostic before later ones.",
+        "Record expected output and the exact executable path."
+      ],
+      "pitfalls": [
+        "A C++ driver can accept or reject code under different rules.",
+        "A desktop library may not exist on a microcontroller.",
+        "Running an old executable after a failed build can hide the failure."
+      ],
+      "exercises": [
+        {
+          "title": "First reproducible result",
+          "prompt": "Change the duration to 2750 ms and rebuild.",
+          "inputs": "2750 milliseconds",
+          "expected": "2.750 s",
+          "hints": [
+            "Use 1000.0.",
+            "Keep %.3f."
+          ],
+          "solution": "Divide before printing and verify three digits after the decimal point.",
+          "tests": [
+            "0 ms prints 0.000 s.",
+            "1 ms prints 0.001 s."
+          ],
+          "extension": "Write a one-command build instruction.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-01-a"
+        },
+        {
+          "title": "Identify the failure stage",
+          "prompt": "Create separate examples of a missing semicolon and a declared but undefined function.",
+          "inputs": "Two saved source variants",
+          "expected": "Compilation failure; linking failure",
+          "hints": [
+            "A declaration describes a function.",
+            "A definition supplies its body."
+          ],
+          "solution": "The compiler needs valid syntax; the linker needs an implementation for each called function.",
+          "tests": [
+            "Restore valid source and build.",
+            "Confirm no old executable is mistaken for the new version."
+          ],
+          "extension": "Repeat from your editor and command line.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-01-b"
+        },
+        {
+          "title": "Desktop versus board",
+          "prompt": "Compare startup and output assumptions in this sample with a board project.",
+          "inputs": "Desktop standard output; board UART unconfigured",
+          "expected": "A table of assumptions rather than a claimed drop-in port",
+          "hints": [
+            "Who calls main?",
+            "Where does printf output go?"
+          ],
+          "solution": "Desktop runtime and output are provided by the environment; embedded startup and I/O redirection depend on the selected platform.",
+          "tests": [
+            "List required board documentation.",
+            "Keep desktop tests buildable."
+          ],
+          "extension": "Plan a fake I/O interface.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-01-c"
+        },
+        {
+          "title": "Wrong language mode",
+          "prompt": "A C file is compiled with g++ and gives confusing diagnostics. Fix the build first.",
+          "inputs": "Intended C17 source",
+          "expected": "Use a C compiler mode and C17 selection",
+          "hints": [
+            "Check driver and flags.",
+            "Extension alone may not override the driver."
+          ],
+          "solution": "Use cc, gcc, or clang in C mode with -std=c17 where supported, or document an equivalent toolchain setting.",
+          "tests": [
+            "Compile correct C source.",
+            "Confirm the build log shows the intended command."
+          ],
+          "extension": "Explain why Arduino sketches are typically C++.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-01-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why select a language standard?",
+          "answer": "It makes the accepted language contract explicit instead of relying on changing defaults."
+        },
+        {
+          "question": "What does hosted mean?",
+          "answer": "An environment providing normal C startup and library facilities, unlike many bare-metal projects."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GCC warning options",
+          "url": "https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html"
+        }
+      ]
+    },
+    {
+      "id": "c-02",
+      "language": "c",
+      "title": "Integer ranges, units, and conversion order",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "c-01"
+      ],
+      "summary": "Choose representation intentionally and test limits before ordinary data.",
+      "why": "Embedded measurements often begin as integer counts; scaling needs both a sensor model and correct arithmetic.",
+      "explanation": [
+        "A number has a representation before it has a physical meaning. An ADC count may be stored in an unsigned integer, while the voltage estimate is a floating-point calculation based on a documented reference and range. A learning model might map integer counts 0 through 4095 onto 0 through 3.3 volts. That is a model to test, not a substitute for a particular converter's datasheet.",
+        "Integer arithmetic happens before assignment to a floating-point destination when both operands are integers. Multiplication can overflow before a later conversion appears to fix it. Decide where to convert and what intermediate range is required. Unsigned arithmetic follows modular rules; signed overflow is undefined behavior. Neither should be used accidentally to handle an out-of-range physical measurement.",
+        "limits.h describes properties of ordinary integer types, and stdint.h provides fixed-width types when supported. uint16_t does not promise that every arithmetic expression uses sixteen bits: integer promotions still apply. Begin with explicit input-range checks and simple double scaling. Study fixed-point arithmetic when the project gives you a reason, and preserve an independently calculated reference result for comparison."
+      ],
+      "example": {
+        "code": "#include <stdbool.h>\n#include <stdint.h>\nbool adc_volts(uint16_t counts, double *out_v) {\n    if (out_v == 0 || counts > 4095u) return false;\n    *out_v = (double)counts * 3.3 / 4095.0;\n    return true;\n}",
+        "explanation": "A simulated 12-bit endpoint model with a 3.3 V reference; invalid counts or a null output pointer are rejected."
+      },
+      "walkthrough": [
+        "State raw range and physical units.",
+        "Predict endpoints and midpoint.",
+        "Convert before fractional arithmetic.",
+        "Verify invalid input leaves output unchanged."
+      ],
+      "pitfalls": [
+        "ADC transfer models depend on the device.",
+        "Casting after truncation or overflow is too late.",
+        "Fixed-width storage does not eliminate promotions."
+      ],
+      "exercises": [
+        {
+          "title": "Endpoint scaling",
+          "prompt": "Evaluate the conversion at both endpoints.",
+          "inputs": "0 and 4095 counts",
+          "expected": "0 V and 3.3 V",
+          "hints": [
+            "Substitute in the formula.",
+            "Compare floats with a justified tolerance."
+          ],
+          "solution": "Zero produces zero; maximum count produces a ratio of one.",
+          "tests": [
+            "4096 is rejected.",
+            "Null output is rejected."
+          ],
+          "extension": "Calculate 2048 counts and explain its relation to 1.65 V.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-02-a"
+        },
+        {
+          "title": "Reject without mutation",
+          "prompt": "Initialize output to 9 and call with invalid counts.",
+          "inputs": "counts=5000; output=9",
+          "expected": "false; output remains 9",
+          "hints": [
+            "Validate before assignment.",
+            "Failure needs an output policy."
+          ],
+          "solution": "The guard returns before writing the caller-owned result.",
+          "tests": [
+            "Valid zero changes output to zero.",
+            "Null pointer is never dereferenced."
+          ],
+          "extension": "Document every error path.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-02-b"
+        },
+        {
+          "title": "Fixed-point range analysis",
+          "prompt": "Analyze multiplication before converting counts to integer millivolts.",
+          "inputs": "4095 maximum count; numerator 3300",
+          "expected": "Maximum product 13,513,500",
+          "hints": [
+            "Multiply maxima on paper.",
+            "State rounding policy."
+          ],
+          "solution": "A uint32_t intermediate can represent the product where available; divide by 4095 and explicitly choose truncation or rounding.",
+          "tests": [
+            "0 maps to 0.",
+            "4095 maps to 3300."
+          ],
+          "extension": "Compare integer and double models for every raw count.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-02-c"
+        },
+        {
+          "title": "Nearly every result is zero",
+          "prompt": "Repair double ratio = counts / 4095 before scaling.",
+          "inputs": "counts=2048",
+          "expected": "Approximately 1.6504 V after scaling",
+          "hints": [
+            "Inspect operand types.",
+            "Convert before division."
+          ],
+          "solution": "Use counts / 4095.0. Assigning an integer-division result to double cannot recover its fractional part.",
+          "tests": [
+            "Interior count is nonzero.",
+            "Endpoints remain correct."
+          ],
+          "extension": "Retain a midpoint regression test.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-02-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Does signed overflow wrap predictably?",
+          "answer": "No. It is undefined behavior; use checked arithmetic."
+        },
+        {
+          "question": "Why test endpoints?",
+          "answer": "They provide easy independent checks of range, units, and arithmetic order."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        },
+        {
+          "title": "Clang UndefinedBehaviorSanitizer",
+          "url": "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html"
+        }
+      ]
+    },
+    {
+      "id": "c-03",
+      "language": "c",
+      "title": "Functions and output-pointer contracts",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "c-02"
+      ],
+      "summary": "Use explicit return status and caller-owned outputs.",
+      "why": "C interfaces often communicate through pointers; meaning, validity, and lifetime must be clear.",
+      "explanation": [
+        "C passes function arguments by value. Passing a pointer copies an address value, allowing the function to access an object owned by the caller. This often returns a calculation result while the function's return value reports success or failure. The interface should say whether the pointer may be null, which object is modified, and what happens to that object when the operation fails.",
+        "A pointer is not a length, ownership record, or proof of validity. A non-null pointer can refer to an object whose lifetime ended or to inappropriate storage. A scalar output parameter requires a pointer to a live object of the correct type. Arrays also require a count. The caller and function share responsibility for honoring this contract; checking only null cannot establish arbitrary pointer safety.",
+        "Keep the implementation auditable: validate what you can before modifying caller-visible output. Compute into local variables and assign on success. This gives a simple failure guarantee and makes tests clearer. Avoid global variables as hidden outputs; their values and ordering dependencies complicate isolated tests and later concurrency. Draw the caller object and the copied pointer to understand which object each assignment affects."
+      ],
+      "example": {
+        "code": "#include <stdbool.h>\nbool mean_pair(double a, double b, double *out) {\n    if (out == 0) return false;\n    *out = a / 2.0 + b / 2.0;\n    return true;\n}",
+        "explanation": "The output must point to a live double. This avoids forming a+b first, though rounding and non-finite policy still matter."
+      },
+      "walkthrough": [
+        "Write validity and ownership requirements.",
+        "Return status independently from value.",
+        "Test success and null rejection.",
+        "Document non-finite input behavior."
+      ],
+      "pitfalls": [
+        "Non-null does not prove validity.",
+        "Changing the local pointer does not change the caller's pointer.",
+        "Partial output changes on failure complicate callers."
+      ],
+      "exercises": [
+        {
+          "title": "Caller-owned result",
+          "prompt": "Call mean_pair with the address of a local result.",
+          "inputs": "2 and 6",
+          "expected": "true; result 4",
+          "hints": [
+            "Use &result.",
+            "Keep the object alive."
+          ],
+          "solution": "The copied pointer permits writing into the caller's live double.",
+          "tests": [
+            "2 and 2 give 2.",
+            "-2 and 2 give 0."
+          ],
+          "extension": "Reject non-finite input.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-03-a"
+        },
+        {
+          "title": "No mutation on failure",
+          "prompt": "Design a conversion that rejects negative duration and preserves output.",
+          "inputs": "duration=-1; output=7",
+          "expected": "false; output remains 7",
+          "hints": [
+            "Validate first.",
+            "Assign only on success."
+          ],
+          "solution": "Return failure for negative duration before writing; keep computation local until all validation succeeds.",
+          "tests": [
+            "Zero follows the stated policy.",
+            "Null output rejects."
+          ],
+          "extension": "Use distinct status codes for different errors.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-03-b"
+        },
+        {
+          "title": "Two results without globals",
+          "prompt": "Return minimum and maximum for two finite inputs using a small result struct.",
+          "inputs": "3 and -1",
+          "expected": "minimum -1; maximum 3",
+          "hints": [
+            "Group related outputs.",
+            "Define invalid-number policy."
+          ],
+          "solution": "A struct keeps results coherent; a status field or checked output pointer communicates validity.",
+          "tests": [
+            "Swapped inputs give the same result.",
+            "Equal inputs give equal min and max."
+          ],
+          "extension": "Extend to an array and count.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-03-c"
+        },
+        {
+          "title": "Address of a dead local",
+          "prompt": "Repair a function returning the address of its automatic local result.",
+          "inputs": "double *bad(void) { double result=4; return &result; }",
+          "expected": "Return double by value or write through a caller output pointer",
+          "hints": [
+            "Local lifetime ends at return.",
+            "Copying an address does not extend lifetime."
+          ],
+          "solution": "Returning the scalar is simplest; if status is needed, accept an output pointer supplied by the caller.",
+          "tests": [
+            "Compile with warnings.",
+            "Use the result after return."
+          ],
+          "extension": "Draw lifetimes for both repaired interfaces.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-03-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Are pointer arguments passed by reference in C?",
+          "answer": "No. The pointer value is copied; dereferencing it may access a caller-owned object."
+        },
+        {
+          "question": "What is a useful failure guarantee?",
+          "answer": "Caller-visible output remains unchanged unless the operation succeeds."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        }
+      ]
+    },
+    {
+      "id": "c-04",
+      "language": "c",
+      "title": "Arrays, sizes, and bounds-aware interfaces",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "c-03"
+      ],
+      "summary": "Carry the number of accessible elements beside every buffer.",
+      "why": "Parser and sensor code becomes easier to reason about when each access is tied to a known bound.",
+      "explanation": [
+        "An array is a contiguous sequence of elements, but a pointer to its first element does not carry its count. In most expressions an array converts to such a pointer. A function parameter written double values[] is adjusted to a pointer parameter; sizeof(values) there measures the pointer, not the original array. Pass the element count explicitly and distinguish it from a byte count.",
+        "If n is the number of accessible elements, valid indexes run from zero through n-1. Stop loops before n and define empty-input behavior. Do not read the first element before checking that one exists. A pointer-plus-count contract must also say whether null with zero count is allowed. Choose a consistent rule, then test all combinations of empty and nonempty inputs.",
+        "Bounds checks work only when the caller supplies an honest count for live storage. C cannot recover the true allocation size from an arbitrary pointer. Keep ownership local, derive counts from real arrays when possible, and pass sizes through layers without inventing them. For external packets, verify length before reading fields even when every normal example happens to be long enough."
+      ],
+      "example": {
+        "code": "#include <stdbool.h>\n#include <stddef.h>\nbool sum_values(const double *values, size_t n, double *out) {\n    if (out == NULL || (n > 0 && values == NULL)) return false;\n    double sum = 0;\n    for (size_t i = 0; i < n; ++i) sum += values[i];\n    *out = sum;\n    return true;\n}",
+        "explanation": "The caller promises n accessible doubles. Empty input is accepted with sum zero, including NULL when n is zero."
+      },
+      "walkthrough": [
+        "Draw indexes and the one-past-end position.",
+        "Pass size_t count with the pointer.",
+        "Test zero, one, and several elements.",
+        "Check that validation precedes each access."
+      ],
+      "pitfalls": [
+        "i <= n reads one element too many.",
+        "sizeof an array parameter does not recover caller length.",
+        "An exaggerated count is invalid even with a non-null pointer."
+      ],
+      "exercises": [
+        {
+          "title": "Sum a bounded array",
+          "prompt": "Call sum_values on the supplied sequence.",
+          "inputs": "[1,2,3], count 3",
+          "expected": "true; sum 6",
+          "hints": [
+            "Use real element count.",
+            "Stop before n."
+          ],
+          "solution": "Visit indexes 0,1,2 only.",
+          "tests": [
+            "Count 0 gives 0.",
+            "Count 1 gives 1."
+          ],
+          "extension": "Write a mean that rejects empty input.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-04-a"
+        },
+        {
+          "title": "Null-and-empty policy",
+          "prompt": "Test buffer and count combinations with a valid output pointer.",
+          "inputs": "NULL/0; NULL/1; valid/0; valid/1",
+          "expected": "Accept; reject; accept; accept",
+          "hints": [
+            "No access is needed for zero count.",
+            "The policy is explicit."
+          ],
+          "solution": "NULL is rejected only when n>0; zero-count input yields an empty sum.",
+          "tests": [
+            "Failed call preserves output.",
+            "NULL output always rejects."
+          ],
+          "extension": "Compare with a stricter always-non-null contract.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-04-b"
+        },
+        {
+          "title": "Bounded maximum",
+          "prompt": "Implement maximum without an empty-input sentinel.",
+          "inputs": "[-5,-2,-9]; empty",
+          "expected": "-2; explicit failure",
+          "hints": [
+            "Initialize from element 0 only after n>0.",
+            "Zero is wrong for all-negative data."
+          ],
+          "solution": "Check nonempty, initialize from the first element, and scan the rest with i<n.",
+          "tests": [
+            "One negative item returns itself.",
+            "Equal values return that value."
+          ],
+          "extension": "Define non-finite behavior.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-04-c"
+        },
+        {
+          "title": "One-past-end loop",
+          "prompt": "Repair a loop with condition i<=n.",
+          "inputs": "n=3",
+          "expected": "Read indexes 0,1,2 only",
+          "hints": [
+            "Count is not last index.",
+            "Empty input must not read."
+          ],
+          "solution": "Use i<n and preserve a zero-length regression test.",
+          "tests": [
+            "Run empty input.",
+            "Use AddressSanitizer when supported."
+          ],
+          "extension": "Explain why an apparently harmless adjacent read is still invalid.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-04-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What information does a pointer omit?",
+          "answer": "Accessible length, ownership, and lifetime guarantees."
+        },
+        {
+          "question": "Why use size_t for counts?",
+          "answer": "It is the standard unsigned type for object sizes and sizeof results, though arithmetic still needs care."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        },
+        {
+          "title": "Clang AddressSanitizer",
+          "url": "https://clang.llvm.org/docs/AddressSanitizer.html"
+        }
+      ]
+    },
+    {
+      "id": "c-05",
+      "language": "c",
+      "title": "Strings are buffers with an ending convention",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "c-04"
+      ],
+      "summary": "Keep capacity, length, and termination separate.",
+      "why": "Readable telemetry labels still occupy finite memory; a copied name must not overwrite the next object.",
+      "explanation": [
+        "A C string is a sequence of character values terminated by a null character. Its logical length excludes that terminator, but storage must include space for it. A char array is not automatically a valid string: without a terminator inside accessible storage, string operations may keep reading beyond the object. Know whether an interface accepts a string or an arbitrary sequence of bytes.",
+        "Capacity describes available storage; length describes text currently present. Before copying, establish whether text plus terminator fits. Define the overflow policy: reject, truncate with a visible status, or allocate more storage. Silently truncating a sensor identifier can merge two sources into one displayed name, creating a data-integrity bug even when memory writes remain inside the destination.",
+        "Prefer interfaces receiving destination capacity and returning a result you check. snprintf supports bounded formatting, but its result is the number of characters that would have been written, excluding the terminator. A nonnegative result at least as large as capacity indicates truncation. Check before treating the output as complete. Practice exact-fit and one-too-small cases before embedding formatted text in a larger parser."
+      ],
+      "example": {
+        "code": "#include <stdio.h>\n#include <stdbool.h>\n#include <stddef.h>\nbool label_sensor(char *dst, size_t cap, unsigned id) {\n    if (dst == NULL || cap == 0) return false;\n    int n = snprintf(dst, cap, \"S%u\", id);\n    return n >= 0 && (size_t)n < cap;\n}",
+        "explanation": "Reports whether the complete label fits. On truncation the destination can contain a shortened string; this is not an unchanged-on-failure interface."
+      },
+      "walkthrough": [
+        "Count visible characters plus one terminator.",
+        "Document capacity and overflow behavior.",
+        "Test exact fit and one byte too small.",
+        "Check formatting status before using an identifier."
+      ],
+      "pitfalls": [
+        "strlen requires a valid terminated string.",
+        "strncpy can leave output unterminated.",
+        "Bounded truncation can still corrupt meaning."
+      ],
+      "exercises": [
+        {
+          "title": "Exact label capacity",
+          "prompt": "Find minimum storage for two labels.",
+          "inputs": "S42 and S1000",
+          "expected": "4 and 6 bytes",
+          "hints": [
+            "Count visible characters.",
+            "Add the null terminator."
+          ],
+          "solution": "Three characters need four bytes; five need six.",
+          "tests": [
+            "Capacity 3 cannot hold all of S42.",
+            "Capacity 4 exactly holds S42."
+          ],
+          "extension": "Recalculate after adding a prefix.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-05-a"
+        },
+        {
+          "title": "Detect truncation",
+          "prompt": "Format id 1234 into capacity 4.",
+          "inputs": "Requested S1234",
+          "expected": "false; shortened output is not a complete identifier",
+          "hints": [
+            "Required visible length is 5.",
+            "Compare result with capacity."
+          ],
+          "solution": "The label needs six bytes. The return check detects truncation despite bounded writing.",
+          "tests": [
+            "Capacity 6 succeeds.",
+            "Capacity 0 rejects."
+          ],
+          "extension": "Return a distinct Truncated status.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-05-b"
+        },
+        {
+          "title": "Unchanged on failure",
+          "prompt": "Design a copy function that rejects insufficient space without modifying output.",
+          "inputs": "Source ROVER; capacities 5 and 6",
+          "expected": "Reject at 5; accept at 6",
+          "hints": [
+            "Know the valid source length.",
+            "Check terminator space before writing."
+          ],
+          "solution": "Validate length against capacity before copying. An explicit source length avoids relying on an unbounded scan.",
+          "tests": [
+            "Empty string needs one byte.",
+            "Exact fit includes a terminator."
+          ],
+          "extension": "Use source pointer plus length.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-05-c"
+        },
+        {
+          "title": "Unterminated name",
+          "prompt": "A three-byte array contains R,O,V and is printed with %s. Repair it.",
+          "inputs": "Three characters without a null terminator",
+          "expected": "Use a four-byte terminated string or length-aware output",
+          "hints": [
+            "%s expects a string.",
+            "No ending character exists."
+          ],
+          "solution": "Declare char name[]=\"ROV\" to include the terminator, or use an explicitly bounded byte-output operation.",
+          "tests": [
+            "String array size is 4.",
+            "Empty string contains a terminator."
+          ],
+          "extension": "Explain text versus binary packet bytes.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-05-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Is every char array a string?",
+          "answer": "No. A terminator must exist within accessible storage."
+        },
+        {
+          "question": "What does snprintf result >= capacity mean?",
+          "answer": "The full formatted output did not fit."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        }
+      ]
+    },
+    {
+      "id": "c-06",
+      "language": "c",
+      "title": "Structs, enums, and explicit validity",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "c-05"
+      ],
+      "summary": "Group measurements with the state needed to interpret them.",
+      "why": "Valid zero, stale data, and missing observations deserve different representations.",
+      "explanation": [
+        "A struct groups related fields into one record. An enum names a finite set of states. Together they represent value, time, and quality without hiding missing data in a magic number. Function interfaces become easier to read and tests can construct the condition they intend to exercise. Initialize every field that later code may read, including status fields that seem obvious.",
+        "Struct assignment copies member values, but a pointer member still refers to the same external object after copying. It does not clone the pointed-to buffer or transfer ownership automatically. Prefer scalar fields and small fixed arrays for early sensor records. Introduce pointer fields when their ownership, lifetime, and access permissions are explicit, especially if records outlive the function that built them.",
+        "An in-memory struct is not automatically a portable wire format. A compiler may add padding; alignment, integer sizes, and byte order can vary. Writing sizeof(struct sample) bytes directly to a file therefore does not establish a reliable interchange format. Keep the logical record separate from the byte encoding, define field widths and order, and test encoding against fixed known fixtures."
+      ],
+      "example": {
+        "code": "enum quality { SAMPLE_VALID, SAMPLE_STALE, SAMPLE_MISSING };\nstruct sample {\n    double temperature_c;\n    unsigned long time_ms;\n    enum quality quality;\n};\nint usable(const struct sample *s) {\n    return s != 0 && s->quality == SAMPLE_VALID;\n}",
+        "explanation": "The time type is illustrative; its range and clock meaning must be defined by the real interface."
+      },
+      "walkthrough": [
+        "Define validity states.",
+        "Initialize every field.",
+        "Test one record per state.",
+        "Keep encoding separate from record layout."
+      ],
+      "pitfalls": [
+        "Pointer members copy shallowly.",
+        "Uninitialized data is not a missing-data detector.",
+        "Raw struct bytes include representation assumptions."
+      ],
+      "exercises": [
+        {
+          "title": "Zero can be real",
+          "prompt": "Classify records by quality.",
+          "inputs": "Valid 0; Stale 0; Missing 20",
+          "expected": "Usable; unusable; unusable",
+          "hints": [
+            "Read quality.",
+            "Plausibility does not prove presence."
+          ],
+          "solution": "Quality preserves the distinction independently of the number.",
+          "tests": [
+            "NULL is unusable.",
+            "Valid negative temperature remains usable in this narrow contract."
+          ],
+          "extension": "Add domain validation separately.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-06-a"
+        },
+        {
+          "title": "Copy semantics",
+          "prompt": "Copy a record with one scalar and one buffer pointer; describe what changes.",
+          "inputs": "Two structs point to one buffer",
+          "expected": "Scalar values copy; buffer remains shared",
+          "hints": [
+            "Draw two records and one buffer.",
+            "The pointer value is copied."
+          ],
+          "solution": "Editing one scalar does not change the other record; editing the common buffer is visible through both pointers.",
+          "tests": [
+            "Change one scalar.",
+            "Change one buffer byte."
+          ],
+          "extension": "Compare with a fixed array embedded in the struct.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-06-b"
+        },
+        {
+          "title": "Encode the contract",
+          "prompt": "Write a separate byte-format table for a centidegree reading and a quality byte.",
+          "inputs": "Logical sample record",
+          "expected": "Offsets, widths, signedness, and order stated",
+          "hints": [
+            "Do not use sizeof(struct) as format.",
+            "State valid ranges."
+          ],
+          "solution": "A decoder can validate a known packet length and reconstruct logical fields without assuming compiler layout.",
+          "tests": [
+            "Known fixture decodes correctly.",
+            "Short input rejects."
+          ],
+          "extension": "Add a format-version field.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-06-c"
+        },
+        {
+          "title": "Padding surprise",
+          "prompt": "Raw struct files differ across compilers. Repair the design.",
+          "inputs": "fwrite of sizeof(struct sample) bytes",
+          "expected": "Explicit field-by-field encoding",
+          "hints": [
+            "Padding is not a field.",
+            "Byte order may differ."
+          ],
+          "solution": "Define external bytes deliberately and decode them independently of in-memory layout.",
+          "tests": [
+            "Two encoders emit the same fixture.",
+            "Unknown version rejects."
+          ],
+          "extension": "Explain why packing alone is not a full portability solution.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-06-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Does struct copy clone a pointed-to buffer?",
+          "answer": "No. It copies the pointer value."
+        },
+        {
+          "question": "Why separate record and encoding?",
+          "answer": "Logical meaning should not depend on compiler layout or host byte order."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        }
+      ]
+    },
+    {
+      "id": "c-07",
+      "language": "c",
+      "title": "Bit masks and byte order without guesswork",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "c-06"
+      ],
+      "summary": "Decode flags and multi-byte fields explicitly.",
+      "why": "Telemetry decoders should explain every bit and every byte they read.",
+      "explanation": [
+        "A mask selects positions in an integer. If bit zero means stale, (status & 1u) != 0 tests that bit independently of other flags. Use unsigned types and named masks. Logical && asks whether whole expressions are true, while bitwise & combines corresponding bits. Confusing them can pass a simple test and fail as soon as a different flag is set.",
+        "Byte order describes a multi-byte representation. For a big-endian two-byte unsigned field, the first byte is the high part: first*256 + second. Decode explicitly instead of casting a byte pointer to a wider integer pointer. A cast can introduce alignment, aliasing, and host-byte-order assumptions while concealing the format's actual meaning. The external contract chooses the byte order.",
+        "Bounds still come first. Correct arithmetic cannot rescue reading a second byte from a one-byte input. Validate pointer and length, construct the result in an unsigned type wide enough for intermediate operations, then assign. The examples assume fixed-width types are available. Real interfaces should verify these platform assumptions and distinguish unknown reserved bits from currently recognized flags."
+      ],
+      "example": {
+        "code": "#include <stdbool.h>\n#include <stdint.h>\n#include <stddef.h>\nbool read_be16(const uint8_t *p, size_t n, uint16_t *out) {\n    if (p == NULL || out == NULL || n < 2) return false;\n    *out = (uint16_t)(((uint32_t)p[0] << 8) | (uint32_t)p[1]);\n    return true;\n}",
+        "explanation": "Reads an unsigned big-endian value without assuming host byte order or alignment."
+      },
+      "walkthrough": [
+        "Create a named bit-position table.",
+        "Test flags alone and combined.",
+        "Decode one fixture by hand.",
+        "Reject short input before access."
+      ],
+      "pitfalls": [
+        "Logical and bitwise AND are different.",
+        "Widen before shifting.",
+        "A wider pointer cast is not a portable decoder."
+      ],
+      "exercises": [
+        {
+          "title": "Independent flags",
+          "prompt": "Decode stale at bit 0 and fault at bit 2.",
+          "inputs": "0,1,4,5",
+          "expected": "Neither; stale; fault; both",
+          "hints": [
+            "Masks are 1 and 4.",
+            "Test each mask separately."
+          ],
+          "solution": "Status 5 is binary 0101 and contains both named flags.",
+          "tests": [
+            "2 sets neither.",
+            "255 sets both."
+          ],
+          "extension": "Report unknown reserved bits.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-07-a"
+        },
+        {
+          "title": "Endian fixture",
+          "prompt": "Decode two bytes in both orders.",
+          "inputs": "[0x01,0x02]",
+          "expected": "Big-endian 258; little-endian 513",
+          "hints": [
+            "High byte multiplies 256.",
+            "Order changes meaning."
+          ],
+          "solution": "1*256+2=258 and 2*256+1=513.",
+          "tests": [
+            "Zero bytes yield zero.",
+            "FF FF yields 65535."
+          ],
+          "extension": "Write an inverse encoder.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-07-b"
+        },
+        {
+          "title": "Reserved bit policy",
+          "prompt": "Only bits 0 and 2 are allowed. Reject others.",
+          "inputs": "0x05 and 0x07",
+          "expected": "Accept 0x05; reject 0x07",
+          "hints": [
+            "Allowed mask is 0x05.",
+            "Check bits outside it."
+          ],
+          "solution": "For an eight-bit status, status & 0xFAu identifies reserved bits.",
+          "tests": [
+            "0 is accepted.",
+            "0x80 is rejected."
+          ],
+          "extension": "Version the policy for future flags.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-07-c"
+        },
+        {
+          "title": "Logical-AND decoder",
+          "prompt": "Code uses status && 4u for bit 2. Find a failing case.",
+          "inputs": "status=1",
+          "expected": "Fault must be false",
+          "hints": [
+            "Both whole operands are nonzero.",
+            "Use a bit mask."
+          ],
+          "solution": "Replace with (status & 4u) != 0u; && ignores bit positions.",
+          "tests": [
+            "1 has no fault bit.",
+            "4 and 5 have fault."
+          ],
+          "extension": "Exhaustively test all 256 statuses.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-07-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why widen before shifting?",
+          "answer": "It makes intermediate signedness and range explicit."
+        },
+        {
+          "question": "Who decides byte order?",
+          "answer": "The external format contract, not the host machine."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        },
+        {
+          "title": "Clang UndefinedBehaviorSanitizer",
+          "url": "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html"
+        }
+      ]
+    },
+    {
+      "id": "c-08",
+      "language": "c",
+      "title": "Parse numbers while retaining error information",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "c-07"
+      ],
+      "summary": "Distinguish zero from malformed or out-of-range text.",
+      "why": "Weak configuration parsing can turn a typo into a plausible parameter.",
+      "explanation": [
+        "Text conversion must answer more than what number appeared first. Determine whether any digits were consumed, whether the whole expected token was consumed, and whether the value fits the accepted range. strtol provides an end pointer and range-error reporting that support those checks. A wrapper should preserve their information instead of treating every failure as numeric zero.",
+        "Choose a grammar. A strict field may permit decimal digits only, while a more permissive field permits leading whitespace and an optional sign. strtol accepts syntax your application might forbid, so library success is not automatically grammar success. Select base ten when decimal is the contract, then validate any additional restrictions explicitly and explain them in the error message.",
+        "Reset errno immediately before conversion, inspect conversion progress and the end pointer, check ERANGE, and then enforce application limits before narrowing. Validate before changing caller-visible output. Test zero, empty text, a number followed by junk, a huge number, and exact boundaries. A bad-then-good two-call test catches dependence on error state left behind by an earlier operation."
+      ],
+      "example": {
+        "code": "#include <stdlib.h>\n#include <errno.h>\n#include <stdbool.h>\nbool parse_count(const char *s, long *out) {\n    if (s == NULL || out == NULL || *s == '\\0') return false;\n    char *end;\n    errno = 0;\n    long value = strtol(s, &end, 10);\n    if (s == end || *end != '\\0' || errno == ERANGE || value < 0 || value > 1000) return false;\n    *out = value;\n    return true;\n}",
+        "explanation": "Accepts strtol leading whitespace and optional sign, requires full consumption, and limits the result to 0..1000. Stricter grammar needs additional checks."
+      },
+      "walkthrough": [
+        "Write the token grammar.",
+        "Check progress and full consumption.",
+        "Check range before narrowing.",
+        "Verify output remains unchanged on rejection."
+      ],
+      "pitfalls": [
+        "atoi lacks the same end-pointer interface.",
+        "A numeric prefix is not a complete token.",
+        "errno is not automatically cleared on success."
+      ],
+      "exercises": [
+        {
+          "title": "Successful zero",
+          "prompt": "Test zero, empty text, and letters.",
+          "inputs": "0; empty; abc",
+          "expected": "Success 0; reject; reject",
+          "hints": [
+            "Check conversion progress.",
+            "Zero is a valid value."
+          ],
+          "solution": "Only the zero token produces an in-range completed conversion.",
+          "tests": [
+            "1000 succeeds.",
+            "1001 rejects."
+          ],
+          "extension": "Decide whether +0 is allowed.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-08-a"
+        },
+        {
+          "title": "Numeric prefix",
+          "prompt": "Test full-token consumption.",
+          "inputs": "12; 12ms; 12 followed by a space",
+          "expected": "Success; reject; reject",
+          "hints": [
+            "End pointer must reach terminator.",
+            "This wrapper rejects trailing space."
+          ],
+          "solution": "The library can parse a prefix, but the wrapper requires no remaining character.",
+          "tests": [
+            "0012 succeeds.",
+            "-1 rejects by range."
+          ],
+          "extension": "Create a separate unit-suffix parser.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-08-b"
+        },
+        {
+          "title": "Strict decimal grammar",
+          "prompt": "Allow digits only, no signs or whitespace.",
+          "inputs": "+3; space then 3; 003; 3",
+          "expected": "Reject; reject; accept 3; accept 3",
+          "hints": [
+            "Validate characters first.",
+            "Range checks still apply."
+          ],
+          "solution": "Reject empty text or any nondigit, then perform checked conversion and apply 0..1000 limits.",
+          "tests": [
+            "Huge digit string rejects.",
+            "0 is valid."
+          ],
+          "extension": "Return separate syntax and range statuses.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-08-c"
+        },
+        {
+          "title": "Stale errno",
+          "prompt": "A valid conversion fails because errno still contains ERANGE.",
+          "inputs": "Valid 10 after a failed prior call",
+          "expected": "Reset errno before conversion",
+          "hints": [
+            "Tie error state to one call.",
+            "Success need not clear errno."
+          ],
+          "solution": "Set errno=0 immediately before strtol and retain end-pointer and range checks.",
+          "tests": [
+            "Bad then good succeeds on second call.",
+            "Huge number still fails."
+          ],
+          "extension": "Add a two-call regression test.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-08-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does end tell you?",
+          "answer": "Where conversion stopped and whether no characters were consumed."
+        },
+        {
+          "question": "Why check before narrowing?",
+          "answer": "A long result may exceed the application or destination range."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        }
+      ]
+    },
+    {
+      "id": "c-09",
+      "language": "c",
+      "title": "Storage duration, lifetime, and borrowed pointers",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "c-08"
+      ],
+      "summary": "Draw which objects exist and who may still access them.",
+      "why": "A pointer value can survive long after its object is gone; explicit lifetime reasoning prevents subtle defects.",
+      "explanation": [
+        "Storage duration determines how long an object is available. An ordinary local variable usually has automatic storage duration and ceases to exist when execution leaves its block. A static object lasts for the program's execution. Dynamically allocated storage lasts until it is released. Scope, which controls where a name can be used, is related but not identical to lifetime.",
+        "A pointer can borrow access without owning the object. If a function receives a pointer to caller data, the caller normally remains responsible for keeping that data alive and eventually releasing it if appropriate. Document whether the function retains the pointer after returning. A function that stores a borrowed address for later use has a stronger lifetime requirement than one that reads it immediately.",
+        "Draw a timeline for each object and every pointer that refers to it. A non-null pointer is not proof that its target still exists, and setting one pointer to null does not invalidate other aliases automatically. Static storage can avoid one dangling-pointer bug while introducing hidden shared state and reentrancy problems. Choose lifetime based on the interface, not as a shortcut around understanding ownership."
+      ],
+      "example": {
+        "code": "#include <stddef.h>\nstruct view { const double *data; size_t count; };\ndouble first_or_zero(struct view v) {\n    return v.count > 0 && v.data != NULL ? v.data[0] : 0.0;\n}",
+        "explanation": "The view borrows storage and does not extend its lifetime. The zero fallback is an explicit demonstration policy, not an appropriate missing-data policy for every application."
+      },
+      "walkthrough": [
+        "Draw automatic, static, and allocated object lifetimes.",
+        "Mark pointers as owners or borrowers in notes.",
+        "State whether functions retain pointers.",
+        "Test APIs with caller-owned data that stays alive for the whole use."
+      ],
+      "pitfalls": [
+        "Returning a pointer to an automatic local creates a dangling pointer.",
+        "A static local can create shared mutable state.",
+        "Null checks do not detect expired or otherwise invalid addresses."
+      ],
+      "exercises": [
+        {
+          "title": "Borrowed view",
+          "prompt": "Pass a view of a live three-element array and inspect its first value.",
+          "inputs": "[4,5,6], count 3",
+          "expected": "4",
+          "hints": [
+            "The caller retains ownership.",
+            "The view copies pointer and count."
+          ],
+          "solution": "The function reads element zero while the caller's array is alive.",
+          "tests": [
+            "Empty view follows zero fallback.",
+            "A null zero-count view performs no read."
+          ],
+          "extension": "Replace fallback with explicit status.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-09-a"
+        },
+        {
+          "title": "Retention contract",
+          "prompt": "Compare a function that immediately sums a buffer with one that stores its pointer for tomorrow's callback.",
+          "inputs": "Same pointer argument",
+          "expected": "The retaining function requires a longer lifetime",
+          "hints": [
+            "Ask when the last read occurs.",
+            "Returning does not necessarily end access."
+          ],
+          "solution": "Document the retention interval or copy the data into owned storage. Immediate use only requires validity during the call.",
+          "tests": [
+            "Caller cannot destroy retained data early.",
+            "A copied buffer has a separate lifetime."
+          ],
+          "extension": "Design an API that makes retention obvious.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-09-b"
+        },
+        {
+          "title": "Remove static scratch state",
+          "prompt": "A parser returns a pointer to a static result reused on every call. Redesign it for two independent results.",
+          "inputs": "Two parsed sensor records",
+          "expected": "Caller-owned result structs remain independent",
+          "hints": [
+            "Static avoids local expiration but is shared.",
+            "Accept output pointers or return structs."
+          ],
+          "solution": "Store each parsed result in a distinct caller object and stop sharing hidden scratch output.",
+          "tests": [
+            "Second parse does not alter first result.",
+            "Nested calls preserve both outputs."
+          ],
+          "extension": "Explain reentrancy separately from thread safety.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-09-c"
+        },
+        {
+          "title": "Two aliases, one release",
+          "prompt": "After free(a), code sets a=NULL but still reads alias b that pointed to the same allocation. Diagnose it.",
+          "inputs": "a and b referred to one allocation",
+          "expected": "b is dangling and must not be read",
+          "hints": [
+            "Pointer variables are separate objects.",
+            "Nulling a does not update b."
+          ],
+          "solution": "Release invalidates access through all aliases; redesign ownership so borrowers end before release.",
+          "tests": [
+            "No access follows free.",
+            "The ownership diagram names one releaser."
+          ],
+          "extension": "Use a sanitizer to detect an isolated test defect where supported.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-09-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Is scope the same as lifetime?",
+          "answer": "No. Scope governs name visibility; lifetime governs whether the object exists."
+        },
+        {
+          "question": "Does a borrowed pointer extend lifetime?",
+          "answer": "No. The owner must keep the object alive for every permitted use."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        },
+        {
+          "title": "Clang AddressSanitizer",
+          "url": "https://clang.llvm.org/docs/AddressSanitizer.html"
+        }
+      ]
+    },
+    {
+      "id": "c-10",
+      "language": "c",
+      "title": "Allocation, capacity, and one clear owner",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "c-09"
+      ],
+      "summary": "Allocate only after checking size arithmetic and define who releases memory.",
+      "why": "Dynamic memory can be useful, but its failure and ownership paths are part of the design.",
+      "explanation": [
+        "malloc requests a number of bytes and can fail. Before multiplying an element count by an element size, prove that the multiplication fits size_t. Otherwise an overflow can request a much smaller allocation than intended while later code still assumes the original large count. Keep requested count and actual capacity together, and reject unreasonable application sizes before allocating even when arithmetic would fit.",
+        "C does not automatically release allocations when a pointer leaves scope. Name the one owner responsible for free and document whether a function transfers ownership or merely borrows access. Every successful allocation should have a visible release path, including errors after allocation. Prefer a bounded fixed array when the maximum size is small and truly known; dynamic allocation is not a requirement for sophisticated software.",
+        "realloc has special failure behavior: on failure, the original allocation remains valid. Assigning its return value directly to the only owning pointer can therefore lose the original address. Use a temporary pointer and replace the owner only after success. Define a zero-size policy explicitly rather than relying on implementation-sensitive expectations. This module is for desktop experiments; embedded projects may impose stricter allocation rules."
+      ],
+      "example": {
+        "code": "#include <stdlib.h>\n#include <stdint.h>\n#include <stddef.h>\ndouble *allocate_samples(size_t n) {\n    if (n == 0 || n > SIZE_MAX / sizeof(double)) return NULL;\n    return malloc(n * sizeof(double));\n}",
+        "explanation": "Returns either an owned allocation for n doubles or NULL. The caller must initialize elements before reading and release the allocation exactly once."
+      },
+      "walkthrough": [
+        "Check count against a realistic application limit.",
+        "Check multiplication before allocation.",
+        "Handle NULL before access.",
+        "Identify the single owner and every release path."
+      ],
+      "pitfalls": [
+        "Allocated bytes are not automatically initialized by malloc.",
+        "Losing the only pointer leaks the allocation.",
+        "Double-free and use-after-free are invalid regardless of whether a run crashes."
+      ],
+      "exercises": [
+        {
+          "title": "Byte requirement",
+          "prompt": "Compute storage for 100 doubles using the actual implementation size.",
+          "inputs": "n=100; sizeof(double) reported by compiler",
+          "expected": "100 * sizeof(double) bytes",
+          "hints": [
+            "Do not assume a size without checking.",
+            "The count is elements, not bytes."
+          ],
+          "solution": "Use sizeof *pointer or sizeof(double) and check multiplication before requesting bytes.",
+          "tests": [
+            "n=0 follows rejection policy.",
+            "n=1 requests one element."
+          ],
+          "extension": "Print both count and byte capacity.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-10-a"
+        },
+        {
+          "title": "Failure injection",
+          "prompt": "Wrap allocation so a test can force failure and verify the caller.",
+          "inputs": "Allocator returns NULL",
+          "expected": "No write or read through NULL; explicit failure result",
+          "hints": [
+            "Failure must be testable.",
+            "Do not wait for real memory exhaustion."
+          ],
+          "solution": "Inject a controlled allocator result and ensure no output claims a successfully created buffer.",
+          "tests": [
+            "Successful path initializes and frees.",
+            "Failure path frees nothing it never acquired."
+          ],
+          "extension": "Count live allocations in the test wrapper.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-10-b"
+        },
+        {
+          "title": "Resize without losing ownership",
+          "prompt": "Write the control flow for growing an allocation using a temporary realloc result.",
+          "inputs": "Existing owned buffer; simulated failed growth",
+          "expected": "Original owner remains valid on failure",
+          "hints": [
+            "Do not overwrite the owner yet.",
+            "Check new byte arithmetic first."
+          ],
+          "solution": "tmp=realloc(owner,new_bytes); if tmp is non-null update owner and capacity, otherwise keep both old values.",
+          "tests": [
+            "Failed growth preserves old contents.",
+            "Successful growth updates capacity."
+          ],
+          "extension": "Document that newly added bytes need initialization.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-10-c"
+        },
+        {
+          "title": "Overflow before malloc",
+          "prompt": "A function requests n*sizeof(double) without checking and then loops n times. Repair the size path.",
+          "inputs": "n exceeds SIZE_MAX/sizeof(double)",
+          "expected": "Reject before multiplication",
+          "hints": [
+            "Check using division.",
+            "Allocation success cannot validate an overflowed request."
+          ],
+          "solution": "Test n > SIZE_MAX/sizeof(double) before multiplying, and also apply a practical maximum count.",
+          "tests": [
+            "Boundary count arithmetic is checked.",
+            "Oversized n never reaches malloc."
+          ],
+          "extension": "Test with a fake allocator to avoid huge real allocations.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-10-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Who frees an owned result?",
+          "answer": "The caller if the API transfers ownership, as stated explicitly in the contract."
+        },
+        {
+          "question": "Why use a temporary realloc result?",
+          "answer": "Failure leaves the original allocation valid; overwriting its only address would lose it."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        },
+        {
+          "title": "Clang AddressSanitizer",
+          "url": "https://clang.llvm.org/docs/AddressSanitizer.html"
+        }
+      ]
+    },
+    {
+      "id": "c-11",
+      "language": "c",
+      "title": "Files, exact byte counts, and portable records",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "c-10"
+      ],
+      "summary": "Read and write small binary fixtures without confusing partial data with complete records.",
+      "why": "Sensor logs and telemetry packets need explicit lengths and representation rules.",
+      "explanation": [
+        "A file operation can return fewer elements than requested. A short read may mean end-of-file or an error, so the caller must examine both the count and the stream state before deciding what happened. For a fixed-size record, receiving only part of the record is not successful decoding. Keep I/O separate from the decoder so the same byte fixture can test parsing without touching a file.",
+        "Define the external record byte by byte: a version, flags, and a two-byte reading can make a useful four-byte educational format. State byte order and units, and reject unknown versions or forbidden flags. This discipline is more important than a fancy checksum. A checksum can detect certain accidental changes but does not fix an ambiguous format or establish authenticity.",
+        "Opening, reading, writing, and closing all have outcomes worth checking. Close streams on every owned path, preserve the original input, and avoid presenting a partial output as a completed report. A beginner-friendly workflow writes to a new file and validates it by reading it back with an independent fixture expectation. Never assume raw struct bytes form a portable external format."
+      ],
+      "example": {
+        "code": "#include <stdio.h>\n#include <stdint.h>\n#include <stdbool.h>\nbool read_four(FILE *stream, uint8_t out[4]) {\n    if (stream == NULL || out == NULL) return false;\n    return fread(out, 1, 4, stream) == 4;\n}",
+        "explanation": "The caller provides four writable bytes. A false result can leave partial bytes written; inspect feof/ferror in the I/O layer if that distinction is needed."
+      },
+      "walkthrough": [
+        "Define one fixed-size external format.",
+        "Test decoder directly with byte arrays.",
+        "Check exact fread/fwrite counts.",
+        "Test truncated files and retain failure reasons."
+      ],
+      "pitfalls": [
+        "Array syntax in a parameter does not enforce destination capacity.",
+        "Short reads may partially modify a buffer.",
+        "A checksum is neither a format definition nor an authenticity guarantee."
+      ],
+      "exercises": [
+        {
+          "title": "Four-byte fixture",
+          "prompt": "Define version=1, flags=0, reading=258 in big-endian form.",
+          "inputs": "One four-byte record",
+          "expected": "[0x01,0x00,0x01,0x02]",
+          "hints": [
+            "Use the earlier endian decoder.",
+            "Document reading units."
+          ],
+          "solution": "Version and flags occupy the first two bytes; 258 is 0x0102 in the final pair.",
+          "tests": [
+            "All four bytes round-trip.",
+            "Unknown version rejects."
+          ],
+          "extension": "Create a second fixture with maximum reading.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-11-a"
+        },
+        {
+          "title": "Truncated record",
+          "prompt": "Attempt to read a fixed four-byte record from files of length 0,1,3,4.",
+          "inputs": "Four fixture lengths",
+          "expected": "Only length 4 is a complete record",
+          "hints": [
+            "Inspect returned byte count.",
+            "Do not decode partial bytes."
+          ],
+          "solution": "Gate decoding on an exact four-byte read. Report an incomplete record or I/O error through the surrounding interface.",
+          "tests": [
+            "Three bytes never decode.",
+            "Four valid bytes do."
+          ],
+          "extension": "Distinguish clean empty file from partial final record.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-11-b"
+        },
+        {
+          "title": "Multiple-record importer",
+          "prompt": "Read three four-byte records and detect an incomplete tail.",
+          "inputs": "12 valid bytes then 2 extra bytes",
+          "expected": "3 complete records and one truncated-tail error",
+          "hints": [
+            "Maintain record count separately.",
+            "Retain the byte offset."
+          ],
+          "solution": "Process exact groups of four; when the final read returns two, report an incomplete record at offset 12.",
+          "tests": [
+            "Exactly 12 bytes has no tail error.",
+            "Malformed version in record 2 is reported."
+          ],
+          "extension": "Write a text summary without altering input.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-11-c"
+        },
+        {
+          "title": "The success count mistake",
+          "prompt": "Code treats any nonzero fread return as one complete four-byte record. Fix it.",
+          "inputs": "fread(out,1,4,stream) returns 2",
+          "expected": "Reject as incomplete",
+          "hints": [
+            "Return count is elements read.",
+            "Element size here is one byte."
+          ],
+          "solution": "Require a count of four before decoding. Preserve the distinction between partial read and valid record.",
+          "tests": [
+            "Return 0 is not complete.",
+            "Return 4 permits validation."
+          ],
+          "extension": "Explain how changing size/count arguments changes the return-count unit.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-11-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Can a failed fixed-record read modify output?",
+          "answer": "Yes. Partial bytes may already have been written."
+        },
+        {
+          "question": "Why separate I/O and decoding?",
+          "answer": "The decoder can be tested with deterministic byte arrays, and I/O errors remain distinguishable."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        }
+      ]
+    },
+    {
+      "id": "c-12",
+      "language": "c",
+      "title": "Warnings, sanitizers, and boundary-driven testing",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "c-11"
+      ],
+      "summary": "Build a small test harness that reports failures in every build configuration.",
+      "why": "C demands deliberate checks around memory and arithmetic; a clean happy-path run is weak evidence.",
+      "explanation": [
+        "Start from the interface contract and make a boundary table. A two-byte decoder needs tests for lengths zero, one, two, and extra bytes under its policy. A range-limited number parser needs below-minimum, minimum, maximum, above-maximum, and malformed input. Give each case a name explaining the promised behavior. A failed test should tell you what assumption was violated, not only that something went wrong.",
+        "Compiler warnings expose many suspicious constructs before execution, but their coverage depends on the toolchain and settings. A debugger reveals actual values and control flow. On supported platforms, AddressSanitizer detects categories of memory misuse and UndefinedBehaviorSanitizer detects selected undefined operations on executed paths. They complement careful reasoning and tests; none is a certificate that every possible input is safe.",
+        "Make the harness itself trustworthy. assert may disappear when NDEBUG is defined, so durable test verdicts should use explicit checks or a test framework. Have at least one deliberate known-failing case during harness development to confirm it exits nonzero. Keep failing inputs as regression fixtures, and use a fake allocator or fake clock for failures that should not depend on exhausting memory or waiting real time."
+      ],
+      "example": {
+        "code": "#include <stdio.h>\nint main(void) {\n    int failures = 0;\n    if (2 + 2 != 4) { fputs(\"arithmetic case failed\\n\", stderr); ++failures; }\n    return failures ? 1 : 0;\n}",
+        "explanation": "This minimal harness reports failure independently of assert settings. Replace the trivial arithmetic check with real interface cases."
+      },
+      "walkthrough": [
+        "Build a contract boundary table.",
+        "Verify the harness detects a deliberate defect.",
+        "Run normal and diagnostic builds.",
+        "Keep the smallest reproducing fixture after every fix."
+      ],
+      "pitfalls": [
+        "An unexecuted branch is not covered by a sanitizer run.",
+        "Warnings cannot validate units or intended physics.",
+        "Disabled assertions can make an empty test run appear successful."
+      ],
+      "exercises": [
+        {
+          "title": "Decoder length table",
+          "prompt": "List outcomes for a decoder requiring at least two bytes.",
+          "inputs": "Lengths 0,1,2,3",
+          "expected": "Reject,reject,accept,accept under at-least-two policy",
+          "hints": [
+            "Write the length contract first.",
+            "Extra bytes need a deliberate rule."
+          ],
+          "solution": "The guard n<2 rejects the first two cases; successful parsing reads only the first pair.",
+          "tests": [
+            "Known pair decodes correctly.",
+            "Output unchanged on short input."
+          ],
+          "extension": "Compare an exact-length policy.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-12-a"
+        },
+        {
+          "title": "Validate the test runner",
+          "prompt": "Temporarily change a correct expected value to a wrong one.",
+          "inputs": "One known failing case",
+          "expected": "Nonzero process exit and named diagnostic",
+          "hints": [
+            "Test the test harness.",
+            "Restore the intended expectation afterward."
+          ],
+          "solution": "Explicit failure accounting should make automation detect the failed case regardless of release assertions.",
+          "tests": [
+            "Correct cases exit zero.",
+            "Wrong case exits nonzero."
+          ],
+          "extension": "Register the harness with CTest.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-12-b"
+        },
+        {
+          "title": "Exhaust a small input space",
+          "prompt": "Test an eight-bit flag decoder for every possible status.",
+          "inputs": "0 through 255",
+          "expected": "256 checked cases",
+          "hints": [
+            "Expected bit0 is status modulo 2.",
+            "Expected bit2 follows integer division by 4 modulo 2."
+          ],
+          "solution": "Compare each decoder result to an independently expressed arithmetic oracle, not a copied implementation.",
+          "tests": [
+            "Zero has no flags.",
+            "255 has all bits set."
+          ],
+          "extension": "Check reserved-bit rejection exhaustively.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-12-c"
+        },
+        {
+          "title": "The silent release tests",
+          "prompt": "A release build compiles away all assert checks. Repair evidence collection.",
+          "inputs": "NDEBUG defined",
+          "expected": "Explicit runtime checks still detect wrong output",
+          "hints": [
+            "Inspect build flags.",
+            "Do not equate zero exit with executed assertions."
+          ],
+          "solution": "Use a real test runner or explicit comparisons and failure counts; retain a harness self-check during development.",
+          "tests": [
+            "Run debug and release test builds.",
+            "Inject then remove a known defect."
+          ],
+          "extension": "Record test case counts.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-12-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What is a regression fixture?",
+          "answer": "An input preserving a previously observed defect so the fix stays checked."
+        },
+        {
+          "question": "Can warnings and sanitizers replace contracts?",
+          "answer": "No. They detect selected implementation issues, not intended behavior or physical validity."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Clang AddressSanitizer",
+          "url": "https://clang.llvm.org/docs/AddressSanitizer.html"
+        },
+        {
+          "title": "Clang UndefinedBehaviorSanitizer",
+          "url": "https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html"
+        }
+      ]
+    },
+    {
+      "id": "c-13",
+      "language": "c",
+      "title": "Finite-state machines as plain C data and functions",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "c-12"
+      ],
+      "summary": "Model a simulated device workflow with explicit events and transitions.",
+      "why": "C can express reliable state logic without a large object hierarchy or hidden mutable flags.",
+      "explanation": [
+        "A finite-state machine represents a small set of modes and the events that change them. Use an enum for states, another enum for events, and a function that computes the next state. Begin with a transition table on paper. It should cover normal progress, irrelevant events, reset, and the loss of expected data. Two independent booleans often accidentally represent impossible combinations that one state enum excludes.",
+        "Keep transition decisions separate from physical actions. A pure transition function can be tested on the desktop and replayed from a fixture. Another layer carries out a requested action, records its outcome, and supplies a later event if needed. This separation prevents a half-completed I/O operation from being mistaken for a successful state change and makes unexpected failures easier to represent.",
+        "Every default behavior is still a policy. Ignoring an event, reporting an error, or moving to Review can each be sensible under different requirements. State the choice and test it. The educational example models environmental logging only; real embedded equipment needs domain-specific analysis, recovery design, and hardware validation beyond the correctness of one transition function."
+      ],
+      "example": {
+        "code": "enum state { IDLE, SAMPLING, REVIEW, DONE };\nenum event { START, SAMPLE_OK, SAMPLE_BAD, FINISH, RESET };\nenum state next_state(enum state s, enum event e) {\n    if (e == RESET) return IDLE;\n    if (s == IDLE && e == START) return SAMPLING;\n    if (s == SAMPLING && e == SAMPLE_BAD) return REVIEW;\n    if (s == SAMPLING && e == FINISH) return DONE;\n    return s;\n}",
+        "explanation": "Unlisted state/event combinations retain the current state. Invalid numeric enum values still require an external-input validation policy."
+      },
+      "walkthrough": [
+        "Write a complete state/event table.",
+        "Separate action requests from decisions.",
+        "Replay normal and bad-sample sequences.",
+        "Test reset from every state."
+      ],
+      "pitfalls": [
+        "An enum does not validate arbitrary incoming integers by itself.",
+        "Default behavior must be intentional.",
+        "Multiple independent mode flags can represent impossible states."
+      ],
+      "exercises": [
+        {
+          "title": "Normal logging sequence",
+          "prompt": "Replay START,SAMPLE_OK,FINISH from IDLE.",
+          "inputs": "Three events",
+          "expected": "SAMPLING,SAMPLING,DONE",
+          "hints": [
+            "Apply one event at a time.",
+            "SAMPLE_OK retains state."
+          ],
+          "solution": "Only START and FINISH cause transitions in this sequence.",
+          "tests": [
+            "FINISH at IDLE does nothing.",
+            "RESET at DONE returns IDLE."
+          ],
+          "extension": "Record an event-by-event trace.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-13-a"
+        },
+        {
+          "title": "Bad sample sequence",
+          "prompt": "Replay START,SAMPLE_BAD,FINISH.",
+          "inputs": "Initial IDLE",
+          "expected": "SAMPLING,REVIEW,REVIEW",
+          "hints": [
+            "FINISH is only accepted in SAMPLING.",
+            "Review cannot be bypassed."
+          ],
+          "solution": "After SAMPLE_BAD the machine remains in REVIEW until a defined recovery event, currently RESET.",
+          "tests": [
+            "Repeated SAMPLE_BAD remains REVIEW.",
+            "RESET returns IDLE."
+          ],
+          "extension": "Add a documented review-completed event.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-13-b"
+        },
+        {
+          "title": "Full transition tests",
+          "prompt": "Create table-driven tests for every valid state and event.",
+          "inputs": "4 states and 5 events",
+          "expected": "20 checked combinations",
+          "hints": [
+            "Use the Cartesian product.",
+            "Include ignored events."
+          ],
+          "solution": "Each table entry specifies expected next state; reset should lead to IDLE from all four states.",
+          "tests": [
+            "Exactly 20 valid combinations execute.",
+            "No state/event pair is left implicit in the test table."
+          ],
+          "extension": "Return a separate accepted/ignored event result.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-13-c"
+        },
+        {
+          "title": "Illegal numeric event",
+          "prompt": "A byte from a file is cast to enum event without range validation. Repair the boundary.",
+          "inputs": "Incoming byte 250",
+          "expected": "Reject before transition dispatch",
+          "hints": [
+            "Enum storage does not prove semantic validity.",
+            "Validate the external representation."
+          ],
+          "solution": "Map only defined byte codes to known enum values, returning an explicit unknown-event error for others.",
+          "tests": [
+            "All documented codes map correctly.",
+            "250 is rejected."
+          ],
+          "extension": "Keep the raw byte in a diagnostic record.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-13-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why use a pure transition function?",
+          "answer": "It enables deterministic replay and complete table tests without hardware."
+        },
+        {
+          "question": "Does enum type eliminate all invalid values?",
+          "answer": "No. Values from casts or external representations still need semantic validation."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        },
+        {
+          "title": "NASA core Flight System",
+          "url": "https://github.com/nasa/cFS"
+        }
+      ]
+    },
+    {
+      "id": "c-14",
+      "language": "c",
+      "title": "Ring buffers, bounded capacity, and timer rollover",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "c-13"
+      ],
+      "summary": "Make a small queue whose invariants remain visible at empty, full, and wrap boundaries.",
+      "why": "Embedded software often needs bounded storage and predictable overload behavior.",
+      "explanation": [
+        "A ring buffer reuses a fixed array by moving indexes around its capacity. The data does not need to shift every time an item leaves. A simple beginner design keeps a head index and an explicit count. The next write position is (head+count) modulo capacity, while removal advances head and decreases count. State the invariants: head is inside the array and count never exceeds capacity.",
+        "Full and empty are different states even when some indexes coincide. A count makes that distinction explicit, at the cost of maintaining one more value consistently. Choose what a full buffer does: reject a new item, overwrite the oldest, or ask a producer to wait. The example rejects new items and reports failure. It is single-threaded; sharing it between threads or interrupts requires additional platform-appropriate synchronization.",
+        "Timer counters can also wrap. Unsigned subtraction can represent elapsed ticks across one wrap when the true interval remains within the counter's modulus and the surrounding assumptions are satisfied. Do not generalize this into comparing arbitrary absolute timestamps with ordinary less-than. For this module, test wraparound with a deliberately tiny simulated counter so the cases are visible without waiting for real hardware."
+      ],
+      "example": {
+        "code": "#include <stdbool.h>\n#include <stddef.h>\nstruct ring { int data[4]; size_t head; size_t count; };\nbool ring_push(struct ring *q, int value) {\n    if (q == NULL || q->head >= 4 || q->count >= 4) return false;\n    q->data[(q->head + q->count) % 4] = value;\n    ++q->count;\n    return true;\n}",
+        "explanation": "Initialize as struct ring q={0}. This bounded single-threaded push rejects a full or invalid queue; a matching pop must preserve the same invariants."
+      },
+      "walkthrough": [
+        "Write capacity, head, and count invariants.",
+        "Test empty, exact-full, and rejected push.",
+        "Add pop and verify wraparound order.",
+        "Keep concurrency outside this first implementation."
+      ],
+      "pitfalls": [
+        "Index coincidence alone can confuse empty and full.",
+        "Overwriting old data must be an explicit policy.",
+        "Unsigned elapsed-time tricks require stated range and wrap assumptions."
+      ],
+      "exercises": [
+        {
+          "title": "Fill and reject",
+          "prompt": "Push five values into an empty capacity-four ring.",
+          "inputs": "10,20,30,40,50",
+          "expected": "First four succeed; fifth fails; count stays 4",
+          "hints": [
+            "Full count equals capacity.",
+            "Failed push must not mutate the queue."
+          ],
+          "solution": "The fifth value is rejected under this policy, preserving the four earlier values.",
+          "tests": [
+            "Empty count starts at 0.",
+            "Rejected push does not change head."
+          ],
+          "extension": "Return a distinct Full result.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-14-a"
+        },
+        {
+          "title": "Wrap while preserving order",
+          "prompt": "Fill with 1,2,3,4; pop two; push 5,6; then pop all.",
+          "inputs": "Capacity four",
+          "expected": "Remaining output 3,4,5,6",
+          "hints": [
+            "Advance head modulo four.",
+            "Use head+count for insertion."
+          ],
+          "solution": "The reused slots hold newer values while head still identifies the oldest retained item.",
+          "tests": [
+            "Count never exceeds four.",
+            "Final count is zero."
+          ],
+          "extension": "Log internal indexes after every operation.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-14-b"
+        },
+        {
+          "title": "Tiny timer rollover",
+          "prompt": "Compute elapsed ticks with an eight-bit modulo model.",
+          "inputs": "Previous 250; current 5; fewer than 256 true elapsed ticks",
+          "expected": "11 ticks",
+          "hints": [
+            "The counter passes 255 then 0.",
+            "Apply modulo 256 to the difference."
+          ],
+          "solution": "There are six increments from 250 to 0 and five more to 5. The answer is only unambiguous under the stated interval bound.",
+          "tests": [
+            "250 to 250 gives zero under no-full-wrap assumption.",
+            "0 to 5 gives five."
+          ],
+          "extension": "Explain why two full wraps cannot be detected from endpoints alone.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-14-c"
+        },
+        {
+          "title": "Shared queue illusion",
+          "prompt": "An interrupt and main loop modify head and count without synchronization. Can volatile fix the queue invariant?",
+          "inputs": "Two contexts sharing the ring",
+          "expected": "No; use a platform-appropriate concurrency design",
+          "hints": [
+            "Volatile is not a lock.",
+            "Several updates must remain consistent."
+          ],
+          "solution": "Design interrupt-safe ownership or critical sections using the actual platform contract; retain the single-threaded version as a reference model.",
+          "tests": [
+            "Document which context writes each field.",
+            "Test policy independently of hardware timing."
+          ],
+          "extension": "Study an appropriate single-producer/single-consumer design later.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-14-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why keep count in a beginner ring buffer?",
+          "answer": "It makes full and empty explicit while providing an invariant to test."
+        },
+        {
+          "question": "Does volatile make compound queue updates atomic?",
+          "answer": "No. Synchronization and atomicity require separate reasoning and platform facilities."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        }
+      ]
+    },
+    {
+      "id": "c-15",
+      "language": "c",
+      "title": "Hardware boundaries, volatile, and fake devices",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "c-14"
+      ],
+      "summary": "Keep portable logic separate from device-specific access.",
+      "why": "A clean boundary lets you test the program before a disconnected wire or board setup hides a logic error.",
+      "explanation": [
+        "A hardware adapter translates device-specific operations into an interface your program can reason about. It might provide a read operation returning status plus a raw value, while portable code validates and scales the result. Keep register addresses, bus calls, and board initialization inside that adapter. A desktop fake can implement the same interface with a planned sequence of successful and failed reads.",
+        "volatile tells the compiler that certain accesses have special observable meaning; it does not make a compound operation atomic, establish inter-thread synchronization, or validate a register sequence. Real hardware requires the device datasheet, processor memory model, toolchain guidance, and board support APIs. Do not copy a register address from an unrelated board and expect the language to make it correct.",
+        "Use dependency injection in its simplest C form: pass a function pointer and an opaque context pointer to the component that needs input. The fake context can hold sample data and an index. Test ordinary readings, disconnection, stale values, and recovery without physical hardware. Once portable behavior is clear, integrate one real operation at a time and compare its observed contract with the fake assumptions."
+      ],
+      "example": {
+        "code": "#include <stdbool.h>\n#include <stdint.h>\ntypedef bool (*read_counts_fn)(void *context, uint16_t *out);\nbool take_sample(read_counts_fn read_fn, void *context, uint16_t *out) {\n    if (read_fn == 0 || out == 0) return false;\n    return read_fn(context, out);\n}",
+        "explanation": "The adapter owns the meaning of context and output-on-failure. This fragment performs no hardware access and can be tested with a fake reader."
+      },
+      "walkthrough": [
+        "Define the read interface and failure policy.",
+        "Implement a deterministic fake context.",
+        "Test disconnect and recovery sequences.",
+        "Consult actual device documentation before a hardware adapter."
+      ],
+      "pitfalls": [
+        "Volatile is not a concurrency primitive.",
+        "A fake is useful only if its contract matches the intended device boundary.",
+        "Register layout and timing are platform-specific."
+      ],
+      "exercises": [
+        {
+          "title": "Constant fake device",
+          "prompt": "Implement a fake reader that always returns 1234 successfully.",
+          "inputs": "Valid output pointer",
+          "expected": "true; output 1234",
+          "hints": [
+            "The fake need not use context.",
+            "Honor pointer validity."
+          ],
+          "solution": "Assign the predetermined count and return success, making the calling logic testable on the desktop.",
+          "tests": [
+            "Repeated calls agree.",
+            "Null function pointer is rejected by take_sample."
+          ],
+          "extension": "Convert the fake count using the validated ADC model.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-15-a"
+        },
+        {
+          "title": "Disconnect sequence",
+          "prompt": "Create a fake returning success, failure, success.",
+          "inputs": "100; disconnected; 120",
+          "expected": "Two valid samples and one explicit missing observation",
+          "hints": [
+            "Failure is not a zero reading.",
+            "Do not silently reuse the previous value as fresh."
+          ],
+          "solution": "Advance the fake sequence and preserve status. The consumer records missing data for the middle call.",
+          "tests": [
+            "Middle failure follows output policy.",
+            "Recovery produces 120."
+          ],
+          "extension": "Add timestamps to distinguish stale from missing.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-15-b"
+        },
+        {
+          "title": "Context-backed replay",
+          "prompt": "Store a fixture array and index in a fake context; reject reads beyond its end.",
+          "inputs": "Three fixture samples",
+          "expected": "Three ordered successes then failure",
+          "hints": [
+            "Cast context only inside its documented adapter.",
+            "Check index before access."
+          ],
+          "solution": "The context owns replay position. Each successful read advances once; exhaustion returns failure without out-of-bounds access.",
+          "tests": [
+            "Empty fixture immediately fails.",
+            "Repeated exhausted reads remain failures."
+          ],
+          "extension": "Add injected errors at selected indexes.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-15-c"
+        },
+        {
+          "title": "Volatile as a lock",
+          "prompt": "A comment says volatile unsigned count makes ++count safe across interrupts and threads. Correct it.",
+          "inputs": "Shared compound increment",
+          "expected": "Volatile does not guarantee atomic read-modify-write or synchronization",
+          "hints": [
+            "An increment involves multiple logical steps.",
+            "Check platform atomic facilities."
+          ],
+          "solution": "Use the platform's documented atomic or critical-section mechanism and define the concurrency model rather than relying on volatile.",
+          "tests": [
+            "Portable logic has no unnecessary shared state.",
+            "Hardware access contract is documented."
+          ],
+          "extension": "Explain the separate role volatile can have for memory-mapped I/O.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-15-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why use a fake device?",
+          "answer": "It makes data and failure sequences deterministic so portable behavior can be tested first."
+        },
+        {
+          "question": "What does a function pointer plus context provide?",
+          "answer": "A small interface for substituting different implementations while carrying implementation-specific state."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU C language introduction and reference (includes GNU extensions)",
+          "url": "https://www.gnu.org/software/c-intro-and-ref/manual/html_node/index.html"
+        },
+        {
+          "title": "NASA core Flight System",
+          "url": "https://github.com/nasa/cFS"
+        }
+      ]
+    },
+    {
+      "id": "c-16",
+      "language": "c",
+      "title": "A reusable C component and a reviewable portfolio",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "c-15"
+      ],
+      "summary": "Package a bounded component with a header, implementation, tests, and explicit guarantees.",
+      "why": "Understanding a small trustworthy component is a better foundation than importing a flight framework you cannot explain.",
+      "explanation": [
+        "A component needs a clear public interface and a small set of responsibilities. Place declarations, documented types, and caller obligations in a header. Keep private helper functions and state inside the implementation where possible. A header should be usable from a clean source file without depending on accidental include order. Build a small test executable against the same implementation used by the demonstration.",
+        "Write a compact trace from each requirement to evidence. A packet decoder might require rejection of short data, recognition of a version byte, and preservation of output on failure. Map those to named tests and fixed byte fixtures. Include compiler settings and the intended C standard. This record helps future you understand whether a change preserved the original contract or intentionally replaced it.",
+        "Mature flight-software ecosystems such as NASA cFS demonstrate how reusable services, applications, and platform abstractions fit together. Read them for architecture after you can explain your own component. Framework use, C language choice, and passing tests do not confer flight qualification. A credible project report distinguishes tested behavior, assumptions, portability limits, and future verification work without diminishing what the prototype actually achieved."
+      ],
+      "example": {
+        "code": "#ifndef SENSOR_DECODE_H\n#define SENSOR_DECODE_H\n#include <stddef.h>\n#include <stdint.h>\nenum decode_status { DECODE_OK, DECODE_SHORT, DECODE_VERSION };\nstruct reading { uint16_t counts; uint8_t flags; };\nenum decode_status decode_reading(const uint8_t *data, size_t n, struct reading *out);\n#endif",
+        "explanation": "A public interface sketch. The implementation must document null-pointer policy, expected length, allowed flags, and output behavior before it can be considered complete."
+      },
+      "walkthrough": [
+        "Write the interface contract and include guard.",
+        "Keep implementation helpers private.",
+        "Map each requirement to a test.",
+        "Rebuild from clean source and publish a limitations note."
+      ],
+      "pitfalls": [
+        "A header declaration is not an implemented or verified contract.",
+        "A framework does not transfer qualification to your project.",
+        "Platform assumptions should be stated rather than disguised as portability."
+      ],
+      "exercises": [
+        {
+          "title": "Requirement trace",
+          "prompt": "Turn reject invalid packets into three specific testable requirements.",
+          "inputs": "Length, version, output policy",
+          "expected": "Three named requirements and corresponding tests",
+          "hints": [
+            "State exact boundaries.",
+            "Use observable outcomes."
+          ],
+          "solution": "Require minimum length, recognized version, and unchanged output on rejection; give each one a fixed fixture.",
+          "tests": [
+            "Short input rejects.",
+            "Unknown version rejects."
+          ],
+          "extension": "Add reserved-flag behavior.",
+          "level": "Start",
+          "minutes": 15,
+          "id": "c-16-a"
+        },
+        {
+          "title": "Standalone header check",
+          "prompt": "Compile a source file that includes only the public header before its main function.",
+          "inputs": "No accidental prior includes",
+          "expected": "Header compiles using its own declared dependencies",
+          "hints": [
+            "The header must include size_t and integer declarations.",
+            "Avoid hidden include order."
+          ],
+          "solution": "Include stddef.h and stdint.h in the header because its public types require them.",
+          "tests": [
+            "Include the header twice safely.",
+            "Build implementation and test separately."
+          ],
+          "extension": "Add C++ linkage guards only if interoperability is required.",
+          "level": "Build",
+          "minutes": 25,
+          "id": "c-16-b"
+        },
+        {
+          "title": "cFS architecture reading",
+          "prompt": "Read the official cFS repository overview and map application, platform abstraction, and tests to your own component.",
+          "inputs": "Documentation-only study",
+          "expected": "A sourced one-page comparison with explicit unknowns",
+          "hints": [
+            "Start with architecture purpose.",
+            "Do not claim equivalent assurance."
+          ],
+          "solution": "Describe the shared separation-of-concerns idea while clearly identifying the much smaller scope and unverified aspects of the learning component.",
+          "tests": [
+            "Every framework claim links to its source.",
+            "Unknown details remain marked unknown."
+          ],
+          "extension": "Follow one official sample application later.",
+          "level": "Stretch",
+          "minutes": 45,
+          "id": "c-16-c"
+        },
+        {
+          "title": "Overclaimed reliability",
+          "prompt": "A README calls a desktop parser flight-safe because it uses C and passes 20 tests. Rewrite it.",
+          "inputs": "Desktop fixture tests only",
+          "expected": "Accurate educational-prototype description",
+          "hints": [
+            "Describe actual evidence.",
+            "Separate coverage from certification."
+          ],
+          "solution": "State tested inputs, compiler, diagnostic tools, and known limits; list hardware, timing, and domain assurance as unperformed work.",
+          "tests": [
+            "README includes reproducible commands.",
+            "Limitations identify untested conditions."
+          ],
+          "extension": "Prioritize the next test by a realistic failure mode.",
+          "level": "Debug",
+          "minutes": 25,
+          "id": "c-16-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What belongs in a public header?",
+          "answer": "Types, declarations, dependencies, and clear caller obligations needed to use the interface."
+        },
+        {
+          "question": "What makes a prototype report credible?",
+          "answer": "Reproducible evidence, explicit assumptions, and honest limits alongside its demonstrated capabilities."
+        }
+      ],
+      "sources": [
+        {
+          "title": "NASA core Flight System",
+          "url": "https://github.com/nasa/cFS"
+        },
+        {
+          "title": "GCC warning options",
+          "url": "https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "c-project-01",
+      "language": "c",
+      "title": "Environmental packet decoder",
+      "level": "Beginner",
+      "summary": "Decode a tiny documented byte format into a meaningful record without trusting missing bytes.",
+      "mission": "Habitats",
+      "prerequisites": [
+        "c-04",
+        "c-06",
+        "c-07"
+      ],
+      "milestones": [
+        {
+          "title": "Specify the bytes",
+          "deliverable": "A four-byte format table with version, flags, and unsigned reading",
+          "acceptance": "Every offset, width, byte order, and unit is explicit."
+        },
+        {
+          "title": "Implement the decoder",
+          "deliverable": "A length-aware function with status and caller-owned output",
+          "acceptance": "Short data and unknown versions reject before output changes."
+        },
+        {
+          "title": "Build fixture tests",
+          "deliverable": "Known valid, short, reserved-flag, and boundary-value byte arrays",
+          "acceptance": "All expected values are computed independently."
+        },
+        {
+          "title": "Explain the result",
+          "deliverable": "A command-line demonstration plus README",
+          "acceptance": "A clean build reproduces each fixture verdict."
+        }
+      ],
+      "testPlan": [
+        "Test lengths 0,1,2,3,4 and extra-length policy.",
+        "Test values 0 and 65535.",
+        "Test every status-byte combination under the allowed-mask rule."
+      ],
+      "extensions": [
+        "Write an inverse encoder and check round trips.",
+        "Compare decoding with a Python reference."
+      ],
+      "portfolio": [
+        "Byte-format diagram.",
+        "Named test table.",
+        "A short explanation of why raw struct serialization was avoided."
+      ],
+      "constraints": [
+        "Invented educational format only.",
+        "No live flight or hardware protocol claim."
+      ]
+    },
+    {
+      "id": "c-project-02",
+      "language": "c",
+      "title": "Bounded rover log buffer",
+      "level": "Intermediate",
+      "summary": "Build a fixed-capacity ring buffer and demonstrate explicit loss handling.",
+      "mission": "Rovers",
+      "prerequisites": [
+        "c-04",
+        "c-12",
+        "c-14"
+      ],
+      "milestones": [
+        {
+          "title": "State the invariant",
+          "deliverable": "Capacity, head, count, and full-buffer policy",
+          "acceptance": "The chosen representation distinguishes empty and full."
+        },
+        {
+          "title": "Implement push and pop",
+          "deliverable": "Single-threaded bounded operations with explicit statuses",
+          "acceptance": "Rejected operations preserve the queue state."
+        },
+        {
+          "title": "Replay wraparound",
+          "deliverable": "An event fixture that fills, drains, wraps, and overflows",
+          "acceptance": "Output order and loss count match hand calculations."
+        },
+        {
+          "title": "Document resource use",
+          "deliverable": "Storage and operation-count notes",
+          "acceptance": "The report separates bounded algorithm work from platform timing."
+        }
+      ],
+      "testPlan": [
+        "Empty pop rejects.",
+        "Exact capacity is accepted and the next push rejects.",
+        "Repeated wrap cycles preserve FIFO order."
+      ],
+      "extensions": [
+        "Compare reject-new with drop-oldest.",
+        "Add a fake producer-consumer event schedule."
+      ],
+      "portfolio": [
+        "Queue-state trace.",
+        "Invariant table.",
+        "Regression test for a wrap bug."
+      ],
+      "constraints": [
+        "Single-threaded reference implementation.",
+        "Interrupt or thread use requires a separately designed synchronization contract."
+      ]
+    },
+    {
+      "id": "c-project-03",
+      "language": "c",
+      "title": "Sensor adapter with a fake device",
+      "level": "Intermediate",
+      "summary": "Separate portable measurement handling from device-specific I/O using function pointers and context.",
+      "mission": "Habitats",
+      "prerequisites": [
+        "c-03",
+        "c-09",
+        "c-13",
+        "c-15"
+      ],
+      "milestones": [
+        {
+          "title": "Write the boundary",
+          "deliverable": "Read function signature and ownership/error policy",
+          "acceptance": "The consumer can distinguish valid zero from failure."
+        },
+        {
+          "title": "Create a fake reader",
+          "deliverable": "A deterministic success/failure fixture",
+          "acceptance": "The fake checks its own bounds and exposes exhaustion."
+        },
+        {
+          "title": "Integrate state logic",
+          "deliverable": "Portable logging component reacting to fake input",
+          "acceptance": "Missing and recovery events follow the transition table."
+        },
+        {
+          "title": "Plan hardware adaptation",
+          "deliverable": "A checklist naming the required datasheet and board API",
+          "acceptance": "No guessed register addresses or unverified timing assumptions."
+        }
+      ],
+      "testPlan": [
+        "Success, disconnect, and recovery are all replayed.",
+        "Exhausted fixture never reads beyond its array.",
+        "Caller data remains alive while context is retained."
+      ],
+      "extensions": [
+        "Add calibration as a separately tested function.",
+        "Implement one real board adapter after reviewing its documentation."
+      ],
+      "portfolio": [
+        "Architecture diagram.",
+        "Fake-device fixture.",
+        "Test trace showing missing-data behavior."
+      ],
+      "constraints": [
+        "Desktop fake first.",
+        "Real I/O depends on the exact hardware and development environment."
+      ]
+    },
+    {
+      "id": "c-project-04",
+      "language": "c",
+      "title": "Portable binary log inspector",
+      "level": "Intermediate",
+      "summary": "Read fixed-size records from a copied file and report complete, rejected, and truncated records honestly.",
+      "mission": "Spacecraft",
+      "prerequisites": [
+        "c-07",
+        "c-08",
+        "c-11",
+        "c-12"
+      ],
+      "milestones": [
+        {
+          "title": "Define file structure",
+          "deliverable": "Header/version and fixed record format",
+          "acceptance": "The decoder does not depend on compiler struct layout."
+        },
+        {
+          "title": "Implement I/O accounting",
+          "deliverable": "Exact read counts and byte offsets",
+          "acceptance": "Partial final records are reported separately from valid records."
+        },
+        {
+          "title": "Decode with fixtures",
+          "deliverable": "Independent byte-array decoder",
+          "acceptance": "Known values and malformed cases have deterministic outcomes."
+        },
+        {
+          "title": "Produce a report",
+          "deliverable": "Text summary plus reproducible example file",
+          "acceptance": "Original input is unchanged and partial results are labeled."
+        }
+      ],
+      "testPlan": [
+        "Empty file has an explicit meaning.",
+        "A two-byte tail is identified at its correct offset.",
+        "I/O error and format rejection remain distinguishable where the interface supports it."
+      ],
+      "extensions": [
+        "Create a companion writer with exact byte fixtures.",
+        "Export accepted records for a Python plot."
+      ],
+      "portfolio": [
+        "Format specification.",
+        "Fixture-generation notes.",
+        "Report containing accepted and rejected counts."
+      ],
+      "constraints": [
+        "Use invented or public data.",
+        "Checksums, if added, do not establish authenticity."
+      ]
+    },
+    {
+      "id": "c-project-05",
+      "language": "c",
+      "title": "Reusable telemetry component study",
+      "level": "Advanced",
+      "summary": "Package a decoder, state machine, and fake input layer as a small reviewable C component.",
+      "mission": "Spacecraft",
+      "prerequisites": [
+        "c-10",
+        "c-12",
+        "c-13",
+        "c-15",
+        "c-16"
+      ],
+      "milestones": [
+        {
+          "title": "Define public API",
+          "deliverable": "A self-contained header with status types and contracts",
+          "acceptance": "Ownership, lengths, lifetime, and failure mutation are documented."
+        },
+        {
+          "title": "Separate implementation",
+          "deliverable": "Private helpers and portable logic",
+          "acceptance": "Tests use the same implementation as the demonstration."
+        },
+        {
+          "title": "Build evidence",
+          "deliverable": "Boundary tests, fake failures, and clean-build recipe",
+          "acceptance": "A deliberate injected defect is detected by the harness."
+        },
+        {
+          "title": "Study the next ecosystem",
+          "deliverable": "A concise comparison with the official cFS architecture",
+          "acceptance": "The report distinguishes conceptual similarities from unperformed integration."
+        }
+      ],
+      "testPlan": [
+        "Null/length policies are consistent across public functions.",
+        "Every allocation has an owner and tested failure path if allocation is used.",
+        "No unsupported flight-readiness claim appears in the report."
+      ],
+      "extensions": [
+        "Follow one official cFS sample application tutorial.",
+        "Add an independent implementation for a small decoding oracle."
+      ],
+      "portfolio": [
+        "Requirement-to-test map.",
+        "API documentation.",
+        "Reproducible demonstration and limitation statement."
+      ],
+      "constraints": [
+        "Educational desktop component.",
+        "cFS integration would require its own build, platform, and assurance work."
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Object",
+      "definition": "A region of storage representing a value with a type and lifetime.",
+      "example": "A local double result is an object; a pointer can refer to it."
+    },
+    {
+      "term": "Pointer",
+      "definition": "A value referring to an object or function, or a null value; it does not carry general bounds or ownership.",
+      "example": "const uint8_t *data requires a separate accessible byte count."
+    },
+    {
+      "term": "Storage duration",
+      "definition": "The category determining how long storage exists.",
+      "example": "An automatic local ends at block exit; allocated storage ends at release."
+    },
+    {
+      "term": "Scope",
+      "definition": "The region of source where a name is visible.",
+      "example": "A static local has block scope but program-long storage duration."
+    },
+    {
+      "term": "Array decay",
+      "definition": "The common conversion of an array expression to a pointer to its first element.",
+      "example": "An array parameter does not preserve the original count for sizeof."
+    },
+    {
+      "term": "Null terminator",
+      "definition": "A zero character marking the end of a C string.",
+      "example": "ROV needs four bytes when represented as a terminated string."
+    },
+    {
+      "term": "Capacity",
+      "definition": "The number of elements or bytes available for storage, with the unit explicitly stated.",
+      "example": "A four-element ring has capacity 4 regardless of its current count."
+    },
+    {
+      "term": "Integer promotion",
+      "definition": "Conversion of smaller integer types before many arithmetic operations.",
+      "example": "A uint8_t expression may be evaluated as int before a shift."
+    },
+    {
+      "term": "Undefined behavior",
+      "definition": "An operation for which the language imposes no requirements on the resulting behavior.",
+      "example": "Reading beyond an array is invalid even if no crash occurs."
+    },
+    {
+      "term": "Endianness",
+      "definition": "The byte ordering of a multi-byte representation.",
+      "example": "Bytes 01 02 represent 258 under unsigned big-endian decoding."
+    },
+    {
+      "term": "Ownership",
+      "definition": "Responsibility for managing and eventually releasing a resource.",
+      "example": "An allocation-returning API can transfer one free obligation to the caller."
+    },
+    {
+      "term": "Borrow",
+      "definition": "Access to storage whose owner remains elsewhere.",
+      "example": "A view into caller data is valid only while that data remains alive."
+    },
+    {
+      "term": "Reentrancy",
+      "definition": "The ability to be entered again before a previous invocation completes under the stated design.",
+      "example": "A parser using one static scratch result may not preserve nested-call results."
+    },
+    {
+      "term": "Volatile",
+      "definition": "A type qualification used for accesses with special observable behavior; it is not a general lock or atomicity guarantee.",
+      "example": "A memory-mapped register needs platform-specific volatile access rules and more."
+    },
+    {
+      "term": "Freestanding environment",
+      "definition": "A C execution environment without all the hosted startup and library assumptions.",
+      "example": "A microcontroller project may require board startup code and a restricted library."
+    }
+  ]
+}

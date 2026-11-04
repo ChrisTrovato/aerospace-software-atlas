@@ -1,0 +1,2373 @@
+{
+  "modules": [
+    {
+      "id": "bash-01",
+      "language": "bash",
+      "title": "Know which shell you are using",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [],
+      "summary": "Orient yourself before running commands and create a disposable learning workspace.",
+      "why": "Robotics instructions often assume Linux and Bash. Recognizing the environment prevents confusing a shell problem with a programming problem.",
+      "explanation": [
+        "Bash is a command interpreter and scripting language. Linux is an operating-system kernel used in many complete environments. A terminal is the window or interface through which you interact with a shell. PowerShell is a different shell with different syntax and object-based behavior. A command copied from one environment may not mean the same thing in another, even if a familiar command name exists.",
+        "On Windows, an installed WSL distribution is one possible place to use Linux tools; Git Bash is another environment with different capabilities. Neither should be assumed to contain every robotics dependency. Identify the shell, current directory, and available command before following a tutorial. Read-only checks such as pwd, printf, and command -v help establish where you are without changing system settings.",
+        "Practice in a fresh scratch directory, not among irreplaceable project files. The example creates a unique temporary directory and enters it, so repeated lessons do not overwrite earlier work. Write down the path it prints. This is not a cleanup lesson: leave deletion to a deliberate later action after inspecting the contents. Your first success is knowing exactly where a command runs and which files it can affect."
+      ],
+      "example": {
+        "code": "printf \"Bash version: %s\\n\" \"$BASH_VERSION\"\npwd\nlab_dir=$(mktemp -d) || exit 1\ncd \"$lab_dir\" || exit 1\nprintf \"Practice directory: %s\\n\" \"$PWD\"",
+        "explanation": "Run these commands in Bash. mktemp creates a unique directory, and quoted cd preserves its path as one argument."
+      },
+      "walkthrough": [
+        "Identify whether the active shell is Bash or PowerShell.",
+        "In Bash, inspect the version and current directory.",
+        "Create and enter a new temporary directory.",
+        "Write the directory path in your learning notes."
+      ],
+      "pitfalls": [
+        "Assuming the terminal application determines the shell language.",
+        "Pasting Bash assignments into PowerShell.",
+        "Running file exercises in an important project directory."
+      ],
+      "exercises": [
+        {
+          "title": "Environment inventory",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "In Bash, print its version and current directory. Explain what each tells you.",
+          "inputs": "No files required.",
+          "expected": "A Bash version string and an absolute current-directory path.",
+          "hints": [
+            "Use BASH_VERSION.",
+            "pwd reports location, not shell identity."
+          ],
+          "solution": "printf \"%s\\n\" \"$BASH_VERSION\"; pwd. The version identifies Bash behavior; the path identifies the base for relative filenames.",
+          "tests": [
+            "Version is not empty in Bash.",
+            "pwd agrees with the directory you intended."
+          ],
+          "extension": "Record the operating environment separately.",
+          "id": "bash-01-a"
+        },
+        {
+          "title": "Command discovery",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Determine whether python3 and git are available without executing a project.",
+          "inputs": "command -v python3; command -v git",
+          "expected": "Paths or a nonzero status if a command is absent.",
+          "hints": [
+            "command -v asks how a command resolves.",
+            "Absence is information, not permission to install blindly."
+          ],
+          "solution": "Inspect each command separately and record which environment supplied it. An installed Windows program and a Linux command may differ.",
+          "tests": [
+            "A known shell builtin resolves.",
+            "A deliberately invented command does not."
+          ],
+          "extension": "Compare with your project’s documented prerequisites.",
+          "id": "bash-01-b"
+        },
+        {
+          "title": "Workspace map",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Create a new temporary directory and draw a plan for raw, work, and results subdirectories.",
+          "inputs": "A scratch Bash session.",
+          "expected": "All proposed paths stay under the printed practice directory.",
+          "hints": [
+            "Use mkdir with relative names after entering the directory.",
+            "Record the parent path first."
+          ],
+          "solution": "Create the three subdirectories with mkdir raw work results. Use pwd and a listing to confirm location before adding sample files.",
+          "tests": [
+            "No system directory is modified.",
+            "The three names are siblings."
+          ],
+          "extension": "Describe which category should contain unmodified observations.",
+          "id": "bash-01-c"
+        },
+        {
+          "title": "Wrong-shell diagnosis",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A tutorial says sample_count=3, but the current console interprets it as a command. Identify the likely cause before changing syntax.",
+          "inputs": "A PowerShell console running Bash tutorial text.",
+          "expected": "The user must choose Bash or translate intentionally to PowerShell.",
+          "hints": [
+            "Check the actual shell.",
+            "A terminal window can host different shells."
+          ],
+          "solution": "The assignment syntax belongs to Bash. Follow the tutorial in a supported Bash environment or use equivalent PowerShell instructions consistently.",
+          "tests": [
+            "BASH_VERSION is available in the intended Bash session.",
+            "The chosen tutorial matches the environment."
+          ],
+          "extension": "Explain why Linux installation is separate from learning one assignment.",
+          "id": "bash-01-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What is the difference between a terminal and a shell?",
+          "answer": "The terminal provides the interaction surface; the shell interprets commands and implements a language."
+        },
+        {
+          "question": "Why start in a scratch directory?",
+          "answer": "It bounds file effects and makes the lesson’s inputs and outputs easy to inspect."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Microsoft: WSL command context",
+          "url": "https://learn.microsoft.com/en-us/windows/wsl/basic-commands"
+        }
+      ]
+    },
+    {
+      "id": "bash-02",
+      "language": "bash",
+      "title": "Paths and arguments with spaces",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-01"
+      ],
+      "summary": "Treat a filename as data and preserve it as one command argument.",
+      "why": "Engineering folders often contain spaces, run names, and long descriptive filenames. Quoting is a daily reliability skill.",
+      "explanation": [
+        "A command receives a list of arguments, not the exact sentence you see on screen. Bash first interprets quoting and expansions, then constructs that list. Unquoted spaces separate words. Quotes let a path such as run one remain one argument rather than becoming two unrelated names. This is why quoting is more than a style preference.",
+        "Single quotes preserve literal text. Double quotes allow selected expansions, such as a variable’s value, while keeping that result together. Use double quotes around a path variable in ordinary commands. The quote characters are instructions to the shell and are not normally part of the filename received by the command. To understand a command, ask how many arguments it will receive and what each contains.",
+        "Relative paths are resolved from the current working directory. A leading ./ makes that relationship explicit, and it also helps distinguish a filename beginning with a dash from an option. Many tools support -- to end option parsing, but verify the tool’s interface rather than assuming every program does. Practice with printf before copying or processing files so you can see the intended argument boundaries."
+      ],
+      "example": {
+        "code": "run_name=\"run one\"\nmkdir -- \"$run_name\"\nprintf \"<%s>\\n\" \"$run_name\" \"./$run_name\"",
+        "explanation": "The two printf arguments remain intact. This example assumes a fresh practice directory where run one does not already exist."
+      },
+      "walkthrough": [
+        "Predict how many arguments a command receives.",
+        "Compare literal single quotes and expanding double quotes.",
+        "Create a directory with a space in its name.",
+        "Inspect the resulting path with a visible delimiter format."
+      ],
+      "pitfalls": [
+        "Leaving path variables unquoted.",
+        "Including quote characters inside a variable as if they will become shell syntax later.",
+        "Confusing a relative path with a fixed absolute location."
+      ],
+      "exercises": [
+        {
+          "title": "One name, one argument",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Print the name rover log between angle brackets without splitting it.",
+          "inputs": "name=\"rover log\"",
+          "expected": "<rover log> on one line",
+          "hints": [
+            "Quote the expansion.",
+            "Use a fixed printf format."
+          ],
+          "solution": "printf \"<%s>\\n\" \"$name\" preserves the value as one argument.",
+          "tests": [
+            "A value containing two spaces remains intact.",
+            "An empty value prints <>."
+          ],
+          "extension": "Try a value containing an asterisk without expanding filenames.",
+          "id": "bash-02-a"
+        },
+        {
+          "title": "Literal versus expanded",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Predict the difference between printing a literal variable reference and its value.",
+          "inputs": "name=\"sensor A\"",
+          "expected": "Single quotes around $name print $name; double quotes print sensor A.",
+          "hints": [
+            "Single quotes suppress expansion.",
+            "Double quotes preserve boundaries while allowing variables."
+          ],
+          "solution": "Use printf \"%s\\n\" followed by each quoted form and compare. The quotes themselves are not printed.",
+          "tests": [
+            "The literal form starts with a dollar sign.",
+            "The expanded form remains one argument."
+          ],
+          "extension": "Explain which form suits a fixed template.",
+          "id": "bash-02-b"
+        },
+        {
+          "title": "A filename beginning with dash",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Design a read-only command to inspect a file named -notes.txt in the current scratch directory.",
+          "inputs": "The file is already present.",
+          "expected": "The name is interpreted as a file, not an option.",
+          "hints": [
+            "Use an explicit relative path.",
+            "Many tools also accept --."
+          ],
+          "solution": "cat -- \"./-notes.txt\" makes both the option boundary and relative location explicit. Check cat’s help if using a nonstandard implementation.",
+          "tests": [
+            "The path stays in the current directory.",
+            "No unexpected option is parsed."
+          ],
+          "extension": "Explain how a variable containing that name should be quoted.",
+          "id": "bash-02-c"
+        },
+        {
+          "title": "Quotes stored in a string",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A variable contains the characters double-quote, run one, double-quote. A command still splits it when expanded unquoted. Why?",
+          "inputs": "path contains literal quote characters.",
+          "expected": "Quote the expansion; do not store shell syntax as data.",
+          "hints": [
+            "Expansion results are not reparsed as fresh quoting syntax.",
+            "Keep the variable’s value equal to the actual path."
+          ],
+          "solution": "Set path=\"run one\", then use \"$path\". Do not use eval to force reparsing.",
+          "tests": [
+            "The variable contains no extra quote characters.",
+            "printf with delimiters shows one intact argument."
+          ],
+          "extension": "Describe why reparsing strings as commands is fragile.",
+          "id": "bash-02-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why quote a path variable?",
+          "answer": "To preserve its value as one argument and avoid unintended word splitting or filename expansion."
+        },
+        {
+          "question": "Do quotation marks inside a variable become shell quoting?",
+          "answer": "No. They are data after expansion, not a second pass of shell syntax."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: quoting",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Quoting.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-03",
+      "language": "bash",
+      "title": "Variables, defaults, and integer arithmetic",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-02"
+      ],
+      "summary": "Use small pieces of state without turning the shell into a numerical analysis language.",
+      "why": "A run script needs filenames, counters, and modes. Scientific arrays and floating-point calculations usually belong in Python or MATLAB.",
+      "explanation": [
+        "Bash assignments have no spaces around the equals sign. A variable can hold a string, including text that looks numeric. Expansion retrieves that string, and quoting preserves it. Use descriptive names such as run_label or sample_count. Avoid overwriting environment variables whose established meaning controls how tools behave.",
+        "Default values can make a script convenient, but a default should not conceal a missing essential input. For an optional label, a documented fallback is reasonable. For an input dataset, an absent path should usually produce a clear error. Distinguish an unset value from an empty one when that difference matters, and keep the behavior in the script’s usage text.",
+        "Bash arithmetic is integer arithmetic. Division truncates toward an integer result, so it is inappropriate for a scientific average such as 5/2 when you expect 2.5. Use the shell to coordinate a numerical program instead of recreating its data model. Be cautious with numbers containing leading zeros, which can have base-related interpretation. For a beginner script, accept and validate simple decimal counters rather than arbitrary arithmetic expressions."
+      ],
+      "example": {
+        "code": "sample_count=5\nextra_count=2\ntotal_count=$((sample_count+extra_count))\nprintf \"Total samples: %s\\n\" \"$total_count\"",
+        "explanation": "The result is 7. Arithmetic expansion is useful for counters, not a replacement for floating-point engineering calculations."
+      },
+      "walkthrough": [
+        "Assign a descriptive string and print it quoted.",
+        "Increment an integer counter.",
+        "Compare integer division with the expected real-number result.",
+        "Decide which settings may have defaults and which are required."
+      ],
+      "pitfalls": [
+        "Putting spaces around = in an assignment.",
+        "Expecting floating-point division from Bash arithmetic.",
+        "Using familiar system variable names for unrelated counters."
+      ],
+      "exercises": [
+        {
+          "title": "Counter arithmetic",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Compute the number of rows after adding two sample batches.",
+          "inputs": "first=12, second=8",
+          "expected": "20",
+          "hints": [
+            "Use arithmetic expansion.",
+            "Print with a fixed format."
+          ],
+          "solution": "total=$((first+second)); printf \"%s\\n\" \"$total\". This models a count, so integer arithmetic is appropriate.",
+          "tests": [
+            "Adding zero preserves the count.",
+            "Order of addition does not change the result."
+          ],
+          "extension": "Add a third batch.",
+          "id": "bash-03-a"
+        },
+        {
+          "title": "Document a default",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Design behavior for an optional run label and a required input path.",
+          "inputs": "No label supplied; input path supplied.",
+          "expected": "Use a documented label fallback while retaining the explicit input path.",
+          "hints": [
+            "Not every missing value should become empty text.",
+            "Treat required and optional inputs differently."
+          ],
+          "solution": "Choose a fallback such as trial for the label; reject an absent input path with usage guidance before reading files.",
+          "tests": [
+            "An explicit label is preserved.",
+            "A missing required path fails clearly."
+          ],
+          "extension": "Specify whether an empty label should trigger the default.",
+          "id": "bash-03-b"
+        },
+        {
+          "title": "Choose the right tool",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "A script must average 5 and 2 to produce 3.5. Explain why a Bash-only arithmetic expression is a poor default.",
+          "inputs": "Values 5 and 2.",
+          "expected": "Delegate floating-point calculation to a suitable numerical tool.",
+          "hints": [
+            "Integer division loses the fractional part.",
+            "Keep orchestration separate from analysis."
+          ],
+          "solution": "Bash can validate filenames and call a Python or MATLAB analysis. The numerical program should define parsing, precision, and error behavior.",
+          "tests": [
+            "The expected mean is independently known.",
+            "The analysis output is checked before use."
+          ],
+          "extension": "Define a simple input/output interface for the numerical program.",
+          "id": "bash-03-c"
+        },
+        {
+          "title": "Assignment becomes a command",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "Diagnose sample_count = 5 in Bash.",
+          "inputs": "Spaces surround the equals sign.",
+          "expected": "Bash attempts to execute a command named sample_count.",
+          "hints": [
+            "Whitespace separates words.",
+            "Assignment syntax is one token."
+          ],
+          "solution": "Use sample_count=5. For arithmetic later use $((sample_count+1)); do not add spaces around the assignment operator.",
+          "tests": [
+            "The variable prints 5.",
+            "No command-not-found message remains."
+          ],
+          "extension": "Contrast this with spaces inside a quoted string value.",
+          "id": "bash-03-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What kind of arithmetic does Bash provide directly?",
+          "answer": "Integer arithmetic, useful for counters and control flow."
+        },
+        {
+          "question": "When is a default dangerous?",
+          "answer": "When it hides a missing required input and lets a script operate on an unintended file or assumption."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: shell parameters",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Shell-Parameters.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-04",
+      "language": "bash",
+      "title": "Streams, redirection, and preserving raw data",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-03"
+      ],
+      "summary": "Separate input, useful output, and diagnostics before building pipelines.",
+      "why": "A simulation run may produce both results and warnings. Mixing them can corrupt the next stage’s input.",
+      "explanation": [
+        "A process normally has standard input, standard output, and standard error. Standard output is the ordinary result stream; standard error is where diagnostics often go. These are conventions that let programs cooperate. A numerical tool can print a machine-readable result on standard output while explaining a missing file on standard error.",
+        "Redirection changes where a stream goes. The > operator opens an output file and truncates an existing one before the command runs. Appending with >> preserves old content but can accumulate stale or duplicated results. Neither is automatically the correct choice. Decide whether a file is an immutable input, a per-run result, or an append-only journal before selecting the operator.",
+        "Never use the same file as both a pipeline’s input and its redirected output. The shell may truncate it before the first command reads anything. In these lessons, create tiny files only inside your scratch directory and write transformations to a different filename. Inspect the new file before any later replacement decision. Learning the timing of redirection prevents mistakes that otherwise look like mysterious data loss."
+      ],
+      "example": {
+        "code": "printf \"time_s,temperature_c\\n0,20\\n1,21\\n\" > raw.csv\nprintf \"Created a tiny practice fixture\\n\" >&2\ncat raw.csv > copied.csv",
+        "explanation": "This creates raw.csv in the scratch directory and copies its content to a distinct generated file. Repeating the first line replaces this lesson fixture."
+      },
+      "walkthrough": [
+        "Create a small fixture in the scratch directory.",
+        "Send one result to stdout and one diagnostic to stderr.",
+        "Redirect stdout to a distinct output file.",
+        "Explain what repeating > and >> would do."
+      ],
+      "pitfalls": [
+        "Reading and redirecting output to the same filename.",
+        "Appending results when a fresh per-run report was intended.",
+        "Sending diagnostic text into a data-only output stream."
+      ],
+      "exercises": [
+        {
+          "title": "Create a fixture",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Write two lines into a new scratch file, then inspect them.",
+          "inputs": "Lines alpha and beta.",
+          "expected": "A two-line file in the practice directory.",
+          "hints": [
+            "Use printf with newline escapes.",
+            "Choose a new lesson filename."
+          ],
+          "solution": "printf \"alpha\\nbeta\\n\" > fixture.txt; cat fixture.txt. This intentionally creates or replaces only the named fixture.",
+          "tests": [
+            "There are two newline-terminated lines.",
+            "The content is not a single literal backslash-n string."
+          ],
+          "extension": "Add a third line using a deliberate append.",
+          "id": "bash-04-a"
+        },
+        {
+          "title": "Separate diagnostics",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Design a script that emits 42 as its result and a progress message as a diagnostic.",
+          "inputs": "One result and one status message.",
+          "expected": "Redirecting stdout captures only 42.",
+          "hints": [
+            "Use >&2 for the diagnostic.",
+            "Keep the result format predictable."
+          ],
+          "solution": "printf \"42\\n\"; printf \"Analysis complete\\n\" >&2. Run with stdout redirected to a scratch result file and inspect it.",
+          "tests": [
+            "The result file contains no status sentence.",
+            "The diagnostic is still visible unless separately redirected."
+          ],
+          "extension": "Capture stdout and stderr into separate files.",
+          "id": "bash-04-b"
+        },
+        {
+          "title": "Choose overwrite or append",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Specify file behavior for raw observations, a regenerated summary, and a study journal.",
+          "inputs": "Three different file roles.",
+          "expected": "Raw is preserved; summary gets a new per-run file or deliberate replacement; journal appends.",
+          "hints": [
+            "Choose policy by meaning.",
+            "Repeated runs must not silently duplicate summary rows."
+          ],
+          "solution": "Document each policy before coding. Keep generated output paths separate from raw data and add run identifiers where needed.",
+          "tests": [
+            "Re-running does not change raw data.",
+            "The journal retains prior entries."
+          ],
+          "extension": "Add an output-exists check to the summary workflow.",
+          "id": "bash-04-c"
+        },
+        {
+          "title": "The empty input file",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "Explain why cat raw.csv > raw.csv can leave raw.csv empty.",
+          "inputs": "The same path is input and redirected output.",
+          "expected": "Redirection truncates the file before cat reads it.",
+          "hints": [
+            "The shell sets up streams first.",
+            "Use a separate output path."
+          ],
+          "solution": "Write to a new file such as copied.csv instead and inspect it. Do not repeat the faulty command on real data to investigate.",
+          "tests": [
+            "Input and output resolve to distinct paths.",
+            "Raw content remains unchanged."
+          ],
+          "extension": "Draw the order: redirection, process start, file read.",
+          "id": "bash-04-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What is stderr for?",
+          "answer": "Diagnostics or other non-result output by convention, keeping stdout usable by another program."
+        },
+        {
+          "question": "When does > truncate a file?",
+          "answer": "During shell redirection setup, before the command consumes its input."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: redirections",
+          "url": "https://www.gnu.org/s/bash/manual/html_node/Redirections.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-05",
+      "language": "bash",
+      "title": "Pipelines and small text tools",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-04"
+      ],
+      "summary": "Build a transformation one stage at a time and inspect the data between stages.",
+      "why": "A few composable tools can summarize simulation logs without creating a large custom application.",
+      "explanation": [
+        "A pipeline connects one command’s standard output to another command’s standard input. The useful mental model is a sequence of transformations with an explicit data format at every boundary. Start by reading a tiny log, then filter lines, then count them. Inspect each intermediate result before compressing the work into one line.",
+        "Text tools have specific meanings. grep selects matching lines; wc -l counts newline characters, which corresponds to line count for the newline-terminated fixtures used here. sort orders text according to its options and locale. A numerical value represented as text is not automatically sorted numerically. These details matter when a report’s ranking or count influences what you investigate next.",
+        "Choose text tools for formats they actually understand. A simple line-oriented log is appropriate for grep. General CSV can contain quoted commas and embedded newlines, so splitting it with a basic delimiter command can corrupt records. Use a CSV-aware library for that case. Bash coordinates tools; it does not need to become a fragile replacement for a parser."
+      ],
+      "example": {
+        "code": "printf \"INFO start\\nWARN gap\\nINFO end\\nWARN stale\\n\" | grep \"^WARN\" | wc -l",
+        "explanation": "The result is 2. The fixture is deliberately line-oriented and newline-terminated."
+      },
+      "walkthrough": [
+        "Write a four-line synthetic log.",
+        "Run the filter alone and inspect matching lines.",
+        "Add the count only after the filter is correct.",
+        "Document the format assumptions that make the pipeline valid."
+      ],
+      "pitfalls": [
+        "Counting substrings when you intend lines beginning with a severity.",
+        "Using lexical sort for numeric values.",
+        "Treating all comma-containing text as simple CSV."
+      ],
+      "exercises": [
+        {
+          "title": "Filter warnings",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Print only lines beginning with WARN.",
+          "inputs": "INFO start; WARN gap; INFO text says WARN; WARN stale, each on its own line.",
+          "expected": "WARN gap and WARN stale only.",
+          "hints": [
+            "Anchor the pattern at the line start.",
+            "Quote the pattern."
+          ],
+          "solution": "grep \"^WARN\" selects severity-prefixed lines. An unanchored WARN would also match the INFO sentence.",
+          "tests": [
+            "The INFO sentence is excluded.",
+            "Both real warning lines remain."
+          ],
+          "extension": "Require a following space to avoid matching WARNING if the format demands it.",
+          "id": "bash-05-a"
+        },
+        {
+          "title": "Count selected lines",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Count ERROR severity lines in a newline-terminated fixture without including INFO mentions of ERROR.",
+          "inputs": "ERROR read; INFO ERROR example; ERROR parse",
+          "expected": "2",
+          "hints": [
+            "Verify the filter first.",
+            "Then count its output lines."
+          ],
+          "solution": "Use grep \"^ERROR \" followed by wc -l. Keep the fixture small enough to verify by inspection.",
+          "tests": [
+            "No matching lines gives count zero.",
+            "A line containing the word later is excluded."
+          ],
+          "extension": "Use grep -c and compare behavior and exit status.",
+          "id": "bash-05-b"
+        },
+        {
+          "title": "Numeric ranking",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Sort textual run durations from smallest to largest and explain the option choice.",
+          "inputs": "2, 10, 1 on separate lines.",
+          "expected": "1, 2, 10",
+          "hints": [
+            "Default text ordering is not numeric ordering.",
+            "Read sort help for -n."
+          ],
+          "solution": "sort -n interprets the leading numeric value for ordering. Define how malformed or missing durations will be handled before using real logs.",
+          "tests": [
+            "10 follows 2.",
+            "Duplicate durations remain unless deliberately deduplicated."
+          ],
+          "extension": "Add run identifiers and define a stable numeric sort key.",
+          "id": "bash-05-c"
+        },
+        {
+          "title": "A CSV parser made from cut",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A script uses cut -d, on a CSV whose quoted notes contain commas. Explain why the selected field is wrong.",
+          "inputs": "time,note,value with note such as \"sensor, left\".",
+          "expected": "A simple comma split does not respect CSV quoting.",
+          "hints": [
+            "The delimiter can occur inside a quoted field.",
+            "Use a format-aware parser."
+          ],
+          "solution": "Pass CSV processing to Python’s csv module or another documented CSV parser, while Bash handles filenames and orchestration.",
+          "tests": [
+            "A quoted comma remains inside one field.",
+            "A newline inside a quoted field is handled if allowed by the data contract."
+          ],
+          "extension": "Create a two-row regression fixture with quoted punctuation.",
+          "id": "bash-05-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why inspect intermediate pipeline output?",
+          "answer": "It localizes mistakes and confirms the format passed between tools before another transformation hides it."
+        },
+        {
+          "question": "When should text processing move out of Bash?",
+          "answer": "When structured parsing, complex validation, numerical arrays, or intricate data relationships exceed simple line-oriented transformations."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: pipelines",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Pipelines.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-06",
+      "language": "bash",
+      "title": "Exit status and visible failure",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-05"
+      ],
+      "summary": "Make success or failure part of the interface, not something inferred from a log message.",
+      "why": "A long simulation pipeline should not produce a convincing report after an earlier stage failed.",
+      "explanation": [
+        "Every completed command returns an exit status. Zero conventionally means success, while nonzero values distinguish failure or other outcomes. Some tools use nonzero for an ordinary negative result, such as grep finding no match. Therefore you need the command’s documented contract rather than a blanket assumption that every nonzero result is a crash.",
+        "The special parameter $? holds the last command’s status, but another command replaces it. Capture it immediately or use the command directly in an if statement. A pipeline has its own status rules: by default its final command determines the pipeline status. Bash pipefail changes that rule so an earlier nonzero status can make the pipeline nonzero. It does not make every pipeline’s semantics automatically correct.",
+        "Do not add set -e and assume failure handling is solved. Context affects its behavior, and expected negative results can need explicit branches. For small learning scripts, clear if/else handling around important commands is easier to reason about. Decide what failure means, which outputs remain trustworthy, and what diagnostic should help the next person repair the input."
+      ],
+      "example": {
+        "code": "if grep -q \"^WARN \" run.log; then\n  printf \"Warnings present\\n\"\nelse\n  status=$?\n  printf \"grep status: %s\\n\" \"$status\" >&2\nfi",
+        "explanation": "For grep, status 1 means no selected lines; larger error statuses need different treatment. A production script should distinguish these cases explicitly."
+      },
+      "walkthrough": [
+        "Run one command that succeeds and one that returns nonzero.",
+        "Inspect the status immediately.",
+        "Write an explicit branch for an expected negative result.",
+        "Demonstrate how a final successful pipeline stage can hide an earlier failure."
+      ],
+      "pitfalls": [
+        "Reading $? after a printf has already replaced it.",
+        "Treating grep’s no-match result as the same as a file-read error.",
+        "Assuming pipefail or set -e replaces an error-handling design."
+      ],
+      "exercises": [
+        {
+          "title": "Status immediately",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Run true and false and record each status immediately.",
+          "inputs": "Bash builtins true and false.",
+          "expected": "0 after true; 1 after false.",
+          "hints": [
+            "Read $? before another command.",
+            "The words true and false here are commands."
+          ],
+          "solution": "true; status=$?; printf \"%s\\n\" \"$status\"; then repeat with false. The saved variable survives the print.",
+          "tests": [
+            "Statuses differ as expected.",
+            "The second test does not reuse the first saved value."
+          ],
+          "extension": "Explain how an if statement avoids manual status capture.",
+          "id": "bash-06-a"
+        },
+        {
+          "title": "No match is meaningful",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Design three outcomes for grep: match, no match, and input error.",
+          "inputs": "A readable log with a match, a readable log without one, and a missing path.",
+          "expected": "Distinct result messages and failure handling.",
+          "hints": [
+            "Consult grep’s status contract.",
+            "Do not collapse no data into bad data."
+          ],
+          "solution": "Branch on 0 for match, 1 for no match, and other statuses for an error. Capture the status directly after grep.",
+          "tests": [
+            "No-match is reported as an ordinary outcome.",
+            "Missing input prevents a success report."
+          ],
+          "extension": "Have the script itself return a documented status.",
+          "id": "bash-06-b"
+        },
+        {
+          "title": "Pipeline status experiment",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Compare false | true with pipefail disabled and enabled in a scratch Bash session.",
+          "inputs": "Two builtins, no files.",
+          "expected": "Default pipeline status 0; with pipefail status nonzero.",
+          "hints": [
+            "The last command succeeds.",
+            "pipefail considers earlier nonzero statuses."
+          ],
+          "solution": "Observe the status in each mode and restore the session setting afterward if needed. Explain why this is a behavior experiment rather than an error policy.",
+          "tests": [
+            "No files change.",
+            "The result is captured immediately."
+          ],
+          "extension": "Repeat with true | false and explain why both modes fail.",
+          "id": "bash-06-c"
+        },
+        {
+          "title": "The status was overwritten",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A script runs an analyzer, prints \"done\", then tests $?. Diagnose why it reports success even when the analyzer failed.",
+          "inputs": "The diagnostic printf succeeds.",
+          "expected": "The script checked printf’s status.",
+          "hints": [
+            "Every command updates $?.",
+            "Save or branch immediately."
+          ],
+          "solution": "Use if analyzer; then ... else ... fi, or status=$? immediately after the analyzer. Do not print a success sentence before checking.",
+          "tests": [
+            "A failing analyzer enters the failure branch.",
+            "A passing analyzer enters the success branch."
+          ],
+          "extension": "Test the branch using a stub command.",
+          "id": "bash-06-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does exit status zero mean?",
+          "answer": "It conventionally indicates success according to that command’s interface."
+        },
+        {
+          "question": "What is the default status of a pipeline?",
+          "answer": "The status of its last command, unless options such as Bash pipefail change the rule."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: exit status",
+          "url": "https://www.gnu.org/s/bash/manual/html_node/Exit-Status.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-07",
+      "language": "bash",
+      "title": "Script arguments and a clear usage contract",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-06"
+      ],
+      "summary": "Turn an interactive command into a reusable script with deliberate input validation.",
+      "why": "A daily analysis should accept the file you intend rather than silently depend on the current folder or yesterday’s filename.",
+      "explanation": [
+        "A script receives positional arguments. The first argument is $1, the count is $#, and the script name is available as $0. Before reading a positional parameter, check whether the required number of arguments was supplied. A short usage message is part of the interface: it should explain what input is required and what output the script produces.",
+        "Quoted argument forwarding preserves the original argument boundaries. A path containing spaces must remain one path through every wrapper layer. Do not concatenate arguments into a command string and then execute that string. Keeping program name and arguments separate is both simpler and more reliable. If the interface grows complicated, use a documented option parser rather than a pile of accidental conventions.",
+        "Validation should happen before work with side effects. Check argument count, file readability, and allowed mode values before starting a long analysis or creating a result. For this lesson the script only inspects a file, which keeps failures easy to test. Build a tiny fixture and deliberately omit the argument, provide a missing path, and provide a filename containing a space."
+      ],
+      "example": {
+        "code": "#!/usr/bin/env bash\nif [[ $# -ne 1 ]]; then\n  printf \"Usage: inspect-log FILE\\n\" >&2\n  exit 2\nfi\nif [[ ! -r \"$1\" ]]; then\n  printf \"Input is not readable\\n\" >&2\n  exit 1\nfi\nwc -l < \"$1\"",
+        "explanation": "Save as inspect-log.sh and run with bash inspect-log.sh \"run one.log\". It prints a line count for a readable newline-terminated file."
+      },
+      "walkthrough": [
+        "Write the usage sentence before the code.",
+        "Check argument count before accessing $1.",
+        "Validate the path and preserve its quoting.",
+        "Test normal, missing, and space-containing inputs."
+      ],
+      "pitfalls": [
+        "Hard-coding yesterday’s filename.",
+        "Accessing missing arguments before validation.",
+        "Building a command string and using eval to run it."
+      ],
+      "exercises": [
+        {
+          "title": "Argument count",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Write a script that requires exactly one argument and prints usage otherwise.",
+          "inputs": "Zero, one, or two arguments.",
+          "expected": "Only the one-argument case continues.",
+          "hints": [
+            "Use $#.",
+            "Return a nonzero status for bad usage."
+          ],
+          "solution": "Test [[ $# -ne 1 ]] and exit 2 with usage on stderr. Keep the expected interface visible.",
+          "tests": [
+            "Zero arguments fails.",
+            "Two arguments fails."
+          ],
+          "extension": "Include the script name in the usage text.",
+          "id": "bash-07-a"
+        },
+        {
+          "title": "A path with spaces",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Pass a file named run one.log to the line-count script.",
+          "inputs": "A two-line fixture in the scratch directory.",
+          "expected": "The script prints 2.",
+          "hints": [
+            "Quote the path at invocation.",
+            "Quote $1 inside the script too."
+          ],
+          "solution": "bash inspect-log.sh \"run one.log\" passes one argument; wc -l < \"$1\" reads the intended file.",
+          "tests": [
+            "The argument count is one.",
+            "Neither run nor one.log is accessed separately."
+          ],
+          "extension": "Try a path in a subdirectory with spaces.",
+          "id": "bash-07-b"
+        },
+        {
+          "title": "Allowed modes",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Design a script accepting MODE FILE, where MODE is either count or warnings. Validate before reading.",
+          "inputs": "count fixture.log; warnings fixture.log; unknown fixture.log",
+          "expected": "The first two operate; unknown is rejected with usage.",
+          "hints": [
+            "Check the count first.",
+            "Use a case statement for allowed modes."
+          ],
+          "solution": "Reject unsupported mode text rather than treating it as a command name. Each supported branch invokes a fixed known operation.",
+          "tests": [
+            "No mode text is executed as code.",
+            "Bad usage produces nonzero status."
+          ],
+          "extension": "Add help as a documented third mode.",
+          "id": "bash-07-c"
+        },
+        {
+          "title": "Argument forwarding splits names",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A wrapper calls bash inspect-log.sh $1. Why can it fail for a valid path?",
+          "inputs": "First argument is run one.log.",
+          "expected": "Unquoted expansion can become multiple arguments.",
+          "hints": [
+            "Preserve the argument boundary at every layer.",
+            "The called script’s validation reveals the split."
+          ],
+          "solution": "Use bash inspect-log.sh \"$1\". For forwarding all original arguments, use quoted \"$@\" after validating the wrapper’s own interface.",
+          "tests": [
+            "The path reaches the child unchanged.",
+            "An empty argument is not silently dropped."
+          ],
+          "extension": "Explain why \"$*\" is not interchangeable with \"$@\".",
+          "id": "bash-07-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why validate argument count first?",
+          "answer": "It prevents missing values from being mistaken for legitimate input and provides a clear usage failure."
+        },
+        {
+          "question": "What does quoted \"$@\" preserve?",
+          "answer": "Each original positional argument as its own argument, including spaces and empty values."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: shell parameters",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Shell-Parameters.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-08",
+      "language": "bash",
+      "title": "Conditionals that express the workflow",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-07"
+      ],
+      "summary": "Make branch decisions explicit using file tests, string choices, and numeric comparisons.",
+      "why": "A robust run script needs to know whether an input exists, a mode is supported, and a prerequisite succeeded.",
+      "explanation": [
+        "A conditional is a choice based on a command’s success or an expression’s truth. In Bash, [[ ... ]] provides a useful expression form for many checks. A readable-file test answers a different question from a nonempty-string test, and neither proves that a CSV’s contents are valid. Match the test to the decision rather than treating any nonempty value as evidence of correctness.",
+        "Use case for a small set of named modes. It makes the allowed vocabulary visible and avoids evaluating user-supplied text as a command. For numeric comparisons, validate the expected numeric representation before arithmetic. Bash arithmetic is not an appropriate parser for arbitrary untrusted expressions, and lexical string ordering is different from numeric ordering.",
+        "Keep branches short and meaningful. A branch should explain what happens when a condition is false, not only the happy path. Avoid compact chains that look like if/else but behave differently when the middle command fails. Readability matters because a future failed simulation may require you to diagnose the workflow quickly, under less convenient conditions than a tutorial."
+      ],
+      "example": {
+        "code": "mode=\"count\"\ncase \"$mode\" in\n  count) printf \"Count mode selected\\n\" ;;\n  warnings) printf \"Warning mode selected\\n\" ;;\n  *) printf \"Unsupported mode\\n\" >&2; exit 2 ;;\nesac",
+        "explanation": "The accepted modes are explicit. The mode string is compared as data, never executed as a command."
+      },
+      "walkthrough": [
+        "List the possible states of the input.",
+        "Choose a test that answers exactly the intended question.",
+        "Write an explicit failure branch.",
+        "Test every branch with a tiny fixture."
+      ],
+      "pitfalls": [
+        "Assuming a readable file contains valid data.",
+        "Comparing numeric text with lexical operators.",
+        "Using a && b || c as if c could never run after a succeeds."
+      ],
+      "exercises": [
+        {
+          "title": "Readable input",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Check whether a supplied path is readable and print an appropriate message.",
+          "inputs": "A readable fixture and a missing path.",
+          "expected": "Different branches for readable and unavailable input.",
+          "hints": [
+            "Use -r with a quoted path.",
+            "This checks access, not schema."
+          ],
+          "solution": "if [[ -r \"$path\" ]]; then ... else ... fi. Keep a later content validator separate.",
+          "tests": [
+            "A missing path enters failure.",
+            "A malformed but readable file still passes this access check."
+          ],
+          "extension": "Add a regular-file test if directories are not allowed.",
+          "id": "bash-08-a"
+        },
+        {
+          "title": "Named operation",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Implement count and inspect modes with a default rejection branch.",
+          "inputs": "mode values count, inspect, nonsense.",
+          "expected": "Only the two documented values are accepted.",
+          "hints": [
+            "case makes the vocabulary clear.",
+            "Use ;; between branches."
+          ],
+          "solution": "case \"$mode\" in count) ... ;; inspect) ... ;; *) ... ;; esac. Fixed operations are selected by the data value.",
+          "tests": [
+            "Each supported mode reaches its own branch.",
+            "Unknown text is not executed."
+          ],
+          "extension": "Add a mode that prints help without reading files.",
+          "id": "bash-08-b"
+        },
+        {
+          "title": "Validate a positive count",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Specify a decimal positive-integer contract for a sample count before using it in a loop.",
+          "inputs": "Inputs 3, 0, -2, 2.5, abc.",
+          "expected": "Only 3 passes under this contract.",
+          "hints": [
+            "Representation and range are separate checks.",
+            "Do not feed arbitrary expressions into arithmetic."
+          ],
+          "solution": "First require digits in the intended format, then enforce a positive range. Document a reasonable maximum to avoid accidental enormous work.",
+          "tests": [
+            "Decimal fractions are rejected.",
+            "The maximum boundary is tested."
+          ],
+          "extension": "Decide whether leading zeros are accepted and normalize them explicitly.",
+          "id": "bash-08-c"
+        },
+        {
+          "title": "The misleading compact chain",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A script uses validate && analyze || report_invalid. Why might report_invalid run even after validation succeeds?",
+          "inputs": "analyze returns nonzero.",
+          "expected": "The final branch responds to the failed analyze command.",
+          "hints": [
+            "&& and || form command lists.",
+            "This is not a complete if/else substitute."
+          ],
+          "solution": "Use if validate; then if analyze; then ... else report_analysis_failure; fi; else report_invalid; fi. Distinguish the two failures.",
+          "tests": [
+            "Validation failure has its own message.",
+            "Analysis failure is not mislabeled as invalid input."
+          ],
+          "extension": "Refactor the nested branch into small functions.",
+          "id": "bash-08-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Does -r validate the contents of a file?",
+          "answer": "No. It checks readability; the data format and scientific validity need separate checks."
+        },
+        {
+          "question": "Why use case for modes?",
+          "answer": "It exposes a finite set of accepted values and keeps input as data instead of executable text."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: conditional constructs",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Conditional-Constructs.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-09",
+      "language": "bash",
+      "title": "Loops over records, not accidental words",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-08"
+      ],
+      "summary": "Repeat work while preserving the boundaries of filenames and text lines.",
+      "why": "Batch processing is one of Bash’s best uses, provided each item remains intact.",
+      "explanation": [
+        "A loop repeats an operation for a sequence of items. The crucial question is what counts as an item. A list of filenames is not safely represented by arbitrary whitespace-separated text, because a filename can itself contain spaces. Similarly, a line of a log may contain several words that must remain one record.",
+        "For a fixed list, quote each item and quote the loop variable when passing it to commands. For lines from a simple text file, IFS= read -r preserves leading and trailing whitespace and backslashes. A redirected while loop can keep its state in the current shell, unlike common pipeline-loop forms that may execute in a subshell. Learn this difference with a counter before relying on it in a report.",
+        "Start by printing the work you intend to perform. Once the item boundaries and count are correct, replace the print with a known read-only transformation. Record a per-item result and decide what should happen if one item fails. A batch that processes nine files and silently skips the tenth is not a complete successful analysis."
+      ],
+      "example": {
+        "code": "count=0\nwhile IFS= read -r line; do\n  printf \"<%s>\\n\" \"$line\"\n  count=$((count+1))\ndone < records.txt\nprintf \"Records: %s\\n\" \"$count\"",
+        "explanation": "This assumes a newline-terminated records.txt fixture. The redirection avoids placing the loop in a pipeline subshell."
+      },
+      "walkthrough": [
+        "Create three newline-terminated records, including a space and a backslash.",
+        "Print each record with visible delimiters.",
+        "Count iterations and inspect the counter after the loop.",
+        "Define a policy for an input file whose last line lacks a newline."
+      ],
+      "pitfalls": [
+        "Using for line in $(cat file), which splits on words.",
+        "Dropping backslashes by omitting read -r.",
+        "Expecting a pipeline subshell’s counter to update the parent shell."
+      ],
+      "exercises": [
+        {
+          "title": "Fixed list",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Loop over two names, one containing a space, and print one bracketed name per line.",
+          "inputs": "Names alpha and rover run.",
+          "expected": "[alpha] then [rover run]",
+          "hints": [
+            "Quote the space-containing item.",
+            "Quote the expansion inside the loop."
+          ],
+          "solution": "for name in \"alpha\" \"rover run\"; do printf \"[%s]\\n\" \"$name\"; done.",
+          "tests": [
+            "Exactly two iterations occur.",
+            "The space remains inside the second name."
+          ],
+          "extension": "Add an empty-string item and observe that it remains an item.",
+          "id": "bash-09-a"
+        },
+        {
+          "title": "Preserve text lines",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Read a three-line fixture without splitting words or interpreting backslashes.",
+          "inputs": "alpha beta; path\\segment; final, each newline-terminated.",
+          "expected": "Three intact printed records.",
+          "hints": [
+            "Use IFS= before read.",
+            "Use the -r option."
+          ],
+          "solution": "while IFS= read -r line; do printf \"%s\\n\" \"$line\"; done < records.txt. This contract expects newline-terminated records.",
+          "tests": [
+            "alpha beta is one record.",
+            "The backslash survives."
+          ],
+          "extension": "Support a final unterminated record explicitly.",
+          "id": "bash-09-b"
+        },
+        {
+          "title": "Batch outcome summary",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Design a loop that reports how many files succeeded and failed without hiding individual failures.",
+          "inputs": "Three fixtures, one deliberately unreadable or absent.",
+          "expected": "Two successes and one failure under the defined test.",
+          "hints": [
+            "Check each operation immediately.",
+            "Store success and failure counters separately."
+          ],
+          "solution": "Use an if around each file operation, increment the appropriate count, and print a final summary. Return a failure status when the batch contract requires all files.",
+          "tests": [
+            "Every item has an outcome.",
+            "A failed item cannot be counted as successful."
+          ],
+          "extension": "Add a separate list of failed paths for retry.",
+          "id": "bash-09-c"
+        },
+        {
+          "title": "Counter disappears",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A counter incremented inside cat records.txt | while read ... remains zero afterward. Explain a likely cause.",
+          "inputs": "A Bash pipeline loop.",
+          "expected": "The loop may run in a subshell whose variables do not update the parent.",
+          "hints": [
+            "Investigate execution scope.",
+            "Feed the loop with input redirection instead."
+          ],
+          "solution": "Use while ...; done < records.txt for this simple file case. Then the counter is available in the surrounding shell.",
+          "tests": [
+            "The final count equals the number of records.",
+            "Input boundaries are still preserved with IFS= read -r."
+          ],
+          "extension": "Explain why a subshell can be useful when intentional.",
+          "id": "bash-09-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why avoid for line in $(cat file)?",
+          "answer": "Command substitution and word splitting do not preserve arbitrary line boundaries or filename characters."
+        },
+        {
+          "question": "What does read -r prevent?",
+          "answer": "It prevents read from treating backslashes as escape characters."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: looping constructs",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Looping-Constructs.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-10",
+      "language": "bash",
+      "title": "Arrays and file discovery",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-09"
+      ],
+      "summary": "Keep an argument list structured and inspect discovered files before processing them.",
+      "why": "A reproducible batch needs an exact list of inputs, including paths containing spaces.",
+      "explanation": [
+        "An array stores separate elements without forcing you to encode them into one space-separated string. This makes it suitable for a command’s arguments or a small list of files. Quoted expansion of all array elements preserves those boundaries. It is a better design than building a string with embedded quote marks and hoping Bash will parse it again.",
+        "File discovery introduces another boundary problem. A newline-separated listing is convenient for human inspection but cannot represent every possible filename unambiguously. A NUL-delimited stream is suitable for machine handling because filenames cannot contain that delimiter. GNU find supports -print0, and compatible consumers can preserve each complete path. Use a read-only listing first to verify the selection criteria.",
+        "Keep the discovery scope narrow. Start from the project’s input directory, filter regular files and the intended suffix, and record which files were selected. An empty match set deserves an explicit outcome, especially when the absence of logs could otherwise look like a successful zero-error run. The exercises here only list and inspect files; they do not bulk rename or delete anything."
+      ],
+      "example": {
+        "code": "files=(\"run one.log\" \"run two.log\")\nfor file in \"${files[@]}\"; do\n  printf \"Input: <%s>\\n\" \"$file\"\ndone",
+        "explanation": "Each array element remains one argument, including its space. The quoted @ expansion is the important boundary-preserving step."
+      },
+      "walkthrough": [
+        "Create an array of two space-containing names.",
+        "Print each element and count the results.",
+        "Use find on a scratch input folder with a quoted pattern.",
+        "Decide how an empty selection should be reported."
+      ],
+      "pitfalls": [
+        "Storing many paths in one string.",
+        "Parsing ls output as a machine-readable file list.",
+        "Letting the shell expand a find pattern before find receives it."
+      ],
+      "exercises": [
+        {
+          "title": "Array boundaries",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Store three input names in an indexed Bash array and print them individually.",
+          "inputs": "a.log, run one.log, z.log",
+          "expected": "Exactly three intact names.",
+          "hints": [
+            "Use parentheses for the array assignment.",
+            "Quote the @ expansion."
+          ],
+          "solution": "files=(\"a.log\" \"run one.log\" \"z.log\"); for file in \"${files[@]}\"; do printf \"%s\\n\" \"$file\"; done.",
+          "tests": [
+            "The middle name is not split.",
+            "The iteration count is three."
+          ],
+          "extension": "Add an empty element and inspect its behavior.",
+          "id": "bash-10-a"
+        },
+        {
+          "title": "Discover only logs",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "List regular .log files below a scratch inputs directory.",
+          "inputs": "Mixed .log and .csv files plus a subdirectory.",
+          "expected": "Only regular files whose names end in .log.",
+          "hints": [
+            "Quote the pattern.",
+            "Use -type f."
+          ],
+          "solution": "find ./inputs -type f -name \"*.log\" -print. The quoted glob belongs to find rather than the parent shell.",
+          "tests": [
+            "A directory named archive.log is excluded.",
+            "A file named notes.csv is excluded."
+          ],
+          "extension": "Repeat with -print0 for a machine consumer.",
+          "id": "bash-10-b"
+        },
+        {
+          "title": "Machine-safe discovery",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Design a NUL-delimited loop that prints discovered paths with boundaries intact.",
+          "inputs": "Files include spaces and tabs.",
+          "expected": "Every selected file is processed exactly once.",
+          "hints": [
+            "Use find -print0.",
+            "Use a consumer that reads NUL delimiters."
+          ],
+          "solution": "In Bash, use while IFS= read -r -d \"\" file; do printf \"<%s>\\n\" \"$file\"; done < <(find ./inputs -type f -name \"*.log\" -print0). This is Bash-specific process substitution.",
+          "tests": [
+            "Space-containing paths remain whole.",
+            "An empty folder produces zero iterations."
+          ],
+          "extension": "Add an explicit empty-selection report.",
+          "id": "bash-10-c"
+        },
+        {
+          "title": "A glob expanded too early",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "Why can find ./inputs -name *.log behave differently depending on files in the current directory?",
+          "inputs": "Unquoted *.log in the parent shell.",
+          "expected": "The shell may expand the pattern before find sees it.",
+          "hints": [
+            "There are two different pattern interpreters involved.",
+            "Choose which one owns the glob."
+          ],
+          "solution": "Use -name \"*.log\" so find receives the literal pattern. The discovery should not depend on unrelated matching files in the caller’s current directory.",
+          "tests": [
+            "Behavior is stable when the caller has matching files.",
+            "Only the intended search root is traversed."
+          ],
+          "extension": "Describe the same problem with an unquoted grep pattern.",
+          "id": "bash-10-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why use an array for command arguments?",
+          "answer": "It preserves separate values directly, including spaces and empty elements, without reparsing a string as code."
+        },
+        {
+          "question": "Why is NUL useful for filename lists?",
+          "answer": "It separates filenames unambiguously because a filename cannot contain a NUL character."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Findutils: safe filename handling",
+          "url": "https://www.gnu.org/software/findutils/manual/html_node/find_html/Safe-File-Name-Handling.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-11",
+      "language": "bash",
+      "title": "Functions with small responsibilities",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-10"
+      ],
+      "summary": "Give repeated workflow steps a name and a clear status contract.",
+      "why": "A script becomes easier to test when discovery, validation, analysis, and reporting are separate steps.",
+      "explanation": [
+        "A shell function is a named group of commands that runs in the shell context. It receives positional arguments and returns an exit status. It does not return an arbitrary string through return; use standard output for a data result and the status for success or failure. This distinction helps functions compose with ordinary command-line tools.",
+        "Use local variables inside functions to avoid accidentally changing unrelated script state. Validate the function’s inputs and preserve quoted argument boundaries exactly as in a script. Keep diagnostics on standard error if standard output is intended to be captured. A function named count_records should not also rename files or change the caller’s working directory without an explicit contract.",
+        "Choose functions around responsibilities rather than line counts. A five-line validator can be worth naming because it describes a meaningful decision. Avoid introducing layers that only obscure a simple command. Your goal is a script that reads like a sequence of clear steps and whose failures point to a specific boundary. Start by testing functions against tiny fixtures before running them across a large folder."
+      ],
+      "example": {
+        "code": "count_lines() {\n  local file=\"$1\"\n  [[ -r \"$file\" ]] || return 1\n  wc -l < \"$file\"\n}\ncount_lines \"run one.log\"",
+        "explanation": "The function emits a line count on stdout and returns nonzero if the input is not readable. Callers should supply exactly one argument or add count validation."
+      },
+      "walkthrough": [
+        "Name one repeated responsibility.",
+        "Define inputs, stdout format, and status behavior.",
+        "Use local variables and quote paths.",
+        "Test the function directly before integrating it."
+      ],
+      "pitfalls": [
+        "Trying to return a large numerical result through an exit status.",
+        "Printing progress messages into captured data output.",
+        "Changing global variables accidentally."
+      ],
+      "exercises": [
+        {
+          "title": "A validation function",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Write a function that succeeds only when its one argument is a readable regular file.",
+          "inputs": "One existing fixture and one missing path.",
+          "expected": "Status 0 for the valid file, nonzero otherwise.",
+          "hints": [
+            "Check argument count.",
+            "Combine -f and -r deliberately."
+          ],
+          "solution": "Use [[ $# -eq 1 ]] before inspecting $1, then [[ -f \"$1\" && -r \"$1\" ]]. The final test supplies the status.",
+          "tests": [
+            "A directory is rejected.",
+            "No argument is rejected cleanly."
+          ],
+          "extension": "Add a diagnostic without changing the status contract.",
+          "id": "bash-11-a"
+        },
+        {
+          "title": "Data through stdout",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Write a function that prints a supplied label in a stable format while leaving status for success.",
+          "inputs": "label \"trial one\"",
+          "expected": "label=trial one on stdout.",
+          "hints": [
+            "Use a fixed printf format.",
+            "Quote the argument."
+          ],
+          "solution": "A function can printf \"label=%s\\n\" \"$1\". Do not use return \"$1\"; return is for numeric status.",
+          "tests": [
+            "Spaces survive.",
+            "A successful print returns success."
+          ],
+          "extension": "Capture the output into a variable and inspect it.",
+          "id": "bash-11-b"
+        },
+        {
+          "title": "No hidden directory changes",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Refactor a function that changes into an input directory and forgets to change back.",
+          "inputs": "Caller expects its current directory unchanged.",
+          "expected": "The function’s effect is isolated or removed.",
+          "hints": [
+            "Prefer explicit paths when possible.",
+            "A subshell can intentionally contain cd."
+          ],
+          "solution": "Use explicit file paths, or perform the directory-specific work in a subshell. Document any unavoidable state changes.",
+          "tests": [
+            "pwd before and after agrees.",
+            "The intended file is still accessed."
+          ],
+          "extension": "Add a test for failure during the internal operation.",
+          "id": "bash-11-c"
+        },
+        {
+          "title": "Debug text corrupts a number",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A caller captures count=$(count_lines file), but the function prints \"starting\" and then the number. Diagnose the broken interface.",
+          "inputs": "Captured text contains two lines.",
+          "expected": "Send diagnostics to stderr or remove them from the data function.",
+          "hints": [
+            "Command substitution captures stdout.",
+            "Keep stdout machine-readable."
+          ],
+          "solution": "Use printf \"starting\\n\" >&2 for a diagnostic, and only the count on stdout. Also check the function’s exit status before using the data.",
+          "tests": [
+            "Captured output contains only the number.",
+            "Failure does not produce a misleading valid count."
+          ],
+          "extension": "Document whether leading whitespace from wc is normalized.",
+          "id": "bash-11-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does return communicate in a shell function?",
+          "answer": "An exit status, conventionally zero for success and nonzero for failure, not an arbitrary data value."
+        },
+        {
+          "question": "Why declare local variables?",
+          "answer": "To limit accidental changes to the surrounding script’s state and make the function’s dependencies clearer."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: shell functions",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Shell-Functions.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-12",
+      "language": "bash",
+      "title": "Test scripts with awkward fixtures",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-11"
+      ],
+      "summary": "Verify success, failure, quoting, and output contracts before processing real project data.",
+      "why": "The most useful shell tests often expose problems that an ordinary filename and perfect input would never reveal.",
+      "explanation": [
+        "A script test should check more than whether a command ran. Inspect its exit status, standard output, standard error, and file effects. A program that reports success but writes the wrong file has failed its contract. Build small fixtures where the correct answer is obvious and include one missing file, one empty file, and one path containing a space.",
+        "Static analysis catches another class of mistakes. ShellCheck can identify many suspicious expansions, quoting errors, and portability issues without running the script. Read its explanation rather than silencing warnings mechanically. A static warning is evidence to investigate, and a clean report is not a proof of correctness. Runtime behavior, data meaning, and intended side effects still require tests.",
+        "Keep test data inside a fresh temporary directory and avoid destructive cleanup logic in beginner exercises. A test harness can report its scratch location for inspection. Introduce one deliberate defect, confirm a test fails, repair it, and rerun. This demonstrates that the test is capable of detecting the behavior you care about instead of merely echoing a reassuring message."
+      ],
+      "example": {
+        "code": "if bash inspect-log.sh \"missing-fixture.log\" > actual.out 2> actual.err; then\n  printf \"FAIL: missing input was accepted\\n\"\nelse\n  printf \"PASS: missing input was rejected\\n\"\nfi",
+        "explanation": "Run in a scratch directory. The harness checks the failure path and saves both streams for inspection."
+      },
+      "walkthrough": [
+        "List the script’s observable contract.",
+        "Create ordinary, empty, missing, and space-containing fixtures.",
+        "Check status, output, diagnostics, and files separately.",
+        "Run ShellCheck and investigate relevant findings."
+      ],
+      "pitfalls": [
+        "Testing only the successful case.",
+        "Calling every nonzero status a test failure when the case expects rejection.",
+        "Suppressing static warnings without understanding them."
+      ],
+      "exercises": [
+        {
+          "title": "Known-count fixture",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Test the line-count script with exactly three newline-terminated records.",
+          "inputs": "A scratch file containing a, b, c.",
+          "expected": "Status 0 and count 3.",
+          "hints": [
+            "Make the answer obvious.",
+            "Capture status and output separately."
+          ],
+          "solution": "Run the script, save stdout, check the exit status, and compare the normalized count with 3.",
+          "tests": [
+            "Three records pass.",
+            "Adding a fourth changes the expected count."
+          ],
+          "extension": "Add an empty-file test expecting zero.",
+          "id": "bash-12-a"
+        },
+        {
+          "title": "Expected rejection",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Test that a missing input produces a nonzero status and a helpful diagnostic.",
+          "inputs": "A path guaranteed absent in the new scratch directory.",
+          "expected": "No success result; nonzero status; nonempty stderr.",
+          "hints": [
+            "The test passes when the script rejects the input.",
+            "Do not confuse the test status with the script status."
+          ],
+          "solution": "Wrap the script in an if and invert the test expectation. Inspect actual.err for the diagnostic.",
+          "tests": [
+            "No result file is mistaken for valid analysis.",
+            "The error explains which condition failed."
+          ],
+          "extension": "Distinguish bad usage from missing-file status codes.",
+          "id": "bash-12-b"
+        },
+        {
+          "title": "Quoting regression",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Create a fixture path with spaces and confirm the script handles it exactly like an ordinary path.",
+          "inputs": "run one.log with two records.",
+          "expected": "Count 2 with status 0.",
+          "hints": [
+            "Quote the path in the harness too.",
+            "A broken harness can mimic a broken script."
+          ],
+          "solution": "Compare ordinary and awkward names containing identical data. Their outputs and statuses should agree.",
+          "tests": [
+            "Exactly one path argument reaches the script.",
+            "No extra files are created."
+          ],
+          "extension": "Add a leading-dash basename with an explicit ./ path.",
+          "id": "bash-12-c"
+        },
+        {
+          "title": "A test that cannot fail",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A harness prints PASS after running the script but never checks its result. Explain why it provides no evidence.",
+          "inputs": "The script may return any status.",
+          "expected": "PASS must depend on an asserted outcome.",
+          "hints": [
+            "Find the condition controlling the message.",
+            "Introduce a deliberate failing input."
+          ],
+          "solution": "Check the expected status and output before printing PASS. A deliberate defect should change the harness result.",
+          "tests": [
+            "The known defect is detected.",
+            "The repaired implementation passes."
+          ],
+          "extension": "Give the harness its own nonzero exit status when any assertion fails.",
+          "id": "bash-12-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What should a shell test observe?",
+          "answer": "Status, stdout, stderr, and intended file effects, according to the script’s contract."
+        },
+        {
+          "question": "What does ShellCheck add?",
+          "answer": "Static detection and explanation of many suspicious shell patterns; it complements rather than replaces behavioral tests."
+        }
+      ],
+      "sources": [
+        {
+          "title": "ShellCheck: diagnostic reference",
+          "url": "https://www.shellcheck.net/wiki/"
+        }
+      ]
+    },
+    {
+      "id": "bash-13",
+      "language": "bash",
+      "title": "Git as an experiment notebook",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-12"
+      ],
+      "summary": "Track source changes with small meaningful commits and inspect what is actually recorded.",
+      "why": "A future result is easier to explain when you can identify the exact code version that produced it.",
+      "explanation": [
+        "Git records snapshots of selected files. The working tree is what you are editing, the staging area is what the next commit will contain, and a commit is a saved snapshot with a message and parent history. These are distinct states. Editing a file after staging it does not automatically update the staged content.",
+        "Use read-only inspection habitually: status shows what changed, diff shows unstaged changes, and diff --cached shows the staged changes. Review before committing so generated outputs, accidental large files, or private configuration do not enter the history unintentionally. A useful commit message describes a coherent change and its purpose, such as adding a missing-input check.",
+        "A local repository does not require publishing anything. Practice with a tiny scratch project before using a remote. Git history is not a complete backup plan, and ignoring a file does not remove it from earlier commits. For engineering work, record code revision, input identity, and environment together; a commit alone does not identify a measurement file stored somewhere else."
+      ],
+      "example": {
+        "code": "git status --short\ngit diff\ngit diff --cached\ngit log -5 --oneline",
+        "explanation": "Run inside a repository. These commands inspect state and history without changing it."
+      },
+      "walkthrough": [
+        "Create or use a dedicated practice repository.",
+        "Edit a small text source file and inspect the unstaged diff.",
+        "Stage only the intended file and inspect the staged diff.",
+        "Commit a coherent change and inspect its history."
+      ],
+      "pitfalls": [
+        "Confusing staged content with the latest working-tree contents.",
+        "Treating .gitignore as removal from existing history.",
+        "Publishing private configuration as part of a broad add operation."
+      ],
+      "exercises": [
+        {
+          "title": "Three states",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Explain where an edit lives before staging, after staging, and after committing.",
+          "inputs": "A modified analysis script.",
+          "expected": "Working tree; staging area snapshot; commit history.",
+          "hints": [
+            "These are separate representations.",
+            "A later edit can coexist with an earlier staged version."
+          ],
+          "solution": "Use git status and the two diff forms to inspect each boundary. Describe what the next commit would contain.",
+          "tests": [
+            "Unstaged changes appear in git diff.",
+            "Staged changes appear in git diff --cached."
+          ],
+          "extension": "Stage, edit again, and explain both diffs.",
+          "id": "bash-13-a"
+        },
+        {
+          "title": "A focused commit",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "In a practice repository, add one clear input-validation change and commit only the intended file.",
+          "inputs": "A small script and unrelated notes edit.",
+          "expected": "The commit contains the script change, not unrelated notes.",
+          "hints": [
+            "Name the file when staging.",
+            "Review the staged diff."
+          ],
+          "solution": "Use git add with the specific file, inspect git diff --cached, then commit a message explaining the validation behavior.",
+          "tests": [
+            "Unrelated notes remain outside the commit.",
+            "The commit diff matches the intended change."
+          ],
+          "extension": "Include the relevant test in the same coherent commit.",
+          "id": "bash-13-b"
+        },
+        {
+          "title": "Run provenance",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Design a small metadata record linking a result to code and input identity.",
+          "inputs": "A code revision, input filename/checksum, tool versions.",
+          "expected": "A future reader can identify the producing code and data.",
+          "hints": [
+            "A commit does not identify untracked data.",
+            "Record the environment separately."
+          ],
+          "solution": "Store the commit identifier, whether local edits existed, input checksum, run arguments, and relevant versions with the result.",
+          "tests": [
+            "Two changed inputs have distinguishable records.",
+            "Uncommitted code is not represented as a clean revision."
+          ],
+          "extension": "Add a short interpretation of the result.",
+          "id": "bash-13-c"
+        },
+        {
+          "title": "Changed after staging",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A file was staged, then corrected, then committed without staging again. Why is the correction absent from the commit?",
+          "inputs": "The staging area retained an earlier snapshot.",
+          "expected": "Stage the intended corrected content after inspection.",
+          "hints": [
+            "Git commits the index.",
+            "Working-tree edits do not automatically alter it."
+          ],
+          "solution": "Inspect both diffs, stage the corrected file, and review the staged diff again before committing.",
+          "tests": [
+            "The final staged diff includes the correction.",
+            "No unrelated edits are included."
+          ],
+          "extension": "Explain this behavior with a three-column diagram.",
+          "id": "bash-13-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does git diff --cached show?",
+          "answer": "The staged changes that would enter the next commit relative to the current commit."
+        },
+        {
+          "question": "Is a commit enough to reproduce a scientific result?",
+          "answer": "No. Inputs, environment, run arguments, and any uncommitted changes also matter."
+        }
+      ],
+      "sources": [
+        {
+          "title": "Git: tutorial",
+          "url": "https://git-scm.com/docs/gittutorial"
+        }
+      ]
+    },
+    {
+      "id": "bash-14",
+      "language": "bash",
+      "title": "Environment and reproducible configuration",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-13"
+      ],
+      "summary": "Make tool selection and run settings visible without exposing private values.",
+      "why": "The same script can behave differently when it finds another interpreter, locale, or dependency version.",
+      "explanation": [
+        "A process inherits an environment containing named string values. Some variables affect command lookup, locale, or library behavior. A script should document the settings it relies on rather than assuming every terminal starts identically. Use command -v to inspect which executable will run and the tool’s documented version option to record its identity.",
+        "Keep run configuration separate from secrets. A sample configuration can show expected names and harmless defaults without containing credentials. Do not print the whole environment into a public report, because it may include private values. For a learning pipeline, record only a small allowlist of relevant non-sensitive settings such as tool versions and explicitly chosen locale behavior.",
+        "Reproducibility also includes platform assumptions. GNU and BSD tools may offer different flags, Bash versions may differ, and PowerShell is not Bash. State the environment you tested and prefer simple interfaces where practical. If a task requires sophisticated environment management, learn it when the project earns that complexity rather than collecting tools without a use case."
+      ],
+      "example": {
+        "code": "command -v bash\ncommand -v python3\nbash --version\nLC_ALL=C sort durations.txt",
+        "explanation": "The locale assignment applies to this sort invocation. It is useful when a workflow requires predictable byte-oriented ordering, but must match the data’s intended interpretation."
+      },
+      "walkthrough": [
+        "Identify each executable used by the script.",
+        "Record only relevant non-sensitive versions/settings.",
+        "Document platform-specific flags.",
+        "Run from a fresh shell and compare behavior."
+      ],
+      "pitfalls": [
+        "Dumping the entire environment into logs.",
+        "Assuming every sort order is independent of locale.",
+        "Confusing interpreter availability with matching dependency versions."
+      ],
+      "exercises": [
+        {
+          "title": "Executable identity",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Find which python3 executable the shell will invoke.",
+          "inputs": "A Bash environment with or without python3.",
+          "expected": "A resolved path or a documented missing-command outcome.",
+          "hints": [
+            "Use command -v.",
+            "Do not infer from an application icon."
+          ],
+          "solution": "Record command -v python3 and, if present, its version using the documented option. This identifies the executable in this environment.",
+          "tests": [
+            "A missing command is handled.",
+            "The recorded path matches the intended environment."
+          ],
+          "extension": "Compare an interactive shell and a project launcher.",
+          "id": "bash-14-a"
+        },
+        {
+          "title": "Local configuration",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Define a harmless run label and output folder as explicit script inputs rather than hidden global assumptions.",
+          "inputs": "run label trialA; output folder results/trialA.",
+          "expected": "The selected values are visible in the run summary.",
+          "hints": [
+            "Use descriptive names.",
+            "Keep required inputs explicit."
+          ],
+          "solution": "Validate the configuration at startup and print only non-sensitive values useful for reproducing the run.",
+          "tests": [
+            "A missing required value fails clearly.",
+            "Space-containing output paths remain quoted."
+          ],
+          "extension": "Provide an example config containing no private values.",
+          "id": "bash-14-b"
+        },
+        {
+          "title": "Portability note",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Write a compatibility section for a script using Bash arrays and GNU find -print0.",
+          "inputs": "The script is intended for a tested Linux Bash environment.",
+          "expected": "The note names tested tools and avoids claiming POSIX-sh portability.",
+          "hints": [
+            "Language and tool interfaces are separate dependencies.",
+            "List flags that need verification elsewhere."
+          ],
+          "solution": "Document the Bash version family, GNU utility assumptions, and a small smoke-test command. Test another platform before claiming support.",
+          "tests": [
+            "Running under sh is not recommended accidentally.",
+            "A missing dependency is detected early."
+          ],
+          "extension": "Replace one platform-specific operation with a verified portable alternative.",
+          "id": "bash-14-c"
+        },
+        {
+          "title": "The wrong interpreter",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "An interactive command uses the desired Python environment, but a scheduled or fresh-shell run finds a different interpreter. Diagnose the likely boundary.",
+          "inputs": "Different command lookup environments.",
+          "expected": "Make interpreter selection explicit and verify it at startup.",
+          "hints": [
+            "Inspect command -v in both contexts.",
+            "Do not assume shell startup files ran."
+          ],
+          "solution": "Document and invoke the intended environment through its supported mechanism. Record version identity with each run and avoid hard-coded private machine paths in shared examples.",
+          "tests": [
+            "The two contexts identify the same intended interpreter.",
+            "A missing environment fails clearly."
+          ],
+          "extension": "Add a startup dependency check.",
+          "id": "bash-14-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why avoid printing the entire environment?",
+          "answer": "It can contain private or irrelevant values; an allowlist records useful provenance without unnecessary disclosure."
+        },
+        {
+          "question": "Why is command -v useful?",
+          "answer": "It shows how the current shell resolves a command, helping identify environment-dependent tool selection."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: environment",
+          "url": "https://www.gnu.org/software/bash/manual/html_node/Environment.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-15",
+      "language": "bash",
+      "title": "Processes, waiting, and truthful completion",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-14"
+      ],
+      "summary": "Understand when work has actually finished before consuming its output.",
+      "why": "Simulation orchestration can fail when a report begins while the solver is still running.",
+      "explanation": [
+        "A foreground command normally completes before the shell continues to the next command. Appending & starts work asynchronously, allowing the shell to continue sooner. This can be useful, but it introduces a dependency problem: the output file may not be complete when another step tries to read it.",
+        "Capture the process identifier of a background job you started and use wait to observe its completion and status. Do not infer completion from a file merely existing, because a process may create the file before finishing or fail after writing part of it. For a first workflow, sequential execution is often easier to verify than parallel execution.",
+        "Interactive job control, process identifiers, and long-lived services are related but distinct topics. This lesson uses a harmless short process that you own. Do not experiment by stopping unrelated system processes. For later simulations, define cancellation, timeout, logging, and partial-output policies explicitly. Faster orchestration is only useful when the dependencies and outcomes remain understandable."
+      ],
+      "example": {
+        "code": "sleep 1 &\njob_pid=$!\nif wait \"$job_pid\"; then\n  printf \"Owned job completed successfully\\n\"\nelse\n  printf \"Owned job failed\\n\" >&2\nfi",
+        "explanation": "This starts and waits for a harmless short process. The completion message follows wait, not merely process launch."
+      },
+      "walkthrough": [
+        "Run a short command in the foreground.",
+        "Run the same harmless command in the background.",
+        "Capture its identifier and wait for it.",
+        "Make the next step conditional on successful completion."
+      ],
+      "pitfalls": [
+        "Treating process launch as successful completion.",
+        "Reading a file while its producer is still writing.",
+        "Managing a process you did not start or identify."
+      ],
+      "exercises": [
+        {
+          "title": "Foreground order",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Predict output order for a print, a short foreground sleep, and another print.",
+          "inputs": "before; sleep 1; after.",
+          "expected": "before appears first, after appears only after the sleep completes.",
+          "hints": [
+            "Foreground commands are sequential here.",
+            "Do not equate delay with a hang."
+          ],
+          "solution": "The shell waits for the foreground process before executing the next command. Observe once using harmless prints.",
+          "tests": [
+            "The second print is delayed.",
+            "No files change."
+          ],
+          "extension": "Contrast with background execution.",
+          "id": "bash-15-a"
+        },
+        {
+          "title": "Wait for owned work",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Start sleep 1 in the background, capture its PID, and print completion after wait succeeds.",
+          "inputs": "One owned background process.",
+          "expected": "Completion is reported after the process exits.",
+          "hints": [
+            "$! identifies the most recent asynchronous job.",
+            "wait returns its status."
+          ],
+          "solution": "Use job_pid=$! immediately after launching, then if wait \"$job_pid\"; then ... fi.",
+          "tests": [
+            "The stored PID is not overwritten by another launch.",
+            "Completion follows wait."
+          ],
+          "extension": "Add a second owned job and wait for both separately.",
+          "id": "bash-15-b"
+        },
+        {
+          "title": "Dependency plan",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Design a three-step pipeline: generate samples, analyze samples, render report. Identify which steps may overlap.",
+          "inputs": "Analysis depends on complete samples; report depends on analysis.",
+          "expected": "The core chain is sequential unless a dependency is removed deliberately.",
+          "hints": [
+            "Draw producer-consumer arrows.",
+            "File existence is not sufficient readiness."
+          ],
+          "solution": "Require successful producer completion before each consumer. Independent metadata collection might overlap, but must not change the data dependency.",
+          "tests": [
+            "A failed generator prevents analysis.",
+            "A failed analysis prevents a success report."
+          ],
+          "extension": "Add an explicit partial-output policy.",
+          "id": "bash-15-c"
+        },
+        {
+          "title": "Premature success",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A script launches analyzer & and immediately prints \"analysis complete\". Explain the false claim.",
+          "inputs": "The analyzer is still running.",
+          "expected": "The message proves launch only, not completion.",
+          "hints": [
+            "Asynchronous execution returns control early.",
+            "Use wait and inspect status."
+          ],
+          "solution": "Capture the job PID, wait for it, and print success only after a successful exit. Keep failures visible and do not consume incomplete output.",
+          "tests": [
+            "A failing analyzer produces no success message.",
+            "A slow analyzer delays the completion message."
+          ],
+          "extension": "Test with a stub that exits nonzero.",
+          "id": "bash-15-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does & change?",
+          "answer": "It starts a command asynchronously so the shell can continue before the command finishes."
+        },
+        {
+          "question": "Why is file existence a weak completion signal?",
+          "answer": "The file may be incomplete, stale, or left by a failed producer."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: job control basics",
+          "url": "https://www.gnu.org/s/bash/manual/html_node/Job-Control-Basics.html"
+        }
+      ]
+    },
+    {
+      "id": "bash-16",
+      "language": "bash",
+      "title": "Build a rerunnable experiment pipeline",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "bash-15"
+      ],
+      "summary": "Connect validation, analysis, provenance, and reporting into one transparent workflow.",
+      "why": "The lasting value of shell scripting is making a useful experiment repeatable after weeks or years away.",
+      "explanation": [
+        "A rerunnable pipeline has a defined input set, known tools, an explicit order, and a clear output contract. Begin with one file and one analysis command. Add validation and a small test fixture before scaling to a folder. The top-level script should read like a short explanation of the workflow rather than a puzzle of nested one-liners.",
+        "Choose what happens on rerun. A unique per-run output directory avoids confusing old results with new ones. A deliberate overwrite policy can also work for generated artifacts, but it must never target the raw observations. Record arguments, code revision, relevant versions, and input identity. A checksum helps distinguish changed bytes; it is not a statement about scientific quality.",
+        "At the end, verify the expected outputs rather than merely reaching the final line. Did every selected input get an outcome? Is the result parseable, nonempty when required, and associated with the current run? Write a short limitations note. Your first pipeline might summarize invented rover logs; later the same structure can coordinate MATLAB models, Python analysis, and simulator outputs without hiding their assumptions."
+      ],
+      "example": {
+        "code": "#!/usr/bin/env bash\nif [[ $# -ne 1 || ! -r \"$1\" ]]; then\n  printf \"Usage: summarize READABLE_LOG\\n\" >&2\n  exit 2\nfi\nprintf \"Input: %s\\n\" \"$1\"\nif wc -l < \"$1\"; then\n  printf \"Line-count step completed\\n\" >&2\nelse\n  printf \"Line-count step failed\\n\" >&2\n  exit 1\nfi",
+        "explanation": "This is a deliberately small starting pipeline. Expand it only after defining and testing each additional boundary."
+      },
+      "walkthrough": [
+        "Write the workflow contract in a README.",
+        "Validate before running analysis.",
+        "Record a per-run manifest and keep raw data unchanged.",
+        "Verify outputs and report both successes and failures."
+      ],
+      "pitfalls": [
+        "Reusing a stale output after a failed run.",
+        "Declaring success because the script reached its end.",
+        "Growing a shell script into an undocumented data-processing language."
+      ],
+      "exercises": [
+        {
+          "title": "Workflow contract",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Write the input, output, success, and failure contract for a log-summary script.",
+          "inputs": "One newline-terminated text log.",
+          "expected": "A reader knows what counts are produced and what invalid input does.",
+          "hints": [
+            "Specify the format, not just the filename.",
+            "Name the expected error outcomes."
+          ],
+          "solution": "Document required file readability, severity-line format, count outputs, status codes, and preservation of the source log.",
+          "tests": [
+            "An empty input has a defined meaning.",
+            "A missing input has a different outcome."
+          ],
+          "extension": "Add an example fixture and expected summary.",
+          "id": "bash-16-a"
+        },
+        {
+          "title": "Fresh outputs",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Design a per-run output directory policy that prevents old results from masquerading as current results.",
+          "inputs": "Two executions with different input logs.",
+          "expected": "Each run has a distinct identifiable result set.",
+          "hints": [
+            "Use a run identifier.",
+            "Validate the target before creating results."
+          ],
+          "solution": "Require a new run directory or reject an existing one under the chosen policy. Store a manifest alongside generated artifacts.",
+          "tests": [
+            "The second run cannot silently read the first summary.",
+            "Raw inputs remain outside the generated output folder."
+          ],
+          "extension": "Add a human-readable summary of the run.",
+          "id": "bash-16-b"
+        },
+        {
+          "title": "Cross-language orchestration",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Plan Bash validation followed by Python analysis and MATLAB comparison, using CSV as an explicit interface.",
+          "inputs": "Shared columns time_s and temperature_c.",
+          "expected": "Each stage has a documented format, status check, and evidence artifact.",
+          "hints": [
+            "Bash coordinates; numerical code analyzes.",
+            "Check the producer before invoking its consumer."
+          ],
+          "solution": "Validate filenames and tool availability, run the producer, inspect its status, validate the output schema, then run the comparison. Record versions and assumptions.",
+          "tests": [
+            "Failed analysis prevents comparison.",
+            "A schema mismatch is reported explicitly."
+          ],
+          "extension": "Add a small end-to-end fixture with a known answer.",
+          "id": "bash-16-c"
+        },
+        {
+          "title": "Stale success artifact",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A script reads summary.csv after analysis fails; the file was left by yesterday’s run. Why is existence checking insufficient?",
+          "inputs": "An old valid-looking summary remains.",
+          "expected": "Associate outputs with the current successful run.",
+          "hints": [
+            "Status and provenance both matter.",
+            "Use fresh output locations."
+          ],
+          "solution": "Stop on analysis failure and use a new run directory or a verified current-run marker. A stale file should never satisfy the new run’s success contract.",
+          "tests": [
+            "A failing run cannot publish yesterday’s result.",
+            "The manifest identifies the current inputs."
+          ],
+          "extension": "Test this case deliberately in a scratch directory.",
+          "id": "bash-16-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What makes a pipeline rerunnable?",
+          "answer": "Explicit inputs and environment, controlled output policy, checked dependencies, and enough provenance to reproduce the result."
+        },
+        {
+          "question": "When should a shell pipeline call another language?",
+          "answer": "When structured parsing, numerical analysis, complex data models, or detailed testing is clearer in a dedicated programming language."
+        }
+      ],
+      "sources": [
+        {
+          "title": "GNU Bash: manual",
+          "url": "https://www.gnu.org/s/bash/manual/bash.html"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "bash-project-log-audit",
+      "language": "bash",
+      "title": "Rover log audit command",
+      "level": "Beginner",
+      "summary": "Turn a folder of synthetic severity logs into a repeatable report that distinguishes no warnings from unreadable input.",
+      "mission": "Rovers",
+      "prerequisites": [
+        "bash-02",
+        "bash-05",
+        "bash-06",
+        "bash-07"
+      ],
+      "milestones": [
+        {
+          "title": "Specify the log format",
+          "deliverable": "A tiny fixture and a README defining INFO, WARN, and ERROR prefixes.",
+          "acceptance": "A line mentioning WARN inside an INFO message is not counted as a warning."
+        },
+        {
+          "title": "Build one-file analysis",
+          "deliverable": "A script with a quoted file argument and explicit status handling.",
+          "acceptance": "Valid, empty, missing, and space-containing filenames have documented outcomes."
+        },
+        {
+          "title": "Add batch reporting",
+          "deliverable": "One result per selected file plus success/failure totals.",
+          "acceptance": "Every selected input has an outcome and unreadable input cannot appear as zero warnings."
+        },
+        {
+          "title": "Package tests",
+          "deliverable": "A scratch-fixture test harness and usage examples.",
+          "acceptance": "An intentionally broken filter or unquoted path makes a test fail."
+        }
+      ],
+      "testPlan": [
+        "Prefix matching excludes incidental words.",
+        "Missing file is distinct from no matches.",
+        "A filename with spaces remains one argument."
+      ],
+      "extensions": [
+        "Delegate structured JSON logs to a JSON-aware tool.",
+        "Export a CSV summary using a parser/serializer appropriate to the schema."
+      ],
+      "portfolio": [
+        "A concise command usage page.",
+        "Before/after sample report.",
+        "Failure-path tests."
+      ],
+      "constraints": [
+        "Use synthetic logs or data you may share.",
+        "No deletion or mutation of input logs.",
+        "This is text auditing, not a vehicle safety monitor."
+      ]
+    },
+    {
+      "id": "bash-project-batch",
+      "language": "bash",
+      "title": "Simulation batch manifest builder",
+      "level": "Intermediate",
+      "summary": "Discover candidate input files, validate them, and create a manifest before any expensive simulation is launched.",
+      "mission": "Spacecraft",
+      "prerequisites": [
+        "bash-08",
+        "bash-09",
+        "bash-10",
+        "bash-12"
+      ],
+      "milestones": [
+        {
+          "title": "Define discovery",
+          "deliverable": "A documented search root, suffix rule, and empty-selection policy.",
+          "acceptance": "Only intended regular files are selected."
+        },
+        {
+          "title": "Preserve path boundaries",
+          "deliverable": "A filename-safe iteration method.",
+          "acceptance": "Spaces and tabs do not split a path into multiple jobs."
+        },
+        {
+          "title": "Produce a dry-run manifest",
+          "deliverable": "A list of exact intended inputs and fixed command arguments.",
+          "acceptance": "The manifest can be inspected without starting simulations."
+        },
+        {
+          "title": "Verify repeatability",
+          "deliverable": "Tests using a small nested fixture directory.",
+          "acceptance": "Repeated discovery on unchanged input gives the same documented selection and ordering policy."
+        }
+      ],
+      "testPlan": [
+        "No matching files has a clear outcome.",
+        "Directories with matching suffixes are excluded.",
+        "Unexpected filenames remain data, not code."
+      ],
+      "extensions": [
+        "Add checksums with a documented available tool.",
+        "Connect a harmless stub analyzer before a real simulator."
+      ],
+      "portfolio": [
+        "A manifest example.",
+        "A path-boundary regression test.",
+        "A diagram of discovery and validation."
+      ],
+      "constraints": [
+        "Do not execute command strings assembled from filenames.",
+        "Do not crawl broad system directories.",
+        "The first version is a dry-run planner, not a bulk job launcher."
+      ]
+    },
+    {
+      "id": "bash-project-runner",
+      "language": "bash",
+      "title": "A trustworthy analysis runner",
+      "level": "Intermediate",
+      "summary": "Wrap a small Python or MATLAB analysis with input checks, output isolation, and truthful success reporting.",
+      "mission": "Habitats",
+      "prerequisites": [
+        "bash-06",
+        "bash-07",
+        "bash-11",
+        "bash-14",
+        "bash-16"
+      ],
+      "milestones": [
+        {
+          "title": "Define interfaces",
+          "deliverable": "A contract for input CSV, analysis command, and output schema.",
+          "acceptance": "The runner knows which outputs are required and what failure means."
+        },
+        {
+          "title": "Validate startup",
+          "deliverable": "Checks for arguments, readable input, and required executable.",
+          "acceptance": "Missing prerequisites fail before output is reported as complete."
+        },
+        {
+          "title": "Isolate each run",
+          "deliverable": "A fresh output directory with a small provenance manifest.",
+          "acceptance": "A failed run cannot reuse yesterday’s result."
+        },
+        {
+          "title": "Test end to end",
+          "deliverable": "A successful known fixture and a failing stub analysis.",
+          "acceptance": "Only successful current-run output is offered to the next stage."
+        }
+      ],
+      "testPlan": [
+        "Missing interpreter or file fails clearly.",
+        "Nonzero analysis status prevents success reporting.",
+        "Space-containing paths survive all wrapper layers."
+      ],
+      "extensions": [
+        "Add a human-readable report of excluded rows.",
+        "Record tool versions with an explicit non-sensitive allowlist."
+      ],
+      "portfolio": [
+        "One-command reproduction instructions.",
+        "Successful and failed run examples.",
+        "A provenance manifest."
+      ],
+      "constraints": [
+        "No private environment dump.",
+        "No automatic software installation.",
+        "The wrapped analysis remains responsible for scientific validity."
+      ]
+    },
+    {
+      "id": "bash-project-git",
+      "language": "bash",
+      "title": "Versioned experiment notebook",
+      "level": "Beginner to intermediate",
+      "summary": "Create a small local repository that connects each analysis change to a test and a result interpretation.",
+      "mission": "Foundations",
+      "prerequisites": [
+        "bash-12",
+        "bash-13",
+        "bash-14"
+      ],
+      "milestones": [
+        {
+          "title": "Organize the project",
+          "deliverable": "Source, tests, sample input, and generated-output conventions.",
+          "acceptance": "Raw observations and generated artifacts have clearly different roles."
+        },
+        {
+          "title": "Record a baseline",
+          "deliverable": "A reviewed commit with a runnable known fixture.",
+          "acceptance": "The staged diff contains only intended shareable content."
+        },
+        {
+          "title": "Change one assumption",
+          "deliverable": "A second commit with an explained analysis or validation change.",
+          "acceptance": "The commit includes a relevant test and a meaningful message."
+        },
+        {
+          "title": "Write a comparison",
+          "deliverable": "A note connecting changed code to changed results.",
+          "acceptance": "The note names input identity, code version, and remaining uncertainty."
+        }
+      ],
+      "testPlan": [
+        "Fresh checkout or clean folder can run the sample.",
+        "Tests catch the original defect.",
+        "Generated results do not silently replace source evidence."
+      ],
+      "extensions": [
+        "Add a small changelog of scientific assumptions.",
+        "Practice a branch locally before learning remote collaboration."
+      ],
+      "portfolio": [
+        "Two coherent commits with reviewed diffs.",
+        "A reproduction README.",
+        "A short decision record."
+      ],
+      "constraints": [
+        "Publishing to a remote is optional and deliberate.",
+        "Do not commit credentials or private logs.",
+        "Git history is not your only backup."
+      ]
+    },
+    {
+      "id": "bash-project-orchestrate",
+      "language": "bash",
+      "title": "Dependency-aware experiment workflow",
+      "level": "Intermediate to advanced",
+      "summary": "Coordinate several harmless analysis stages and prove that failures, partial outputs, and background work are handled correctly.",
+      "mission": "Propulsion analysis",
+      "prerequisites": [
+        "bash-06",
+        "bash-11",
+        "bash-12",
+        "bash-15",
+        "bash-16"
+      ],
+      "milestones": [
+        {
+          "title": "Draw dependencies",
+          "deliverable": "A graph of fixture generation, analysis, comparison, and report steps.",
+          "acceptance": "Every consumer depends on a verified completed producer."
+        },
+        {
+          "title": "Implement sequentially",
+          "deliverable": "A readable runner using fixed commands and explicit status checks.",
+          "acceptance": "A failure stops only the dependent work and is identified accurately."
+        },
+        {
+          "title": "Add one independent task",
+          "deliverable": "An optional background metadata task with captured PID and wait status.",
+          "acceptance": "The report waits for required tasks and does not confuse launch with completion."
+        },
+        {
+          "title": "Inject failures",
+          "deliverable": "A test matrix of missing inputs, failing stubs, and stale output files.",
+          "acceptance": "No failing case yields a false success report."
+        }
+      ],
+      "testPlan": [
+        "A deliberately failing producer prevents its consumer.",
+        "A stale file cannot satisfy current-run completion.",
+        "Owned background tasks are waited on and statuses checked."
+      ],
+      "extensions": [
+        "Add a documented timeout using a supported tool only when needed.",
+        "Compare sequential and limited parallel execution after correctness is established."
+      ],
+      "portfolio": [
+        "Dependency diagram.",
+        "Failure-injection results.",
+        "A concise operational README."
+      ],
+      "constraints": [
+        "Use harmless stubs or offline analysis, not physical propulsion equipment.",
+        "Manage only processes started by the workflow.",
+        "Do not parallelize stages that share mutable outputs."
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Shell",
+      "definition": "A program that interprets commands and provides a scripting language.",
+      "example": "Bash interprets a quoted path and invokes a program."
+    },
+    {
+      "term": "Terminal",
+      "definition": "The interface through which a user interacts with a shell.",
+      "example": "One terminal application can host Bash or PowerShell."
+    },
+    {
+      "term": "Argument",
+      "definition": "One value passed to a command after shell interpretation.",
+      "example": "\"run one.log\" should be one argument."
+    },
+    {
+      "term": "Quoting",
+      "definition": "Syntax controlling expansion and word boundaries.",
+      "example": "\"$path\" preserves a path containing spaces."
+    },
+    {
+      "term": "Standard input",
+      "definition": "The default stream a program reads.",
+      "example": "A pipeline supplies grep with text on stdin."
+    },
+    {
+      "term": "Standard output",
+      "definition": "The default stream for ordinary program results.",
+      "example": "A count printed for another program to consume."
+    },
+    {
+      "term": "Standard error",
+      "definition": "A separate stream conventionally used for diagnostics.",
+      "example": "A missing-input message sent with >&2."
+    },
+    {
+      "term": "Exit status",
+      "definition": "A numeric outcome returned by a completed command.",
+      "example": "Zero conventionally means success."
+    },
+    {
+      "term": "Pipeline",
+      "definition": "A connection from one command’s stdout to another’s stdin.",
+      "example": "grep selects lines before wc counts them."
+    },
+    {
+      "term": "Glob",
+      "definition": "A shell or tool pattern matching filenames.",
+      "example": "*.log selects a class of names under specified rules."
+    },
+    {
+      "term": "Subshell",
+      "definition": "A separate shell execution environment with its own variable state.",
+      "example": "A loop in a pipeline may not update a parent counter."
+    },
+    {
+      "term": "Array",
+      "definition": "A structured sequence of separate values in Bash.",
+      "example": "An array holds paths without joining them into one string."
+    },
+    {
+      "term": "Working tree",
+      "definition": "The current editable files in a Git repository.",
+      "example": "A script change appears here before it is staged."
+    },
+    {
+      "term": "Staging area",
+      "definition": "The selected snapshot prepared for the next Git commit.",
+      "example": "git diff --cached shows staged changes."
+    },
+    {
+      "term": "Idempotence",
+      "definition": "The property that repeating an operation has the same intended effect as doing it once.",
+      "example": "A validated directory-creation step can tolerate reruns, while blind log appending may duplicate records."
+    }
+  ]
+}

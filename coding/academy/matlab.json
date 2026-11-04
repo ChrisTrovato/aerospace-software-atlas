@@ -1,0 +1,2369 @@
+{
+  "modules": [
+    {
+      "id": "matlab-01",
+      "language": "matlab",
+      "title": "A calculation you can rerun",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [],
+      "summary": "Turn a hand calculation into a transparent script with named quantities and units.",
+      "why": "An engineering result is useful only when you can reconstruct where it came from. A small repeatable script is your first laboratory notebook.",
+      "explanation": [
+        "Begin with a question small enough to solve on paper: how much electrical energy does a 12 W instrument use in 15 minutes? Name power and duration, convert minutes to seconds, multiply, and label the answer. A variable name such as duration_s records an assumption that a bare number cannot. MATLAB will happily multiply incompatible quantities; dimensional consistency is your responsibility until you deliberately introduce a units system.",
+        "A script records the sequence that produces your result. The Command Window is excellent for experiments, but commands that worked only because yesterday’s variables still existed are not a reproducible analysis. Put every required input in the script, run it from the beginning, and change just one input. A semicolon suppresses display; it does not skip computation. Comments should explain a physical assumption or choice, not repeat an obvious assignment.",
+        "Keep a small evidence trail beside the code: the question, input units, one hand calculation, and the expected behavior when an input doubles. Here doubling power should double energy. Do not let output formatting imply more measurement accuracy than you possess. The computer can print many digits even when your power estimate is approximate. This habit becomes valuable later when a long thermal model contains thousands of operations and only a few independent checks."
+      ],
+      "example": {
+        "code": "power_w = 12;\nduration_s = 15*60;\nenergy_j = power_w*duration_s;\nfprintf(\"Energy: %.0f J\\n\",energy_j);",
+        "explanation": "The answer is 10800 J. Watts are joules per second, so the seconds cancel in the multiplication."
+      },
+      "walkthrough": [
+        "Calculate the answer on paper before running the script.",
+        "Save energy_budget.m with all inputs at the top.",
+        "Run from the first line, then double power and predict the result.",
+        "Record why joules and watt-hours are different numerical representations of the same energy."
+      ],
+      "pitfalls": [
+        "Typing 15 as seconds when the problem says minutes.",
+        "Using ans as a lasting variable instead of naming the quantity.",
+        "Treating displayed precision as sensor accuracy."
+      ],
+      "exercises": [
+        {
+          "title": "Instrument energy",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Calculate the energy consumed by an 8 W sensor over 30 minutes. Print joules and watt-hours.",
+          "inputs": "power_w=8; duration_min=30",
+          "expected": "14400 J and 4 Wh",
+          "hints": [
+            "Convert minutes once.",
+            "One Wh is 3600 J."
+          ],
+          "solution": "duration_s=30*60; energy_j=8*duration_s; energy_wh=energy_j/3600. Multiplying 8 W by 0.5 h provides an independent check.",
+          "tests": [
+            "Zero duration returns zero.",
+            "Doubling duration returns twice the energy."
+          ],
+          "extension": "Add a second instrument and compare separate versus combined energy.",
+          "id": "matlab-01-a"
+        },
+        {
+          "title": "Battery estimate with assumptions",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Estimate ideal runtime from a 40 Wh battery powering a constant 10 W load. State one reason the real runtime might differ.",
+          "inputs": "energy_wh=40; power_w=10",
+          "expected": "4 h; the estimate ignores conversion losses and changing load.",
+          "hints": [
+            "Divide energy by power.",
+            "Do not mix Wh with seconds."
+          ],
+          "solution": "runtime_h=40/10. This is a simplified energy balance, not a battery performance guarantee.",
+          "tests": [
+            "20 W gives 2 h.",
+            "A zero load must be handled explicitly, not reported as ordinary finite runtime."
+          ],
+          "extension": "Represent an assumed 80% usable fraction as a named input.",
+          "id": "matlab-01-b"
+        },
+        {
+          "title": "A unit audit",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "A script computes energy_j=power_w*duration_min. Explain the error and make the input interface harder to misuse.",
+          "inputs": "power_w=5; duration_min=2",
+          "expected": "Correct energy is 600 J, not 10 J.",
+          "hints": [
+            "Write the units under each factor.",
+            "Convert at the boundary of the calculation."
+          ],
+          "solution": "Convert duration_min to duration_s=60*duration_min, then multiply. Keep the conversion visible and label outputs.",
+          "tests": [
+            "2 min agrees with 120 s.",
+            "1 W for 1 s gives 1 J."
+          ],
+          "extension": "Write a short input/output contract for the script.",
+          "id": "matlab-01-c"
+        },
+        {
+          "title": "The stale variable",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A script contains only energy_j=power_w*60 and works once, then fails in a fresh workspace. Diagnose and repair it.",
+          "inputs": "power_w happened to exist from an earlier session.",
+          "expected": "A self-contained script assigns or receives power_w before use.",
+          "hints": [
+            "Inspect the script, not only the workspace.",
+            "Ask what an independent reader needs."
+          ],
+          "solution": "The script has an undeclared dependency. Put the intended power value in the input section and explain the one-minute duration.",
+          "tests": [
+            "Run with no preexisting variables.",
+            "Change the input and rerun from the beginning."
+          ],
+          "extension": "Identify another analysis habit that can hide state.",
+          "id": "matlab-01-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does a semicolon change?",
+          "answer": "It suppresses ordinary display of that statement’s result; the calculation still occurs."
+        },
+        {
+          "question": "Why include units in a variable name?",
+          "answer": "It makes the intended representation visible and helps catch conversion mistakes; it does not enforce units automatically."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: scripts",
+          "url": "https://www.mathworks.com/help/matlab/learn_matlab/scripts.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-02",
+      "language": "matlab",
+      "title": "Vectors, indexing, and sample identity",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-01"
+      ],
+      "summary": "Represent several measurements without losing which sample each value belongs to.",
+      "why": "Sensor logs are sequences, not isolated scalars. Indexing mistakes can pair a correct measurement with the wrong time.",
+      "explanation": [
+        "A vector lets you give one name to a sequence of samples. Decide what an element represents before performing an operation: a temperature, a time, a channel, or a trial. MATLAB indexing starts at one. The first reading in a three-element vector is reading(1), and the final one is reading(end). A row vector and a column vector contain similar-looking numbers but have different shapes, which matters when you combine them.",
+        "Treat the time and value arrays as a pair. If you remove the second temperature but keep the second timestamp, every later interpretation can become wrong. Build an index selection once and apply it consistently to both arrays. A logical mask names a property of the samples, such as readings above a review threshold. It is often easier to inspect that mask than a loop containing several nested conditions.",
+        "Before trusting a selection, write down the expected indices using a tiny dataset. Include a reading exactly equal to the threshold so that the distinction between greater-than and greater-than-or-equal is deliberate. Missing samples are not automatically zero, and an empty selection is a legitimate outcome. Your future rover may produce no readings meeting a condition; the analysis should report that clearly instead of inventing an average."
+      ],
+      "example": {
+        "code": "time_s = [0 2 4 6];\ntemperature_c = [20 23 30 31];\nreview = temperature_c > 30;\nreview_times_s = time_s(review);",
+        "explanation": "Only the final sample exceeds 30 °C, so review_times_s is 6."
+      },
+      "walkthrough": [
+        "Create four timestamps and four readings on paper.",
+        "Inspect size, numel, first, and last elements.",
+        "Build one mask and apply it to both arrays.",
+        "Test a boundary value and a mask selecting no samples."
+      ],
+      "pitfalls": [
+        "Starting indices at zero.",
+        "Filtering values but forgetting their timestamps.",
+        "Confusing an empty vector with a zero measurement."
+      ],
+      "exercises": [
+        {
+          "title": "Choose the samples",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Select the first and third readings, then select the last two.",
+          "inputs": "x=[12 15 18 21]",
+          "expected": "[12 18] and [18 21]",
+          "hints": [
+            "Use a vector of indices.",
+            "end refers to the last index."
+          ],
+          "solution": "x([1 3]) selects [12 18]; x(end-1:end) selects [18 21].",
+          "tests": [
+            "Selecting 1 returns 12.",
+            "The last-two result contains exactly two elements."
+          ],
+          "extension": "Repeat with a column vector and describe the output shape.",
+          "id": "matlab-02-a"
+        },
+        {
+          "title": "Find threshold times",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Report the times where voltage is strictly below 11.5 V.",
+          "inputs": "t=[0 5 10 15]; v=[12 11.5 11.2 11.8]",
+          "expected": "Only 10 s",
+          "hints": [
+            "Build low=v<11.5.",
+            "Use t(low)."
+          ],
+          "solution": "The mask is [false false true false]. The equal-to-threshold reading is not selected.",
+          "tests": [
+            "All values above the threshold produces empty output.",
+            "A reading exactly 11.5 is excluded."
+          ],
+          "extension": "Return the matching voltages alongside their times.",
+          "id": "matlab-02-b"
+        },
+        {
+          "title": "Keep paired data aligned",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Remove invalid negative distances while preserving the matching trial identifiers.",
+          "inputs": "trial=[101 102 103 104]; distance_m=[2 -1 4 0]",
+          "expected": "trial [101 103 104], distance [2 4 0]",
+          "hints": [
+            "Zero distance is valid under this contract.",
+            "Use the same mask for both vectors."
+          ],
+          "solution": "valid=distance_m>=0; trial=trial(valid); distance_m=distance_m(valid). State whether missing values require a different check.",
+          "tests": [
+            "The retained arrays have the same length.",
+            "Trial 104 is retained."
+          ],
+          "extension": "Add an explicit NaN value and decide a finite-data policy.",
+          "id": "matlab-02-c"
+        },
+        {
+          "title": "The shifted clock",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A program deletes value(2) after a sensor fault but leaves time unchanged, then plots them. Explain both the obvious and the subtle failure.",
+          "inputs": "time=[0 1 2]; value=[10 -999 12]",
+          "expected": "Use one validity mask; retained pairs are (0,10),(2,12).",
+          "hints": [
+            "Lengths may no longer agree.",
+            "Padding or trimming to match lengths does not restore identity."
+          ],
+          "solution": "Mask both arrays together. Merely truncating time to two samples would silently attach 12 to t=1.",
+          "tests": [
+            "Plot input lengths match.",
+            "The second valid reading remains at t=2."
+          ],
+          "extension": "Store paired data in a table in a later module.",
+          "id": "matlab-02-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What is the difference between numel and size?",
+          "answer": "numel counts all elements; size reports the dimensions that describe their arrangement."
+        },
+        {
+          "question": "Why reuse a logical mask?",
+          "answer": "It preserves sample alignment across all variables filtered by the same validity decision."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: array indexing",
+          "url": "https://www.mathworks.com/help/matlab/learn_matlab/array-indexing.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-03",
+      "language": "matlab",
+      "title": "Array operations and matrix meaning",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-02"
+      ],
+      "summary": "Choose operators by the mathematics you intend rather than by which one avoids an error.",
+      "why": "The same symbols can mean a per-sample calculation or a linear transformation. Aerospace calculations use both.",
+      "explanation": [
+        "Suppose you have several measured speeds and want their squares. Each speed should be squared independently, so use .^2. If you instead have a matrix representing a transformation, multiplying that matrix by itself has a different mathematical meaning. The dot in an operator is a statement about the operation, not a cosmetic syntax fix. Write one small result by hand before applying an unfamiliar operator to a large array.",
+        "Shape is part of the contract. Two row vectors can be combined element by element. A row vector and a column vector can produce an entire grid through implicit expansion. That feature is useful for parameter sweeps, but it can also turn an intended four-sample result into a four-by-four matrix without an error. Inspect size before and after important operations and explain the meaning of each output dimension.",
+        "In this module you need multiplication, powers, and basic matrix multiplication; advanced linear algebra can come later. Think of a matrix-vector product as weighted combinations of inputs. For example, two simple sensor combinations can be represented by two rows. Do not memorize a blanket rule to put dots everywhere: that would break genuine matrix equations. Your goal is to recognize whether corresponding samples or coupled variables are being combined."
+      ],
+      "example": {
+        "code": "speed_mps = [1 2 3];\nenergy_j = 0.5*2.*speed_mps.^2;\nA = [1 1; 1 -1];\ny = A*[3; 1];",
+        "explanation": "The energies are [1 4 9] J for a 2 kg mass. The independent matrix example returns [4;2]."
+      },
+      "walkthrough": [
+        "Compute the three energy values by hand.",
+        "Compare size(speed_mps) with size(speed_mps').",
+        "Predict a 2-by-2 matrix-vector product.",
+        "Write a comment explaining the mathematical role of each dot operator."
+      ],
+      "pitfalls": [
+        "Using ^ when a vector needs element-wise powers.",
+        "Assuming implicit expansion always matches the intended sample pairing.",
+        "Replacing matrix multiplication with .* just to silence an error."
+      ],
+      "exercises": [
+        {
+          "title": "Square each speed",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Calculate one-half mass times speed squared for each sample.",
+          "inputs": "mass_kg=4; speed_mps=[0 2 3]",
+          "expected": "[0 8 18] J",
+          "hints": [
+            "Use speed_mps.^2.",
+            "Check the scalar mass separately."
+          ],
+          "solution": "energy_j=0.5*mass_kg.*speed_mps.^2. Each output belongs to the corresponding speed sample.",
+          "tests": [
+            "At zero speed energy is zero.",
+            "Doubling speed multiplies energy by four."
+          ],
+          "extension": "Plot energy against speed with units.",
+          "id": "matlab-03-a"
+        },
+        {
+          "title": "Read a transformation",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Compute the two weighted sensor combinations represented by A*x.",
+          "inputs": "A=[2 0;1 3]; x=[4;2]",
+          "expected": "[8;10]",
+          "hints": [
+            "The first output uses the first row.",
+            "The second output is 1*4+3*2."
+          ],
+          "solution": "Matrix multiplication combines rows with the input column. A.*x would express a different operation.",
+          "tests": [
+            "The output is 2-by-1.",
+            "Replacing x with [0;0] gives zeros."
+          ],
+          "extension": "Describe each row as a plain-language formula.",
+          "id": "matlab-03-b"
+        },
+        {
+          "title": "Intentional parameter grid",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Create energies for masses [1;2] kg and speeds [1 2 3] m/s using implicit expansion, then explain the axes.",
+          "inputs": "mass=[1;2]; speed=[1 2 3]",
+          "expected": "[0.5 2 4.5;1 4 9] J",
+          "hints": [
+            "Keep mass a column.",
+            "Rows should identify masses."
+          ],
+          "solution": "0.5*mass.*speed.^2 forms all mass-speed combinations. This is a grid, not two paired records.",
+          "tests": [
+            "Output size is 2-by-3.",
+            "Second row is twice the first."
+          ],
+          "extension": "Add row and column labels before exporting the grid.",
+          "id": "matlab-03-c"
+        },
+        {
+          "title": "The accidental grid",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A calculation intended three paired products but returned a 3-by-3 array. Repair the representation.",
+          "inputs": "a=[1 2 3]; b=[10;20;30]; result=a.*b",
+          "expected": "Paired products [10 40 90], if a row output is chosen.",
+          "hints": [
+            "Inspect both shapes.",
+            "Choose a consistent orientation deliberately."
+          ],
+          "solution": "Use a.*b.' or convert both to columns with a(:).*b(:). The original expanded every combination.",
+          "tests": [
+            "Exactly three outputs remain.",
+            "The middle paired product is 40."
+          ],
+          "extension": "Add a shape assertion before multiplying.",
+          "id": "matlab-03-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "When is .* appropriate?",
+          "answer": "When the intended mathematics multiplies corresponding elements or deliberately expanded combinations."
+        },
+        {
+          "question": "Why can a shape error produce no exception?",
+          "answer": "Implicit expansion can make mismatched orientations mathematically compatible while still violating the intended data contract."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: array versus matrix operations",
+          "url": "https://www.mathworks.com/help/matlab/matlab_prog/array-vs-matrix-operations.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-04",
+      "language": "matlab",
+      "title": "Plots that support a claim",
+      "stage": "Foundations",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-03"
+      ],
+      "summary": "Make figures that preserve units, sampling, and uncertainty rather than simply looking smooth.",
+      "why": "A plot is often the first thing a project reviewer sees. It should make the evidence easier to evaluate.",
+      "explanation": [
+        "A line plot joins your supplied points; it does not prove that the physical system followed a straight line between them. Markers reveal where data actually exists. Before plotting, ask what claim the figure should support: a temperature rose, two runs differ, or a model misses a transient. Choose axes and labels that let a reader test that claim. Use seconds, degrees Celsius, volts, or other explicit units rather than relying on a caption remembered from class.",
+        "Keep comparisons fair. Two runs shown on different scales can look deceptively similar. Plot them together when appropriate and distinguish them using markers or line styles as well as color. When time grids differ, do not silently treat sample index as time. Show each run on its actual timestamps, and label invented data as invented. Save the code that produced the figure so a corrected measurement can regenerate it.",
+        "Visual polish should follow data checks. Inspect vector lengths, order, missing values, and bounds before adjusting colors. A jagged line may expose a real problem worth investigating, while smoothing may hide it. For a small lesson dataset, calculate one plotted point independently. For a later report, include the data source, processing decisions, and limitations. This turns a picture into a reproducible piece of engineering evidence."
+      ],
+      "example": {
+        "code": "t_s = [0 10 20 30];\nmeasured_c = [20 22 25 27];\nplot(t_s,measured_c,\"o-\");\nxlabel(\"Time (s)\"); ylabel(\"Temperature (°C)\");\ngrid on;",
+        "explanation": "Markers expose the four sample times. The line is a visual connection, not an independently validated continuous model."
+      },
+      "walkthrough": [
+        "Write the intended claim in one sentence.",
+        "Plot original data with markers and labeled units.",
+        "Add a second run using the same axes.",
+        "Check one point and document any filtering."
+      ],
+      "pitfalls": [
+        "Plotting sample indices while labeling the axis as seconds.",
+        "Using a legend that does not match series order.",
+        "Removing inconvenient points without recording a reason."
+      ],
+      "exercises": [
+        {
+          "title": "Label a warm-up",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Plot the given temperatures against actual time and show sample markers.",
+          "inputs": "t_s=[0 5 15]; T_c=[20 24 26]",
+          "expected": "Points (0,20),(5,24),(15,26), axes labeled seconds and °C.",
+          "hints": [
+            "Pass both x and y.",
+            "Use a marker style such as o-."
+          ],
+          "solution": "plot(t_s,T_c,\"o-\"); xlabel(\"Time (s)\"); ylabel(\"Temperature (°C)\"). The unequal spacing must remain visible.",
+          "tests": [
+            "The final timestamp is 15, not 3.",
+            "All three sample markers appear."
+          ],
+          "extension": "Explain what is unknown between samples.",
+          "id": "matlab-04-a"
+        },
+        {
+          "title": "Compare two runs",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Show both runs on common axes with a meaningful legend.",
+          "inputs": "t=[0 1 2]; runA=[20 22 24]; runB=[20 21 23]",
+          "expected": "At t=2, A is 1 °C warmer than B.",
+          "hints": [
+            "Plot two x/y pairs.",
+            "Use different marker shapes."
+          ],
+          "solution": "plot(t,runA,\"o-\",t,runB,\"s--\"); legend(\"Run A\",\"Run B\"); add units. The claim concerns these samples only.",
+          "tests": [
+            "Both start at 20 °C.",
+            "Legend identity matches line identity."
+          ],
+          "extension": "Add a difference plot on a separate axis.",
+          "id": "matlab-04-b"
+        },
+        {
+          "title": "Model residual figure",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Plot measured-minus-predicted residuals and identify whether the model is consistently low.",
+          "inputs": "measured=[20 23 26]; predicted=[20 22 24]",
+          "expected": "Residuals [0 1 2] °C; prediction is low at the latter two samples.",
+          "hints": [
+            "Subtract in the stated order.",
+            "Include a zero reference."
+          ],
+          "solution": "residual=measured-predicted. The increasing residual suggests an error pattern worth investigating, not proof of a particular cause.",
+          "tests": [
+            "The first residual is zero.",
+            "Swapping subtraction reverses the sign and requires relabeling."
+          ],
+          "extension": "Describe two model assumptions that could be tested next.",
+          "id": "matlab-04-c"
+        },
+        {
+          "title": "The wrong clock label",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A chart uses plot(T) and xlabel(\"Time (s)\") although samples were collected every ten seconds starting at zero. Repair it.",
+          "inputs": "T=[20 21 24 25]",
+          "expected": "Explicit times [0 10 20 30] s",
+          "hints": [
+            "The default x values are indices.",
+            "Build the actual time vector."
+          ],
+          "solution": "t=(0:numel(T)-1)*10; plot(t,T,\"o-\"). Without this correction the plot misstates both origin and duration.",
+          "tests": [
+            "First point is at 0 s.",
+            "Last point is at 30 s."
+          ],
+          "extension": "Handle an irregular time vector.",
+          "id": "matlab-04-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does a marker contribute?",
+          "answer": "It identifies actual supplied samples rather than letting a connecting line imply continuous observation."
+        },
+        {
+          "question": "Why save plotting code?",
+          "answer": "It records how data became a figure and lets corrected inputs regenerate the same analysis."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: plot",
+          "url": "https://www.mathworks.com/help/matlab/ref/plot.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-05",
+      "language": "matlab",
+      "title": "Functions and input contracts",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-04"
+      ],
+      "summary": "Package a calculation so its inputs, outputs, and assumptions are explicit.",
+      "why": "A thermal equation reused across several scripts should have one tested implementation, not five slightly different copies.",
+      "explanation": [
+        "A function makes a boundary around a calculation. Inputs cross into it, outputs come back, and local intermediate values stay inside. That boundary gives you a place to state units, valid ranges, and array shapes. Start with a scalar conversion rather than a large simulation. Decide whether the function accepts one number, a vector, or both before writing the body.",
+        "Validation is not decoration. A cooling time constant must be positive, and a measured duration should not silently become complex or infinite. Reject inputs that do not belong to the intended model. Conversely, do not invent an unnecessary restriction just because the first example used a positive temperature: negative Celsius temperatures are physically ordinary. The contract should follow the quantity, not a convenient example.",
+        "Keep numerical work separate from presentation. A function returning energy can be tested without opening a figure or reading a file. Another script can gather inputs and plot the result. This separation makes homework easier to debug and later lets a batch of simulation runs call the same model. Use a function file matching the function name, include a short help comment, and test a known value before making the interface broader."
+      ],
+      "example": {
+        "code": "function kelvin = celsius_to_kelvin(celsius)\n% Convert finite temperatures at or above absolute zero.\nassert(isnumeric(celsius) && isreal(celsius));\nassert(all(isfinite(celsius(:))) && all(celsius(:)>=-273.15));\nkelvin = celsius + 273.15;\nend",
+        "explanation": "Save as celsius_to_kelvin.m. The validation permits negative Celsius values above absolute zero."
+      },
+      "walkthrough": [
+        "Write the input/output contract before the implementation.",
+        "Save one function with the matching filename.",
+        "Call it with a normal value and a boundary value.",
+        "Test a deliberately invalid value and read the diagnostic."
+      ],
+      "pitfalls": [
+        "Relying on a variable that exists only in the calling workspace.",
+        "Rejecting all negative Celsius values.",
+        "Mixing plots, files, and a simple numerical calculation in one function."
+      ],
+      "exercises": [
+        {
+          "title": "Conversion function",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Write a function converting minutes to seconds for nonnegative finite numeric input.",
+          "inputs": "[0 1 2.5] minutes",
+          "expected": "[0 60 150] seconds",
+          "hints": [
+            "Multiplication by 60 works on an array.",
+            "Validate the whole input, not only its first element."
+          ],
+          "solution": "Return minutes*60 after checking finite real nonnegative values. Use a name that includes the direction of conversion.",
+          "tests": [
+            "0 returns 0.",
+            "A negative value is rejected."
+          ],
+          "extension": "Document whether an empty input is accepted.",
+          "id": "matlab-05-a"
+        },
+        {
+          "title": "Energy interface",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Write energy_j(power_w,duration_s) for scalar nonnegative finite inputs. Keep printing outside it.",
+          "inputs": "12 W, 20 s",
+          "expected": "240 J",
+          "hints": [
+            "Start with scalar inputs only.",
+            "A return value is easier to test than a printed sentence."
+          ],
+          "solution": "The function checks scalar size and range, then returns power_w*duration_s. The caller labels the result.",
+          "tests": [
+            "Zero duration gives zero.",
+            "A vector is rejected under this contract."
+          ],
+          "extension": "Extend deliberately to equal-sized arrays.",
+          "id": "matlab-05-b"
+        },
+        {
+          "title": "Cooling contract",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Design the input checks for T=Ta+(T0-Ta)*exp(-t/tau), accepting vector t and scalar parameters.",
+          "inputs": "t=[0 10], tau=10, T0=30, Ta=20",
+          "expected": "[30, 23.6788...] °C",
+          "hints": [
+            "tau must be positive.",
+            "t must be nonnegative; temperatures can be negative."
+          ],
+          "solution": "Validate real finite values, positive scalar tau, scalar temperatures, and nonnegative t. Return an array with t’s shape.",
+          "tests": [
+            "t=0 returns T0.",
+            "tau=0 is rejected."
+          ],
+          "extension": "Add help text explaining the lumped-model assumption.",
+          "id": "matlab-05-c"
+        },
+        {
+          "title": "Invisible dependency",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A function accepts duration_s but refers to power_w without an input or local assignment. It worked as a script. Repair its design.",
+          "inputs": "function E=energy(duration_s); E=power_w*duration_s; end",
+          "expected": "power_w must become an explicit input.",
+          "hints": [
+            "Functions have their own workspace.",
+            "Do not repair this with a global variable."
+          ],
+          "solution": "Use function E=energy(power_w,duration_s). Call energy(12,20), then test 240 J.",
+          "tests": [
+            "Calling with documented inputs works in a fresh session.",
+            "Changing caller variable names does not change the function."
+          ],
+          "extension": "Find another hidden assumption and move it into the contract.",
+          "id": "matlab-05-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why keep plotting outside a small model function?",
+          "answer": "It makes the numerical result independently testable and reusable in other interfaces."
+        },
+        {
+          "question": "What belongs in an input contract?",
+          "answer": "Units, types, sizes, valid ranges, missing-data policy, and the meaning of each output."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: functions",
+          "url": "https://www.mathworks.com/help/matlab/ref/function.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-06",
+      "language": "matlab",
+      "title": "Importing logs without trusting them blindly",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-05"
+      ],
+      "summary": "Read a table, inspect its schema, and make missing-data decisions visible.",
+      "why": "Real experimental logs contain empty cells, inconsistent units, duplicate times, and malformed values. Import success does not mean scientific validity.",
+      "explanation": [
+        "A table attaches names to columns and keeps related measurements together. That is useful for a log containing time, temperature, and operating mode. Read the file, then inspect the variable names, types, and a few rows before applying a formula. A column that looks numeric in a spreadsheet may arrive as text because one row contains a unit suffix or a status word.",
+        "Define the data contract before cleaning. Is time measured in seconds from the start or represented by calendar timestamps? Can two measurements have the same time? Does a blank mean missing, zero, or not applicable? Retain the original file and construct a separate validity mask or cleaned table. Record how many rows were excluded and why; the removal itself can affect your conclusion.",
+        "Use synthetic files to test the importer before relying on an expensive experiment. Include one normal row, one missing value, one duplicate time, and one out-of-order row. Decide whether to reject, retain with a flag, or sort each case. Sorting is not automatically harmless because it can hide a logging-order problem. An honest report distinguishes what the instrument measured from what the analysis inferred or repaired."
+      ],
+      "example": {
+        "code": "T = readtable(\"sensor_log.csv\");\nrequired = [\"time_s\",\"temperature_c\"];\nassert(all(ismember(required,string(T.Properties.VariableNames))));\nvalid = isfinite(T.time_s) & isfinite(T.temperature_c);\nclean = T(valid,:);\nexcluded = sum(~valid);",
+        "explanation": "The example checks expected column names and removes nonfinite numeric rows into a new table; inspect imported types before using it."
+      },
+      "walkthrough": [
+        "Create a tiny CSV with explicit column names.",
+        "Inspect imported types and verify the expected columns.",
+        "Build a documented validity mask.",
+        "Keep raw and cleaned data separate and report exclusions."
+      ],
+      "pitfalls": [
+        "Treating missing temperature as zero.",
+        "Assuming automatic type detection always matches the intended schema.",
+        "Sorting or deleting rows without leaving a record."
+      ],
+      "exercises": [
+        {
+          "title": "Read a tiny CSV",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Create a three-row CSV in a scratch folder, import it, and report row count and column names.",
+          "inputs": "time_s,temperature_c followed by 0,20; 1,21; 2,22",
+          "expected": "3 rows; time_s and temperature_c",
+          "hints": [
+            "Use header names carrying units.",
+            "Inspect the table before calculation."
+          ],
+          "solution": "readtable reads the file; height(T) gives three. Confirm both columns are numeric and names match the contract.",
+          "tests": [
+            "First time is zero.",
+            "Last temperature is 22."
+          ],
+          "extension": "Add an operating-mode text column.",
+          "id": "matlab-06-a"
+        },
+        {
+          "title": "Missing measurement audit",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Keep finite temperatures and count missing rows without changing the original table.",
+          "inputs": "time=[0;1;2;3], temperature=[20;NaN;22;23]",
+          "expected": "3 valid rows, 1 excluded; retained times [0;2;3]",
+          "hints": [
+            "Use isfinite.",
+            "Select complete rows with the mask."
+          ],
+          "solution": "valid=isfinite(T.temperature_c); clean=T(valid,:); excluded=sum(~valid). This does not invent a temperature at t=1.",
+          "tests": [
+            "Raw table still has 4 rows.",
+            "The gap at 1 s remains visible."
+          ],
+          "extension": "Plot the gap instead of joining across it automatically.",
+          "id": "matlab-06-b"
+        },
+        {
+          "title": "Timestamp policy",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Specify and implement a check for strictly increasing time. Explain what you would do with a violation.",
+          "inputs": "time_s=[0;1;1;3]",
+          "expected": "The duplicate at the third row violates strict increase.",
+          "hints": [
+            "diff gives adjacent changes.",
+            "A zero difference is not positive."
+          ],
+          "solution": "all(diff(time_s)>0) is false. Return a diagnostic with the offending row pair; do not silently average duplicate readings without a stated rule.",
+          "tests": [
+            "[0;1;2] passes.",
+            "[0;2;1] fails for a different reason."
+          ],
+          "extension": "Separate duplicate and reverse-order diagnostics.",
+          "id": "matlab-06-c"
+        },
+        {
+          "title": "A missing value becomes ice",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A cleaning script replaces NaN temperature with 0 before averaging. Diagnose the scientific error.",
+          "inputs": "temperature_c=[20 NaN 22]",
+          "expected": "Known-data mean is 21 °C; zero substitution produces 14 °C.",
+          "hints": [
+            "Missing is not measured zero.",
+            "State the denominator used in the average."
+          ],
+          "solution": "Retain missingness, report two valid observations and one missing, and compute the mean only under an explicit known-data policy.",
+          "tests": [
+            "The valid count is 2.",
+            "An all-missing set reports no estimate."
+          ],
+          "extension": "Explain why interpolation also requires assumptions.",
+          "id": "matlab-06-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why retain the raw file?",
+          "answer": "It preserves evidence and allows cleaning choices to be audited or revised."
+        },
+        {
+          "question": "What should accompany a cleaned-data result?",
+          "answer": "The validity policy, number and reasons for excluded records, units, and any interpolation or sorting decisions."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: readtable",
+          "url": "https://www.mathworks.com/help/matlab/ref/readtable.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-07",
+      "language": "matlab",
+      "title": "Tests, tolerances, and useful failures",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-06"
+      ],
+      "summary": "Turn physical expectations and edge cases into small repeatable tests.",
+      "why": "A simulation may run without crashing while returning the wrong answer. Tests give correctness a visible definition.",
+      "explanation": [
+        "Start with a case whose result you know independently. A zero-duration energy calculation should return zero. A cooling model at its initial time should return the initial temperature. These are stronger tests than merely repeating the implementation’s formula in a second place. Include one ordinary value, one boundary, and one invalid input so the interface is tested as well as the arithmetic.",
+        "Floating-point calculations often need tolerances. An absolute tolerance measures an acceptable error in the output’s units; a relative tolerance scales with the reference magnitude. Neither should be chosen only to make a failing test pass. Near zero, relative error alone is awkward. State the reason for a tolerance and keep measurement uncertainty distinct from numerical rounding: they are different questions.",
+        "A failing test is useful information. Reduce the input to the smallest example that still fails, inspect intermediate quantities, and identify which assumption broke. Assertions can document invariants while developing a script, and larger projects can grow into MATLAB’s testing framework. Keep tests runnable without clicking through figures or requiring private files. A future version of you should be able to reproduce a failure with one clear command."
+      ],
+      "example": {
+        "code": "expected_j = 240;\nactual_j = 12*20;\nassert(abs(actual_j-expected_j)<1e-10,\"Energy check failed\");\nx = 0.1+0.2;\nassert(abs(x-0.3)<1e-12);",
+        "explanation": "The second comparison allows tiny representation error instead of demanding exact equality of decimal arithmetic."
+      },
+      "walkthrough": [
+        "Choose an independent known result.",
+        "Write normal, boundary, and invalid-input cases.",
+        "State an absolute or relative tolerance with units.",
+        "Deliberately break the model and confirm a test detects it."
+      ],
+      "pitfalls": [
+        "Comparing every floating-point value with exact equality.",
+        "Using a huge tolerance to hide a modeling error.",
+        "Testing the same formula against an identical copy of itself."
+      ],
+      "exercises": [
+        {
+          "title": "Boundary test",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Write tests for a minutes-to-seconds conversion at 0, 1, and 2.5 minutes.",
+          "inputs": "Expected seconds [0 60 150]",
+          "expected": "All three pass; a mistaken factor of 100 fails.",
+          "hints": [
+            "Select values with simple independent answers.",
+            "Check every expected value."
+          ],
+          "solution": "Use assert on the known outputs. Integer and half-minute cases make the conversion mistake obvious.",
+          "tests": [
+            "Introduce factor 100 and observe failure.",
+            "Restore 60 and rerun."
+          ],
+          "extension": "Test a negative input rejection.",
+          "id": "matlab-07-a"
+        },
+        {
+          "title": "Mixed tolerance",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Write a comparison using abs(actual-reference)<=atol+rtol*abs(reference).",
+          "inputs": "actual=1000.001, reference=1000, atol=1e-6, rtol=1e-5",
+          "expected": "Pass, since 0.001 is less than about 0.010001.",
+          "hints": [
+            "Compute the allowed error separately.",
+            "The reference supplies the scale."
+          ],
+          "solution": "allowed=atol+rtol*abs(reference); compare absolute error with allowed. Document why these tolerances fit the problem.",
+          "tests": [
+            "A 1-unit error fails.",
+            "A zero reference is governed by atol."
+          ],
+          "extension": "Use a different tolerance for a quantity measured in millimeters.",
+          "id": "matlab-07-b"
+        },
+        {
+          "title": "Physical invariant",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Design three model tests for passive cooling toward a constant ambient with positive time constant.",
+          "inputs": "T0=40, Ta=20, tau=30, t>=0",
+          "expected": "Initial value 40; values remain between 20 and 40; temperature decreases.",
+          "hints": [
+            "Use limits and monotonicity.",
+            "Choose a finite time grid."
+          ],
+          "solution": "Check T(0)=40 within tolerance, all T>=20 and T<=40, and diff(T)<=small_tolerance. These verify model properties independently of a chosen output vector.",
+          "tests": [
+            "Equal initial and ambient temperatures stay constant.",
+            "Negative tau is rejected."
+          ],
+          "extension": "Explain why these tests still do not validate real hardware.",
+          "id": "matlab-07-c"
+        },
+        {
+          "title": "Tolerance hides a unit error",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A result of 240000 is accepted against reference 240 using atol=1e6. Diagnose the test and model.",
+          "inputs": "Power was entered in milliwatts but treated as watts.",
+          "expected": "Correct output is 240 J; the error is 1000-fold.",
+          "hints": [
+            "Check input units before changing tolerances.",
+            "A passing test is only as meaningful as its acceptance rule."
+          ],
+          "solution": "Convert milliwatts to watts and choose tolerance based on the intended numerical calculation. Keep a known unit-conversion test.",
+          "tests": [
+            "The 1000-fold error must fail.",
+            "A rounding-scale difference may pass."
+          ],
+          "extension": "Add a test documenting the input unit.",
+          "id": "matlab-07-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What is an invariant?",
+          "answer": "A property expected to remain true across a range of valid inputs, such as a conserved total or a bounded passive response."
+        },
+        {
+          "question": "Why is numerical tolerance different from measurement uncertainty?",
+          "answer": "Tolerance checks computation against a reference; uncertainty describes incomplete knowledge of the physical input or observation."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: assert",
+          "url": "https://www.mathworks.com/help/matlab/ref/assert.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-08",
+      "language": "matlab",
+      "title": "Linear systems and residuals",
+      "stage": "Working programs",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-07"
+      ],
+      "summary": "Solve coupled equations and check whether the computed solution actually satisfies them.",
+      "why": "Statics, circuits, numerical models, and estimation all lead to linear systems. Knowing how to question a solution matters as much as obtaining it.",
+      "explanation": [
+        "A linear system A*x=b represents several coupled equations. Each row is an equation and each column corresponds to an unknown. Before typing matrices, write the unknown order explicitly and check coefficient units. A correct solver cannot repair a column that accidentally switched from one unknown to another halfway through the model. Begin with a two-equation system you can solve by substitution.",
+        "Use the backslash operator for a numerical solve rather than explicitly forming an inverse. Then calculate the residual A*x-b and inspect its size relative to the scale of the problem. A small residual means the computed answer satisfies the entered equations closely. It does not prove the equations represent reality, nor guarantee that the solution is insensitive to tiny changes in data.",
+        "Nearly dependent equations deserve attention. If two measurements provide almost the same information, small measurement differences can cause large changes in inferred unknowns. This is conditioning, not simply a MATLAB bug. Perturb one right-hand-side value slightly and observe the result. Later linear algebra courses explain norms, rank, and condition numbers; this module gives you concrete questions to carry into that mathematics."
+      ],
+      "example": {
+        "code": "A = [2 1;1 -1];\nb = [5;1];\nx = A\\b;\nresidual = A*x-b;\ndisp(x); disp(norm(residual));",
+        "explanation": "The solution is [2;1], and the residual is zero up to numerical rounding."
+      },
+      "walkthrough": [
+        "Write both scalar equations and the unknown order.",
+        "Construct A and b with compatible dimensions.",
+        "Solve using backslash and substitute the result.",
+        "Change an input slightly and compare the solution change."
+      ],
+      "pitfalls": [
+        "Using inv(A)*b as the default solve.",
+        "Calling a tiny residual proof that the physical model is correct.",
+        "Ignoring solver warnings about rank or near singularity."
+      ],
+      "exercises": [
+        {
+          "title": "Two equations",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Solve 2x+y=5 and x-y=1, then substitute the result manually.",
+          "inputs": "A=[2 1;1 -1], b=[5;1]",
+          "expected": "x=2, y=1",
+          "hints": [
+            "Subtract or substitute on paper first.",
+            "The right-hand side is a column."
+          ],
+          "solution": "A\\b gives [2;1]; 2*2+1=5 and 2-1=1 verify both equations.",
+          "tests": [
+            "Residual norm is near zero.",
+            "Output has two entries."
+          ],
+          "extension": "Change the second right-hand side to zero and predict the result.",
+          "id": "matlab-08-a"
+        },
+        {
+          "title": "Residual audit",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Check the proposed solution [1;1] against the same system.",
+          "inputs": "A=[2 1;1 -1], b=[5;1], candidate=[1;1]",
+          "expected": "Residual [-2;-1], norm sqrt(5).",
+          "hints": [
+            "Calculate A*candidate first.",
+            "Subtract b in the stated direction."
+          ],
+          "solution": "A*candidate=[3;0], so the residual is [-2;-1]. The candidate does not solve the entered equations.",
+          "tests": [
+            "The true [2;1] produces near-zero residual.",
+            "Reversing subtraction changes signs, not norm."
+          ],
+          "extension": "Report per-equation residuals with the relevant units.",
+          "id": "matlab-08-b"
+        },
+        {
+          "title": "Sensitivity experiment",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Compare solutions before and after changing the second entry of b by 0.0001.",
+          "inputs": "A=[1 1;1 1.0001], b=[2;2.0001]",
+          "expected": "Initial [1;1]; changed b=[2;2.0002] gives approximately [0;2].",
+          "hints": [
+            "Subtract the two equations by hand.",
+            "The equations are nearly redundant."
+          ],
+          "solution": "The difference equation has coefficient 0.0001 on the second unknown. A tiny data change therefore creates a large solution change.",
+          "tests": [
+            "Both solutions can have small residuals.",
+            "A better-separated A should be less sensitive."
+          ],
+          "extension": "Explain why more output digits would not fix uncertain inputs.",
+          "id": "matlab-08-c"
+        },
+        {
+          "title": "Unknown order mismatch",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A model defines x=[forceA;forceB], but the second row’s coefficients were entered in reverse order. Can a small residual reveal the mistake?",
+          "inputs": "Entered A differs from the intended equation.",
+          "expected": "No: a solver can exactly solve the wrong system.",
+          "hints": [
+            "Separate implementation verification from model validation.",
+            "Reconstruct each row in words."
+          ],
+          "solution": "Audit the mapping from equations to columns and correct A. Recheck against an independently derived case, not only the residual.",
+          "tests": [
+            "Every column keeps one unknown meaning.",
+            "A hand-solved case agrees."
+          ],
+          "extension": "Add a diagram or variable-order table to the report.",
+          "id": "matlab-08-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does the residual measure?",
+          "answer": "How closely the computed values satisfy the equations that were actually entered."
+        },
+        {
+          "question": "Can a small residual coexist with a sensitive solution?",
+          "answer": "Yes. An ill-conditioned system can be solved with a small residual while small input perturbations strongly change the answer."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: numerical linear solve",
+          "url": "https://www.mathworks.com/help/matlab/ref/double.mldivide.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-09",
+      "language": "matlab",
+      "title": "Integrating sampled power",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-08"
+      ],
+      "summary": "Estimate accumulated energy from timestamped measurements and inspect sampling error.",
+      "why": "A rover or habitat consumes changing power. Multiplying one reading by total duration may miss the actual energy history.",
+      "explanation": [
+        "An integral accumulates a rate over an interval. For power measured in watts and time in seconds, the area under the power curve is energy in joules. Sampled data does not reveal the complete curve, so numerical integration introduces an approximation. The trapezoidal rule assumes straight segments between neighboring samples and adds the resulting areas.",
+        "Pass actual timestamps to trapz. Calling trapz(power) alone assumes unit spacing, which is wrong when readings are ten seconds apart or irregularly spaced. Verify that time increases and that each power value belongs to the corresponding timestamp. Missing intervals deserve a stated policy; joining across a long gap makes a strong assumption about unobserved behavior.",
+        "Use a function with a known integral to evaluate your method before using real data. Constant and linearly changing power are especially useful because trapezoidal integration is exact apart from rounding. For a curved function, reduce the step size and compare results. This convergence experiment separates a coding error from an approximation that improves with better sampling. Calculus gives the interpretation; the program gives a reproducible numerical experiment."
+      ],
+      "example": {
+        "code": "t_s = [0 2 5];\npower_w = [10 14 20];\nenergy_j = trapz(t_s,power_w);",
+        "explanation": "The two trapezoids contribute 24 J and 51 J, totaling 75 J."
+      },
+      "walkthrough": [
+        "Draw the sample points and trapezoids.",
+        "Calculate each interval contribution by hand.",
+        "Use actual timestamps in trapz.",
+        "Compare a finer sampling of a known curved function."
+      ],
+      "pitfalls": [
+        "Assuming one-second spacing without checking.",
+        "Integrating unsorted timestamps.",
+        "Treating interpolation across a data gap as a measurement."
+      ],
+      "exercises": [
+        {
+          "title": "Constant power",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Integrate 5 W over four seconds from three samples.",
+          "inputs": "t=[0 2 4], P=[5 5 5]",
+          "expected": "20 J",
+          "hints": [
+            "Area is a rectangle.",
+            "Pass t explicitly."
+          ],
+          "solution": "trapz(t,P)=20; independently 5 W*4 s=20 J.",
+          "tests": [
+            "Doubling power doubles energy.",
+            "Doubling time span doubles energy."
+          ],
+          "extension": "Try irregular times [0 1 4] with the same constant power.",
+          "id": "matlab-09-a"
+        },
+        {
+          "title": "Irregular trapezoids",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Compute energy and each interval contribution.",
+          "inputs": "t=[0 2 5], P=[10 14 20]",
+          "expected": "24 J + 51 J = 75 J",
+          "hints": [
+            "Average adjacent powers.",
+            "Multiply by each interval length."
+          ],
+          "solution": "(10+14)/2*2=24; (14+20)/2*3=51. Their sum agrees with trapz.",
+          "tests": [
+            "There are two intervals, not three.",
+            "All contributions are nonnegative here."
+          ],
+          "extension": "Plot cumulative energy at the sample times.",
+          "id": "matlab-09-b"
+        },
+        {
+          "title": "Convergence on a curve",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Compare trapezoidal estimates of the integral of t^2 from 0 to 1 using steps 0.5 and 0.25.",
+          "inputs": "Analytic answer 1/3",
+          "expected": "0.375 and 0.34375, approaching 0.333333...",
+          "hints": [
+            "Generate the grid including both endpoints.",
+            "Report absolute error."
+          ],
+          "solution": "The first error is 1/24; the second is 1/96. Here halving step divides the error by four. Do not generalize this ratio to arbitrary missing or noisy data.",
+          "tests": [
+            "Both estimates exceed 1/3.",
+            "A constant function remains exact."
+          ],
+          "extension": "Try 0.125 and explain the pattern.",
+          "id": "matlab-09-c"
+        },
+        {
+          "title": "The missing time scale",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A log sampled every 10 s is integrated using trapz(P). Explain the factor error.",
+          "inputs": "P=[2 2 2], actual t=[0 10 20]",
+          "expected": "Correct 40 J; unit-spacing call returns 4.",
+          "hints": [
+            "Inspect the assumed x spacing.",
+            "Units expose the error."
+          ],
+          "solution": "Use trapz(t,P) or trapz(P)*10 only when constant spacing is established.",
+          "tests": [
+            "The corrected duration is 20 s.",
+            "An irregular log must use its timestamp vector."
+          ],
+          "extension": "Write a check rejecting nonincreasing time.",
+          "id": "matlab-09-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why pass timestamps to trapz?",
+          "answer": "They define the width and units of each interval, including irregular spacing."
+        },
+        {
+          "question": "What does convergence testing show?",
+          "answer": "How a numerical result changes as resolution improves; it does not establish that the physical model is correct."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: trapz",
+          "url": "https://www.mathworks.com/help/matlab/ref/trapz.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-10",
+      "language": "matlab",
+      "title": "Interpolation is an assumption",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-09"
+      ],
+      "summary": "Align data carefully and distinguish interpolation from extrapolation.",
+      "why": "Sensors and simulations often report at different times. Comparing them requires an explicit rule for values between samples.",
+      "explanation": [
+        "Interpolation estimates a value inside the range of supplied data. Linear interpolation connects adjacent observations by a straight segment. It is easy to explain and a useful starting point when no stronger model is justified. It is not a new measurement, and a denser interpolated curve does not contain more experimental information than the original samples.",
+        "Extrapolation asks for values outside the observed range and is a different risk. A sensor that warmed steadily for ten seconds need not continue at the same rate for an hour. Choose an explicit out-of-range policy: reject the query, retain a missing value, or use a separately justified model. Do not enable extrapolation simply to eliminate NaNs from a plot.",
+        "When comparing two logs, choose the comparison timestamps first and preserve the originals. Check time order, duplicate times, units, and gaps before interpolating. For a status flag or operating mode, a continuous interpolation may be meaningless; a previous-value rule could be appropriate only if the state is understood to persist. The engineering meaning of the quantity determines the mathematical operation."
+      ],
+      "example": {
+        "code": "t_s = [0 10 20];\nT_c = [20 30 34];\nquery_s = [5 15];\nestimate_c = interp1(t_s,T_c,query_s,\"linear\");",
+        "explanation": "The estimates are [25 32] °C. They lie halfway between adjacent samples."
+      },
+      "walkthrough": [
+        "Mark which query times lie inside the observed interval.",
+        "Calculate a midpoint by hand.",
+        "Interpolate with a named method.",
+        "Label estimated values separately from measured values."
+      ],
+      "pitfalls": [
+        "Calling a dense interpolated curve higher-resolution evidence.",
+        "Extrapolating unintentionally.",
+        "Interpolating categorical state numbers as if they were physical magnitudes."
+      ],
+      "exercises": [
+        {
+          "title": "Midpoint estimate",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Estimate temperature at 5 s with linear interpolation.",
+          "inputs": "t=[0 10], T=[20 30]",
+          "expected": "25 °C",
+          "hints": [
+            "Five seconds is halfway.",
+            "Weight both endpoints equally."
+          ],
+          "solution": "interp1(t,T,5,\"linear\") gives 25. This follows the straight-line assumption.",
+          "tests": [
+            "Query at 0 gives 20.",
+            "Query at 10 gives 30."
+          ],
+          "extension": "Estimate at 2 s and explain the weight.",
+          "id": "matlab-10-a"
+        },
+        {
+          "title": "Unequal interval",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Estimate a value at 3 s using endpoints 1 s and 7 s.",
+          "inputs": "t=[1 7], y=[10 22]",
+          "expected": "14",
+          "hints": [
+            "The fraction is (3-1)/(7-1).",
+            "Apply that fraction to the value difference."
+          ],
+          "solution": "10+(2/6)*(22-10)=14. The timestamps are not array indices.",
+          "tests": [
+            "The result lies between endpoint values.",
+            "Query 4 gives 16."
+          ],
+          "extension": "Implement the formula once and compare to interp1.",
+          "id": "matlab-10-b"
+        },
+        {
+          "title": "Overlap-only comparison",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Find valid comparison times for two logs before interpolating.",
+          "inputs": "A spans [0,20] s; B spans [5,25] s; query=[0 5 10 15 20 25]",
+          "expected": "Use [5 10 15 20] s only.",
+          "hints": [
+            "Find the interval intersection.",
+            "Avoid extrapolating either log."
+          ],
+          "solution": "The shared interval is [max(0,5),min(20,25)]=[5,20]. Mask query times to this interval before computing differences.",
+          "tests": [
+            "Both endpoints are allowed.",
+            "Disjoint intervals produce no comparison."
+          ],
+          "extension": "Report how much of each run is excluded.",
+          "id": "matlab-10-c"
+        },
+        {
+          "title": "A fractional operating mode",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A mode log uses 0=idle and 1=active. Linear interpolation gives mode 0.5 between transitions. Diagnose it.",
+          "inputs": "t=[0 10], mode=[0 1], query=5",
+          "expected": "0.5 is not a defined mode.",
+          "hints": [
+            "These values are labels.",
+            "Ask when the transition is known to occur."
+          ],
+          "solution": "Do not apply continuous interpolation blindly. If a logged state persists until its next update, document and use previous-value behavior; otherwise mark the transition interval uncertain.",
+          "tests": [
+            "Outputs must be defined states.",
+            "The transition convention is documented."
+          ],
+          "extension": "Keep an uncertainty interval around unknown transition timing.",
+          "id": "matlab-10-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Does interpolation create new evidence?",
+          "answer": "No. It creates estimates between supplied observations under a chosen rule."
+        },
+        {
+          "question": "What distinguishes extrapolation?",
+          "answer": "The query lies outside the observed range, where the interpolation assumptions have no bracketing data support."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: interp1",
+          "url": "https://www.mathworks.com/help/matlab/ref/double.interp1.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-11",
+      "language": "matlab",
+      "title": "Fit a model and question its residuals",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-10"
+      ],
+      "summary": "Estimate a simple relationship while separating fitted values from validation evidence.",
+      "why": "Calibration and experiment analysis often need a model, but a high-order curve can hide problems rather than explain them.",
+      "explanation": [
+        "Curve fitting chooses parameters that make a model agree with data according to an objective. For a first calibration exercise, fit a straight line and interpret its slope and intercept with units. A polynomial degree is a modeling choice, not a quality setting. More coefficients can reduce training residuals while making predictions unstable or physically implausible.",
+        "Residuals are measured values minus model predictions at the same inputs. Plot them against the input and against collection order. A trend may suggest missing physics, an offset may suggest calibration bias, and isolated outliers may suggest data problems. None of these patterns proves a cause by itself. Use them to decide which assumption or measurement deserves another experiment.",
+        "Keep some evidence separate from fitting when possible. A held-out observation tests prediction more honestly than a point used to select parameters. Also report the range over which data supports the fit; extrapolating a calibration line far beyond its observations can be unjustified. You need basic algebra for the line, while later statistics provides deeper tools for uncertainty and model comparison."
+      ],
+      "example": {
+        "code": "x = [0 1 2 3];\ny = [1 3 5 7];\np = polyfit(x,y,1);\npredicted = polyval(p,x);\nresidual = y-predicted;",
+        "explanation": "The fitted coefficients are approximately [2 1]. Residuals are zero up to rounding for this invented exact line."
+      },
+      "walkthrough": [
+        "Choose the model family before looking for a perfect curve.",
+        "Fit a line and interpret coefficient units.",
+        "Compute and plot residuals.",
+        "Test a held-out point and state the supported input range."
+      ],
+      "pitfalls": [
+        "Choosing a high degree merely to pass through every observation.",
+        "Treating training fit as independent validation.",
+        "Reporting coefficients without units or input range."
+      ],
+      "exercises": [
+        {
+          "title": "An exact line",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Fit a first-degree polynomial to four exact points and predict y at x=4.",
+          "inputs": "x=[0 1 2 3], y=[1 3 5 7]",
+          "expected": "p=[2 1], prediction 9",
+          "hints": [
+            "A line has slope and intercept.",
+            "MATLAB stores the highest-power coefficient first."
+          ],
+          "solution": "polyfit(x,y,1) yields [2 1] within rounding; polyval(p,4)=9. This last point is extrapolated.",
+          "tests": [
+            "At x=0 output is 1.",
+            "All training residuals are near zero."
+          ],
+          "extension": "Label the x=4 prediction as extrapolation.",
+          "id": "matlab-11-a"
+        },
+        {
+          "title": "Residual sign",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Calculate residuals and identify whether predictions are high or low.",
+          "inputs": "measured=[10 12 15], predicted=[11 12 13]",
+          "expected": "[-1 0 2]; first prediction high, last low.",
+          "hints": [
+            "Use measured minus predicted.",
+            "Interpret signs explicitly."
+          ],
+          "solution": "Subtract corresponding values. A positive residual means the measured quantity exceeded the prediction under this convention.",
+          "tests": [
+            "Middle residual is zero.",
+            "Signs reverse if convention reverses."
+          ],
+          "extension": "Make a labeled residual chart.",
+          "id": "matlab-11-b"
+        },
+        {
+          "title": "Hold out an observation",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Fit the first three exact points, then evaluate a fourth observation without refitting.",
+          "inputs": "train x=[0 1 2], y=[1 3 5]; test x=3, y=7.4",
+          "expected": "Prediction 7, test residual 0.4",
+          "hints": [
+            "Do not include the test observation in polyfit.",
+            "Keep a separate variable for validation."
+          ],
+          "solution": "The trained line is y=2x+1. At x=3 it predicts 7; the held-out observation differs by 0.4. Investigate whether that error is acceptable in context.",
+          "tests": [
+            "Training residuals remain near zero.",
+            "Test error is reported separately."
+          ],
+          "extension": "Repeat with several held-out points.",
+          "id": "matlab-11-c"
+        },
+        {
+          "title": "Perfect but unhelpful",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A student raises polynomial degree until every noisy calibration point is matched, then calls it validated. Explain the failure.",
+          "inputs": "Six noisy samples and a degree-five polynomial.",
+          "expected": "Interpolation of training samples does not establish predictive or physical validity.",
+          "hints": [
+            "Count model freedom.",
+            "Ask what independent evidence remains."
+          ],
+          "solution": "Use a justified simple model, inspect residuals, and evaluate separate data. Degree should reflect the question and data support, not a goal of zero training error.",
+          "tests": [
+            "Report held-out error.",
+            "Check behavior between and outside observations."
+          ],
+          "extension": "Compare line and quadratic using the same withheld data.",
+          "id": "matlab-11-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does polyfit degree 1 represent?",
+          "answer": "A straight-line least-squares model with slope and intercept."
+        },
+        {
+          "question": "Why inspect residuals?",
+          "answer": "Their magnitude and structure expose disagreements hidden by an attractive overlaid curve and guide further validation."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: polyfit",
+          "url": "https://www.mathworks.com/help/matlab/ref/polyfit.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-12",
+      "language": "matlab",
+      "title": "Solve an equation, then verify the root",
+      "stage": "Engineering",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-11"
+      ],
+      "summary": "Use a numerical root finder with a meaningful interval and an independent residual check.",
+      "why": "Engineering equilibrium and threshold questions often reduce to finding where a model equals a target.",
+      "explanation": [
+        "A root is an input at which a function is zero. If you want a cooling model to reach 25 °C, subtract 25 from the model and solve the resulting equation. This reformulation is more useful than searching a plot by eye. Define the physical domain and units before calling a solver, and inspect the function near the proposed interval.",
+        "A bracket with opposite endpoint signs is useful for a continuous function because it identifies a crossing. It does not guarantee that every function is appropriate for the method: discontinuities, invalid model regions, and roots that only touch zero require care. fzero returns a numerical answer together with diagnostics that should be read rather than ignored.",
+        "After solving, evaluate the original model at the returned input and check the residual in meaningful units. Ask whether the root lies within the model’s supported domain and whether multiple roots could answer different questions. For a simple exercise, compare against algebra. This creates a habit of treating numerical solvers as tools for a specified problem instead of mysterious buttons that confer correctness."
+      ],
+      "example": {
+        "code": "f = @(x) x.^2-9;\n[root,residual,flag] = fzero(f,[0 5]);\nassert(flag>0 && abs(residual)<1e-8);",
+        "explanation": "The positive root is 3. The bracket selects the positive crossing rather than the negative root."
+      },
+      "walkthrough": [
+        "Rearrange the target condition into f(x)=0.",
+        "Inspect endpoint values and continuity assumptions.",
+        "Call the solver with a justified interval.",
+        "Substitute the answer into the original condition."
+      ],
+      "pitfalls": [
+        "Solving in a physically invalid domain.",
+        "Ignoring diagnostics or a large residual.",
+        "Assuming the returned root is the only possible root."
+      ],
+      "exercises": [
+        {
+          "title": "A known root",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Find the positive root of x^2-9 using [0,5].",
+          "inputs": "f(0)=-9, f(5)=16",
+          "expected": "3",
+          "hints": [
+            "Endpoint signs differ.",
+            "Check by squaring."
+          ],
+          "solution": "fzero(@(x)x.^2-9,[0 5]) returns approximately 3; 3^2-9=0.",
+          "tests": [
+            "The result is within the bracket.",
+            "The residual is small."
+          ],
+          "extension": "Find the negative root with a different bracket.",
+          "id": "matlab-12-a"
+        },
+        {
+          "title": "A threshold time",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Solve when T(t)=20+20*exp(-t/30) reaches 25 °C.",
+          "inputs": "Bracket [0,100] s",
+          "expected": "30*log(4) ≈ 41.5888 s",
+          "hints": [
+            "Subtract 25 from T.",
+            "Use algebra as a second method."
+          ],
+          "solution": "20*exp(-t/30)=5 gives t=30*log(4). The numeric solver should agree within tolerance.",
+          "tests": [
+            "T(0)=40 is above target.",
+            "T(100) is below target."
+          ],
+          "extension": "Change target to 30 °C and compare times.",
+          "id": "matlab-12-b"
+        },
+        {
+          "title": "No finite crossing",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Explain why the same model never reaches exactly 20 °C at a finite nonnegative time.",
+          "inputs": "T(t)=20+20*exp(-t/30)",
+          "expected": "20 °C is an asymptote.",
+          "hints": [
+            "The exponential remains positive for finite t.",
+            "Separate a tolerance threshold from exact equality."
+          ],
+          "solution": "Do not force a finite root by extending the interval. Define a practical condition such as T-20<=0.1 if that is scientifically justified.",
+          "tests": [
+            "T(t)>20 for finite t in exact arithmetic.",
+            "A tolerance target above 20 has a finite crossing."
+          ],
+          "extension": "Solve the 0.1 °C difference threshold analytically.",
+          "id": "matlab-12-c"
+        },
+        {
+          "title": "A sign change at a jump",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A piecewise function is -1 below x=0 and +1 at or above x=0. Does a sign-changing bracket prove it has a root?",
+          "inputs": "Bracket [-1,1]",
+          "expected": "No; the function never equals zero.",
+          "hints": [
+            "Continuity matters.",
+            "Evaluate the function at the proposed answer."
+          ],
+          "solution": "The intermediate-value argument does not apply across a jump. A solver’s location near zero is not a valid zero-residual solution.",
+          "tests": [
+            "Residual magnitude remains 1.",
+            "The discontinuity is documented."
+          ],
+          "extension": "Construct a continuous comparison function.",
+          "id": "matlab-12-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "Why evaluate the residual after solving?",
+          "answer": "It verifies that the returned input actually satisfies the intended numerical condition."
+        },
+        {
+          "question": "Why does a bracket need context?",
+          "answer": "Sign changes can come from discontinuities or invalid model regions, and the physical domain may exclude some mathematical roots."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: fzero",
+          "url": "https://www.mathworks.com/help/matlab/ref/fzero.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-13",
+      "language": "matlab",
+      "title": "Differential equations and a cooling model",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-12"
+      ],
+      "summary": "Simulate a first-order system and compare the numerical trajectory to a known solution.",
+      "why": "Dynamics and thermal engineering describe rates of change. Coding makes those equations testable, provided the physical assumptions stay visible.",
+      "explanation": [
+        "This lesson belongs after introductory calculus and differential equations. The model dT/dt=-(T-Ta)/tau says the temperature changes in proportion to its difference from a fixed ambient temperature. A positive time constant creates passive relaxation. This is a lumped model: the entire object has one temperature, with constant parameters and no spatial gradients.",
+        "An ODE solver needs the rate function, a time interval, and an initial condition. It returns a numerical trajectory, not the physical truth. Begin with this equation because its analytic solution is available. Compare numerical and analytic values at the same returned times; comparing mismatched grids can create an artificial error. Tightening solver tolerances is a numerical experiment, not a way to repair a wrong physical equation.",
+        "Before adding another state, verify initial value, direction, units, and limiting behavior. If the object starts warmer than ambient, it should cool toward ambient without overshooting in this model. If it starts at ambient, it should remain there. Real systems can violate these predictions because of internal heat generation, varying airflow, radiation, multiple thermal masses, or sensor lag. Those are reasons to revise the model after evidence, not to hide the disagreement."
+      ],
+      "example": {
+        "code": "Ta = 20; tau = 30; T0 = 40;\nrate = @(t,T) -(T-Ta)/tau;\n[t,T] = ode45(rate,[0 120],T0);\nexact = Ta+(T0-Ta)*exp(-t/tau);\nmax_error = max(abs(T-exact));",
+        "explanation": "The analytic comparison uses the solver’s returned time vector. The rate has units °C/s when tau is in seconds."
+      },
+      "walkthrough": [
+        "Derive the rate units and state the assumptions.",
+        "Evaluate the derivative at the initial condition.",
+        "Integrate and compare with the analytic solution.",
+        "Test equal initial and ambient temperatures."
+      ],
+      "pitfalls": [
+        "Missing the minus sign.",
+        "Comparing solutions at different timestamps.",
+        "Calling a one-temperature model a detailed thermal analysis."
+      ],
+      "exercises": [
+        {
+          "title": "Initial derivative",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Calculate the initial cooling rate before running a solver.",
+          "inputs": "T0=40 °C, Ta=20 °C, tau=30 s",
+          "expected": "-2/3 °C/s",
+          "hints": [
+            "Subtract ambient first.",
+            "Positive temperature difference should produce cooling."
+          ],
+          "solution": "-(40-20)/30=-0.666666... °C/s. A positive result would reveal a sign mistake.",
+          "tests": [
+            "At T=Ta the derivative is zero.",
+            "At T below Ta the derivative is positive."
+          ],
+          "extension": "Explain why a temperature difference can be expressed in K or °C.",
+          "id": "matlab-13-a"
+        },
+        {
+          "title": "One time constant",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Compare numerical and analytic temperature at t=30 s.",
+          "inputs": "T0=40, Ta=20, tau=30",
+          "expected": "20+20/e ≈ 27.3576 °C",
+          "hints": [
+            "The remaining temperature difference is multiplied by exp(-1).",
+            "Request or evaluate the solution at the same time."
+          ],
+          "solution": "Use the analytic expression as the reference. The system has removed about 63.2% of its initial difference after one time constant.",
+          "tests": [
+            "Initial value is 40.",
+            "The result is between 20 and 40."
+          ],
+          "extension": "Repeat at two time constants.",
+          "id": "matlab-13-b"
+        },
+        {
+          "title": "Tolerance study",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Run the model with two solver tolerance settings and compare maximum analytic error on each returned grid.",
+          "inputs": "Use RelTol 1e-3 then 1e-6 with a suitable AbsTol.",
+          "expected": "Both should approximate the analytic curve; report measured errors rather than inventing fixed values.",
+          "hints": [
+            "Use odeset and read its documentation.",
+            "Compare at each run’s own t values."
+          ],
+          "solution": "Calculate max(abs(T-exact(t))) separately. Numerical errors depend on solver settings and implementation; record actual results and function evaluations if investigated.",
+          "tests": [
+            "Both preserve the initial condition.",
+            "Neither result is called experimentally validated."
+          ],
+          "extension": "Repeat for a longer time interval.",
+          "id": "matlab-13-c"
+        },
+        {
+          "title": "Heating by mistake",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "The implemented derivative is +(T-Ta)/tau for a warmer-than-ambient object. Diagnose the growing trajectory.",
+          "inputs": "T0=40, Ta=20, tau=30",
+          "expected": "The sign is wrong for passive cooling.",
+          "hints": [
+            "Inspect the initial derivative.",
+            "A solver faithfully integrates the supplied equation."
+          ],
+          "solution": "Use the negative sign derived from heat flowing toward ambient. Changing plotting limits or tolerances does not fix the physics.",
+          "tests": [
+            "Initial slope becomes negative.",
+            "T0=Ta stays constant."
+          ],
+          "extension": "Write a monotonicity test that catches the sign error.",
+          "id": "matlab-13-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What information does an ODE solver require?",
+          "answer": "A derivative function, initial condition, time interval, and optional numerical controls such as tolerances."
+        },
+        {
+          "question": "What is a lumped thermal assumption?",
+          "answer": "The modeled object is represented by one uniform temperature instead of a spatial temperature field."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: ode45",
+          "url": "https://www.mathworks.com/help/matlab/ref/ode45.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-14",
+      "language": "matlab",
+      "title": "Sampling, spectra, and honest frequency claims",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-13"
+      ],
+      "summary": "Inspect a simple periodic signal without confusing FFT output with unlimited frequency knowledge.",
+      "why": "Vibration and rotating machinery produce time series. Sampling choices limit what those series can reveal.",
+      "explanation": [
+        "Begin after learning basic trigonometry and the idea of frequency. A sampled signal records values at discrete times. Its sampling rate determines which frequencies can be distinguished without ambiguity under the sampling assumptions. A fast oscillation can masquerade as a slower one when undersampled; no colorful spectrum can recover information that was never recorded.",
+        "The FFT efficiently computes a discrete Fourier transform. To interpret its output, you must know the sample spacing, sample count, scaling convention, and whether you are looking at a one-sided or two-sided spectrum. Start with a noise-free sinusoid whose frequency falls exactly on a DFT bin. That removes several complications and gives you a known reference for the frequency axis.",
+        "Real logs introduce trends, finite-record effects, noise, nonuniform timestamps, and multiple components. Windowing and detrending are useful later topics, but they should not be applied as unexplained rituals. Do not pass irregularly timed samples to a uniform-sampling FFT and label the result in hertz without addressing the timing. Base MATLAB provides fft; other signal-processing functions may require a licensed toolbox, so check each function’s product requirements."
+      ],
+      "example": {
+        "code": "Fs = 100; N = 100;\nt = (0:N-1)/Fs;\nx = sin(2*pi*5*t);\nY = fft(x);\nf = (0:N-1)*Fs/N;\nplot(f,abs(Y)/N);\nxlabel(\"Frequency (Hz)\");",
+        "explanation": "This is a two-sided magnitude display with peaks at 5 Hz and its mirrored bin at 95 Hz. It is not yet a one-sided amplitude plot."
+      },
+      "walkthrough": [
+        "Define sample rate, count, and duration convention explicitly.",
+        "Generate a known bin-centered sinusoid.",
+        "Build the frequency axis from Fs/N.",
+        "Explain mirrored bins before interpreting a real log."
+      ],
+      "pitfalls": [
+        "Labeling array index as hertz.",
+        "Treating irregular samples as uniformly spaced.",
+        "Confusing two-sided magnitude scaling with one-sided amplitude."
+      ],
+      "exercises": [
+        {
+          "title": "Sample times",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Create 100 samples at 100 Hz beginning at zero. State the final timestamp.",
+          "inputs": "Fs=100, N=100",
+          "expected": "t=0:0.01:0.99; final time 0.99 s",
+          "hints": [
+            "Use indices 0 through N-1.",
+            "A sample count is not a final index."
+          ],
+          "solution": "t=(0:N-1)/Fs. There are 100 samples, separated by 0.01 s.",
+          "tests": [
+            "numel(t)=100.",
+            "diff(t) is 0.01 within rounding."
+          ],
+          "extension": "Contrast sample span with a one-second periodic record convention.",
+          "id": "matlab-14-a"
+        },
+        {
+          "title": "Frequency bins",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Compute the DFT bin spacing and identify bins for a 5 Hz sinusoid.",
+          "inputs": "Fs=100 Hz, N=100",
+          "expected": "Spacing 1 Hz; zero-based bins 5 and 95. MATLAB indices 6 and 96.",
+          "hints": [
+            "Frequency is bin*Fs/N.",
+            "MATLAB indices start at one."
+          ],
+          "solution": "The positive component is at f=5; the conjugate mirror is at f=95 in the full DFT array.",
+          "tests": [
+            "A DC signal peaks at MATLAB index 1.",
+            "The frequency vector has N elements."
+          ],
+          "extension": "Create a correctly scaled one-sided plot after reading the fft example.",
+          "id": "matlab-14-b"
+        },
+        {
+          "title": "Aliasing thought experiment",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "At a 100 Hz sample rate, compare sampled cosines at 10 Hz and 90 Hz at integer sample times.",
+          "inputs": "x1=cos(2*pi*10*n/100); x2=cos(2*pi*90*n/100)",
+          "expected": "They produce the same ideal samples.",
+          "hints": [
+            "90/100 equals 1-10/100.",
+            "Cosine is even and periodic."
+          ],
+          "solution": "At integer n, cos(2*pi*n-2*pi*10*n/100)=cos(2*pi*10*n/100). The samples alone cannot distinguish these cases.",
+          "tests": [
+            "Maximum difference is near rounding error.",
+            "Changing the sampling rate can break the ambiguity."
+          ],
+          "extension": "Describe why an analog antialias filter may be needed.",
+          "id": "matlab-14-c"
+        },
+        {
+          "title": "Index masquerading as frequency",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A spectrum is plotted with plot(abs(fft(x))) and its x-axis labeled Hz. Diagnose what is missing.",
+          "inputs": "Fs=200 Hz, N=100",
+          "expected": "Bin spacing is 2 Hz, not 1 Hz.",
+          "hints": [
+            "Default x-axis is MATLAB index.",
+            "Build the frequency coordinates explicitly."
+          ],
+          "solution": "Use f=(0:N-1)*Fs/N and specify the scaling convention. Otherwise peak labels are numerically wrong and shifted by the indexing origin.",
+          "tests": [
+            "DC belongs at 0 Hz.",
+            "Bin 5 corresponds to 10 Hz."
+          ],
+          "extension": "Add a caption naming the spectrum convention.",
+          "id": "matlab-14-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What fixes the DFT bin spacing?",
+          "answer": "The ratio Fs/N for uniformly sampled data."
+        },
+        {
+          "question": "Does a longer FFT created by zero padding add measured information?",
+          "answer": "No. It samples the transform representation more densely without adding new observations."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: fft",
+          "url": "https://www.mathworks.com/help/matlab/ref/fft.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-15",
+      "language": "matlab",
+      "title": "Parameter sweeps and uncertainty experiments",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-14"
+      ],
+      "summary": "Vary assumptions systematically and keep random experiments reproducible.",
+      "why": "A single simulation run can conceal sensitivity. Exploring plausible inputs helps you see which assumptions deserve better measurements.",
+      "explanation": [
+        "A parameter sweep evaluates the same model over a deliberate set of inputs. Change one parameter first so the resulting pattern is easy to understand. Store both input and output for every run; a plot of unlabeled results is not a reproducible experiment. Choose ranges from the question and available evidence, not from what produces the most dramatic figure.",
+        "Uncertainty experiments go a step further by sampling from stated distributions. A random number generator makes computational samples, but it does not justify the distribution. Uniform, normal, independent, and correlated assumptions have different meanings. Begin with a simple repeatable random sequence and record the algorithm and seed. Reproducibility lets you compare code changes without confusing them with a changed random draw.",
+        "Distinguish sensitivity from probability. A worst-case parameter grid is not automatically a confidence interval, and a Monte Carlo percentile is conditional on the assumed input model. Report what was varied, what was held fixed, and what was not modeled. Base MATLAB supports simple random sampling; specialized statistics features can have separate product requirements. For early work, a transparent range study is often more valuable than an elaborate unjustified probability claim."
+      ],
+      "example": {
+        "code": "rng(7,\"twister\");\ntau_s = [20 30 40];\nT_at_60 = 20+20*exp(-60./tau_s);\nresults = table(tau_s(:),T_at_60(:), ...\n    \"VariableNames\",[\"tau_s\",\"temperature_c\"]);",
+        "explanation": "The deterministic sweep gives about [20.9957,22.7067,24.4626] °C. The seed is relevant when random sampling is added."
+      },
+      "walkthrough": [
+        "Define the question and plausible parameter range.",
+        "Run one-at-a-time variations before combinations.",
+        "Store inputs beside outputs.",
+        "If sampling randomly, record seed, generator, distribution, and limitations."
+      ],
+      "pitfalls": [
+        "Calling a sweep a statistical confidence interval.",
+        "Changing the random sample while comparing two implementations.",
+        "Assuming independent inputs without examining the physical relationship."
+      ],
+      "exercises": [
+        {
+          "title": "Three time constants",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Calculate temperature at 60 s for three time constants.",
+          "inputs": "tau=[20 30 40], T=20+20*exp(-60./tau)",
+          "expected": "Approximately [20.9957 22.7067 24.4626] °C",
+          "hints": [
+            "Use element-wise division.",
+            "Larger tau means slower cooling."
+          ],
+          "solution": "The remaining difference is 20*exp(-60/tau). The sequence increases because larger tau retains more of the initial warmth.",
+          "tests": [
+            "All results exceed 20.",
+            "Ordering agrees with physical reasoning."
+          ],
+          "extension": "Plot output against tau with units.",
+          "id": "matlab-15-a"
+        },
+        {
+          "title": "Repeatable random draws",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Generate five uniform random numbers twice by resetting the same named generator and seed.",
+          "inputs": "rng(7,\"twister\"); rand(1,5)",
+          "expected": "The two generated vectors agree exactly in the same environment.",
+          "hints": [
+            "Reset before each draw.",
+            "Do not reset between individual values in one vector."
+          ],
+          "solution": "Save first=rand(1,5), reset the generator and seed, then second=rand(1,5). Compare with isequal.",
+          "tests": [
+            "Same setup reproduces the sequence.",
+            "An additional draw advances the sequence."
+          ],
+          "extension": "Record MATLAB release alongside generator metadata.",
+          "id": "matlab-15-b"
+        },
+        {
+          "title": "A bounded input model",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Sample a time constant uniformly between 20 and 40 s and propagate it through the cooling formula. Explain the limitation.",
+          "inputs": "tau=20+20*rand(1000,1)",
+          "expected": "All sampled tau lie in [20,40); temperatures lie within the corresponding deterministic bounds.",
+          "hints": [
+            "Transform the unit uniform sample.",
+            "The distribution is an assumption, not a measurement."
+          ],
+          "solution": "Compute each output and summarize sample statistics. Interpret any percentile only under the uniform time-constant assumption.",
+          "tests": [
+            "No output leaves deterministic bounds.",
+            "The seed permits reproduction."
+          ],
+          "extension": "Compare the result with a different justified distribution.",
+          "id": "matlab-15-c"
+        },
+        {
+          "title": "A seed inside the loop",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A simulation resets rng(7) before every iteration, then draws one random input. Why are all trials identical?",
+          "inputs": "Reset and draw repeated 100 times.",
+          "expected": "Each iteration restarts the same sequence.",
+          "hints": [
+            "Initialization belongs before the loop.",
+            "Distinct draws require advancing generator state."
+          ],
+          "solution": "Set the seed once before sampling. The repeated experiment is then reproducible while individual trials can differ.",
+          "tests": [
+            "At least two draws differ under normal operation.",
+            "Rerunning the entire experiment reproduces all draws."
+          ],
+          "extension": "Explain why identical trials invalidate an intended Monte Carlo sample.",
+          "id": "matlab-15-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What does a random seed establish?",
+          "answer": "A reproducible computational sequence under the specified generator and environment, not the truth of an uncertainty model."
+        },
+        {
+          "question": "How does sensitivity differ from uncertainty?",
+          "answer": "Sensitivity asks how outputs respond to changed inputs; uncertainty analysis also models what is known or assumed about those inputs."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: rng",
+          "url": "https://www.mathworks.com/help/matlab/ref/rng.html"
+        }
+      ]
+    },
+    {
+      "id": "matlab-16",
+      "language": "matlab",
+      "title": "A reproducible engineering report",
+      "stage": "Systems",
+      "minutes": 45,
+      "prerequisites": [
+        "matlab-15"
+      ],
+      "summary": "Package inputs, calculations, checks, and limitations into an analysis another person can rerun.",
+      "why": "A portfolio project earns credibility through traceable evidence, not only a polished figure.",
+      "explanation": [
+        "A useful report connects a question to data, a model, a result, and a limitation. Separate raw inputs, analysis functions, tests, and generated outputs. Use explicit filenames and relative project paths rather than a private absolute path tied to one computer. Store units and variable definitions beside the data so someone opening the project later can interpret it without asking you.",
+        "Exporting a table is an interface decision. Specify column names, numeric meaning, missing-data representation, and whether a repeated run replaces or creates a new output. For a learning project, write into a dedicated output directory and preserve the original observations. Reimport one exported result and compare its row count and key values; this catches formatting and schema mistakes at the boundary.",
+        "End with an honest statement of scope. A cooling notebook can demonstrate numerical modeling without proving a habitat thermal design. A frequency plot can reveal a component without identifying its mechanical cause. Include one failed hypothesis or limitation you investigated. As your classes deepen the physics, return to the same project and improve one assumption at a time. This makes the report a growing body of evidence instead of a finished screenshot."
+      ],
+      "example": {
+        "code": "results = table([0;10;20],[20;23;25], ...\n    \"VariableNames\",[\"time_s\",\"temperature_c\"]);\nwritetable(results,\"learning_results.csv\");\ncheck = readtable(\"learning_results.csv\");\nassert(height(check)==height(results));",
+        "explanation": "Run in a dedicated scratch/output folder. The file is a generated result, not the original measurement record."
+      },
+      "walkthrough": [
+        "Write a README with the question, setup, and run order.",
+        "Keep raw input separate from generated output.",
+        "Export labeled results and verify a round trip.",
+        "Add model assumptions, a known test, and a limitation."
+      ],
+      "pitfalls": [
+        "Publishing a figure without the input and code needed to regenerate it.",
+        "Overwriting raw data with cleaned results.",
+        "Presenting a classroom model as certified design evidence."
+      ],
+      "exercises": [
+        {
+          "title": "Labeled result table",
+          "level": "Start",
+          "minutes": 15,
+          "prompt": "Create and export a three-row table with units in column names.",
+          "inputs": "time_s=[0;5;10], voltage_v=[12;11.9;11.8]",
+          "expected": "A CSV with named columns and three data rows.",
+          "hints": [
+            "Use column vectors.",
+            "Write to a scratch output folder."
+          ],
+          "solution": "table(time_s,voltage_v) retains meaningful variable names. Reimport the exported CSV and inspect its columns.",
+          "tests": [
+            "Row count remains three.",
+            "First voltage remains 12."
+          ],
+          "extension": "Add a run identifier column.",
+          "id": "matlab-16-a"
+        },
+        {
+          "title": "One-command rerun",
+          "level": "Build",
+          "minutes": 25,
+          "prompt": "Design a run_all.m script that validates inputs, calls a model, runs checks, and exports results in a documented order.",
+          "inputs": "A small existing cooling model.",
+          "expected": "A fresh session recreates the same report outputs.",
+          "hints": [
+            "Avoid hidden workspace dependencies.",
+            "Fail before exporting if validation fails."
+          ],
+          "solution": "The driver owns workflow; functions own calculations. Include explicit input paths and a final output summary.",
+          "tests": [
+            "A missing input produces a clear diagnostic.",
+            "Two runs with the same inputs agree."
+          ],
+          "extension": "Record runtime and MATLAB release in metadata.",
+          "id": "matlab-16-b"
+        },
+        {
+          "title": "Cross-language handoff",
+          "level": "Stretch",
+          "minutes": 40,
+          "prompt": "Specify a CSV contract for Python to read a MATLAB-generated thermal trajectory.",
+          "inputs": "Columns time_s,temperature_c; one row per sample.",
+          "expected": "Both languages agree on row count, units, order, and missing-value policy.",
+          "hints": [
+            "CSV alone does not explain units.",
+            "Write a short schema beside it."
+          ],
+          "solution": "Document UTF-8 text, comma delimiter, header names, seconds from start, °C values, increasing times, and how missing values are represented.",
+          "tests": [
+            "First/last times agree after import.",
+            "Compare a known value within an explicit tolerance."
+          ],
+          "extension": "Build a Python verification script in a later project.",
+          "id": "matlab-16-c"
+        },
+        {
+          "title": "A report that cannot be rerun",
+          "level": "Debug",
+          "minutes": 25,
+          "prompt": "A report contains only a final plot and a script referring to an unnamed variable loaded manually. Identify the minimum repair.",
+          "inputs": "No input file or run instructions included.",
+          "expected": "Provide input or a reproducible synthetic substitute, explicit loading, units, and run order.",
+          "hints": [
+            "Ask what a fresh computer lacks.",
+            "Distinguish private data from shareable sample data."
+          ],
+          "solution": "Make the dependency explicit and include a small public fixture that exercises the same analysis path. State any omitted data limitation.",
+          "tests": [
+            "The fixture runs without manual workspace setup.",
+            "The plot can be regenerated."
+          ],
+          "extension": "Add a verification checklist to the README.",
+          "id": "matlab-16-d"
+        }
+      ],
+      "review": [
+        {
+          "question": "What is the smallest credible analysis package?",
+          "answer": "A clear question, interpretable input or fixture, runnable code, a known check, reproducible outputs, and stated limitations."
+        },
+        {
+          "question": "Why round-trip an exported table?",
+          "answer": "It tests the file interface that another tool or future user will actually consume."
+        }
+      ],
+      "sources": [
+        {
+          "title": "MathWorks: writetable",
+          "url": "https://www.mathworks.com/help/matlab/ref/writetable.html"
+        }
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "matlab-project-cooling",
+      "language": "matlab",
+      "title": "Equipment enclosure cooling report",
+      "level": "Intermediate",
+      "summary": "Build a reproducible comparison between a lumped cooling model and a small documented dataset. Begin with synthetic values, then use safe room-temperature observations if available.",
+      "mission": "Habitats",
+      "prerequisites": [
+        "matlab-04",
+        "matlab-07",
+        "matlab-13"
+      ],
+      "milestones": [
+        {
+          "title": "State the model",
+          "deliverable": "One-page question, equation, units table, initial condition, and assumptions.",
+          "acceptance": "The derivative has units of temperature per second; a positive time constant produces relaxation toward ambient."
+        },
+        {
+          "title": "Verify numerically",
+          "deliverable": "A MATLAB function, analytic comparison, and three invariant tests.",
+          "acceptance": "Initial temperature agrees, equilibrium remains constant, and warmer-than-ambient results decrease without overshoot under this model."
+        },
+        {
+          "title": "Compare evidence",
+          "deliverable": "An overlay of measurements and predictions plus residuals at matching times.",
+          "acceptance": "Data origin, excluded samples, timestamp alignment, and residual sign convention are documented."
+        },
+        {
+          "title": "Publish the analysis",
+          "deliverable": "README, input fixture, driver script, exported table, and limitations page.",
+          "acceptance": "A fresh session recreates the figures without preloaded workspace variables."
+        }
+      ],
+      "testPlan": [
+        "Known analytic solution at one time constant.",
+        "Reject nonpositive time constant and nonfinite inputs.",
+        "Reimport exported table and compare key values."
+      ],
+      "extensions": [
+        "Estimate a time constant from a separate calibration dataset.",
+        "Compare a second thermal mass only after deriving the new equations."
+      ],
+      "portfolio": [
+        "A labeled model-versus-data figure.",
+        "A concise explanation of one model failure.",
+        "Reproduction instructions and test evidence."
+      ],
+      "constraints": [
+        "This is a learning model, not habitat thermal qualification.",
+        "Avoid hot or hazardous hardware experiments; synthetic or benign temperature data is enough.",
+        "Do not fit and validate on the same data without labeling the limitation."
+      ]
+    },
+    {
+      "id": "matlab-project-energy",
+      "language": "matlab",
+      "title": "Rover instrument energy ledger",
+      "level": "Beginner to intermediate",
+      "summary": "Estimate accumulated instrument energy from irregular power samples and quantify the effect of sampling choices.",
+      "mission": "Rovers",
+      "prerequisites": [
+        "matlab-02",
+        "matlab-06",
+        "matlab-09"
+      ],
+      "milestones": [
+        {
+          "title": "Define the log",
+          "deliverable": "CSV schema with time_s and power_w and a tiny known fixture.",
+          "acceptance": "The schema defines timestamp ordering, missing data, and power sign conventions."
+        },
+        {
+          "title": "Integrate",
+          "deliverable": "A function returning interval and total energies.",
+          "acceptance": "Constant-power and linear-power fixtures agree with hand calculations."
+        },
+        {
+          "title": "Investigate resolution",
+          "deliverable": "A convergence table for a known curved power function.",
+          "acceptance": "At least three resolutions are compared against an analytic integral."
+        },
+        {
+          "title": "Explain limits",
+          "deliverable": "A report comparing two runs and describing unobserved intervals.",
+          "acceptance": "The report distinguishes sampled energy estimates from battery runtime guarantees."
+        }
+      ],
+      "testPlan": [
+        "Zero power yields zero energy.",
+        "Irregular timestamps use their actual widths.",
+        "Nonincreasing timestamps are rejected or handled by a stated policy."
+      ],
+      "extensions": [
+        "Add a cumulative-energy plot.",
+        "Compare instrument duty cycles with an explicit assumed model."
+      ],
+      "portfolio": [
+        "Energy ledger with units.",
+        "One hand-checkable interval.",
+        "A discussion of missing-data effects."
+      ],
+      "constraints": [
+        "Do not infer battery safety or useful capacity from this simple ledger.",
+        "Keep original logs unchanged.",
+        "Document any assumed interpolation across gaps."
+      ]
+    },
+    {
+      "id": "matlab-project-calibration",
+      "language": "matlab",
+      "title": "A sensor calibration you can defend",
+      "level": "Intermediate",
+      "summary": "Fit a simple calibration relationship, inspect residuals, and evaluate a held-out measurement.",
+      "mission": "Foundations",
+      "prerequisites": [
+        "matlab-06",
+        "matlab-07",
+        "matlab-11"
+      ],
+      "milestones": [
+        {
+          "title": "Design the fixture",
+          "deliverable": "At least six synthetic calibration pairs with explicit units and a held-out subset.",
+          "acceptance": "The held-out subset is identified before fitting."
+        },
+        {
+          "title": "Fit the baseline",
+          "deliverable": "A line fit with coefficients and their units.",
+          "acceptance": "A known exact-line fixture recovers the intended relationship within numerical tolerance."
+        },
+        {
+          "title": "Challenge the model",
+          "deliverable": "Residual plots and separate training/held-out errors.",
+          "acceptance": "The report does not call low training error independent validation."
+        },
+        {
+          "title": "Package use limits",
+          "deliverable": "Calibration function with supported range and extrapolation policy.",
+          "acceptance": "Queries outside the supported range are flagged or rejected according to the documented contract."
+        }
+      ],
+      "testPlan": [
+        "Exact line recovery.",
+        "Input length and finite-value checks.",
+        "Held-out prediction remains independent of fitting."
+      ],
+      "extensions": [
+        "Compare a quadratic only with an explained physical or residual-based reason.",
+        "Add repeated measurements and discuss noise without overstating probability."
+      ],
+      "portfolio": [
+        "Calibration plot and residual plot.",
+        "A clear explanation of slope and offset.",
+        "An honest supported-range statement."
+      ],
+      "constraints": [
+        "Synthetic data must be labeled.",
+        "No claim of metrological certification.",
+        "Do not hide outliers solely to improve fit."
+      ]
+    },
+    {
+      "id": "matlab-project-spectrum",
+      "language": "matlab",
+      "title": "Synthetic vibration detective",
+      "level": "Intermediate",
+      "summary": "Build a frequency-analysis notebook that correctly identifies known synthetic signals and explains when sampling makes identification impossible.",
+      "mission": "Propulsion analysis",
+      "prerequisites": [
+        "matlab-04",
+        "matlab-07",
+        "matlab-14"
+      ],
+      "milestones": [
+        {
+          "title": "Generate known signals",
+          "deliverable": "One sinusoid and a two-component signal with recorded sample rates.",
+          "acceptance": "The sample-time vector and sample counts match the intended experiment."
+        },
+        {
+          "title": "Verify the spectrum",
+          "deliverable": "A correctly labeled frequency axis and documented scaling convention.",
+          "acceptance": "Known bin-centered peaks appear at the predicted frequencies."
+        },
+        {
+          "title": "Demonstrate ambiguity",
+          "deliverable": "An aliasing example with two distinct continuous frequencies producing matching samples.",
+          "acceptance": "The numerical comparison is tied to an algebraic explanation."
+        },
+        {
+          "title": "Write the interpretation",
+          "deliverable": "A report separating signal evidence from mechanical-cause speculation.",
+          "acceptance": "The limitations explain finite records, sampling, noise, and untested assumptions."
+        }
+      ],
+      "testPlan": [
+        "A DC input peaks at zero frequency.",
+        "A bin-centered sinusoid gives the expected mirrored bins.",
+        "Frequency labels change correctly when Fs changes."
+      ],
+      "extensions": [
+        "Investigate windowing using documented functions and product requirements.",
+        "Use a public, appropriately licensed vibration dataset after synthetic verification."
+      ],
+      "portfolio": [
+        "A known-signal verification figure.",
+        "An aliasing demonstration.",
+        "A paragraph explaining what the spectrum cannot establish."
+      ],
+      "constraints": [
+        "Use synthetic or public data; no operating propulsion hardware is required.",
+        "A spectrum alone does not diagnose machinery health.",
+        "Check licenses for optional toolboxes."
+      ]
+    },
+    {
+      "id": "matlab-project-trade",
+      "language": "matlab",
+      "title": "Thermal design assumption explorer",
+      "level": "Intermediate to advanced",
+      "summary": "Compare how a simplified enclosure model responds to parameter choices and present a trade study without turning assumptions into false certainty.",
+      "mission": "Spacecraft",
+      "prerequisites": [
+        "matlab-08",
+        "matlab-12",
+        "matlab-13",
+        "matlab-15",
+        "matlab-16"
+      ],
+      "milestones": [
+        {
+          "title": "Choose a narrow question",
+          "deliverable": "A parameter table and a threshold question within the model’s domain.",
+          "acceptance": "Every varied quantity has units and an explicit plausible range or labeled illustrative range."
+        },
+        {
+          "title": "Sweep deterministically",
+          "deliverable": "A grid of model outputs with inputs stored alongside them.",
+          "acceptance": "A manually checked corner case matches the automated result."
+        },
+        {
+          "title": "Explore uncertainty",
+          "deliverable": "Optional seeded sampling plus a statement of distribution assumptions.",
+          "acceptance": "The same seed reproduces the experiment and probability claims remain conditional on the assumed distributions."
+        },
+        {
+          "title": "Make the decision visible",
+          "deliverable": "A trade plot, ranked sensitivities, and a recommendation for the next measurement.",
+          "acceptance": "The conclusion identifies which input uncertainty limits the result rather than claiming a certified design."
+        }
+      ],
+      "testPlan": [
+        "Boundary cases obey model limits.",
+        "Seeded trials reproduce.",
+        "Threshold roots are checked by substitution."
+      ],
+      "extensions": [
+        "Add a second model with a clearly different assumption.",
+        "Compare computational sensitivity with physical measurement priorities."
+      ],
+      "portfolio": [
+        "A trade-space visualization.",
+        "A reproducible experiment manifest.",
+        "A recommendation grounded in model limitations."
+      ],
+      "constraints": [
+        "Illustrative trade study only; no flight or habitat certification.",
+        "Do not interpret arbitrary parameter ranges as real probability distributions.",
+        "Keep numerical error separate from physical uncertainty."
+      ]
+    }
+  ],
+  "glossary": [
+    {
+      "term": "Array",
+      "definition": "An ordered collection of values with a defined shape.",
+      "example": "A 1-by-4 row of temperature samples."
+    },
+    {
+      "term": "Index",
+      "definition": "A position used to select an element; MATLAB positions start at one.",
+      "example": "temperature_c(1) selects the first reading."
+    },
+    {
+      "term": "Logical mask",
+      "definition": "An array of true/false selections applied to aligned data.",
+      "example": "temperature_c>30 flags samples above 30 °C."
+    },
+    {
+      "term": "Element-wise operation",
+      "definition": "An operation applied to corresponding entries rather than matrix algebra.",
+      "example": "speed.^2 squares each speed."
+    },
+    {
+      "term": "Matrix product",
+      "definition": "A row-by-column combination representing linear algebra.",
+      "example": "A*x combines unknowns according to equation coefficients."
+    },
+    {
+      "term": "Residual",
+      "definition": "The difference remaining when a model or solution is checked against data or equations.",
+      "example": "A*x-b checks a linear solve."
+    },
+    {
+      "term": "Conditioning",
+      "definition": "How strongly a problem’s answer responds to small changes in its inputs.",
+      "example": "Nearly redundant equations can yield sensitive solutions."
+    },
+    {
+      "term": "Absolute tolerance",
+      "definition": "An allowed difference expressed in the output’s units.",
+      "example": "A temperature comparison allowing 1e-6 °C of numerical error."
+    },
+    {
+      "term": "Relative tolerance",
+      "definition": "An allowed error scaled by a reference magnitude.",
+      "example": "rtol*abs(reference) grows with the comparison scale."
+    },
+    {
+      "term": "Interpolation",
+      "definition": "An estimate inside the observed input range using a chosen rule.",
+      "example": "A midpoint temperature between two measured times."
+    },
+    {
+      "term": "Extrapolation",
+      "definition": "An estimate outside the observed input range.",
+      "example": "Predicting 100 s behavior from data ending at 20 s."
+    },
+    {
+      "term": "Time constant",
+      "definition": "A parameter describing the rate of first-order exponential relaxation.",
+      "example": "After one tau, exp(-1) of the original temperature difference remains."
+    },
+    {
+      "term": "Aliasing",
+      "definition": "Ambiguity caused when sampling cannot distinguish different continuous signals.",
+      "example": "10 Hz and 90 Hz cosines can match at 100 Hz sampling."
+    },
+    {
+      "term": "Parameter sweep",
+      "definition": "Repeated model evaluation over a deliberate set of input choices.",
+      "example": "Testing cooling time constants of 20, 30, and 40 s."
+    },
+    {
+      "term": "Provenance",
+      "definition": "The record connecting results to inputs, code, settings, and assumptions.",
+      "example": "A report manifest naming data, code revision, and model parameters."
+    }
+  ]
+}
