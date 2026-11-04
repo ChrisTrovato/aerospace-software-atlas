@@ -23,3 +23,10 @@
 - Verified `https://www.christrovato.com/softwares`, catalog data loading, filtering, direct tool navigation, and a tool-page refresh in the browser.
 - Aligned recommended pathway tools with catalog specialty tags so counts and filters agree.
 - Automatic Git deployments remain unconfigured: the Vercel Git integration returned repository-access errors. Direct deployment succeeded without changing Git integration permissions.
+
+
+## November 4, 2026 — Coding Field Guide
+
+Added a six-page programming learning hub with five language guides, 30 provider-linked resources, four mission narratives, five illustrative interactive demos, and local study/readiness progress with validated JSON backup. The existing Software Atlas content is preserved.
+
+Validation: 27 automated tests passed, including the original 19 atlas checks. Static content and asset audit passed. Chrome checks covered all five demo results, all six mobile routes without page-level overflow, resource filtering, mission switching, session duration/focus, local persistence, and export/import restoration. Desktop and mobile visuals inspected. Public routing is scoped to the coding pages and shared coding assets.

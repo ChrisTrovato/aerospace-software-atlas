@@ -1,5 +1,7 @@
 # Aerospace Software Atlas
 
+Also includes **[The Coding Field Guide](https://www.christrovato.com/coding_learning_main)**: six connected pages for Python, C++, MATLAB, C, and Bash/Linux, with 30 learning resources, practical aerospace examples, interactive demonstrations, and local practice tracking. [Coding source and maintenance guide](coding/README.md).
+
 A public learning guide with 116 software profiles, 20 engineering pathways, and a suggested 2026–2035 progression. Explore CAD, scientific computing, simulation, robotics, avionics, systems engineering, and technical communication through small, practical projects.
 
 Live site: [christrovato.com/softwares](https://www.christrovato.com/softwares)  

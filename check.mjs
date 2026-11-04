@@ -129,7 +129,9 @@ export function audit(root=ROOT){
     for(const ref of localRefs){
       if(ref.startsWith('#')||/^(?:https:|data:)/.test(ref))continue;
       if(/^[a-z][a-z0-9+.-]*:/i.test(ref)){errors.push(`${name}: unexpected URL scheme ${ref}.`);continue;}
-      const target=path.resolve(path.dirname(file),ref.replace(/[?#].*$/,''));
+      const cleanRef=ref.replace(/[?#].*$/,'');
+      const codingRoute=/^\/coding_(?:learning_main|python|Cplusplus|matlab|C|bash)\/?$/.test(cleanRef);
+      const target=cleanRef.startsWith('/')?path.resolve(dist,'.'+cleanRef.replace(/\/$/,'')+(codingRoute?'.html':'')):path.resolve(path.dirname(file),cleanRef);
       if(!target.startsWith(dist+path.sep)||!fs.existsSync(target)||!fs.statSync(target).isFile())errors.push(`${name}: missing or unsafe local asset ${ref}.`);
     }
     if(name==='app.js'){

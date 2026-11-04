@@ -1,1 +1,71 @@
-{"$schema":"https://openapi.vercel.sh/vercel.json","framework":null,"buildCommand":"node build.mjs","outputDirectory":"dist","headers":[{"source":"/(.*)","headers":[{"key":"X-Content-Type-Options","value":"nosniff"},{"key":"Referrer-Policy","value":"strict-origin-when-cross-origin"}]}]}
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "buildCommand": "node build.mjs",
+  "outputDirectory": "dist",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/coding_learning_main",
+      "destination": "/coding_learning_main.html"
+    },
+    {
+      "source": "/coding_learning_main/",
+      "destination": "/coding_learning_main.html"
+    },
+    {
+      "source": "/coding_python",
+      "destination": "/coding_python.html"
+    },
+    {
+      "source": "/coding_python/",
+      "destination": "/coding_python.html"
+    },
+    {
+      "source": "/coding_Cplusplus",
+      "destination": "/coding_Cplusplus.html"
+    },
+    {
+      "source": "/coding_Cplusplus/",
+      "destination": "/coding_Cplusplus.html"
+    },
+    {
+      "source": "/coding_matlab",
+      "destination": "/coding_matlab.html"
+    },
+    {
+      "source": "/coding_matlab/",
+      "destination": "/coding_matlab.html"
+    },
+    {
+      "source": "/coding_C",
+      "destination": "/coding_C.html"
+    },
+    {
+      "source": "/coding_C/",
+      "destination": "/coding_C.html"
+    },
+    {
+      "source": "/coding_bash",
+      "destination": "/coding_bash.html"
+    },
+    {
+      "source": "/coding_bash/",
+      "destination": "/coding_bash.html"
+    }
+  ]
+}
