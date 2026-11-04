@@ -49,6 +49,7 @@ function resetTimer(){clearInterval(timer.handle);timer={remaining:0,until:0,run
 function saveExercise(){const f=$('#exercise-form');if(!f)return;const id=f.dataset.id;state.exercises[id]={...(state.exercises[id]||{status:'attempted'}),answer:$('#exercise-answer').value,note:$('#exercise-note').value,updatedAt:stamped()};save();$('#draft-status').textContent=storageOK?'Saved in this browser.':'Storage unavailable. Export a backup before leaving.';}
 function journalMarkdown(){return '# My coding learning journal\n\n'+[...state.journal].sort((a,b)=>a.day.localeCompare(b.day)).map(j=>`## ${j.day} — ${j.language} (${j.minutes} minutes)\n\nLearned: ${j.learned}\n\nTo investigate: ${j.blocker}\n\nNext: ${j.next}\n`).join('\n');}
 document.addEventListener('click',async event=>{
+ const skip=event.target.closest('a.skip');if(skip){event.preventDefault();$('#main').focus({preventScroll:true});$('#main').scrollIntoView({behavior:'instant'});return;}
  const b=event.target.closest('[data-action]');if(!b||!data)return;const action=b.dataset.action,id=b.dataset.id;
  if(action==='bookmark'){state.bookmarks=state.bookmarks.includes(id)?state.bookmarks.filter(v=>v!==id):[...state.bookmarks,id];save();b.innerHTML=state.bookmarks.includes(id)?'★ Saved':'☆ Save';notice(state.bookmarks.includes(id)?'Saved to your library.':'Removed from saved items.');}
  if(action==='lesson-status'){state.lessons[id]={status:state.lessons[id]?.status==='complete'?'learning':'complete',updatedAt:stamped()};save();render();}
