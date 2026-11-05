@@ -35,3 +35,7 @@ Before release, verify the catalog, pathway links, filters, comparison view, pro
 # Coding Academy expansion
 
 The coding paths now include a complete study workspace: 82 lessons, 328 exercises, 164 recall cards, 27 projects, 80 glossary entries, and downloadable handbooks. Start at [Coding Academy](https://www.christrovato.com/coding_learning_main). See [the coding source guide](coding/README.md) for content, persistence, verification, and maintenance details.
+
+## Shared learning priorities
+
+The Academy and Atlas both expose **Focus & readiness** (`#focus`). `coding/learning-plan.mjs` is the shared source for learning stages, Python-to-C++ readiness, language labels, and software-family checkpoints; `coding/learning-plan.css` supplies responsive styling. The build copies these into both application asset locations. Readiness checks are temporary self-assessments and do not alter stored lesson or catalog progress. Update this shared source when changing priorities, and keep research profile prerequisites consistent.

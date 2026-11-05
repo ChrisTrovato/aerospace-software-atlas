@@ -1,5 +1,6 @@
 import {ACADEMY_KEY,LANGS,today,validDay,fresh,normalize,migrateV1,mergeBackups,rateReview,searchItems} from './academy-engine.mjs';
 import {makeDrill,gradeNumber} from './drills.mjs';
+import {focusView,bindFocusView} from './learning-plan.mjs';
 import {whyView} from './why-view.mjs';
 import {tracks,dataset,datasetSpecs,mentorPrompt,readmeTemplate} from './toolkit.mjs';
 import {esc,todayView,libraryView,libraryResults,lessonView,exerciseView,projectsView,projectView,practiceView,reviewView,journalView,toolkitView,exploreView} from './academy-views.mjs';
@@ -35,6 +36,7 @@ function render(){
  else if(view==='journal')html=journalView(data,state);
  else if(view==='toolkit')html=toolkitView(data,state)+(recoveryRaw?'<button class="a-button section-spacer" data-action="recovery-export">Download unreadable progress for recovery</button>':'');
  else if(view==='explore')html=exploreView(data,state);
+ else if(view==='focus')html=focusView('academy');
  else if(view==='why')html=whyView(data,params.get('lang')||state.prefs.focus);
  else if(view==='guide'||view.startsWith('guide-')){$('#field-guide').hidden=false;$('#academy-content').hidden=true;active='guide';if(view!=='guide')requestAnimationFrame(()=>document.getElementById(view)?.scrollIntoView());}
  else if(view==='today')html=todayView(data,state);
@@ -44,6 +46,7 @@ function render(){
  $$('[data-view]').forEach(a=>{if(a.dataset.view===active)a.setAttribute('aria-current','page');else a.removeAttribute('aria-current');});
  const label=[...($(`[data-view="${active}"]`)?.childNodes||[])].filter(n=>n.nodeType===3).map(n=>n.textContent).join('').trim()||'Academy';$('#view-breadcrumb').textContent='The long game / '+label;
  const due=reviewData().due.length;$('#due-badge').textContent=due?String(due):'';
+ bindFocusView($('#academy-content'));
  updateTimerDisplay();
 }
 function updateTimerDisplay(){const el=$('#timer-display');if(!el)return;const remaining=timer.running?Math.max(0,Math.ceil((timer.until-Date.now())/1000)):(timer.remaining||state.prefs.minutes*60);el.textContent=`${Math.floor(remaining/60)}:${String(remaining%60).padStart(2,'0')}`;const b=$('[data-action="timer-start"]');if(b)b.textContent=timer.running?'Pause':timer.remaining?'Resume':'Start';if(timer.running&&remaining<=0){timer.running=false;timer.remaining=0;clearInterval(timer.handle);el.textContent='Complete';if(b)b.textContent='Start again';notice('Focus session complete. Save what you learned in the journal.');}}

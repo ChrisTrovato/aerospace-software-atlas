@@ -94,7 +94,7 @@
     ],
     "priority": "core",
     "start": "2026–2027",
-    "depth": "Proficient",
+    "depth": "Working",
     "access": "Free and open source.",
     "platform": "Windows, macOS and Linux; check the current release.",
     "sources": [
@@ -369,11 +369,12 @@
       "testing"
     ],
     "summary": "A compiled programming language used in robotics, simulation and performance-sensitive systems.",
-    "why": "After Python, learn types, functions, memory ownership, compilation and debugging through small hardware or simulation tasks. Language competence is more valuable than collecting frameworks.",
+    "why": "After comfortable Python fundamentals, add C++ alongside Python for robotics, simulation, and flight software. You do not need expert Python or prior C. Build types, functions, ownership, compilation, and debugging through small tested programs.",
     "firstProject": "Implement a sensor-reading buffer and test how it handles missing or invalid samples.",
     "prerequisites": [
-      "Basic programming",
-      "Comfort running terminal commands"
+      "Can independently write, debug, check, and modify small programs (Python is the recommended first language)",
+      "Basic terminal use",
+      "C is not required first"
     ],
     "alternatives": [],
     "priority": "core",
@@ -403,7 +404,7 @@
       "testing"
     ],
     "summary": "A compiled language used close to embedded hardware and operating systems.",
-    "why": "Learn pointers, arrays, memory and device interfaces. UCSD’s current MAE 144 description explicitly includes C and embedded Linux, while your future course’s actual tools should be checked near enrollment.",
+    "why": "Add C through an embedded project or course after programming basics. It is a separate language from C++ and is not a prerequisite for learning C++. Study arrays, pointers, memory, timing, and device interfaces as the hardware needs them.",
     "firstProject": "Write and test a small state machine for a simulated fan and temperature sensor.",
     "prerequisites": [
       "Basic programming",

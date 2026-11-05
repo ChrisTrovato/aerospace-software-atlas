@@ -1,6 +1,7 @@
+import {languagePriorities} from './learning-plan.mjs';
 export const languages = [
   {
-    id:'python',name:'Python',symbol:'Py',route:'/coding_python',color:'#a4f0c4',role:'Think, investigate, automate.',priority:'Your main focus now',level:'Gentle entry · deep ceiling',difficulty:2,
+    id:'python',name:'Python',symbol:'Py',route:'/coding_python',color:'#a4f0c4',role:'Think, investigate, automate.',priority:languagePriorities.python,level:'Gentle entry · deep ceiling',difficulty:2,
     intro:'Turn an engineering question into an experiment you can run. Python is your fastest route from a page of measurements to a plot, a testable idea, or a robot that can interpret what it sees.',
     why:'For your aerospace path, Python offers the broadest early return. A short program can total a rover’s mass, compare battery logs, inspect images, or repeat an analysis for many design choices. You can begin with arithmetic, then keep the same language as calculus, linear algebra, physics, and controls make your questions more interesting.',
     long:'The lasting investment is learning to translate assumptions into steps and check the result. Libraries will evolve before your planned graduation; reasoning about data, units, uncertainty, and tests will still matter. Python can remain your experiment and analysis language even when another language runs the final embedded system.',
@@ -17,7 +18,7 @@ export const languages = [
     code:'temperatures_c = [22.0, 23.5, 28.2, 31.1]\nlimit_c = 30.0\n\nfor value in temperatures_c:\n    if value > limit_c:\n        print("Review reading:", value)'
   },
   {
-    id:'cpp',name:'C++',symbol:'C++',route:'/coding_Cplusplus',color:'#a7c5ff',role:'Build the robot’s working systems.',priority:'Add through a robotics project',level:'Steep entry · high control',difficulty:5,
+    id:'cpp',name:'C++',symbol:'C++',route:'/coding_Cplusplus',color:'#a7c5ff',role:'Build the robot’s working systems.',priority:languagePriorities.cpp,level:'Steep entry · high control',difficulty:5,
     intro:'When your robot becomes a collection of sensors, messages, and moving parts, C++ lets you build substantial software with explicit control over resources and performance.',
     why:'C++ is a strong investment if robotics, autonomous vehicles, or flight software becomes your direction. It is a major language in the ROS 2 ecosystem and underpins many simulation and perception libraries. Learning it lets you understand the implementation behind a tool, extend a component, and reason about what happens when the system gets busy.',
     long:'The durable skill is managing complexity without losing track of time, memory, ownership, and failure. You do not need to become a language expert before building a useful component. Progress from a small tested program to a clear interface, then to integration with other software.',
@@ -34,7 +35,7 @@ export const languages = [
     code:'#include <iostream>\n#include <vector>\n\nint main() {\n    const std::vector<double> masses_kg{1.2, 0.8, 0.5};\n    double total_kg = 0.0;\n    for (double mass : masses_kg) total_kg += mass;\n    std::cout << total_kg << " kg\\n";\n}'
   },
   {
-    id:'matlab',name:'MATLAB',symbol:'M',route:'/coding_matlab',color:'#ffc490',role:'Make the mathematics move.',priority:'Grow alongside coursework',level:'Friendly entry · mathematical depth',difficulty:3,
+    id:'matlab',name:'MATLAB',symbol:'M',route:'/coding_matlab',color:'#ffc490',role:'Make the mathematics move.',priority:languagePriorities.matlab,level:'Friendly entry · mathematical depth',difficulty:3,
     intro:'MATLAB is where a system of equations becomes a plot, a numerical model, or a controlled response. Its value rises as your engineering mathematics becomes more powerful.',
     why:'MATLAB fits your academic path and your interests in dynamics, thermal systems, and control. It makes matrix-based computation and visualization convenient. Southwestern’s ENGR 221 describes MATLAB and numerical engineering methods; that is a useful reason to learn it near the course rather than adding another intensive track immediately.',
     long:'If you later work in controls or model-based engineering, MATLAB and Simulink may become everyday tools. In another specialty you may use Python more. The transferable investment is numerical thinking: understanding the model, its assumptions, approximation error, and what would make the result untrustworthy.',
@@ -51,7 +52,7 @@ export const languages = [
     code:'time_s = 0:1:120;\ntau_s = 30;\ninitial_c = 40;\nambient_c = 20;\ntemperature_c = ambient_c + ...\n    (initial_c-ambient_c).*exp(-time_s./tau_s);\nplot(time_s, temperature_c)\nxlabel("Time (s)"); ylabel("Temperature (°C)");'
   },
   {
-    id:'c',name:'C',symbol:'C',route:'/coding_C',color:'#f6b6c8',role:'Understand the machine underneath.',priority:'Learn for embedded depth',level:'Small language · demanding details',difficulty:4,
+    id:'c',name:'C',symbol:'C',route:'/coding_C',color:'#f6b6c8',role:'Understand the machine underneath.',priority:languagePriorities.c,level:'Small language · demanding details',difficulty:4,
     intro:'C makes the relationship between a program and memory much more visible. It is a foundation for understanding firmware, low-level interfaces, and the constraints of small computers.',
     why:'C becomes valuable when your aerospace curiosity reaches sensors, flight computers, embedded Linux, or resource-constrained devices. NASA’s core Flight System is a real example of a reusable flight-software framework built around C. UCSD’s MAE 144 description also connects robotics, embedded Linux, and C; requirements and offerings should be rechecked when you enroll.',
     long:'Even if you eventually write more C++ or Python, C can improve your understanding of data representation, buffers, interfaces, and what an abstraction hides. It deserves focused study when you have an embedded goal, rather than a second introductory course competing with Python from day one.',
@@ -68,7 +69,7 @@ export const languages = [
     code:'#include <stdbool.h>\n#include <stdint.h>\n\nbool sensor_fault(uint8_t status) {\n    const uint8_t fault_mask = 1u;\n    return (status & fault_mask) != 0u;\n}'
   },
   {
-    id:'bash',name:'Bash / Linux',symbol:'$_',route:'/coding_bash',color:'#dfc5ff',role:'Make your experiments repeatable.',priority:'Small supporting habit from the start',level:'Quick utility · subtle scripting',difficulty:3,
+    id:'bash',name:'Bash / Linux',symbol:'$_',route:'/coding_bash',color:'#dfc5ff',role:'Make your experiments repeatable.',priority:languagePriorities.bash,level:'Quick utility · subtle scripting',difficulty:3,
     intro:'A shell lets you move around a project, run programs, inspect output, and connect tools. Bash helps turn “I clicked through it once” into “I can repeat this experiment.”',
     why:'Linux is common in robotics development, and many scientific tools are comfortable at the command line. You already have a Windows-oriented workflow; Ubuntu through WSL can provide a Linux practice environment. Basic shell fluency reduces setup friction when you later meet ROS 2, build systems, remote computers, and batches of simulations.',
     long:'You do not need to become a system administrator. The valuable foundation is understanding paths, processes, permissions, inputs, outputs, and exit codes. Small reliable scripts can save hours and make your results easier to reproduce.',

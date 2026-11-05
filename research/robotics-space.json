@@ -13,10 +13,9 @@
     "why": "A strong branch choice for autonomous inspection or servicing prototypes after you can write and debug small programs. Learning nodes, topics, coordinate frames, and logging helps you understand how a complete robot is organized.",
     "firstProject": "Around late 2029, after small Python and C++ programs work on Linux, publish simulated temperature readings, subscribe in a second node, and record and replay the data.",
     "prerequisites": [
-      "Working small Python programs",
-      "Basic C++ and debugging",
+      "Working small Python programs OR basic C++ programs",
       "Linux terminal and package basics",
-      "Basic networking",
+      "Learn nodes, topics, and logging in a first project",
       "Coordinate frames for later motion work"
     ],
     "alternatives": [
@@ -53,11 +52,10 @@
     "why": "Pairs naturally with ROS 2 when a rover or robot-arm project needs repeatable tests before hardware. Use it to compare a model with measurements; a convincing animation alone does not establish physical accuracy.",
     "firstProject": "Around late 2029 or later, after a simple ROS 2 project works, simulate a two-wheel indoor rover driving a short route and compare its commanded and measured travel distance.",
     "prerequisites": [
-      "Working small Python and basic C++ programs",
-      "Linux terminal and package basics",
-      "A working ROS 2 publisher/subscriber project",
-      "Rigid-body motion",
-      "Robot model files",
+      "Small programs in Python or C++",
+      "Basic terminal use",
+      "A simple ROS 2 publisher/subscriber if integrating with ROS 2",
+      "Basic rigid-body motion and model files",
       "Simulation time-step awareness"
     ],
     "alternatives": [
@@ -254,7 +252,7 @@
       "testing"
     ],
     "summary": "Creates detailed virtual robot environments with physics, camera simulation, and synthetic-data workflows.",
-    "why": "An optional advanced environment for testing vision-based inspection or manipulation. It becomes worthwhile when your project needs its sensor or visual capabilities; learning it early would add setup work before you have the underlying robotics skills.",
+    "why": "Explore with a guided scene now if it interests you. Use it as your primary robotics simulator when a simple Python script, model, or sensor experiment gives it a clear role. Deepen coordinate frames, simulation physics, and validation through projects; no calendar year is a prerequisite.",
     "firstProject": "Place a camera and mock equipment panel in a scene, vary lighting, and compare synthetic images with real photographs.",
     "prerequisites": [
       "Python",

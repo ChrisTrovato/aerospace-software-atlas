@@ -6,3 +6,7 @@ fs.writeFileSync('dist/data.json',JSON.stringify(tools,null,2)+'\n');
 console.log(`Built catalog: ${tools.length} tools from ${names.length} research files.`);
 
 await import('./coding/build.mjs');
+for(const name of ['learning-plan.mjs','learning-plan.css']) {
+ fs.copyFileSync('coding/'+name,'dist/'+name);
+ fs.copyFileSync('coding/'+name,'dist/coding_assets/'+name);
+}

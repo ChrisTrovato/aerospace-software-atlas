@@ -519,7 +519,7 @@
       "id": "2026–2027",
       "label": "Foundation",
       "title": "Learn to model, calculate, and explain",
-      "description": "Keep mathematics and introductory physics at the center. Learn one CAD package and basic Python through small projects; the tools below are a connected starter workflow, not separate courses to complete.",
+      "description": "Keep mathematics and introductory physics at the center. Learn one CAD package and basic Python through small projects; the tools below are a connected starter workflow, not separate courses to complete. Add C++ once you can independently write, debug, test, and modify small Python programs; do not wait for expert level or a particular year.",
       "outcome": "A simple assembly, a useful calculation script, and a short record of measurements and revisions.",
       "focus": [
         "freecad",
@@ -550,17 +550,16 @@
       "id": "2028–2029",
       "label": "Apply & transfer",
       "title": "Connect software to coursework and experiments",
-      "description": "Plan to deepen MATLAB around the proposed fall 2028 ENGR 221 course. The proposed fall 2029 transfer is a planning milestone; add electronics or robotics tools only when a project and its prerequisites justify them.",
+      "description": "Plan to deepen MATLAB around the proposed fall 2028 ENGR 221 course. The proposed fall 2029 transfer is a planning milestone; add electronics or robotics tools only when a project and its prerequisites justify them. Follow the Focus & readiness checkpoints rather than treating this date range as a prerequisite.",
       "outcome": "An instrumented prototype with a mathematical model, test data, and a reasoned redesign.",
       "focus": [
+        "cpp",
         "matlab",
         "scipy",
         "pandas",
-        "solidworks",
         "opencv",
-        "kicad",
-        "freertos",
-        "ros-2"
+        "ros-2",
+        "gazebo"
       ],
       "steps": [
         {
